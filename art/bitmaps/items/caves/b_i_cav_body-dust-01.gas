@@ -1,0 +1,5 @@
+[t:tsd,n:b_i_cav_body-dust-01]
+{
+	layer1texture1 = b_i_cav_body-dust-01;
+	texturedetail = 3;
+}

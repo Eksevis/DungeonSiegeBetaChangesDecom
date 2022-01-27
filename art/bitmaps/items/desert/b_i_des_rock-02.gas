@@ -1,0 +1,6 @@
+[t:tsd,n:b_i_des_rock-02]
+{
+	hasalpha = true;
+	layer1texture1 = b_i_des_rock-02;
+	texturedetail = 3;
+}

@@ -1,0 +1,102 @@
+[t:tsd,n:b_sfx_sparkle01_tsd]
+{
+	hasalpha = true;
+
+	layer1alphaarg1 = texture;
+	layer1alphaarg2 = diffuse;
+	layer1alphaop = modulate;
+	layer1colorarg1 = texture;
+	layer1colorarg2 = diffuse;
+	layer1colorop = modulate;
+
+	layer1numframes = 1;
+
+	layer1secondsperframe = 0.0;
+
+	layer1texture1 = b_sfx_sparkle01;
+
+	Layer1RotationPerSecond = -1.0;
+
+	layer1RotationUCenter	= 0.5;
+	layer1RotationVCenter	= 0.5;
+
+
+	layer1ushiftpersecond = 0.0;
+
+	layer1uwrap = false;
+
+	layer1vshiftpersecond = 0.0;
+
+	layer1vwrap = false;
+
+	layer2alphaarg1 = texture;
+	layer2alphaarg2 = current;
+	layer2alphaop = modulate;
+	layer2colorarg1 = texture;
+	layer2colorarg2 = current;
+	layer2colorop = modulate;
+
+	layer2numframes = 1;
+
+	layer2secondsperframe = 0.0;
+
+	layer2texture1 = b_sfx_sparkle01;
+
+	Layer2RotationPerSecond = 1.0;
+
+	layer2RotationUCenter	= 0.5;
+	layer2RotationVCenter	= 0.5;
+
+
+
+	layer2ushiftpersecond = 0.00;
+
+	layer2uwrap = false;
+
+	layer2vshiftpersecond = 0.00;
+
+	layer2vwrap = false;
+
+	numlayers = 2;
+
+	texturedetail = 1;
+
+	timesyncanimation = true;
+}
+
+[t:tsd,n:b_sfx_sparkle01_tsd-simple]
+{
+	hasalpha = true;
+
+	layer1alphaarg1 = texture;
+	layer1alphaarg2 = diffuse;
+	layer1alphaop = modulate;
+	layer1colorarg1 = texture;
+	layer1colorarg2 = diffuse;
+	layer1colorop = modulate;
+
+	layer1numframes = 1;
+
+	layer1secondsperframe = 0.0;
+
+	layer1texture1 = b_sfx_sparkle01;
+
+	Layer1RotationPerSecond = -1.0;
+
+	layer1RotationUCenter	= 0.5;
+	layer1RotationVCenter	= 0.5;
+
+
+	layer1ushiftpersecond = 0.0;
+
+	layer1uwrap = false;
+
+	layer1vshiftpersecond = 0.0;
+
+	layer1vwrap = false;
+	numlayers = 1;
+
+	texturedetail = 1;
+
+	timesyncanimation = true;
+}
