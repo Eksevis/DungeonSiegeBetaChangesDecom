@@ -1,0 +1,5 @@
+[t:tsd,n:b_t_xxx_wal_tx-08x08-p]
+{
+	layer1texture1 = b_t_xxx_wal_tx-08x08-p;
+	texturedetail = 2;
+}

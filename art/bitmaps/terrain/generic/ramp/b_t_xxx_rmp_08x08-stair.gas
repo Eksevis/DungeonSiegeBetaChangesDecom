@@ -1,0 +1,5 @@
+[t:tsd,n:b_t_xxx_rmp_08x08-stair]
+{
+	layer1texture1 = b_t_xxx_rmp_08x08-stair;
+	texturedetail = 2;
+}
