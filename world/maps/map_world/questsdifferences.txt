@@ -1,3 +1,5 @@
+Quests.gas was not stored in a unique directory
+
 Code structure completely different
 
 The example is completely different (and more jokey)
