@@ -1,0 +1,57 @@
+Code structure completely different
+
+The example is completely different (and more jokey)
+
+EXAMPLES:
+
+
+	////// BETA 1 //////
+//[quests]
+//{
+//   [*]
+//    {
+//        name            = Quest_for_Gyorn;		                // This is the name of the quest, it MUST be unique per map!
+//        speaker         = "Norick";                             // The name of the speaker
+//        speaker_role    = "Old Man";                       		// The "role" or occupation of the speaker
+//        description     = "Seek out Gyorn in Stonebridge.";		// This is the line that appears underneath the speaker name
+//        sample          = s_v_fh_norick1.mp3;                   // The dialogue sound file associated with this quest
+//    }
+	
+
+	////// RELEASE //////
+//[quests]
+//{
+//	[quest_for_gyorn]
+//	{		
+//		chapter			= chapter_1;
+//		screen_name		= "Seek Gyorn in Stonebridge";
+//		victory_sample	= s_e_level_up_quest;
+//		quest_image 	= b_gui_ig_mnu_jnl_quest_01;              
+//		
+//		[*]
+//		{
+//			order		= 0;
+//			speaker     = "Norick";                  
+//			description = "Seek Norick's friend Gyorn in the town of Stonebridge.";
+//			sample      = s_v_fh_norick1;   
+//			address		= fh_r1:conversations:conversation_norick;  
+//			play_update_sound = false;
+//		}
+//		[*]
+//		{
+//			order		= 1;
+//			speaker     = "Skartis";
+//			description = "Seek Norick's friend Gyorn in the town of Stonebridge by using the old path through the Crypts.";
+//			address		= path2crypts:conversations:conversation_skartis;				
+//		}
+//	}
+	
+The wording around Gyorn's quest was slightly different. From "seek *out* Gyorn in Stonebridge" to just "Seek Gyorn in Stonebridge"
+	
+Escorting Ulora to Stonebridge was a quest.
+
+Escorting Gyorn to Glacern was a quest.
+
+A character named Ilandro had a quest for you to find their friends. 
+
+Ilandro's quest used s_v_bt_gyorn1.mp3 as a placeholder audio sample.

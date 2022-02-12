@@ -1,0 +1,84 @@
+//////////////////////////////
+//	 MAP_WORLD QUESTS FILE	//
+//////////////////////////////
+
+///////////////////////////////////////////////////////////////
+//
+//DOCUMENTATION:
+//
+//Quests are setup on a per map basis.  In the map directory, you will need a quests.gas file.  Here's a sample of a quests.gas:
+//
+//	[quests]
+//	{
+//		// make one of these blocks for each quest
+//		[*]
+//		{
+//			name 			= quest_for_beef_jerky; 					// This is the name of the quest, it MUST be unique per map!
+//			speaker 		= "Spanky"; 								// The name of the speaker
+//			speaker_role 	= "Jerky Specialist";  						// The "role" or occupation of the speaker
+//			description 	= "Thou must find the sacred jerky or..."; 	// This is the line that appears underneath the speaker name
+//			sample 			= s_v_bt_jerky.mp3;							// The dialogue sound file associated with this quest
+//		}
+//	}
+//
+//This set up gives you maximum flexibility because you can control almost
+//everything that will be put on the screen.  Now, you can activate quests in
+//one of two ways.  The first way is through dialogue.  If you put the
+//following into a conversation.gas, the quest will automatically become
+//active once you activate the specified text of the speaker:
+//
+//	[conversation_spanky]
+//	{
+//		[text*]
+//	    {
+//	    	text			="Thou must find the sacred jerky or we'll all have to eat vegetables!  EWWW!";
+//			sample			=s_v_bt_jerky.mp3;
+//			activate_quest 	= quest_for_beef_jerky;  // this will cause the quest to be activated when this text is displayed
+//		}
+//	}
+//
+//The  other way to activate  a quest is to call the trigger action
+//change_quest_state().  So if you pick up a sword or walk to a certain area,
+//you can activate a quest on a trigger.  This trigger action is also the only
+//way right now to complete a quest.
+//
+//Hit "k" in game to bring up the quest log.
+//
+//////////////////////////////////////////////////////////////
+
+[quests]
+{
+    [*]
+    {
+        name            = Quest_for_Gyorn;		                // This is the name of the quest, it MUST be unique per map!
+        speaker         = "Norick";                             // The name of the speaker
+        speaker_role    = "Old Man";                       		// The "role" or occupation of the speaker
+        description     = "Seek out Gyorn in Stonebridge.";		// This is the line that appears underneath the speaker name
+        sample          = s_v_fh_norick1.mp3;                   // The dialogue sound file associated with this quest
+    }
+    [*]
+    {
+        name            = Ulora_to_Stonebridge;
+        speaker         = "Ulora";
+        speaker_role    = "Azunite Scribe";
+        description     = "Escort Ulora to Stonebridge.";
+        sample          = s_v_cr_ulora1.mp3;
+    }
+    [*]
+    {
+        name            = Gyorn_to_Glacern;
+        speaker         = "Gyorn";
+        speaker_role    = "Old Soldier";
+        description     = "Escort Gyorn to Glacern.";
+        sample          = s_v_bt_gyorn1.mp3;
+    }
+    [*]
+    {
+        name            = quest_find_ilandro_friend;
+        speaker         = "Ilandro";
+        speaker_role    = "Minstrel";
+        description     = "Find Ilandro's friends.";
+//        sample          = s_v_bt_gyorn1.mp3;
+    }
+}
+
