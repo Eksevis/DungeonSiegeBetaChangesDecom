@@ -1,0 +1,47 @@
+bt_r1 had a different SCID 0xa2898c98 (beta) -> 0x26c1513c
+
+cd_r1_hein did not exist
+
+ce_r2 had a different SCID 0xd28d8af4 -> 0x824bdfc8
+
+cr_r0_b had a different SCID 0xdfbfedfb -> 0x4340591a
+
+dd_r0 was changed from "desert dwellings entrance" to "droog village entrance"
+
+df_bandits did not exist
+
+In release, after df_r1, the path to.. etc etc. follow immediately after, but for beta it happens after the dragon lair entrees.
+
+dl_r0 and dl_r1 were not marked with sa_ indicating a side area
+
+dm_r0 had a different SCID 0x01d2af71 -> 0x2deba82c
+
+dm_r0_c refered to "Gloern" as "Glyorn," indicating a possible spelling change
+
+ds_r1a existed and was called "dark swamp region 1a. Makes sense.
+
+e3_10 was just labeled as "castle ehb entrance", whereas the other in the bta are labeled "e3 demo", possibly wasn't intentional
+
+e3_2's description was in quotation marks.
+
+e3_9's description was in quotation marks.
+
+fc_r0 was not marked as a side area.
+
+fd_r2, fd_r3 and fd_r4 existed
+
+fh_r3 had a different SCID 0x6f0757c -> 0xd262b12f
+
+gi_r10_test did not exist
+
+gi_r2, gi_r6 & gi_r9 existed
+
+gom2 & gom2_b did not exist.
+
+id_r1 was not marked as a side area.
+
+lc_r5, bizarelly enough is not references as "lava caverns region 5 (last world region)" but as "arctic caverns final region --- Merik's tomb" which seems to suggest a drastic change at some point in development, but it still has the same SCID.
+
+path2dm did not exist
+
+wd_r1 and wd_r1_b are not labeled as side areas
