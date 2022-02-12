@@ -48,7 +48,7 @@ EXAMPLES:
 //		}
 //	}
 	
-The wording around Gyorn's quest was slightly different. From "seek *out* Gyorn in Stonebridge" to just "Seek Gyorn in Stonebridge"
+The wording around Gyorn's quest was slightly different. From "Seek *out* Gyorn in Stonebridge" to just "Seek Gyorn in Stonebridge"
 	
 Escorting Ulora to Stonebridge was a quest.
 
