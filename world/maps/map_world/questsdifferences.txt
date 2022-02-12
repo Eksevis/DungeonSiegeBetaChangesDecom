@@ -6,7 +6,6 @@ The example is completely different (and more jokey)
 
 EXAMPLES:
 
-
 	////// BETA 1 //////
 //[quests]
 //{
