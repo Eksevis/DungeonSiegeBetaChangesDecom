@@ -1,0 +1,7 @@
+[t:tsd,n:b_em_chrome_ball]
+{
+  b dither = true;
+  b hasalpha = true;
+    layer1texture1 = b_em_chrome_ball;
+  i texturedetail = 0;
+}

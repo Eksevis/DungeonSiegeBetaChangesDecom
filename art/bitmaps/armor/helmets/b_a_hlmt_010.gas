@@ -1,0 +1,7 @@
+[t:tsd,n:b_a_hlmt_010]
+{
+  b dither = true;
+  b hasalpha = true;
+    layer1texture1 = b_a_hlmt_010;
+  i texturedetail = 0;
+}
