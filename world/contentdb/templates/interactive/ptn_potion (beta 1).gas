@@ -1,0 +1,438 @@
+/////////////////////////////////////////////////////////////////////
+// $$$ Potion base template in templates.gas also needs fleshing out,
+// can move some of below components up there. -MM
+
+[t:template,n:base_potion_good]
+{
+	specializes = potion;
+	doc         = "Good potion base template.";
+}
+
+
+[t:template,n:base_potion_dark]
+{
+	specializes = potion;
+	doc         = "Dark potion base template.";
+}
+
+//////////////////////////////////////////////////////////////////////
+// Potion leaf templates
+
+/*$$$ To be deleted. Commented to see if anything breaks first. -CarlosN
+[t:template,n:potion_health]
+{
+	specializes     = base_potion_good;
+	doc             = "Potion_health";
+	category_name   = "potions";
+
+	aspect:gold_value       = 50;
+	aspect:textures:0       = b_i_glb_bottle-red;
+
+	potion:inventory_icon_2 = b_gui_ig_i_it_potion-health;
+	potion:ranges:  0.50        = b_i_glb_bottle-red-02;
+	[common]
+	{
+		screen_name = "Potion of Health";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "potion_sparkle_red" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_life;
+				value               = 50;
+				max_value           = 50;
+				description         = healing potion;
+
+				duration            = 0;
+				frequency           = 0;
+
+				is_value_limited    = true;
+				is_enhancement      = true;
+				is_permanent        = true;
+				is_transmissible    = false;
+				is_single_instance  = false;
+				is_active           = false;
+			}
+		}
+	}
+}
+*/
+
+/*$$$ To be deleted. Commented to see if anything breaks first. -CarlosN
+[t:template,n:potion_mana]
+{
+	specializes     = base_potion_good;
+	doc             = "Potion_mana";
+	category_name   =   "potions";
+
+	aspect:gold_value       = 50;
+	aspect:textures:0       = b_i_glb_bottle-blue;
+
+	[common]
+	{
+		screen_name      = "Potion of Mana";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "potion_sparkle_blue" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	
+	potion:inventory_icon_2 = b_gui_ig_i_it_potion-mana;
+	potion:ranges:  0.50        = b_i_glb_bottle-blue-02;
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_mana;
+				description         = mana potion;
+				duration            = 0;
+				frequency           = 0;
+				is_active           = false;
+				is_enhancement      = true;
+				is_permanent        = true;
+				is_single_instance  = false;
+				is_transmissible    = false;
+				is_value_limited    = true;
+				max_value           = 40.0;
+				value               = 40.0;
+			}
+		}
+	}
+}
+*/
+
+[t:template,n:potion_poison]
+{
+	specializes     = base_potion_dark;
+	doc             = "Potion_poison";
+	category_name   =   "potions";
+
+	aspect:gold_value       = 50;
+	aspect:textures:0       = b_i_glb_bottle-green;
+
+	common:screen_name      = "Poison";
+	potion:inventory_icon_2 = b_gui_ig_i_it_potion-poison;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_life;
+				value               = -1.0;
+				max_value           = -1.0;
+				description         = poison;
+
+				duration            = 20.0;
+				frequency           = 1.0;
+
+				is_enhancement      = false;
+				is_permanent        = false;
+				is_transmissible    = true;
+				is_single_instance  = false;
+				is_active           = false;
+				is_value_limited    = false;
+			}
+
+			[*]
+			{
+				alteration          = alter_life_recovery_period;
+				value               = 0.50;
+				max_value           = 0.50;
+				description         = poison;
+
+				duration            = 30.0;
+				frequency           = 30.0;
+
+				is_enhancement      = false;
+				is_permanent        = false;
+				is_transmissible    = true;
+				is_single_instance  = false;
+				is_active           = false;
+				is_value_limited    = false;
+			}
+
+			[*]
+			{
+				alteration          = alter_mana_recovery_period;
+				value               = 0.50;
+				max_value           = 0.50;
+				description         = poison;
+
+				duration            = 30.0;
+				frequency           = 30.0;
+
+				is_enhancement      = false;
+				is_permanent        = false;
+				is_transmissible    = true;
+				is_single_instance  = false;
+				is_active           = false;
+				is_value_limited    = false;
+			}
+		}
+	}
+}
+
+[t:template,n:potion_invincibility]
+{
+	specializes = base_potion_good;
+	doc         = "Potion_invincibility";
+	category_name   =   "potions";
+
+	aspect:gold_value       = 1050;
+	aspect:textures:0       = b_i_glb_bottle-green;
+
+	common:screen_name      = "Potion of Invincibility";
+	potion:inventory_icon_2 = b_gui_ig_i_it_potion-super;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_invincibility;
+				value               = 20.0;
+				max_value           = 20.0;
+				description         = heal potion;
+
+				duration            = 0.0;
+				frequency           = 0.0;
+
+				is_enhancement      = true;
+				is_permanent        = true;
+				is_transmissible    = false;
+				is_single_instance  = false;
+				is_active           = false;
+				is_value_limited    = true;
+			}
+		}
+	}
+}
+
+////////////////////////////////
+
+[t:template,n:potion_health_small]
+{
+	specializes         = base_potion_good;
+	doc                 = "potion_health_sm";
+	category_name       = "potions";
+
+	aspect:model        = m_i_glb_bottle-potion;
+	aspect:textures:0   = b_i_glb_bottle-red-01;
+   	aspect:gold_value       = 20;
+
+	[common]
+	{
+		screen_name  = "Small Health Potion";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "potion_sparkle_red" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_life;
+				value               = 50;
+				max_value           = 50;
+				description         = healing potion;
+
+				duration            = 0;
+				frequency           = 0;
+
+				is_value_limited    = true;
+				is_enhancement      = true;
+				is_permanent        = true;
+				is_transmissible    = false;
+				is_single_instance  = false;
+				is_active           = false;
+			}
+		}
+	}
+
+	gui:inventory_icon          = b_gui_ig_i_it_potion-bottle_02;
+
+	potion:inventory_icon_2     = b_gui_ig_i_it_potion-health_02;
+	potion:ranges:  0.50        = b_i_glb_bottle-red-02;
+}
+
+[t:template,n:potion_health_large]
+{
+	specializes         = base_potion_good;
+	doc                 = "potion_health_lg";
+	category_name       = "potions";
+
+	aspect:model        = m_i_glb_bottle-potion;
+	aspect:textures:0   = b_i_glb_bottle-red-01;
+    aspect:gold_value       = 50;
+
+	[common]
+	{
+		screen_name  = "Large Health Potion";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "potion_sparkle_red" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_life;
+				value               = 150;
+				max_value           = 150;
+				description         = healing potion;
+
+				duration            = 0;
+				frequency           = 0;
+
+				is_value_limited    = true;
+				is_enhancement      = true;
+				is_permanent        = true;
+				is_transmissible    = false;
+				is_single_instance  = false;
+				is_active           = false;
+			}
+		}
+	}
+
+	gui:inventory_icon          = b_gui_ig_i_it_potion-bottle_01;
+
+	potion:inventory_icon_2     = b_gui_ig_i_it_potion-health_01;
+	potion:ranges:  0.50        = b_i_glb_bottle-red-02;
+}
+
+[t:template,n:potion_mana_small]
+{
+	specializes         = base_potion_good;
+	doc                 = "potion_mana_sm";
+	category_name       = "potions";
+
+	aspect:model        = m_i_glb_bottle-potion;
+	aspect:textures:0   = b_i_glb_bottle-blue-01;
+    aspect:gold_value       = 20;
+
+	[common]
+	{
+		screen_name  = "Small Mana Potion";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "potion_sparkle_blue" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_mana;
+				max_value           = 50.0;
+				value               = 50.0;
+				description         = mana potion;
+				duration            = 0;
+				frequency           = 0;
+				is_active           = false;
+				is_enhancement      = true;
+				is_permanent        = true;
+				is_single_instance  = false;
+				is_transmissible    = false;
+				is_value_limited    = true;
+			}
+		}
+	}
+
+	gui:inventory_icon          = b_gui_ig_i_it_potion-bottle_03;
+
+	potion:inventory_icon_2     = b_gui_ig_i_it_potion-mana_03;
+	potion:ranges:  0.50        = b_i_glb_bottle-blue-02;
+}
+
+[t:template,n:potion_mana_large]
+{
+	specializes         = base_potion_good;
+	doc                 = "potion_mana_lg";
+	category_name       = "potions";
+
+	aspect:model        = m_i_glb_bottle-potion;
+	aspect:textures:0   = b_i_glb_bottle-blue-01;
+   	aspect:gold_value       = 50;
+
+	[common]
+	{
+		screen_name  = "Large Mana Potion";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "potion_sparkle_blue" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration          = alter_mana;
+				max_value           = 150.0;
+				value               = 150.0;
+				description         = mana potion;
+				duration            = 0;
+				frequency           = 0;
+				is_active           = false;
+				is_enhancement      = true;
+				is_permanent        = true;
+				is_single_instance  = false;
+				is_transmissible    = false;
+				is_value_limited    = true;
+			}
+		}
+	}
+
+	gui:inventory_icon          = b_gui_ig_i_it_potion-bottle_04;
+
+	potion:inventory_icon_2     = b_gui_ig_i_it_potion-mana_04;
+	potion:ranges:  0.50        = b_i_glb_bottle-blue-02;
+}
