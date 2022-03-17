@@ -1,0 +1,104 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_equip.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: Get an item.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+
+
+startup state Startup$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	if( m_Job$.GoalObject == Goid.NoneGoid )
+	{
+		m_Go$.Inventory.RSUnequip( m_Job$.GoalSlot );
+		SetState Exiting$;
+	}
+	else
+	{
+		SetState Approaching$;
+	}
+}
+
+
+state Approaching$
+{
+	transition
+	{
+		->Equipping$:	OnWorldMessage( WE_MCP_SECTION_COMPLETED );
+		->Exiting$:		OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Mind$.GetDistance( m_Job$.GoalObject.Go ) > 0.5 )
+		{
+			MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_APPROACH, m_Job$.GoalPosition, 0.5 );
+		}
+		else
+		{
+			SetState Equipping$;
+		}
+	}
+}
+
+
+state Equipping$
+{
+	event OnEnterState$
+	{
+		// use the item
+		m_Go$.Inventory.RSAutoEquip( m_Job$.GoalSlot, m_Job$.GoalObject, false );
+
+		if( m_Job$.GoalObject.Go.Parent != m_Go$.Parent )
+		{
+			// stop walking
+
+			// $$$ bad; this breaks command q-ing -bk
+			//MCPManager.Flush(m_Go$.Goid);
+			MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FIDGET );
+		}
+		SetState Exiting$;
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}

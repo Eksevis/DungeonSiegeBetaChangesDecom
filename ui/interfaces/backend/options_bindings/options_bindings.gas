@@ -1,0 +1,977 @@
+[options_bindings]
+{
+	interface = true;
+	modal = true;
+	centered = background;
+//	intended_resolution_height = 480;
+//	intended_resolution_width = 640;
+
+	[t:dialog_box,n:background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 1;
+		rect = 105,22,535,390;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:options_bg]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 8;
+		rect = 117,80,524,345;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:options_title]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 10;
+		font_color = -1;
+		font_size = 22;
+		font_type = b_gui_fnt_22p_lucinda-bright;
+		justify = center;
+		rect = 200,38,440,52;
+		text = "Options Menu";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:tab,n:tab_video]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 1;
+		radio_group = options_menu_tabs;
+		rect = 118,67,218,83;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { oncheck=notify(show_options_video); }
+		[t:text,n:tab_video_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 128,65,218,80;
+			text = "Video";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_audio]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 4;
+		radio_group = options_menu_tabs;
+		rect = 219,67,321,83;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { oncheck=notify(show_options_audio); }
+		[t:text,n:tab_audio_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;			
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 231,65,321,80;
+			text = "Audio";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_input]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 2;
+		radio_group = options_menu_tabs;
+		rect = 322,64,423,80;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		enabled = false;
+		[messages] { oncheck=notify(show_options_input); }
+		[t:text,n:tab_input_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 334,65,423,80;
+			text = "Input";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_game]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 3;
+		radio_group = options_menu_tabs;
+		rect = 424,67,524,83;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { oncheck=notify(show_options_game); }
+		[t:text,n:tab_game_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = button_4;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 435,65,524,80;
+			text = "Game";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+
+	[t:button,n:button_ok]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 8;
+		rect = 200,358,310,374;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_ok_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 200,359,310,374;
+			text = "OK";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(set_options) & playsound(s_e_interface_close); }
+	}
+	[t:button,n:button_cancel]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 8;
+		rect = 330,358,440,374;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_cancel_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 330,359,440,374;
+			text = "Cancel";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages]
+		{ 
+			onbuttonpress = notify(cancel_options);
+			onescape = notify(cancel_options);
+		}
+	}
+	[t:text,n:text_command]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		rect = 124,90,290,106;
+		text = "Command";
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:text_key0]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		rect = 300,90,395,106;
+		text = "Primary";
+		texture = none;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:text_key1]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		rect = 400,90,495,106;
+		text = "Secondary";
+		texture = none;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding0_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,110,290,126;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding0_key0]
+	{
+		alpha = 0.4000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,110,395,126;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding0_key1]
+	{
+		alpha = 0.40000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,110,495,126;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding1_text]
+	{
+		alpha = 1.00000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,130,290,146;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding1_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,130,395,146;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding1_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,130,495,146;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding2_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,150,290,166;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding2_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,150,395,166;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding2_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,150,495,166;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding3_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,170,290,186;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding3_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,170,395,186;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding3_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,170,495,186;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding4_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,190,290,206;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding4_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,190,395,206;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding4_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,190,495,206;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding5_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,210,290,226;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding5_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,210,395,226;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding5_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,210,495,226;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding6_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,230,290,246;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding6_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,230,395,246;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding6_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,230,495,246;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding7_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,250,290,266;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding7_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,250,395,266;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding7_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,250,495,266;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding8_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,270,290,286;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding8_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,270,395,286;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding8_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,270,495,286;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding9_text]
+	{
+		alpha = 1.000000;
+		draw_order = 15;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 124,290,290,306;
+		text = ;
+		texture = none;
+		justify = right;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:binding9_key0]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 300,290,395,306;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+	[t:text,n:binding9_key1]
+	{
+		alpha = 0.400000;
+		draw_order = 15;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_13p_lucinda-bright;
+		rect = 400,290,495,306;
+		text = ;
+		texture = b_gui_fe_m_options_bindings_bg;
+		justify = center;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onrollover = loadtexture(b_gui_fe_m_options_bindings_hov);
+			onrolloff = loadtexture(b_gui_fe_m_options_bindings_bg) & setalpha(0.4);
+			onlbuttondown = loadtexture(b_gui_fe_m_options_bindings_sel) & notify(bind_key) & setalpha(1.0);
+			onrbuttondown = notify(delete_bound_key);
+		}
+	}
+
+	[t:slider,n:scroll_bindings]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = ;
+		draw_order = 8;
+		rect = 500,126,516,290;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		min_value = 0;
+		max_value = 100;
+		step_value = 10;
+		dynamic_button = false;
+		[messages] { onchange=notify(slider_scroll_bindings); }
+		[t:window,n:scroll_wheel_listen]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 2;
+			rect = 124,94,516,322;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			[messages]
+			{
+				onwheelup=notify(scroll_input_bindings_up);
+				onwheeldown=notify(scroll_input_bindings_down);
+			}
+		}
+	}
+	[t:button,n:scroll_bindings_up]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = "up";
+		draw_order = 29;
+		rect = 500,110,516,126;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:scroll_bindings_down]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = "down";
+		draw_order = 29;
+		rect = 500,290,516,306;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_defaults]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 58;
+		rect = 361,318,501,334;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_defaults_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 14;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 406,319,516,334;
+			text = "Defaults";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(default_options_bindings) & playsound(s_e_interface_close.wav); }
+	}
+	[t:button,n:button_back]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 58;
+		rect = 140,318,280,334;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_back_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 14;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 140,319,250,334;
+			text = "Back";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(show_options_input); }
+	}
+}

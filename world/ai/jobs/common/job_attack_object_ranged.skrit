@@ -1,0 +1,378 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_attack_object_ranged.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: Get close to a target (within weapon range) and shoot at it.
+
+	[Expected Behavior]
+	{
+		// $$$ fill out
+	}
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+
+Goid	m_Ammo$;
+Goid	m_Target$;
+Goid	m_Weapon$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "k_job_c_attack-utils" 
+////////////////////////////////////////////////////////////////////////////////
+ 
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$			= job$;
+	m_Go$			= job$.Go;
+	m_Mind$			= job$.Go.Mind;
+	m_Body$			= job$.Go.Body;
+}
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$		= job$.GoalObject;
+	m_Weapon$		= job$.GoalModifier;
+	m_Ammo$			= goid.InvalidGoid;
+
+
+	if( m_Target$.Go.IsActor && !IsAlive( m_Target$.Go.Aspect.LifeState ) )
+	{
+		SetState Exiting$;
+		return;
+	}
+
+	ResetPathFindingParameters$();
+
+	SetState Begin$;
+}
+
+
+
+event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{
+	if( e$ == WE_DESTRUCTED )
+	{
+		SetState Exiting$;
+	}
+	else if(  	( e$ == WE_REQ_JOB_FINISH ) ||
+				( e$ == WE_ENGAGED_INVALID ) ||
+				( e$ == WE_ENGAGED_KILLED ) ||
+				( e$ == WE_ENGAGED_LOST ) ||
+				( e$ == WE_ENGAGED_HIT_KILLED ) )
+	{
+		SetState Exiting$;
+	}
+
+	if( m_Target$.Go == NULL )
+	{
+		SetState Exiting$;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Begin$
+{
+	////////////////////////////////////////////////////////////////////////////////
+	//	check standing orders
+
+	event OnEnterState$
+	{
+		if( m_Target$.Go == NULL )
+		{
+			SetState Exiting$;
+			return;
+		}
+
+		bool exit$ = true;
+
+		if( m_Mind$.MovementOrders == MO_HOLD )
+		{
+			if( m_Mind$.IsInWeaponRange( m_Target$.Go, m_Weapon$.Go ) )
+			{
+				if( m_Mind$.IsLosClear( m_Target$.Go ) )
+				{
+					exit$ = false;
+					SetState RequestAction$;
+				}
+			}
+		}
+		else if ( m_Mind$.CombatOrders == CO_HOLD )
+		{
+		}
+		else
+		{
+			exit$ = false;
+			SetState ApproachingLOSPoint$;
+		}
+
+		if( exit$ )
+		{
+			SetState Exiting$;
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state ApproachingLOSPoint$
+{
+	event OnEnterState$
+	{
+		if( m_Mind$.IsLosClear( m_Target$.Go ) )
+		{
+			SetState( RequestAction$ );
+		}
+		else
+		{
+			if( AIQuery.FindClearLosPoint( m_Go$, m_Target$.Go, 25, Math.PiHalf*0.5, m_Mind$.TempPos1 ) )
+			{
+				eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_APPROACH, m_Mind$.TempPos1, 0 );
+
+				report.ReportF("aimove","[%s] ApproachingLOSPoint (attack object ranged) [%s] returned [%s]\n",
+				 	m_Go$.TemplateName,
+					MakeSiegePosString(m_Mind$.TempPos1),
+					ToString(ret$) );
+
+				if (RequestFailed(ret$))
+				{
+					SetState( Exiting$ );
+				}
+				else
+				{
+					SetState( RequestAction$ );
+				}
+			}
+			else
+			{
+				SetState( Exiting$ );
+			}
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state RequestAction$
+{
+	transition
+	{
+		-> TargetMoved$:		OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> HeadToHead$:			OnWorldMessage( WE_MCP_MUTUAL_DEPENDANCY );
+		-> Loading$:			OnWorldMessage( WE_ANIM_ATTACH_AMMO );
+		-> FireWithoutLoad$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> Exiting$:			OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+	event OnEnterState$
+	{
+		// $$$ Need to revisit this because the animation should cause the loading of the arrow, but this is totally safe - Rick
+		if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+		}
+
+		eAnimStance stance$ = m_Go$.inventory.animstance;
+ 		float attack_loop_duration$ = m_Weapon$.Go.Attack.ReloadDelay;
+		attack_loop_duration$ += m_Go$.Aspect.AspectHandle.GetBaseDurationForChoreStance(CHORE_ATTACK,stance$);
+  
+  		MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FACE, m_Target$ );
+
+		eReqRetCode ret$ = MCPManager.MakeRequest(m_Job$.Id,
+										  	m_Go$.Goid,
+										  	PL_ATTACK_OBJECT_RANGED,
+										  	attack_loop_duration$,
+										  	m_Target$,
+											m_LookAhead$, m_MaxApproachTime$, // path args
+										  	m_Mind$.WeaponRange
+										  	);
+
+		report.ReportF("aimove","[%s] PL_ATTACK_OBJECT_RANGED [%s] returned [%s]\n",
+		 	m_Go$.TemplateName,
+		 	m_Target$.go.TemplateName,
+			ToString(ret$) );
+
+		if( RequestFailed(ret$) )
+		{
+			SetState( Exiting$ );
+		}
+		else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+		{
+			SetState( MovingCloser$ );
+		}
+		else if (ret$ == REQUEST_OK)
+		{
+		}
+		else // (ret$ == REQUEST_OK_IN_RANGE)
+		{
+			SetState( ContinueAction$ );
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state ContinueAction$
+{
+	// We arrive at this state after we receive a 'WE_MCP_MUTUAL_DEPENDANCY' message
+	// or if the characters is within range and we want to ignore any WE_MCP_MUTUAL_DEPENDANCY
+
+	transition
+	{
+		-> TargetMoved$:		OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> Loading$:			OnWorldMessage( WE_ANIM_ATTACH_AMMO );
+		-> FireWithoutLoad$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> Exiting$:			OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Loading$
+{
+	transition
+	{
+		-> Shooting$: OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+	}
+
+	event OnEnterState$
+	{
+		if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state FireWithoutLoad$
+{
+	event OnEnterState$
+	{
+		//report.warningf("$$$$ The projectile attack for [%s] has no ATTACH AMMO event\n",m_Go$.TemplateName);
+
+		if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+		}
+
+		SetState(Shooting$);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Shooting$
+{
+	transition
+	{
+		-> Begin$:			OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Weapon$.Go == NULL )
+		{
+			SetState Exiting$;
+			return;
+		}
+		
+		// launch arrow at engaged object
+
+		if (m_Weapon$.Go.Attack.GetAmmoCloneSource == goid.invalidgoid)
+		{
+			SendWorldMessage( WE_REQ_ACTIVATE, m_Weapon$, MakeInt( m_Target$ ) );
+		}
+		else
+		{
+			// If JIT ammo creation then make it here otherwise it has already been created
+			if( m_Weapon$.Go.Attack.AmmoAppearsJIT )
+			{
+				m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+			}
+
+			int firing_pos$ = SiegeFx.AddVariable( m_Weapon$.Go.Attack.ComputeFiringPos( m_Ammo$ ), m_Ammo$ );
+			int target_pos$ = SiegeFx.AddVariable( m_Weapon$.Go.Attack.ComputeTargetPos( m_Target$ ), m_Ammo$ );
+	
+			m_Weapon$.Go.Attack.ComputeAimingError;
+			float x_error$ = m_Weapon$.Go.Attack.GetAimingErrorX;
+			float y_error$ = m_Weapon$.Go.Attack.GetAimingErrorY;
+	
+			float velocity$ = m_Weapon$.Go.Physics.GetVelocity;
+	
+			float aiming_angle$ = m_Weapon$.Go.Attack.ComputeAimingAngle( m_Ammo$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), SiegeFx.GetVariable( target_pos$, m_Ammo$ ), velocity$ );
+	
+			m_Weapon$.Go.Attack.SLaunchAmmo( m_Ammo$, velocity$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), SiegeFx.GetVariable( target_pos$, m_Ammo$ ), x_error$, y_error$, m_Target$ );
+			
+			m_Weapon$.Go.Attack.AlertRangedAttack( m_Target$ );
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CleaningUpAndExiting$
+{
+	transition
+	{
+		-> Exiting$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Exiting$
+{
+	event OnEnterState$
+	{
+		if( m_Weapon$.Go != NULL )
+		{
+			MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FACE );
+	
+			// Need to make sure that the ranged weapon is still equipped if we are going to make another ammo
+			if( m_Go$.Inventory.IsRangedWeaponEquipped() )
+			{
+				if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+				{
+					m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+				}
+			}
+	
+			if (m_Weapon$.Go.Attack.GetAmmoCloneSource == goid.invalidgoid)
+			{
+				PostWorldMessage( WE_REQ_DEACTIVATE, m_Weapon$, 0 );
+			}
+		}
+		m_Job$.MarkForDeletion( true );
+	}
+}

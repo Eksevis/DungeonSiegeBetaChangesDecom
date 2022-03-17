@@ -1,0 +1,54 @@
+[generic_node_naming_key]
+{
+	// This file is for SiegeEditor use only.  It finds out what node sets are available to use
+	// and offers a "real world" name for them
+	// You MUST update this file if you add different node set textures.
+
+	dc01 = "Desert Canyon 1";
+
+	dm01 = "Dwarven Mine 1";
+	dm02 = "Dwarven Mine 2";
+	dm03 = "Dwarven Mine 3";
+
+	abc01  = "Abandoned Cave 1";
+	sr01 = "Sub River 1";
+	sr02 = "Sub River 2";
+
+	grs01 = "Grass 1";
+	grs02 = "Grass 2";
+
+	gi = "Goblin Inventor";
+
+	sn02 = "Snow 2";
+
+	xxx  = "Generic";
+
+	ic01 = "Ice Caves";
+
+	lc01 = "Lava Caverns";
+
+	cav01 = "Cave 1";
+
+	swp = "Swamp";
+
+	nt = "Northern Town Paths" ;
+
+	for01 = "Pine Forest" ;
+	for02 = "Sequoia Forest" ;
+
+
+	dgn03 = "Dungeon_Greystone 1" ;
+	dgn04 = "Dungeon_Roundstone 1" ;
+	dgn05 = "Dungeon_Greenstone 1" ;
+	dgn06 = "Dungeon_Redbrick 1" ;
+	dgn07 = "Dungeon_Redstone 1" ;
+	dgn08 = "Dungeon_GreyMarble 1" ;
+	dgn09 = "Dungeon_RedMarble 1" ;
+	dgn10 = "Dungeon_DarkBrick 1" ;
+	dgn11 = "Dungeon_Brownrock-Iced 1" ;
+	dgn12 = "Dungeon_Roundstone-Wet_1" ;
+
+
+	keep01 = "Keep Darkbrick 1";
+	keep02 = "Keep GoldTrim 1";
+}

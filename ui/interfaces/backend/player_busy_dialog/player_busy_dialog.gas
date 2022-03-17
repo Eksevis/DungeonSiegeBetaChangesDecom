@@ -1,0 +1,77 @@
+[player_busy_dialog]
+{
+	  centered = busy_dialog_box_bg;
+	  intended_resolution_height = 480;
+	  intended_resolution_width = 640;
+	  interface = true;
+	[t:dialog_box,n:busy_dialog_box_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		  consumable = true;
+		i draw_order = 1;
+		  group = busy;
+		  rect = 158,178,483,280;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:busy_dialog_box_text_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 4;
+		  group = busy;
+		  rect = 182,192,456,232;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:button,n:button_busy_okay]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 6;
+		  group = busy;
+		  rect = 282,248,349,264;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(hide_busy);
+		}
+		[t:text,n:text_busy_okay]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 8;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  group = busy;
+			  justify = center;
+			  rect = 301,249,349,264;
+			  text = "Close";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:text,n:text_player_busy]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 5;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_13p_lucinda-bright;
+		  group = busy;
+		  justify = center;
+		  rect = 188,201,450,220;
+		  text = "This player is currently busy.";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+}

@@ -1,0 +1,2229 @@
+///// DOMESTIC BLOCKING //////////////////////////////////
+/* blank template for cut&paste action
+[t:template,n:]
+{
+	specializes 		= non_interactive_blocking_blocking;
+	doc 				= "";
+
+	aspect:model 		= ;
+}
+*/
+///////////////////////CSL//////////////////////////////////
+[t:template,n:sarcophagus_cav_01]
+{
+	specializes			= non_interactive_blocking;
+	doc					= "sarcophagus_stone_ornate";
+    category_name       = "container";
+
+	common:screen_name	= "Sarcophagus";
+
+	aspect:model		= m_i_cav_sarcophagus-01;
+}
+
+[t:template,n:sarcophagus_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sarcophagus_stone with lid";
+    category_name       = "container";
+
+    common:screen_name	= "Sarcophagus";
+
+	aspect:model 		= m_i_csl_sarcophagus;
+}
+
+[t:template,n:sarcophagus_csl_03]
+{
+	specializes			= non_interactive_blocking;
+	doc					= "casket_stone with lid";
+    category_name       = "container";
+
+	common:screen_name	= "Casket";
+
+	aspect:model		= m_i_csl_sarcophagus-03;
+}
+[t:template,n:altar_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "altar_stone_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_altar-01;
+}
+
+[t:template,n:banner_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "banner_teal_white";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_banner-01;
+}
+
+[t:template,n:banner_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "banner_prpl_red";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_banner-02;
+}
+
+[t:template,n:banner_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "banner_prpl_gold";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_banner-03;
+}
+
+[t:template,n:bed_csl_royal]
+{
+	specializes		= non_interactive_blocking;
+	doc				= "bed_royal";
+    category_name   = "indoor";
+	[aspect]
+	{
+		model		= m_i_csl_royal-bed;
+		[textures] {0 = b_i_csl_royal-bed;}
+	}
+}
+
+[t:template,n:bench_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_back_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bench-01;
+}
+
+[t:template,n:bench_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_back_stone";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bench-02;
+}
+
+[t:template,n:bench_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_gld_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bench;
+}
+
+[t:template,n:bookcase_csl_broken_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bookcase_broken_vertical";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bookcase-broken-01;
+}
+
+
+[t:template,n:bookcase_csl_broken_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bookcase_broken_horizontal";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bookcase-broken-02;
+}
+
+[t:template,n:brick_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bricks_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_brick-01;
+}
+
+[t:template,n:brick_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bricks_med";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_brick-02;
+}
+
+[t:template,n:brick_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bricks_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_brick-03;
+}
+
+[t:template,n:cauldron_csl]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cauldron_bubbling";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_cauldron;
+}
+
+[t:template,n:chair_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_cherry_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_chair-01;
+}
+
+[t:template,n:chair_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_stone";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_chair-02;
+}
+
+[t:template,n:chair_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_banquet";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_chair-03;
+}
+
+[t:template,n:chair_csl_04]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_wood_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_chair-04;
+}
+
+[t:template,n:chair_csl_broken_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_broken_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_chair-broken-01;
+}
+
+[t:template,n:painting_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "painting_skeleton";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_painting-01;
+}
+
+[t:template,n:painting_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "painting_faerie";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_painting-02;
+}
+
+[t:template,n:painting_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "painting_woman";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_painting-03;
+}
+
+[t:template,n:painting_csl_broken_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "painting_broken_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_painting-broken-01;
+}
+
+[t:template,n:painting_csl_broken_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "painting_broken_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_painting-broken-02;
+}
+
+[t:template,n:pew_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_back_pew";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_pew-01;
+}
+
+[t:template,n:planter_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "planter_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_planter-01;
+}
+
+[t:template,n:planter_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "planter_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_planter-02;
+}
+
+[t:template,n:planter_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "planter_hanging";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_planter-03;
+}
+
+[t:template,n:post_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sign_post";
+    category_name       = "sign";
+
+	aspect:model 		= m_i_glb_post-01;
+}
+
+[t:template,n:sarcophagus_csl_lid]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sarcophagus_stone with lid";
+    category_name       = "container";
+
+	aspect:model 		= m_i_csl_sarcophagus-lid;
+}
+
+[t:template,n:sarcophagus_csl_open]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sarcophagus_stone_open";
+    category_name       = "container";
+
+	aspect:model 		= m_i_csl_sarcophagus-open;
+}
+
+[t:template,n:shield_csl_wall_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "shield_wall_with swords";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_shield-wall-01;
+}
+
+[t:template,n:shield_csl_wall_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "shield_wall with axes";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_shield-wall-02;
+}
+
+[t:template,n:sign_csl_castle_ehb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_castle ehb";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_csl_sign-castle-ehb;
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_csl_castle_ehb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_castle ehb_02";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_csl_sign-castle-ehb-02;
+		[textures] { 0 = b_i_csl_sign-castle-ehb-02; }
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sign_direction plate";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_glb_sign-01;
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override= true;
+		megamap_orient	= true;
+	}
+}
+
+
+[t:template,n:stand_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "stand_stone_grey";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_stand-01;
+}
+
+[t:template,n:stand_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "stand_stone_green";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_stand-02;
+}
+
+[t:template,n:stand_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "stand_metal_brass";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_stand-03;
+}
+
+[t:template,n:statue_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "statue_globe_marble";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_statue-01;
+}
+
+[t:template,n:statue_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "statue_eagle";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_statue-02;
+}
+
+[t:template,n:statue_csl_broken_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "statue_globe_broken";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_statue-broken-01;
+}
+
+[t:template,n:statue_csl_broken_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "statue_chalice_broken";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_statue-broken-03;
+}
+
+[t:template,n:table_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_long_wood_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_table-01;
+}
+
+[t:template,n:table_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_long_logs";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_table-02;
+}
+
+[t:template,n:table_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_long_banquet";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_table-03;
+}
+
+[t:template,n:table_csl_broken_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_long_broken";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_table-broken-02;
+}
+
+[t:template,n:tapestry_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tapestry_cathedral_outside";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_tapestry-01;
+}
+
+[t:template,n:tapestry_csl_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tapestry_cathedral_inside";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_tapestry-02;
+}
+
+[t:template,n:tapestry_csl_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tapestry_blue_red";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_tapestry-03;
+}
+
+[t:template,n:tapestry_csl_ripped_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tapestry_ripped_cathedral";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_tapestry-ripped-01;
+}
+
+[t:template,n:tapestry_csl_ripped_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tapestry_ripped_yllw_white";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_tapestry-ripped-02;
+}
+
+[t:template,n:throne_csl]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "throne_gld_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_throne;
+}
+
+[t:template,n:wallfixture_csl_wood]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "emblem_wood";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_woodcarving;
+}
+
+
+///////////////// DES ////////////////////////////////////////////
+
+[t:template,n:basket_des_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "basket_grain";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_basket-01;
+}
+
+[t:template,n:basket_des_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "basket_beads";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_basket-02;
+}
+
+[t:template,n:bench_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_logs";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bench-03;
+	aspect:textures:0	= b_i_glb_barrier;
+}
+
+[t:template,n:bench_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_log_rough";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_log-07;
+	aspect:textures:0	= b_i_glb_barrier;
+}
+
+
+[t:template,n:sign_des_dragon]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_dragons rath";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_des_sign-dragon;
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_des_dragon_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_dragons rath_02";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_des_sign-dragon-02;
+		[textures] { 0 = b_i_des_sign-dragon-02; }
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+
+[t:template,n:stool_des_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "stool_log_straight";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_stool-02;
+}
+
+[t:template,n:wood_des_pile]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "des_woodpile";
+    category_name       = "misc";
+
+	aspect:model 		= m_i_des_wood-pile;
+}
+
+/////////////////////////GLB//////////////////////////
+
+[t:template,n:basket_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "basket_round_with_lid";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_basket-02;
+}
+
+[t:template,n:bearhead_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bearhead";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bearhead;
+}
+
+[t:template,n:bed_glb_fort_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bed_cot";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bed-fort-01;
+}
+
+[t:template,n:bucket_ice]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bucket_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_bucket;
+	aspect:textures:0	= b_i_ice_bucket;
+}
+
+[t:template,n:cart_glb_caravan_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cart_caravan_red";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_cart-caravan-01;
+}
+
+[t:template,n:cart_glb_caravan_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cart_caravan_violet";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_cart-caravan-01;
+    aspect:textures:0	= b_i_glb_cart-caravan-02;
+}
+
+[t:template,n:cloth_glb_bolt_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cloth_bolts_vertical";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_cloth-bolt-01;
+}
+
+[t:template,n:cloth_glb_bolt_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cloth_bolts_horizontal_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_cloth-bolt-02;
+}
+
+[t:template,n:cloth_glb_bolt_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cloth_bolts_horizontal_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_cloth-bolt-03;
+}
+
+
+[t:template,n:locker_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "wardrobe_rustic";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_locker-01;
+}
+
+[t:template,n:moosehead_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "moosehead";
+    category_name       = "indoor";
+
+
+	aspect:model 		= m_i_glb_moosehead;
+}
+
+[t:template,n:picture_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "picture_town";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_picture-01;
+}
+
+[t:template,n:picture_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "picture_dragon";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_picture-02;
+}
+
+[t:template,n:picture_glb_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "picture_face";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_picture-03;
+}
+
+[t:template,n:rack_glb_coat]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_coat";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rack-coat;
+}
+
+[t:template,n:rack_glb_cutlery]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_cutlery";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rack-cutlery;
+}
+
+[t:template,n:rack_glb_horseshoe]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_horseshoe";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rack-horseshoe;
+}
+
+[t:template,n:shelf_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "shelf_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_shelf-01;
+}
+
+[t:template,n:shelf_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "shelf_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_shelf-02;
+}
+
+[t:template,n:shelf_glb_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "shelf_corner";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_shelf-03;
+}
+
+[t:template,n:shelf_glb_04]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "shelves_wide";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_shelf-large;
+}
+
+[t:template,n:shelf_glb_05]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "shelves_tall";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_shelf-small;
+}
+
+[t:template,n:shelf_glb_06]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bookshelf_weathered";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_cav_bookshelf-02;
+}
+
+[t:template,n:sign_glb_inn_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "inn_etans roost";
+    	category_name       = "sign";
+
+	aspect:model 		= m_i_glb_sign-inn-01;
+}
+
+[t:template,n:sign_glb_blacksmith_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "blcksmth_blck hammer forge";
+    	category_name       = "sign";
+
+	aspect:model 		= m_i_glb_sign-blksmith-01;
+}
+
+[t:template,n:sign_glb_barn_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "barn_jack and mare";
+    	category_name       = "sign";
+
+	aspect:model 		= m_i_glb_sign-barn-01;
+}
+
+[t:template,n:sign_glb_fortress_kroth]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_fortress kroth";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_glb_sign-fortress-kroth;
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_glb_fortress_kroth_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_fortress kroth_02";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_glb_sign-fortress-kroth-02;
+		[textures] { 0 = b_i_glb_sign-fortress-kroth-02; }
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_glb_wesrins_cross]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sign_glb_wesrins_cross";
+    	category_name       = "sign";
+
+	aspect:model 		= m_i_glb_sign-wesrins-cross;
+}
+
+[t:template,n:sign_glb_hallskull]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "hall_of_skulls";
+    	category_name       = "sign";
+
+	aspect:model 		= m_i_glb_sign-hallskulls;
+}
+
+[t:template,n:stoker_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "fireplace stoker";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_stoker;
+}
+
+[t:template,n:stool_glb_04]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "stool_log";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_stool-03;
+}
+
+[t:template,n:supplies_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "barrel_with_crates";
+    category_name       = "container";
+
+	aspect:model 		= m_i_glb_supplies-01;
+}
+
+[t:template,n:supplies_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "barrel_with_sacks";
+    category_name       = "container";
+
+	aspect:model 		= m_i_glb_supplies-02;
+}
+
+[t:template,n:supplies_glb_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "barrel_with_cloth";
+    category_name       = "container";
+
+	aspect:model 		= m_i_glb_supplies-03;
+}
+
+[t:template,n:sign_ice_glacern]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_glacern";
+    	category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_ice_sign-glacern;
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_ice_glacern_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_glacern_02";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_ice_sign-glacern-02;
+		[textures] {0 = b_i_ice_sign-glacern-02; }
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_ice_inn_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "glacern_inn";
+    	category_name       = "sign";
+
+	aspect:model 		= m_i_ice_sign-inn-01;
+}
+
+[t:template,n:sign_ice_mountainman]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "Jeriahs_trading_post";
+    	category_name       = "sign";
+
+	aspect:model 		= m_i_ice_sign-mountainman;
+}
+
+[t:template,n:statue_ice_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "statue_ice";
+    	category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_statue-01;
+}
+
+[t:template,n:trough_ice_apples]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_apples_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-apples;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:trough_ice_empty]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_empty_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-empty;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:trough_ice_fish]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_fish_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-fish;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:trough_ice_flowers]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_flowers_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-flowers;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:trough_ice_grain]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_grain_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-grain;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:trough_ice_hay]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_hay_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-hay;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:trough_ice_horseshoes]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_horseshoes_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-horseshoes;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:trough_ice_water]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_water_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-water;
+	aspect:textures:0	= b_i_ice_troughs;
+}
+
+[t:template,n:well_ice]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "well_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_well;
+	aspect:textures:0	= b_i_ice_well;
+}
+
+[t:template,n:wood_ice_piece]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "board_ice";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_wood-piece;
+	aspect:textures:0	= b_i_ice_wood-piece;
+}
+
+[t:template,n:wood_ice_pile]
+{
+	specializes 		= non_interactive_blocking;
+	doc					= "ice_woodpile";
+    category_name       = "misc";
+
+	aspect:model 		= m_i_glb_wood-pile;
+	aspect:textures:0	= b_i_ice_wood-pile;
+}
+
+[t:template,n:bell_glb_chapel]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chapel_bell";
+    category_name       = "node";
+
+	aspect:model 		= m_i_glb_bell-chapel;
+}
+
+
+///GRS//////////////////////////////////////////////////////
+
+[t:template,n:board_grs_floating_01]
+{
+	specializes		= non_interactive_blocking;
+	doc				= "board_floating";
+    category_name   = "outdoor";
+
+	aspect:model		= m_i_glb_board-01;
+	aspect:textures:0 	= b_i_grs_board;
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=board-01-float; }
+			}
+		}
+	}
+}
+
+[t:template,n:bench_grs_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_back_cherry";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bench-01;
+}
+
+[t:template,n:bench_grs_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bench_cherry";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bench-02;
+}
+
+[t:template,n:cart_grs_02]
+{
+    specializes			= non_interactive_blocking;
+    doc 				= "cart_covered";
+    category_name       = "outdoor";
+
+    aspect:model 		= m_i_grs_cart-02;
+}
+
+[t:template,n:cart_grs_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cart_uncovered";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_grs_cart-03;
+}
+
+[t:template,n:chair_grs_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_oak_solid";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_chair-01;
+}
+
+[t:template,n:chair_grs_02]
+{
+	specializes 		= non_interactive_blocking;
+    doc 				= "chair_oak_slat";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_chair-02;
+}
+
+[t:template,n:chair_grs_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_cherry_solid";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_chair-03;
+}
+
+[t:template,n:chair_grs_04]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_cherry_slats";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_chair-04;
+}
+
+[t:template,n:fireplace_grs]
+{
+	specializes			=	non_interactive_blocking;
+	doc					=	"fireplace grate";
+    category_name       =   "indoor";
+
+	aspect:model		= m_i_grs_fireplace;
+}
+
+[t:template,n:fountain_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "fountain";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_fountain;
+}
+
+[t:template,n:hay_bale_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "hay bale";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_grs_hay-bale;
+}
+
+[t:template,n:hearth_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "fireplace screen";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_grs_hearth;
+}
+
+[t:template,n:hidestand_grs]
+{
+    specializes 		= non_interactive_blocking;
+	doc 				= "hidestand";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_grs_hidestand;
+}
+
+[t:template,n:lumber_grs_burnt]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "board_burnt";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_grs_lumber-burnt;
+}
+
+[t:template,n:plough_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "plough";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_plough;
+}
+
+[t:template,n:pot_grs_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "pot_pottery_sm";
+    category_name       = "container";
+
+	aspect:model 		= m_i_grs_pot-01;
+}
+
+[t:template,n:pot_grs_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "pot_pottery_lg";
+    category_name       = "container";
+
+	aspect:model 		= m_i_grs_pot-02;
+}
+
+[t:template,n:sawhorse_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sawhorse";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_sawhorse;
+}
+
+[t:template,n:sign_grs_blacksmith]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sign_blacksmith";
+    category_name       = "sign";
+
+	aspect:model 		= m_i_glb_sign-blacksmith;
+}
+
+[t:template,n:sign_grs_tavern]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sign_tavern";
+    category_name       = "sign";
+
+	aspect:model 		= m_i_glb_sign-tavern;
+}
+
+[t:template,n:sign_grs_town]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sign_stonebridge";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_grs_sign-town;
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_grs_town_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sign_stonebridge_02";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_grs_sign-town-02;
+		[textures] { 0 = b_i_grs_sign-town-02; }
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:table_grs_round]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_round_oak";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_table-round;
+}
+
+[t:template,n:trough_grs_apples]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_apples";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-apples;
+}
+
+[t:template,n:trough_grs_empty]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_empty";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-empty;
+}
+
+[t:template,n:trough_grs_fish]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_fish";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-fish;
+}
+
+[t:template,n:trough_grs_flowers]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_flowers";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-flowers;
+}
+
+[t:template,n:trough_grs_grain]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_grain";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-grain;
+}
+
+[t:template,n:trough_grs_hay]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_hay";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-hay;
+}
+
+[t:template,n:trough_grs_horseshoes]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_horseshoes";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-horseshoes;
+}
+
+[t:template,n:trough_grs_water]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "trough_water";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_trough-water;
+}
+
+[t:template,n:wagon_wheel_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "wagon wheel";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_wheel-wagon;
+}
+
+[t:template,n:well_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "well";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_well;
+}
+
+
+[t:template,n:wheelbarrow_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cart_wheelbarrow";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_grs_wheelbarrow;
+}
+
+[t:template,n:wood_grs_pile]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "grs_woodpile";
+    category_name       = "misc";
+
+	aspect:model 		= m_i_glb_wood-pile;
+}
+
+
+[t:template,n:wood_grs_piece]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "fireplace firewood";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_wood-piece;
+	aspect:textures:0	= b_i_grs_board;
+}
+
+[t:template,n:woodbox_grs]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "fireplace woodbox";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_grs_woodbox;
+}
+
+
+
+///////////////////////HOME/MERCHANT/////////////////////
+////////////////////GLB///////////////////////////////////
+
+
+
+
+[t:template,n:anvil_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "blcksmth_anvil";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_anvil;
+	aspect:is_collidable= true;
+}
+
+[t:template,n:bed_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bed_rustic";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bed-01;
+}
+
+[t:template,n:bed_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bed_logs";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bed-02;
+}
+
+[t:template,n:bed_glb_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bed_with_posts";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bed-03;
+}
+
+[t:template,n:bed_glb_04]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bed_with_fur";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bed-04;
+}
+
+[t:template,n:bed_glb_hammock]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bed_hammock";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_hammock-01;
+}
+
+[t:template,n:bellow_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "blcksmth_bellows";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_bellows;
+}
+
+[t:template,n:bookcase_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bookcase_with_books";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bookcase-01;
+}
+
+[t:template,n:bookcase_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "bookcase_empty";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bookcase-02;
+}
+
+[t:template,n:broom_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "broom";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_broom;
+}
+
+[t:template,n:cart_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cart_farm";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_cart;
+}
+
+[t:template,n:chair_glb_05]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_wood_hex_back";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_chair-05;
+}
+
+[t:template,n:chair_glb_06]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "chair_wood_diamond_back";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_chair-06;
+}
+
+[t:template,n:counter_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "counter";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_counter;
+}
+
+[t:template,n:furnace_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "blcksmth_chimney";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_furnace;
+}
+
+[t:template,n:mill_glb_vanes]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "mill_glb_vanes";
+    category_name       = "node";
+
+    [aspect] { does_block_camera=true; }
+
+	aspect:model 		= m_i_grs_sbridge-millblades;
+
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			[chore_default]
+			{
+				skrit=rotatex?rpm=10;
+			}
+		}
+	}
+
+}
+
+[t:template,n:mill_glb_gear_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "mill_glb_gear_01";
+    category_name       = "node";
+
+    [body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			[chore_default]
+			{
+				skrit=rotatey?rpm=8;
+			}
+		}
+	}
+
+	aspect:model 		= m_i_grs_sbridge-gear1;
+}
+
+[t:template,n:mill_glb_gear_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "mill_glb_gear_02";
+    category_name       = "node";
+
+    [body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			[chore_default]
+			{
+				skrit=rotatey?rpm=-20;
+			}
+		}
+	}
+
+	aspect:model 		= m_i_grs_sbridge-gear2;
+}
+
+[t:template,n:rack_glb_meat]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_meat";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rack-meat;
+}
+
+[t:template,n:rack_glb_wall_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_vertical";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rack-wall-01;
+}
+
+[t:template,n:rack_glb_wall_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_horizontal";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rack-wall-02;
+}
+
+[t:template,n:rack_glb_wall_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_y";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rack-wall-03;
+}
+
+[t:template,n:sack_glb_burlap]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sack_burlap";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_sack;
+	aspect:textures:0	= b_i_glb_burlap;
+}
+
+[t:template,n:sack_glb_flour_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sack_flour_with hole";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_sack-flour-01;
+}
+
+[t:template,n:sack_glb_flour_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sack_flour_overflowing";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_sack-flour-02;
+}
+
+[t:template,n:sacks_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sacks_grain_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_sacks-01;
+}
+
+[t:template,n:sacks_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sacks_grain_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_sacks-02;
+}
+
+[t:template,n:sacks_glb_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "sacks_burlap_pile";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_sacks-03;
+}
+
+[t:template,n:staghead_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "staghead";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_staghead;
+}
+
+[t:template,n:stand_glb_anvil]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "blcksmth_stump_anvil";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_stand-anvil;
+	aspect:scale_base	= 0.85;
+	aspect:is_collidable= true;
+}
+
+[t:template,n:table_glb_endtable]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_square_cherry_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_table-end;
+}
+
+[t:template,n:table_glb_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_long_oak";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_table-01;
+}
+
+[t:template,n:table_glb_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_long_rustic";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_table-02;
+}
+
+[t:template,n:table_glb_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_round_weathered";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_table-03;
+}
+
+[t:template,n:tent_glb_merchant]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tent_merchant";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_tent-merchant;
+}
+
+
+
+[t:template,n:tub_glb_blacksmith]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "blcksmth_tub";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_tub-blacksmith;
+}
+
+[t:template,n:washbin_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "washbin";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_washbin;
+}
+
+[t:template,n:washboard_glb]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "washboard";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_washboard;
+}
+
+[t:template,n:wood_glb_pile_burnt]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "grs_woodpile_burnt";
+    category_name       = "misc";
+
+	aspect:model 		= m_i_glb_woodpile-burnt;
+}
+
+[t:template,n:wood_glb_pile_fireplace]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "fireplace_logs_stacked";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_woodpile-02;
+}
+
+
+///////////////////////////CAV///////////////////////////
+
+[t:template,n:beam_cav_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "beam_thick";
+    	category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_beam-02;
+}
+
+[t:template,n:column_gargoyle]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "column_gargoyle";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_cav_gargoyle-column;
+}
+
+[t:template,n:debris_cav_lg_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "debris_rock_lg";
+    	category_name       = "rocks";
+
+	aspect:model 		= m_i_cav_mine-debris-large-01;
+}
+
+[t:template,n:debris_cav_med_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "debris_rock_med";
+    	category_name       = "rocks";
+
+	aspect:model 		= m_i_cav_mine-debris-med-01;
+}
+
+[t:template,n:debris_cav_sm_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "debris_rock_sm";
+    	category_name       = "rocks";
+
+	aspect:model 		= m_i_cav_mine-debris-small-01;
+}
+
+[t:template,n:monument_cav_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "monument_marble";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_monument-01;
+}
+
+[t:template,n:monument_cav_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "monument_evil_01";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_monument-02;
+}
+
+[t:template,n:monument_cav_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "monument_evil_02";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_monument-03;
+}
+
+[t:template,n:monument_cav_04]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "monument_evil_03";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_monument-04;
+}
+
+[t:template,n:rack_cav_equip]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "rack_equip";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_cav_rack-equip;
+}
+
+[t:template,n:sign_cav_glitterdelve]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_glitterdelve";
+    	category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_cav_sign-glitterdelve;
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:sign_cav_glitterdelve_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "directional_glitterdelve_02";
+    category_name       = "sign";
+
+	[aspect]
+	{
+		model 			= m_i_cav_sign-glitterdelve-02;
+		[textures] 	{0 = b_i_cav_sign-glitterdelve-02; }
+		megamap_icon	= b_gui_ig_mnu_arrow;
+		megamap_override	= true;
+		megamap_orient	= true;
+	}
+}
+[t:template,n:statue_cav_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "statue_angel_lg";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_statue-01;
+}
+
+[t:template,n:statue_cav_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "statue_robed_sm";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_statue-02;
+}
+
+[t:template,n:table_cav_work]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "table_long_scratched";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_cav_table-work;
+}
+
+[t:template,n:cart_cav_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cart_mines";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_cart;
+}
+
+[t:template,n:cart_cav_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "cart_mines_ore";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_cart-ore;
+}
+
+[t:template,n:tombstone_cav_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_ornate_01";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-01;
+}
+
+[t:template,n:tombstone_cav_02]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_ornate_02";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-02;
+}
+
+[t:template,n:tombstone_cav_03]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_ornate_03";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-03;
+}
+
+[t:template,n:tombstone_cav_04]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_arched";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-04;
+}
+
+[t:template,n:tombstone_cav_05]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_monument";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-05;
+}
+
+[t:template,n:tombstone_cav_06]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_star";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-06;
+}
+
+[t:template,n:tombstone_cav_07]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_evil_01";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-07;
+}
+
+[t:template,n:tombstone_cav_08]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_evil_02";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-08;
+}
+
+[t:template,n:tombstone_cav_09]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_evil_03";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-09;
+}
+
+[t:template,n:tombstone_cav_10]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_evil_04";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-10;
+}
+
+[t:template,n:tombstone_cav_11]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_ancient_01";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-11;
+}
+
+[t:template,n:tombstone_cav_12]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_ancient_02";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-12;
+}
+
+[t:template,n:tombstone_cav_13]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_ancient_03";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-13;
+}
+
+[t:template,n:tombstone_cav_14]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "tombstone_ancient_04";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tombstone-14;
+}
+
+
+

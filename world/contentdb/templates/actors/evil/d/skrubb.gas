@@ -1,0 +1,185 @@
+[t:template,n:base_skrubb]
+{
+	category_name = "evil_d";
+	doc = "skrubb";
+	specializes = actor_evil;
+
+	[aspect]
+	{
+		model = m_c_edm_sb_pos_1;
+		draw_shadow = FALSE;
+	}
+
+	[body]
+	{
+		avg_move_velocity = 1;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			initial_chore = chore_none;
+			chore_prefix = a_c_edm_sb_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					slep = ds;
+					wake = rv;
+				}
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at-02; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=rv; }
+			}
+		}
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_skrubb_spit; }
+	}
+	mind:jat_die = world\ai\jobs\actors\evil\job_die_delete.skrit;
+}
+
+[t:template,n:skrubb]
+{
+	category_name = "evil_d";
+	doc = "skrubb";
+	specializes = base_skrubb;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  15, 0;
+			intelligence =  3, 0;
+			dexterity =  2, 0;
+		}
+	}
+	[aspect]
+	{
+		draw_shadow = false;
+		experience_value = 100;
+		life = 30;
+		max_life = 30;
+		mana = 10;
+		max_mana = 10;
+		model = m_c_edm_sb_pos_1;
+	}
+	[attack]
+	{
+		attack_range = 3;
+		damage_max = 1;
+		damage_min = 1;
+		reload_delay = 1;
+	}
+    [defend] { defense=21; }
+	[inventory]
+	{
+	}
+	[common] { screen_name="Skrubb"; }
+	[mind]
+	{
+		actor_auto_fidgets = false;
+		movement_orders = mo_hold;
+		actor_auto_uses_active_spells = true;
+		melee_engage_range = 10;
+		personal_space_range = 4.7;
+		on_enemy_entered_ocz_attack = true;
+		ranged_engage_range = 10.0;
+		sight_range = 10.0;
+		sight_origin_height	= 2;
+	}
+}
+
+[t:template,n:skrubb_small]
+{
+	category_name = "evil_d";
+	doc = "skrubb_small";
+	specializes = base_skrubb;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  6, 0;
+			intelligence =  2, 0;
+			dexterity =  2, 0;
+		}
+	}
+	[aspect]
+	{
+		draw_shadow = false;
+		experience_value = 40;
+		life = 25;
+		max_life = 25;
+		mana = 10;
+		max_mana = 10;
+		model = m_c_edm_sb_pos_1;
+		[textures] {0 = b_c_edm_sb-02;}
+		scale_base = 0.20;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 1;
+		damage_min = 1;
+		reload_delay = 1;
+	}
+    [defend] { defense=26; }
+	[inventory]
+	{
+	}
+	[common] { screen_name="Black Skrubb"; }
+	[mind]
+	{
+		actor_auto_fidgets = false;
+		movement_orders = mo_hold;
+		actor_auto_uses_active_spells = true;
+		melee_engage_range = 10;
+		personal_space_range = 1.2;
+		on_enemy_entered_ocz_attack = true;
+		ranged_engage_range = 10.0;
+		sight_range = 10.0;
+		sight_origin_height	= 2;
+	}
+}

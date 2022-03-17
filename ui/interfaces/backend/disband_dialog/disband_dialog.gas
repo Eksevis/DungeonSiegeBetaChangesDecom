@@ -1,0 +1,136 @@
+[disband_dialog]
+{
+	interface = true;
+	modal = true;
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+	center = dialog_box_main;
+
+	[t:button,n:button_disband_no]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 7;
+		rect = 341,272,441,288;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(exit_disband_dialog);
+		}
+
+		[t:text,n:text_no]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 10;
+			font_color = -1;
+			font_size = 0;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			justify = center;
+			rect = 358,272,425,287;
+			text = "No";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_disband_yes]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 6;
+		rect = 221,272,321,288;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		
+		[messages]
+		{
+			onbuttonpress = notify(disband_confirm);
+		}
+
+		[t:text,n:text_yes]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 9;
+			font_color = -1;
+			font_size = 0;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			justify = center;
+			rect = 236,272,305,288;
+			text = "Yes";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:dialog_box,n:dialog_box_disband_members]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 11;
+		rect = 223,174,434,193;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:dialog_box_main]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 197,164,462,312;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:text_disband_members]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 12;
+		font_color = -1;
+		font_size = 0;
+		font_type = b_gui_fnt_14p_lucinda-bright;		
+		justify = center;
+		rect = 254,176,401,194;
+		text = "Disband Members?";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:text_line_1]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 3;
+		font_color = -1;
+		font_size = 0;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		justify = center;
+		rect = 216,206,443,223;
+		text = "Are you sure you wish to disband";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:text_line_2]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 4;
+		font_color = -1;
+		font_size = 0;
+		font_type = b_gui_fnt_14p_lucinda-bright;		
+		justify = center;
+		rect = 247,225,415,241;
+		text = "the selected member(s)?";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}	
+}

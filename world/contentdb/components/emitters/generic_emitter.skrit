@@ -1,0 +1,150 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  generic_emitter.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property bool	start_on_creation$	= false		doc = "Start Emitter when it enters the world, otherwise must be controlled by activate/deactivate.";
+property float  rep_freq_min$		= -1.0		doc = "minimum time before repeating the effect, must be positive or effect won't play multiple times, be careful that the effect isn't a continuos effect if you use this.";
+property float  rep_freq_max$		= -1.0		doc = "maximum time before repeating the effect, must be positive or effect won't play multiple times";
+
+property float	time_scale$			= 1			doc = "Time scalar - factor to scale time by, won't work for all effects.";
+property float	scale$		  		= 1			doc = "Scale factor - factor to scale size of effect by, won't work for all effects.";
+
+property string other_effect$		= ""		doc = "put any effect in here to use it instead of a selected effect.";
+property string other_params$		= ""		doc = "put any aditional params in here, will not work unless effect is made to handle this.";
+property bool	geyser$				= false		doc = "use a geyser effect";
+property bool	geyser_drizzle$		= false		doc = "use a constant geyser effect";
+property bool	water_splash$		= false		doc = "use a water splash effect";
+property bool	water_wave$			= false		doc = "use a water wave effect";
+property bool	ice_explosion$		= false		doc = "use an ice explosion effect";
+property bool	dust_explosion$		= false		doc = "use a dust explosion effect";
+property bool	dust_explosion_small$	= false	doc = "use a small dust explosion effect";
+property bool	generic_explosion$	= false		doc = "use a generic explosion effect";
+property bool	coil_explosion$		= false		doc = "use the tessla coil's explosion effect";
+property bool	barrel_explosion$	= false		doc = "use the barrel explosion effect";
+
+owner = GoSkritComponent;
+int active_script_id$ = 0;
+string params$;
+string effect$;
+
+
+startup state Start$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_ENTERED_WORLD ) 
+		{
+			params$ = "[";
+ 			
+			StringTool.Appendf( params$, "ts(%g)", time_scale$ );
+			StringTool.Appendf( params$, "scale(%g)]", scale$ );
+			
+			if( other_params$ != "" )
+			{
+				StringTool.Append( params$, other_params$ );
+			}
+			
+			effect$ = "";
+			// choose the effect.
+			
+			if( other_effect$ != "" ) {
+				effect$ = other_effect$;
+			} else if( geyser$ ) {
+				effect$ = "geyser";
+			} else if( geyser_drizzle$ ) {
+				effect$ = "geyser_drizzle";
+			} else if( water_splash$ ) {
+				effect$ = "water_splash";
+			} else if( water_wave$ ) {
+				effect$ = "water_wave";
+			} else if( ice_explosion$ ) {
+				effect$ = "ice_explosion";
+			} else if( dust_explosion$ ) {
+				effect$ = "dust_explosion";
+			} else if( dust_explosion_small$ ) {
+				effect$ = "dust_explosion_small";
+			} else if( generic_explosion$ ) {
+				effect$ = "generic_explosion";
+			} else if( coil_explosion$ ) {
+				effect$ = "coil_explosion";
+			} else if( barrel_explosion$ ) {
+				effect$ = "barrel_explosion";
+			}
+			
+			if( effect$ == "" )
+			{
+				SetState Finished$;
+				return;
+			}
+			
+			if (start_on_creation$ == true)
+			{
+				active_script_id$ =	SiegeFx.RunScript( effect$, owner.Goid, owner.Goid, params$, owner.Goid, WE_ENTERED_WORLD);
+				SetState Active$;
+				return;		
+			}
+			SetState Idle$;
+		}
+	}
+}
+
+state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		// Only start the effect if there isn't one already going
+		if( (active_script_id$ == 0) && ( e$ == WE_REQ_ACTIVATE ) )
+		{
+			// Run the generic script
+			active_script_id$ =	SiegeFx.RunScript( effect$, owner.Goid, owner.Goid, params$, owner.Goid, WE_REQ_ACTIVATE );
+		
+			SetState Active$;
+		}
+	}
+}
+
+state Active$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		// Only start the effect if there isn't one already going
+		if(e$ == WE_REQ_DEACTIVATE)
+		{
+			if (active_script_id$ != 0)
+			{
+				// Let the effect know that it should finish what it is doing and not spawn anything else
+				SiegeFx.FinishScript( active_script_id$ );
+
+				// Clear the script id
+				active_script_id$ = 0;
+			}
+			SetState Idle$;
+		}
+	}
+	
+	trigger OnTimer$( 1 )
+	{
+		active_script_id$ =	SiegeFx.RunScript( effect$, owner.Goid, owner.Goid, params$, owner.Goid, WE_UNKNOWN);
+		SetState Active$;
+	}
+	
+	event OnEnterState$
+	{
+		if( ( rep_freq_min$ > 0.0 ) && ( rep_freq_max$ > 0.0 ))
+		{
+			float random_delay$ = Math.RandomFloat( rep_freq_min$, rep_freq_max$ );
+			this.CreateTimer( 1, random_delay$ );
+		}
+	}
+}
+
+state Finished$
+{
+}

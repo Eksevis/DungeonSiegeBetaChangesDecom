@@ -1,0 +1,157 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  water_effects.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property bool	_server_only$					= false;
+
+property float 	effect_scale$  					= 1				doc = "scalar multiply for the effect";
+property float	min_depth$						= 0.05			doc = "minimum water depth before effect is played";
+
+property bool	use_position_difference_scalar$	= true			doc = "maintain the previous position and scale effect based on the distance between";
+property bool	use_added_scale_while_fighting$ = true			doc = "Increase effect size when fighting";
+
+property float	battle_scale$					= 1				doc = "minimum scale when fightning";
+property float	max_scale$						= 1.25			doc = "maximum scale";
+property float	min_draw_scale$					= 0.1			doc = "minimum scale for the effect to draw.";
+
+property float  check_freq_min$					= 1				doc = "minimum time before checking if go is in water yet";
+property float  check_freq_max$					= 1				doc = "maximum time before checking if go is in water yet";
+                                        		
+property float  ripple_freq_min$				= .2			doc = "minimum time before checking if go is in water still";
+property float  ripple_freq_max$				= .2			doc = "maximum time before checking if go is in water still";
+                                        		
+property string	shallow_water_effect$			= "water_waves"	doc = "Effect script to call for shallow water effect";
+property string shallow_water_params$			= ""   			doc = "Parameters to send to shallow water script";
+                                        		
+property string	under_water_effect$				= "water_waves"	doc = "Effect script to call for under water effect";
+property string under_water_params$				= ""   			doc = "Parameters to send to under water script";
+                                        		
+property string	deep_water_effect$				= "water_waves"	doc = "Effect script to call for deep water effect";
+property string deep_water_params$				= ""   			doc = "Parameters to send to deep water script";
+                                        		
+property string	lava_effect$					= "lava_waves"	doc = "Effect script to call for lava effect";
+property string lava_params$					= ""   			doc = "Parameters to send to lava script";
+
+owner = GoSkritComponent;
+
+float current_velocity$;
+
+float prev_time$;
+float current_time$;
+
+int prev_pos$;
+int current_pos$;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Startup$
+{
+	transition -> SetPositions$ : OnGoHandleMessage( WE_ENTERED_WORLD );
+}
+
+state SetPositions$
+{
+	event OnEnterState$
+	{
+		prev_time$ = WorldTime.Time;
+		prev_pos$ = SiegeFx.AddVariable( owner.Go.placement.position, owner.goid );
+		current_pos$ = SiegeFx.AddVariable( owner.Go.placement.position, owner.goid );
+		SetState Loop$;
+	}
+}
+
+state Loop$
+{
+	trigger OnTimer$( 1 )
+	{
+		SetState Loop$;
+	}
+	event OnEnterState$
+	{
+		SiegeFx.SetVariable(current_pos$, owner.Go.placement.position, owner.goid );
+		
+		float height$ = owner.Go.placement.position.Pos.y;
+		current_time$ = WorldTime.Time;
+		
+		float time_elapsed$ = current_time$ - prev_time$;
+		
+		SiegePos old_pos$ = SiegeFx.GetVariable( prev_pos$, owner.goid );
+		SiegePos new_pos$ = SiegeFx.GetVariable( current_pos$, owner.goid );
+		
+		float distance_dif$ = 0;
+		
+		if ( old_pos$.node.IsNodeInAnyFrustum && new_pos$.node.IsNodeInAnyFrustum)
+		{
+			distance_dif$ = GetSiegeDistance(old_pos$, new_pos$ );
+		}
+		SiegeFx.SetVariable(prev_pos$, SiegeFx.GetVariable( current_pos$, owner.goid ), owner.goid );
+		
+		prev_time$ = current_time$;
+			
+		if ( (owner.Go.Placement.LiquidHeight > min_depth$) && ( time_elapsed$ > 0 ) )
+		{
+			if ( owner.Go.hasfollower )
+			{
+				current_velocity$ = owner.Go.follower.CurrentVelocity;
+			} else {
+				current_velocity$ = distance_dif$ / time_elapsed$;
+			}
+			
+			if ( owner.Go.Placement.LiquidHeight > ( height$ - owner.Go.Aspect.BoundingSphereRadius) )
+			{
+				string params$	= "";
+				float scale$ = 1.0;
+				
+				
+				if (use_position_difference_scalar$)
+				{
+					scale$ *= 0.2 * current_velocity$; 
+				}
+				
+				if (use_added_scale_while_fighting$ && owner.Go.hasmind)
+				{
+					Job newAction$ = owner.Go.Mind.GetFrontJob( JQ_ACTION );
+					if( newAction$ != NULL )
+					{
+						if( newAction$.IsOffensive )
+						{
+							scale$ = Math.MaxFloat( battle_scale$, scale$);
+						}
+					}
+				}
+				scale$ = Math.MinFloat( scale$, max_scale$);
+				scale$ *= effect_scale$;
+				
+				if (scale$ > min_draw_scale$)
+				{
+					StringTool.AppendF( params$, "[%g]", scale$ );
+					StringTool.AppendF( params$, "[%g]", owner.Go.Placement.LiquidHeight );
+					
+					eLogicalNodeFlags flags$ = owner.Go.Placement.LiquidFlags;
+					if ( !TestBits( flags$, LF_SHALLOW_WATER ) ) {
+						StringTool.Append( params$, shallow_water_params$ );
+						SiegeFx.RunScript( shallow_water_effect$, owner.Goid, owner.Goid, params$, owner.Goid, WE_UNKNOWN );
+					} else if ( !TestBits( flags$, LF_LAVA ) ) {
+						StringTool.Append( params$, lava_params$ );
+						SiegeFx.RunScript( lava_effect$, owner.Goid, owner.Goid, params$, owner.Goid, WE_UNKNOWN );
+					} else if ( !TestBits( flags$, LF_DEEP_WATER ) ) {
+						StringTool.Append( params$, deep_water_params$ );
+						SiegeFx.RunScript( deep_water_effect$, owner.Goid, owner.Goid, params$, owner.Goid, WE_UNKNOWN );
+					}
+				}
+			}
+			float random_delay$ = Math.RandomFloat( ripple_freq_min$, ripple_freq_max$ );
+			this.CreateTimer( 1, random_delay$ );
+		} else { 
+			float random_delay$ = Math.RandomFloat( check_freq_min$, check_freq_max$ );
+			this.CreateTimer( 1, random_delay$ );
+		}
+	}
+} 

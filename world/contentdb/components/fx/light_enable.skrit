@@ -1,0 +1,199 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  light_enable.skrit
+// Author(s):  Scott Bilas, Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool		_server_only$			= false;
+property string		_doc$					= "Enable/disable a Siege light";
+
+// exported properties
+property LightId	siege_light$			= 0					doc = "Identifier of siege light to attach this effect to";
+property bool		initially_active$		= true				doc = "Should the light be on when initially constructed?";
+property bool		is_toggle$				= false				doc = "Should this toggle the light or require separate activate/deactivate messages?";
+property bool		self_destruct$			= false				doc = "Self-destruct on algorithm completion";
+property bool		use_flare$				= false				doc = "will ramp from zero intensity to double then back to normal.";
+property float		flare_duration$			= 1.0				doc = "durration of initial flare.";
+property float		flare_magnitude$		= 1.5				doc = "how much to flare. 1.0 is original intensity.";
+property bool		use_fizzle$				= false				doc = "will fizzle from intensity to zero.";
+property float		fizzle_duration$		= 1.0				doc = "durration of fizzle.";
+
+
+owner = GoSkritComponent;
+float initial_intensity$;
+float time$ = 0;
+bool  left_on$ = false;
+
+//////////////////////////////////////////////////////////////////////////////
+void check_flare$()
+{
+	if ( is_toggle$ )
+	{
+		siege_light$.active = !siege_light$.active;
+	}
+	else
+	{
+		siege_light$.active = true;
+	}
+	
+	if ( siege_light$.active && use_flare$)
+	{
+		time$ = 0;
+		SetState FlareUp$;
+	} else {
+		SetState Wait$;
+	}
+}
+
+void check_fizzle$()
+{
+	if (use_fizzle$)
+	{
+		time$ = 0;
+		SetState Fizzle$;
+	} else {
+		siege_light$.active = false;
+		SetState Wait$;
+	}
+}
+
+trigger OnGoHandleMessage$( WE_LEFT_WORLD )
+{
+	if ( siege_light$.IsValid )
+	{
+		left_on$ = siege_light$.active;
+	}
+}
+
+trigger OnGoHandleMessage$( WE_ENTERED_WORLD )
+{
+	SetState Constructed$;
+}
+
+trigger OnGoHandleMessage$( WE_POST_RESTORE_GAME )
+{
+	SetState Constructed$;
+}
+
+
+trigger OnGoDrawDebugHud$
+{
+	if ( siege_light$.IsValid )
+	{
+		SiegePos pos$ = SiegePos.MakeDefault;
+		siege_light$.GetPosition( pos$ );
+		World.DrawDebugLine( owner.go.Placement.Position,
+							 pos$,
+							 MakeColor( 1.0, 1.0, 1.0, 0.5 ),
+							 "enable" );
+	}
+}
+
+startup state Constructed$
+{
+	// $ wait in this state until the siege light is in the world
+
+	trigger OnGoUpdate$
+	{
+		if ( siege_light$.IsValid )
+		{
+			if( left_on$ )
+			{
+				siege_light$.active = true;
+			} else {
+				siege_light$.active = initially_active$;
+			}
+
+			if ( self_destruct$ )
+			{
+				SendWorldMessage( WE_REQ_DELETE, owner.Goid );
+			}
+			initial_intensity$ = siege_light$.Intensity;
+			setstate Wait$;
+		}
+	}
+}
+
+state Wait$
+{
+	trigger OnGoHandleMessage$( WE_REQ_ACTIVATE )
+	{
+		check_flare$();
+	}
+
+	trigger OnGoHandleMessage$( WE_REQ_DEACTIVATE )
+	{
+		check_fizzle$();
+	}
+}
+
+state FlareUp$
+{
+	transition -> Wait$: OnGoHandleMessage( WE_REQ_DEACTIVATE ) =
+	{
+		check_fizzle$();
+	}
+
+	transition -> Wait$: OnGoHandleMessage( WE_REQ_ACTIVATE ) =
+	{
+		if ( is_toggle$ )
+		{
+			check_fizzle$();
+		}
+	}
+
+	event OnGoUpdate$( float deltaTime$ )
+	{
+		if ( siege_light$.IsValid )
+		{
+			time$ += deltaTime$;
+	
+			if ( time$ >= flare_duration$)
+			{
+				siege_light$.Intensity = initial_intensity$;
+				SetState Wait$;
+			}
+			else
+			{
+				siege_light$.Intensity = (flare_magnitude$/2.0) * initial_intensity$ * (1 - Math.Cos( (time$ / flare_duration$) * 1.5 * Math.Pi) );
+			}
+		}
+	}
+}
+
+state Fizzle$
+{
+	transition -> Wait$: OnGoHandleMessage( WE_REQ_ACTIVATE ) =
+	{
+		check_flare$();
+	}
+
+	event OnGoUpdate$( float deltaTime$ )
+	{
+		if ( siege_light$.IsValid )
+		{
+			time$ += deltaTime$;
+	
+			if ( time$ >= fizzle_duration$)
+			{
+				siege_light$.Intensity = 0;
+				SetState Wait$;
+			}
+			else
+			{
+				siege_light$.Intensity = initial_intensity$ * (1 - Math.Sin( (time$ / fizzle_duration$) * .5 * Math.Pi) );
+			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

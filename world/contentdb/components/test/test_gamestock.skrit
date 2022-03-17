@@ -1,0 +1,27 @@
+owner = GoSkritComponent;
+
+Preload$( string region$ )
+{
+	string address$ = MakeStringF( "world:maps:map_world:regions:%s", region$ );
+	if ( FuelBlock.PreloadFuelBlock( address$, true ) )
+	{
+		Report.GenericF( "Preloaded region '%s' fuel data\n", region$ );
+	}
+	else
+	{
+		Report.GenericF( "ERROR: Failure to preload region '%s' fuel data\n", region$ );
+	}
+}
+
+trigger OnGoPreload$
+{
+	Preload$( "fh_r1"       );
+	Preload$( "path2crypts" );
+	Preload$( "cr_r1"       );
+	Preload$( "fh_r3"       );
+	Preload$( "dm_r11"      );
+	Preload$( "path2nt"     );
+	Preload$( "dm_r8"       );
+	Preload$( "cf_r1"       );
+	Preload$( "path2dc"     );
+}

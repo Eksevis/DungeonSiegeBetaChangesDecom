@@ -1,0 +1,145 @@
+///////////////////////////////////////////////////////////////////////
+// DUNGEON SIEGE TOOLTIPS
+//
+// In general, ToolTips display for all in-game UI items and the
+// pre-game/multiplayer screens that allow players to set options
+// (Video options, Audio options, etc.).
+//
+// ToolTips do not display for pre-game/multiplayer menus (Main 
+// menu, Single Player menu, etc.) Also, ToolTips do not display 
+// for the OK, Cancel, Previous, etc. buttons on ANY screen.
+///////////////////////////////////////////////////////////////////////
+
+[tooltips]
+{
+
+///////////////////////////////////////////////////////////////////////
+// OPTIONS INTERFACES
+[options_video]
+{
+	tip_textbox = gui_fe_tooltip;
+	[tips]
+	{
+		button_screen_res = "Click to set the screen resolution.";
+		button_fullscreen = "Choose whether the game runs full-screen or in a window.";
+		button_shadows = "Choose the detail with which shadows are rendered.";
+		button_texture_filtering = "Choose the degree to which tetures are filtered.";
+		button_hardwaretl = "Choose whether to use hardware T&L.";
+		button_colordepth = "Choose the number of colors used for graphics.";
+		slider_gamma = "Set the brightness or darkness of the game.";
+		slider_objectdetail = "Set the limit for the number of objects visible in game.";
+		button_defaults = "Restores all video settings to their default state.";
+	}
+}
+
+[options_audio]
+{
+	tip_textbox = gui_fe_tooltip;
+	[tips]
+	{
+		button_sound = "Turn the sound on or off.";
+		slider_mastervolume = "Set the volume.";
+		slider_musicvolume = "Set the volume of music.";
+		slider_sfxvolume = "Set the volume of sound effects.";
+		slider_ambientvolume = "Set the ambient volume.";
+		slider_voicevolume = "Set the volume of character's voices.";
+		button_defaults = "Restores all audio settings to their default state.";
+	}
+}
+
+[options_input]
+{
+	tip_textbox = gui_fe_tooltip;
+	[tips]
+	{
+		button_mouse_interface = "Choose which mouse button to use as the primary control in-game.";
+		button_inverse_camera_x = "Flip the horizontal camera controls.";
+		button_inverse_camera_y = "Flip the vertical camera controls.";
+		slider_camera_sensitivity = "Adjust the camera scroll rate.";
+		slider_mouse_sensitivity = "Adjust the mouse scroll rate.";
+		button_defaults = "Restores all input settings to their default state.";
+	}
+}
+
+[options_bindings]
+{
+	tip_textbox = gui_fe_tooltip;
+	[tips]
+	{
+		button_defaults = "Restores all command bindings to their default states.";
+	}
+}
+
+[options_game]
+{
+	tip_textbox = gui_fe_tooltip;
+	[tips]
+	{
+		button_framerate = "Turn the framerate display on or off.";
+		button_showtooltips = "Turn pop-up help messages on or off.";
+		slider_gamespeed = "Increase or decrease the game speed.";
+		slider_textscroll = "Set the rate at which on-screen dialog text scrolls.";
+		slider_maxtext = "Set the amount of text displayed.";
+		button_defaults = "Restores all game settings to their default state.";
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////
+// MULTIPLAYER INTERFACES
+[ip_dialog]
+{
+	tip_textbox = gui_fe_tooltip;
+	[tips]
+	{
+		ip_edit_box = "Type the IP address of the game to which you want to connect.";
+		button_connect = "Click to connect to a game using the selected IP address.";
+		button_host = "Click to host a game using your IP address.";
+	}
+}
+
+[match_maker_games]
+{
+	tip_textbox = gui_fe_tooltip;
+	[tips]
+	{
+		button_refresh = "Click to update the list of games.";
+		button_join = "Click to join the selected game.";
+		button_host = "Click to create a new game.";
+	}
+}
+
+[staging_area]
+{
+	help_textbox = staging_area_comments;
+	[help]
+	{
+		/*
+		staging_area_button_kill_limit = "Select the number of kills required to win the game.";
+		staging_area_button_setlimit = "Select the time limit before the game ends.";
+		staging_area_button_gametype = "Select the style of play.";
+		staging_area_combo_box_choose_map = "Select the map used for the game.";
+		staging_area_button_loadchar = "Click to select a character.";
+		staging_button_kick_player = "Click to remove the selected player from the game.";
+		ip_address_button = "Click to display your network (IP) address so you can give it to other players who want to join your game. Your IP address is valid only if you are connected to a network.";
+		staging_area_check_ready = "Click when you are ready to start the game. The game host cannot start the game until all players are ready. The names of players who are ready are shown in green.";
+		staging_area_button_start = "Click to start the game. You cannot click this button until you click the I'm Ready! button.";
+		*/
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////
+// IN-GAME INTERFACES
+[store]
+{
+	[tips]
+	{
+		button_buy = "Click to buy items from the shop.";
+		button_sell = "Click to sell items to the shop.";
+		button_cancel = "Close the shop.";
+	}
+}
+
+
+} // end tooltips

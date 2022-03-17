@@ -1,0 +1,251 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_attack_position_ranged.skrit
+
+	Author(s)	: 	Bartosz Kijanka
+
+	Purpose		:	Shoot repeatedly at a position
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go			m_Go$;
+GoMind		m_Mind$;
+GoBody  	m_Body$;
+Job			m_Job$;
+
+Goid		m_Ammo$;
+Goid		m_Weapon$;
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+	m_Body$		= job$.Go.Body;
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Weapon$	= job$.GoalModifier;
+	m_Ammo$		= goid.InvalidGoid;
+
+	if (m_Weapon$.Go.Attack.GetAmmoCloneSource == goid.invalidgoid)
+	{
+		SetState Exiting$;
+	} else {
+		SetState ApproachingLOSPoint$;
+	}
+}
+
+
+event OnWorldMessage$( eWorldEvent e$, WorldMessage /*message$*/ )
+{
+	if(  	( e$ == WE_REQ_JOB_FINISH ) ||
+				( e$ == WE_ENGAGED_INVALID ) ||
+				( e$ == WE_ENGAGED_KILLED ) ||
+				( e$ == WE_ENGAGED_HIT_KILLED ) ||
+				( e$ == WE_DESTRUCTED ) )
+	{
+		SetState Exiting$;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state ApproachingLOSPoint$
+{
+	transition
+	{
+		-> Attacking$:		OnWorldMessage( WE_MCP_SECTION_COMPLETE_WARNING );
+		-> Attacking$:		OnWorldMessage( WE_MCP_CHORE_CHANGING );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Mind$.IsLosClear( m_Job$.GoalPosition ) )
+		{
+			SetState( Attacking$ );
+		}
+		else
+		{
+			if( AIQuery.FindClearLosPoint( m_Go$, m_Job$.GoalPosition, 25, Math.PiHalf*0.5, m_Mind$.TempPos1 ) )
+			{
+				eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_APPROACH, m_Mind$.TempPos1, 0 );
+
+				report.ReportF("aimove"," [%s] ApproachingLOSPoint (attack position) [%s] returned [%s]\n",
+				 	m_Go$.TemplateName,
+					MakeSiegePosString(m_Mind$.TempPos1),
+					ToString(ret$) );
+
+				if (RequestFailed(ret$))
+				{
+					SetState( Exiting$ );
+				}
+				else
+				{
+					SetState( Attacking$ );
+				}
+			}
+			else
+			{
+				SetState( Exiting$ );
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Attacking$
+{
+	transition
+	{
+		-> Loading$:			OnWorldMessage( WE_ANIM_ATTACH_AMMO );
+		-> FireWithoutLoad$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> Exiting$:			OnWorldMessage( WE_MCP_INVALIDATED );
+		-> Exiting$:			OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+	}
+	event OnEnterState$
+	{
+		if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+		}
+
+		eAnimStance stance$ = m_Go$.inventory.animstance;
+  		float attack_loop_duration$ = m_Weapon$.Go.Attack.ReloadDelay;
+		attack_loop_duration$ += m_Go$.Aspect.AspectHandle.GetBaseDurationForChoreStance(CHORE_ATTACK,stance$);
+
+		MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FACE, m_Job$.GoalPosition );
+
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id,
+												m_Go$.Goid,
+												PL_ATTACK_POSITION_RANGED,
+												attack_loop_duration$,
+												m_Job$.GoalPosition,
+												m_Mind$.WeaponRange
+												);
+
+		report.ReportF("aimove"," [%s] PL_ATTACK_POSITION_RANGED [%s] returned [%s]\n",
+		 	m_Go$.TemplateName,
+			MakeSiegePosString(m_Job$.GoalPosition),
+			ToString(ret$) );
+
+		if (ret$ == REQUEST_OK_IN_RANGE)
+		{
+			//Report.GenericF("$$$$ Skipping the APPROACH for %s, we are in range already\n",m_Go$.TemplateName);
+		}
+		else if (ret$ != REQUEST_OK)
+		{
+			//Report.GenericF("$$$$ ERROR: %s cannot ATTACK (unable to get in range)\n",m_Go$.TemplateName);
+			SetState( Exiting$ );
+		}
+	}
+
+}
+////////////////////////////////////////////////////////////////////////////////
+//	
+
+state Loading$
+{
+	transition
+	{
+		-> Shooting$:			OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+	}
+	event OnEnterState$
+	{
+		if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state FireWithoutLoad$
+{
+	event OnEnterState$
+	{
+		//report.warningf("$$$$ The projectile attack for [%s] has no ATTACH AMMO event\n",m_Go$.TemplateName);
+
+		if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+		}
+
+		SetState(Shooting$);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Shooting$
+{
+	transition
+	{
+		-> ApproachingLOSPoint$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		// launch arrow at engaged object
+		// If JIT ammo creation then make it here otherwise it has already been created
+		if( m_Weapon$.Go.Attack.AmmoAppearsJIT )
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+		}
+
+		int firing_pos$ = SiegeFx.AddVariable( m_Weapon$.Go.Attack.ComputeFiringPos( m_Ammo$ ), m_Ammo$ );
+
+		m_Weapon$.Go.Attack.ComputeAimingError;
+		float x_error$ = m_Weapon$.Go.Attack.GetAimingErrorX;
+		float y_error$ = m_Weapon$.Go.Attack.GetAimingErrorY;
+
+		float velocity$ = m_Weapon$.Go.Physics.GetVelocity;
+
+		float aiming_angle$ = m_Weapon$.Go.Attack.ComputeAimingAngle( m_Ammo$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), m_Job$.GoalPosition, velocity$ );
+
+		m_Weapon$.Go.Attack.SLaunchAmmo( m_Ammo$, velocity$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), m_Job$.GoalPosition, x_error$, y_error$, Goid.InvalidGoid );
+	}
+}
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FACE );
+
+		// Need to make sure that the ranged weapon is still equipped if we are going to make another ammo
+		if( m_Go$.Inventory.IsRangedWeaponEquipped() )
+		{
+			if( !m_Weapon$.Go.Attack.AmmoAppearsJIT )
+			{
+				m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+			}
+		}
+
+		m_Job$.MarkForDeletion( true );
+	}
+}

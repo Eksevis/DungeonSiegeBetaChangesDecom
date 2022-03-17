@@ -1,0 +1,137 @@
+[defeat_menu]
+{
+	type = interface;
+	modal = true;
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+	centered = defeat_dialog_background;
+	
+	[t:window,n:defeat_background]
+	{
+		alpha = 0.45000;
+		draw_order = 1;
+		texture = b_gui_cmn_textbox_bg;
+		background_color = 0;
+		uvcoords = 0.000000,0.000000,0.000000,0.000000;
+		rect = 0,0,640,480;
+		wrap_mode = clamp;
+		normalize_resize = true;		
+	}
+	[t:text,n:defeat_text]
+	{
+		alpha = 1.000000;
+		draw_order = 13;
+		font_color = -1;
+		font_type = b_gui_fnt_22p_lucinda-bright;
+		rect = 0,100,640,140;
+		text = "Defeat!";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		justify = center;
+	}
+
+	[t:dialog_box,n:defeat_dialog_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 150,180,490,300;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:defeat_text_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 170,200,470,250;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:text,n:defeat_dialog_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 70;
+		fixed_location = true;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		has_slider = false;
+		justify = center;
+		max_height = 240;
+		max_width = 320;
+		rect = 173,203,467,247;
+		scroll_rate = 0.000000;
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		text = "Do you want to load a saved game?";
+	}
+
+	[t:button,n:defeat_yes]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 20;
+		rect = 210,262,310,278;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:defeat_yes_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 107,256,231,271;
+			text = "Yes";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(load_game); }
+	}
+	[t:button,n:defeat_no]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 20;
+		rect = 330,262,430,278;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:defeat_no_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 272,256,417,272;
+			text = "No";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(exit_game); }
+	}
+}

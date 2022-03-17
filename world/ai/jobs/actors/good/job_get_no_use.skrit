@@ -1,0 +1,110 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_get.skrit
+
+	Author(s)	: Bartosz Kijanka, Eric Tams
+
+	Purpose		: Get an item, but don't try to use it!!
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+
+
+startup state Startup$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	if( job$.GoalObject.Go == NULL )
+	{
+		SetState Exiting$;
+	}
+	else
+	{
+		OnJobInitPointers$( job$ );
+
+		SetState Approaching$;
+	}
+}
+
+
+state Approaching$
+{
+	transition
+	{
+		->Getting$:		OnWorldMessage( WE_MCP_SECTION_COMPLETED );
+		->Exiting$:		OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+
+	event OnEnterState$
+	{
+		if ( m_Go$.Inventory.TestGet( m_Job$.GoalObject ) )
+		{
+			//m_Job$.ReqPlan( MakePlanReq( m_Go$.Goid, PL_WALK, m_Job$.GoalPosition, 0.1 ));
+			eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_APPROACH, m_Job$.GoalPosition, 0.5 );
+			if (ret$ == REQUEST_OK_IN_RANGE)
+			{
+				SetState( Getting$ );
+			}
+			else if (ret$ != REQUEST_OK)
+			{
+				Report.genericf("Warning [%s] Can't GET [%s], unable to find a path to it\n",m_Go$.templatename,m_Job$.GoalObject.go.templatename);
+				SetState( Exiting$ );
+			}
+		}
+		else
+		{
+			SetState Exiting$;
+		}		
+	}
+}
+
+
+state Getting$
+{
+	event OnEnterState$
+	{
+		// get the item 
+		if (m_Job$.GoalObject.Go != NULL)
+		{
+			if (!m_Go$.Inventory.Contains(m_Job$.GoalObject.Go) )
+			{
+				m_Go$.Inventory.RSAdd( m_Job$.GoalObject.Go, il_main ,false);
+			}
+		}
+		SetState Exiting$;
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}

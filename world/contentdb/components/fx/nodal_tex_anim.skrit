@@ -1,0 +1,149 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  nodal_tex_anim.skrit
+// Author(s):  James Loe
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool		_server_only$			= false;
+property string		_doc$					= "Nodal texture animation state changing";
+
+// exported properties
+property SiegeId	siege_node$				= 0					doc = "Identifier of siege node whose textures you will be modifying";
+property string		texture_name$			= ""				doc = "Name of the texture which you want to modify";
+property float		duration$				= 0.0				doc = "Duration of the change in seconds (0 for instant)";
+
+owner = GoSkritComponent;
+
+// globals
+float time$;
+bool  bStop$;
+int   texture_index$;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Constructed$
+{
+	// $ wait in this state until the siege node is in the world
+
+	event OnGoUpdate$( float /*deltaTime$*/ )
+	{
+		if( siege_node$.IsValid )
+		{
+			texture_index$	= WorldTerrain.FindNodalTextureIndex( siege_node$, texture_name$ );
+			if( texture_index$ != -1 )
+			{
+				setstate Wait$;
+			}
+		}
+	}
+}
+
+state Wait$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( (e$ == WE_REQ_ACTIVATE) && siege_node$.IsValid )
+		{
+			if( duration$ > 0 )
+			{
+				// Start the animation
+				time$	= 0;
+				bStop$	= false;
+
+				if( !WorldTerrain.GetNodalTextureAnimationState( siege_node$, texture_index$ ) )
+				{
+					WorldTerrain.SetNodalTextureAnimationState( siege_node$, texture_index$, true );
+					SetState Play$;
+				}
+			}
+			else
+			{
+				// Immediately activate the animation
+				WorldTerrain.SetNodalTextureAnimationState( siege_node$, texture_index$, true );
+			}
+		}
+
+		if( (e$ == WE_REQ_DEACTIVATE) && siege_node$.IsValid )
+		{
+			if( duration$ > 0 )
+			{
+				// Fade in the decal
+				time$	= 0;
+				bStop$	= true;
+
+				if( WorldTerrain.GetNodalTextureAnimationState( siege_node$, texture_index$ ) )
+				{
+					SetState Play$;
+				}
+			}
+			else
+			{
+				// Immediately deactivate the animation
+				WorldTerrain.SetNodalTextureAnimationState( siege_node$, texture_index$, false );
+			}
+		}
+	}
+}
+
+state Play$
+{
+	event OnGoUpdate$( float deltaTime$ )
+	{
+		time$ += deltaTime$;
+
+		// Calculate and clamp linear scale
+		float t$	= (time$ / duration$);
+		t$			= (t$ > 1.0) ? 1.0 : t$;
+
+		// apply result
+		if( siege_node$.IsValid )
+		{
+			if( bStop$ )
+			{
+				WorldTerrain.SetNodalTextureAnimationSpeed( siege_node$, texture_index$, (1.0 - t$) );
+			}
+			else
+			{
+				WorldTerrain.SetNodalTextureAnimationSpeed( siege_node$, texture_index$, t$ );
+			}
+		}
+
+		// Update state
+		if( t$ == 1.0 )
+		{
+			if( bStop$ )
+			{
+				WorldTerrain.SetNodalTextureAnimationState( siege_node$, texture_index$, false );
+			}
+
+			SetState Wait$;
+		}
+	}
+
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( (e$ == WE_REQ_ACTIVATE) && (bStop$ == true) )
+		{
+			// Reset time
+			bStop$	= false;
+			time$	= duration$ - time$;
+		}
+		if( (e$ == WE_REQ_DEACTIVATE) && (bStop$ == false) )
+		{
+			// Reset time
+			bStop$	= true;
+			time$	= duration$ - time$;
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

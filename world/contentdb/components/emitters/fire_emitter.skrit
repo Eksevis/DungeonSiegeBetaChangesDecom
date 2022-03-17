@@ -1,0 +1,129 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  fire_emitter.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property bool	start_on_creation$	=	false	doc = "Start Emitter when it enters the world";
+
+property float	red0$				=	0.8		doc = "Red color intensity 0-1";
+property float	green0$				=	0.5		doc = "Green color intensity 0-1";
+property float	blue0$				=	0.0		doc = "Blue color intensity 0-1";
+
+property float	red1$				=	0.15	doc = "Red variance intensity 0-1";
+property float	green1$				=	0.09	doc = "Green variance intensity 0-1";
+property float	blue1$				=	0.0		doc = "Blue variance intensity 0-1";
+
+property float	xvel$				=	0.0		doc = "X component of initial velocity";
+property float	yvel$				=	8.0		doc = "Y component of initial velocity";
+property float	zvel$				=	0.0  	doc = "Z component of initial velocity";
+
+property float	xacc$				=	0.0		doc = "X component of acceleration";
+property float	yacc$				=	14.0	doc = "Y component of acceleration";
+property float	zacc$				=	0.0 	doc = "Z component of acceleration";
+
+property float	fade$				=	0.85 	doc = "Amount to decrease particle alpha per second";
+property float	particle_size$		=	1.75	doc = "Size of an individual particle";
+property int	count$				=	30		doc = "Maximum number of particles";
+
+property float	start_radius_min$	=	0.0		doc = "Inner spawn radius";
+property float	start_radius_max$	=	4.0		doc = "Outer spawn radius";
+property float	displace_min$		=	0.0		doc = "Random y displacement range min";
+property float	displace_max$		=	1.25	doc = "Random y displacement range max";
+
+property bool	dark$				=	false	doc = "Enable dark blending method";
+property bool	grey_tex$			=	false	doc = "use a grey texture";
+property bool	cheap$				=	false	doc = "Uses cheaper particle motion calculations";
+property bool	instant$			=	false	doc = "Fire instantly has volume instead of burning slowly";
+property bool	yorient$			=	false	doc = "Orients fire to y-axis only";
+property bool	ignite$				=	false	doc = "Ignite anything within collision volume";
+
+property float	damage_min$			=	3.0		doc = "Minimum amount of damage to do per second";
+property float	damage_max$			=	7.0		doc = "Maximum amount of damage to do per second";
+property float	particle_fit$  		=	0.2		doc = "Emission volume fit for collision 0 is loose, 1 is tight";
+
+property float	min_size_range$		=	-1.25	doc = "lower aditive range for random particle size generation";
+property float	max_size_range$		=	1.25	doc = "upper aditive range for random particle size generation";
+property float	growth$		  		=	0		doc = "change in partice size over time";
+
+property float	time_scale$			=	1		doc = "Time scalar - factor to scale time by";
+property float	scale$		  		=	1		doc = "Scale factor - factor to scale size of effect by";
+
+
+owner = GoSkritComponent;
+int active_script_id$ = 0;
+
+
+startup state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		// Only start the effect if there isn't one already going
+		if( (active_script_id$ == 0) && (( e$ == WE_REQ_ACTIVATE )  || (( e$ == WE_ENTERED_WORLD ) && (start_on_creation$ == true))) )
+		{
+ 			string params$ = "[-";
+
+			if( ignite$ )
+			{
+				StringTool.Append( params$, "ignite()" );
+				StringTool.Appendf( params$, "fdamage(%g,%g,%g)", damage_min$, damage_max$, particle_fit$ );
+			}
+			
+			if( dark$ )
+			{
+				StringTool.Append( params$, "dark()" );
+			}
+			if( grey_tex$ )
+			{
+				StringTool.Append( params$, "grey_tex()" );
+			}
+			if( cheap$ )
+			{
+				StringTool.Append( params$, "cheap()" );
+			}
+			if( instant$ )
+			{
+				StringTool.Append( params$, "instant()" );
+			}
+			if( yorient$ )
+			{
+				StringTool.Append( params$, "yorient()" );
+			}
+
+			StringTool.Appendf( params$, "color0(%g,%g,%g)", red0$, green0$, blue0$ );
+			StringTool.Appendf( params$, "color1(%g,%g,%g)", red1$, green1$, blue1$ );
+			StringTool.Appendf( params$, "velocity(%g,%g,%g)", xvel$, yvel$, zvel$ );
+			StringTool.Appendf( params$, "accel(%g,%g,%g)", xacc$, yacc$, zacc$ );
+			
+			StringTool.Appendf( params$, "alphafade(%g)", fade$ );
+			StringTool.Appendf( params$, "flamesize(%g)", particle_size$ );
+			StringTool.Appendf( params$, "count(%d)", count$ );
+			
+			StringTool.Appendf( params$, "min_displace(%g)max_displace(%g)", displace_min$, displace_max$ );
+		  
+			StringTool.Appendf( params$, "min_radius(%g)max_radius(%g)", start_radius_min$, start_radius_max$ );
+			
+			StringTool.Appendf( params$, "fctrl(%g,%g,%g)", min_size_range$, max_size_range$, growth$ );
+			
+			StringTool.Appendf( params$, "ts(%g)", time_scale$ );
+			StringTool.Appendf( params$, "scale(%g)]", scale$ );
+			
+						
+			// Run the generic_spawn script
+			active_script_id$ =	SiegeFx.RunScript( "fire_emitter", owner.Goid, owner.Goid, params$, owner.Goid, WE_REQ_ACTIVATE );
+		}
+		else if( (e$ == WE_REQ_DEACTIVATE) && (active_script_id$ != 0) )
+		{
+			// Let the effect know that it should finish what it is doing and not spawn anything else
+			SiegeFx.FinishScript( active_script_id$ );
+
+			// Clear the script id
+			active_script_id$ = 0;
+		}
+	}
+}

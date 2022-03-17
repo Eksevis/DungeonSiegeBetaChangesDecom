@@ -1,0 +1,101 @@
+// $$$ DELETE ME
+// $$$ someone please make me work.  -mm
+
+Job		m_Job$;
+Mind	m_Mind$;
+GO		m_GO$;
+
+
+event OnJobInit$( Job job$ )
+{
+	m_Job$		= job$;
+	m_GO$		= job$.GetGO();
+	m_Mind$		= job$.GetGO.GetMind();
+
+	SetState FindNewSpot$;
+}
+
+
+event OnWorldMessage$( eWorldEvent Event$, WorldMessage /*Message$*/ )
+{
+	if( (Event$ == WE_ATTACKED) && (Object$ == m_GO$ ) )
+	{
+		SetState FreakOut$;
+	}
+}
+
+
+startup state Default$
+{
+	event OnEnterState$
+	{
+	}
+}
+
+
+state FindNewSpot$
+{
+	transition
+	{
+		-> FindNewSpot$: OnWorldMessage( WE_NAV_GOAL_FAILED );
+		-> FindNewSpot$: OnWorldMessage( WE_JOB_TIMER_DONE );
+		-> LookForWorm$: OnWorldMessage( WE_NAV_GOAL_REACHED );
+	}
+
+	event OnEnterState$
+	{
+		if( AIQuery.GetRandomTerrainPositionInCircle( m_Job$.CreationPosition, Math.RandomFloat( 0.3, 1.0 ), m_Job$.TempPos1 ) )
+		{
+			//report.generic( "z found new spot\n" );
+
+			m_Job$.GetNavGoal.SetPositionGoal( m_Job$.TempPos1, 0.01, 0.0 );
+		}
+		else
+		{
+			//report.generic( "NOT found new spot\n" );
+
+			m_Job$.SetTimer( 0.5 );
+		}
+	}
+}
+
+
+state LookForWorm$
+{
+	transition
+	{
+		-> PeckForWorm$: OnWorldMessage( WE_NAV_GOAL_HEADING_REACHED );
+		-> PeckForWorm$: OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnEnterState$
+	{
+		//report.generic( "looking for worm\n" );
+
+		m_Job$.GetNavGoal.ChangeYawGoal( Math.RandomFloat( 10.0, 40.0 ) );
+	}
+}
+
+
+state PeckForWorm$
+{
+	transition
+	{
+		-> FindNewSpot$: OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnEnterState$
+	{
+		// report.generic( "pecking for worm\n" );
+		// play peck anim here
+		// make some noise here...
+
+		m_Job$.SetTimer( Math.RandomFloat( 3.0, 6.0 ) );
+	}
+}
+
+
+state FreakOut$
+{
+	// run away...
+}

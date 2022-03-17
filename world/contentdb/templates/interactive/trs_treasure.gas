@@ -1,0 +1,388 @@
+//////////////////////////////////////////////////////////////////////////////
+// Treasure templates
+
+[t:template,n:gold]
+{
+	specializes			= treasure;
+	doc					= "Gold coins";
+   	category_name       = "treasure";
+    [aspect]
+	{
+		model		= m_i_glb_coin-01;
+		gold_value   = 8;
+		voice:put_down:* = s_e_gui_put_down_gold;
+	}
+
+	gui:inventory_icon			= b_gui_ig_i_it_gold-pile;
+	gui:inventory_max_stackable	= 10;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "gold_sparkle" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+	[gold]
+	{
+		[ranges]
+		{
+			0   = m_i_glb_coin-01, b_i_glb_gold;
+			30	= m_i_glb_coin-02, b_i_glb_gold;
+			100 = m_i_glb_coin-03, b_i_glb_gold;
+
+		}
+	}
+}
+[t:template,n:skull_glb_01]
+{
+	specializes			= treasure;
+	doc					= "skull";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_frag-bone-06;
+
+	common:screen_name	= "Skull";
+
+	gui:inventory_icon	= b_gui_ig_i_ic_c_sk_g;
+}
+[t:template,n:artifact_glb_01]
+{
+	specializes			= treasure;
+	doc					= "Artifact";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_artifact-01;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Artifact";
+
+	gui:inventory_icon	= b_gui_ig_i_it_artifact_01;
+}
+
+[t:template,n:book_glb_magic_01]
+{
+	specializes			= treasure;
+	doc					= "book_magic_sm_symbol";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		is_spellbook	= true;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Book";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+	[inventory] {  }
+}
+
+[t:template,n:book_glb_magic_02]
+{
+	specializes			= treasure;
+	doc					= "book_magic_lg_lock";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_book-magic-02;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	common:screen_name	= "Book";
+
+	gui:inventory_icon	= b_gui_ig_i_it_book_02;
+}
+
+[t:template,n:book_glb_magic_03]
+{
+	specializes			= treasure;
+	doc					= "book_magic_lg_eye";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_book-magic-02;
+	aspect:textures:0	= b_i_glb_book-magic-03;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	common:screen_name	= "Book";
+
+	gui:inventory_icon	= b_gui_ig_i_it_book_03;
+}
+
+[t:template,n:jewel_glb_01]
+{
+	specializes			= treasure;
+	doc					= "jewel_sm_red";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_jewel-01;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Jewel";
+
+	gui:inventory_icon	= b_gui_ig_i_it_jewel_01;
+}
+
+[t:template,n:jewel_glb_02]
+{
+	specializes			= treasure;
+	doc					= "jewel_sm_blue_pink";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_jewel-02;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Jewel";
+
+	gui:inventory_icon	= b_gui_ig_i_it_jewel_02;
+}
+
+[t:template,n:jewel_glb_03]
+{
+	specializes			= treasure;
+	doc					= "jewel_lg_yllw";
+    category_name       = "treasure";
+
+
+	aspect:model		= m_i_glb_jewel-03;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Jewel";
+
+	gui:inventory_icon	= b_gui_ig_i_it_jewel_03;
+}
+
+[t:template,n:jewel_glb_04]
+{
+	specializes			= treasure;
+	doc					= "jewel_med_red";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_crystal;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Gem";
+
+	gui:inventory_icon	= b_gui_ig_i_it_gem;
+}
+
+[t:template,n:scroll_glb_map]
+{
+	specializes			= treasure;
+	doc					= "map_world";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_map-01;
+	aspect:voice:put_down:* = s_e_gui_put_down_scroll;
+
+	common:screen_name	= "Map";
+
+	gui:inventory_icon	= b_gui_ig_i_it_map_01;
+}
+
+[t:template,n:scroll_glb_spell]
+{
+	specializes			= treasure;
+	doc					= "scroll_glb_spell";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_scroll;
+	aspect:voice:put_down:* = s_e_gui_put_down_scroll;
+
+	common:screen_name	= "Scroll";
+
+	gui:inventory_icon	= b_gui_ig_i_it_scroll;
+}
+
+[t:template,n:charm_glb_01]
+{
+	specializes			= treasure;
+	doc					= "trinket_diamond";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_charm-01;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Charm";
+
+	gui:inventory_icon	= b_gui_ig_i_it_charm_01;
+}
+
+[t:template,n:cross_glb_01]
+{
+	specializes			= treasure;
+	doc					= "trinket_ankh";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_cross-01;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Ankh";
+
+	gui:inventory_icon	= b_gui_ig_i_it_cross_01;
+}
+
+[t:template,n:cross_glb_02]
+{
+	specializes			= treasure;
+	doc					= "trinket_ankh_02";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_cross-02;
+	aspect:voice:put_down:* = s_e_gui_put_down_jewelry;
+
+	common:screen_name	= "Ankh";
+
+	gui:inventory_icon	= b_gui_ig_i_it_cross_01;
+}
+
+[t:template,n:cross_level_up]
+{
+	specializes			= non_interactive_nonblocking;
+	doc					= "used in level up anim, don't place.";
+    category_name       = "treasure";
+
+	aspect:model		= m_i_glb_cross-02;
+
+	common:screen_name	= "Ankh";
+}
+
+[t:template,n:fury_eye]
+{
+	specializes			= treasure;
+	doc					= "fury_eye";
+    category_name       = "treasure";
+
+	[aspect]
+	{
+		model		= m_i_glb_frag-fury-eye;
+		textures:0	= b_i_glb_fury-frag-eye;
+		gold_value	= 1000;
+	}
+
+	common:screen_name	= "Fury's Eye";
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_it_fury-eye;
+		inventory_width		= 2;
+		inventory_height	= 2;
+	}
+}
+
+[t:template,n:rune_glb_01]
+{
+	specializes		= treasure;
+	doc				= "rune_hourglass";
+    	category_name       = "treasure";
+
+	[aspect]
+	{
+		model		= m_i_glb_key-01;
+		voice:put_down:* = s_e_gui_put_down_jewelry;
+		// [textures]		{ 0=m_i_glb_key-01; }
+	}
+	common:screen_name	= "Rune";
+	gui:inventory_icon	= b_gui_ig_i_it_rune_001;
+}
+
+[t:template,n:rune_glb_02]
+{
+	specializes		= treasure;
+	doc				= "rune_diamond";
+    	category_name       = "treasure";
+
+	[aspect]
+	{
+		model		= m_i_glb_key-02;
+		voice:put_down:* = s_e_gui_put_down_jewelry;
+		// [textures]		{ 0=m_i_glb_key-02; }
+	}
+	common:screen_name	= "Rune";
+	gui:inventory_icon	= b_gui_ig_i_it_rune_002;
+}
+
+[t:template,n:rune_glb_03]
+{
+	specializes		= treasure;
+	doc				= "rune_triangle";
+    	category_name       = "treasure";
+
+	[aspect]
+	{
+		model		= m_i_glb_key-03;
+		voice:put_down:* = s_e_gui_put_down_jewelry;
+		// [textures]		{ 0=m_i_glb_key-03; }
+	}
+	common:screen_name	= "Rune";
+	gui:inventory_icon	= b_gui_ig_i_it_rune_003;
+}
+
+[t:template,n:rune_glb_04]
+{
+	specializes		= treasure;
+	doc				= "rune_round";
+    	category_name       = "treasure";
+
+	[aspect]
+	{
+		model		= m_i_glb_key-04;
+		voice:put_down:* = s_e_gui_put_down_jewelry;
+		// [textures]		{ 0=m_i_glb_key-04; }
+	}
+	common:screen_name	= "Rune";
+	gui:inventory_icon	= b_gui_ig_i_it_rune_004;
+}
+
+[t:template,n:rune_glb_05]
+{
+	specializes		= treasure;
+	doc				= "rune_hexagon";
+    	category_name       = "treasure";
+
+	[aspect]
+	{
+		model		= m_i_glb_key-05;
+		voice:put_down:* = s_e_gui_put_down_jewelry;
+		// [textures]		{ 0=m_i_glb_key-05; }
+	}
+	common:screen_name	= "Rune";
+	gui:inventory_icon	= b_gui_ig_i_it_rune_005;
+}
+
+[t:template,n:rune_glb_06]
+{
+	specializes		= treasure;
+	doc				= "rune_square";
+    	category_name       = "treasure";
+
+	[aspect]
+	{
+		model		= m_i_glb_key-06;
+		voice:put_down:* = s_e_gui_put_down_jewelry;
+		// [textures]		{ 0=m_i_glb_key-06; }
+	}
+	common:screen_name	= "Rune";
+	gui:inventory_icon	= b_gui_ig_i_it_rune_006;
+}
+

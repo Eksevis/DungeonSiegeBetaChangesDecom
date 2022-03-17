@@ -1,0 +1,407 @@
+//////////////////////////////////////////////////////////////////////////////
+//Emitters
+
+
+[t:template,n:emitter_grs_froth_01]
+{
+	specializes 		= point;
+
+	doc 				= "emitter_grs_froth_01";
+    category_name       = "emitter";
+
+
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("waterfall_froth");
+			}
+		}
+	}
+}
+
+[t:template,n:emitter_grs_froth_02]
+{
+	specializes 		= point;
+    category_name       = "emitter";
+
+	doc 				= "emitter_grs_froth_02";
+
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("waterfall_froth2");
+			}
+		}
+	}
+}
+
+[t:template,n:emitter_grs_froth_03]
+{
+	specializes 		= point;
+    category_name       = "emitter";
+
+	doc 				= "emitter_grs_froth_03";
+
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("waterfall_froth3");
+			}
+		}
+	}
+}
+
+[t:template,n:emitter_grs_froth_04]
+{
+	specializes 		= point;
+    category_name       = "emitter";
+
+	doc 				= "emitter_grs_froth_04";
+
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("waterfall_froth4");
+			}
+		}
+	}
+}
+
+[t:template,n:emitter_des_froth_01]
+{
+	specializes 		= point;
+    category_name       = "emitter";
+
+	doc 				= "emitter_des_froth";
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("waterfall_froth_desert");
+			}
+		}
+	}
+}
+
+[t:template,n:emitter_grs_froth_bridge]
+{
+	specializes 		= point;
+    category_name       = "emitter";
+
+	doc 				= "emitter_grs_froth_bridge";
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("waterfall_froth_bridge");
+			}
+		}
+	}
+}
+
+[t:template,n:emitter_glb_smoke_01]
+{
+	specializes 		= point;
+    category_name       = "emitter";
+
+	doc 				= "emitter_smoke";
+
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("smoke_emitter");
+			}
+		}
+	}
+}
+[t:template,n:emitter_glb_fire_01]
+{
+	specializes 		= point;
+    category_name       = "emitter";
+
+	doc 				= "emitter_fire";
+
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews");
+			}
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////
+// waterwheel
+
+[t:template,n:waterwheel_grs]
+{
+	specializes = non_interactive;
+	doc			= "Waterwheel";
+    category_name   = "node";
+
+	aspect:model = m_i_frm_waterwheel;
+
+	[body]
+	{
+		initial_chore = chore_default;
+
+		[chore_dictionary]
+		{
+			[chore_default]
+			{
+				skrit=rotatex;
+				speed_bias=8.0;
+			}
+		}
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+// waypoints
+
+[t:template,n:waypoint_moving]
+{
+	specializes = gui_helper;
+    doc = "waypoint";
+    category_name       = "gui_helper";
+
+	common:screen_name = "Movement Waypoint";
+	aspect:model = m_i_glb_waypoint-10;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+[t:template,n:unknown]
+{
+	specializes = special;
+
+	[placement]	{  }
+	[aspect]	{  }
+}
+
+[t:template,n:none]
+{
+	specializes = special;
+
+	[placement]	{  }
+
+	aspect:textures:0 = b_a_err-badstyle;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//  Obfuscation cap for hiding areas
+
+[t:template,n:cap_black]
+{
+	specializes = non_interactive_nonblocking;
+	doc			= "cap_black";
+    category_name       ="node";
+
+	aspect:model		= m_i_glb_cap;
+	aspect:textures:0	= b_t_black;
+	aspect:megamap_icon	= <aspect_mesh>;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+[t:template,n:mana_shrine]
+{
+	specializes = point;
+	doc			= "shrine_mana effect";
+    category_name   = "special";
+
+    [gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+	[effect_manager]
+	{
+		repeat_rate = 5.5;
+		effect_name	= life_shrine2;
+		            
+		rep_effect_name	= life_shrine_balls;
+		            
+		repeat = true;
+		                    
+		start_msg = WE_REQ_ACTIVATE;	
+		stop_msg = WE_REQ_DEACTIVATE;
+	}
+}
+
+[t:template,n:life_shrine]
+{
+	specializes = point;
+	doc			= "shrine_health effect";
+	category_name       = "special";
+
+    [gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	1.0, 0, 0;
+		use_diffuse_color	=	true;
+	}
+
+	[effect_manager]
+	{
+		repeat_rate = 5.5;
+		effect_name	= life_shrine2;
+		            
+		rep_effect_name	= life_shrine_balls;
+		            
+		repeat = true;
+		                    
+		start_msg = WE_REQ_ACTIVATE;	
+		stop_msg = WE_REQ_DEACTIVATE;
+	}
+}
+
+[t:template,n:point_snapper]
+{
+	specializes   = point;          
+	doc           = "point_snapper";
+	category_name = "special";      
+	extra_doc     = "snap object to self when requested";
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.2, 0.8, 0.8;
+		use_diffuse_color	=	true;
+	}
+
+	[point_snapper]
+	{
+	}
+}
+
+[t:template,n:chipper]
+{
+    specializes = point;
+	doc			= "Chipper Spew point";
+   
+	category_name       = "special";
+
+	[placement]	{}
+	[common] 	{}
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.5, 0.5, 0.0;
+		use_diffuse_color	=	true;
+	}
+	[chipper] {}
+}
+
+
+
+

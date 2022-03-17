@@ -1,0 +1,1096 @@
+[t:template,n:base_staff]
+{
+	  doc = "Staff or staff-like weapon.";
+	  specializes = weapon_melee;
+	[aspect]
+	{
+		  material = wood;
+		[voice]
+		{
+			[put_down]
+			{
+				  * = s_e_gui_put_down_staff;
+			}
+		}
+	}
+	[attack]
+	{
+		  attack_class = ac_staff;
+		  is_melee = true;
+		  is_two_handed = true;
+		  reload_delay = 0;
+		  skill_class = melee;
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  equip_slot = es_weapon_hand;
+	}
+}
+[t:template,n:pitchfork]
+{
+	  doc = "Pitchfork";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_misc_pitchfork;
+	}
+	[attack]
+	{
+		  damage_max = 3;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Pitchfork";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_ms_pf;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_msc_005;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:rake]
+{
+	  doc = "Rake";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_misc_rake;
+	}
+	[attack]
+	{
+		  damage_max = 2;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Rake";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_ms_rk;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_msc_004;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:shovel]
+{
+	  doc = "Shovel";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_misc_shovel;
+	}
+	[attack]
+	{
+		  damage_max = 3;
+		  damage_min = 2;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Shovel";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_ms_sh;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_msc_002;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_d_c_b_avg]
+{
+	  doc = "need_name_d_c_b_avg";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_020;
+	}
+	[attack]
+	{
+		  damage_max = 13;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  screen_name = "Pike";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_c_b;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_040;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_d_c_r_avg]
+{
+	  doc = "Rod";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_018;
+	}
+	[attack]
+	{
+		  damage_max = 3;
+		  damage_min = 2;
+	}
+	[common]
+	{
+		  screen_name = "Rod";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_c_r;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_038;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_d_d_r_avg]
+{
+	  doc = "Cane";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_018;
+	}
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  screen_name = "Cane";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_c_r;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_036;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_d_o_b_avg]
+{
+	  doc = "need_name_d_o_b_avg";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_024;
+	}
+	[attack]
+	{
+		  damage_max = 14;
+		  damage_min = 8;
+	}
+	[common]
+	{
+		  screen_name = "Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_o_r;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_044;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_d_o_r_avg]
+{
+	  doc = "Rod";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_022;
+	}
+	[attack]
+	{
+		  damage_max = 7;
+		  damage_min = 3;
+	}
+	[common]
+	{
+		  screen_name = "Rod";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_o_r;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_042;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_g_c_b_avg]
+{
+	  doc = "Bladed Staff";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_019;
+	}
+	[attack]
+	{
+		i damage_max = 32;
+		i damage_min = 11;
+	}
+	[common]
+	{
+		  screen_name = "Bladed Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_c_b;
+		  equip_requirements = strength:12, dexterity:15;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_039;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 4;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_049;
+			  model = m_w_stf_029;
+			i modifier_max = 9;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 38;
+				i damage_min = 13;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_069;
+			  model = m_w_stf_029;
+			i modifier_max = 82;
+			i modifier_min = 8;
+			[attack]
+			{
+				i damage_max = 123;
+				i damage_min = 41;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_059;
+			  model = m_w_stf_029;
+			i modifier_max = 43;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 80;
+				i damage_min = 27;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_043;
+			  model = m_w_stf_023;
+			i modifier_max = 16;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 49;
+				i damage_min = 16;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_053;
+			  model = m_w_stf_033;
+			i modifier_max = 27;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 63;
+				i damage_min = 21;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_073;
+			  model = m_w_stf_033;
+			i modifier_max = 100;
+			i modifier_min = 10;
+			[attack]
+			{
+				i damage_max = 150;
+				i damage_min = 50;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_063;
+			  model = m_w_stf_033;
+			i modifier_max = 63;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 100;
+				i damage_min = 33;
+			}
+		}
+	}
+}
+[t:template,n:st_g_c_b_fun]
+{
+	  doc = "Worn Staff";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_019;
+	}
+	[attack]
+	{
+		i damage_max = 31;
+		i damage_min = 10;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Worn Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_c_r;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_029;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_g_c_r_avg]
+{
+	  doc = "Staff";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_017;
+	}
+	[attack]
+	{
+		i damage_max = 5;
+		i damage_min = 4;
+	}
+	[common]
+	{
+		  screen_name = "Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_c_r;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_037;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_047;
+			  model = m_w_stf_027;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 7;
+				i damage_min = 6;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_067;
+			  model = m_w_stf_027;
+			i modifier_max = 14;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 38;
+				i damage_min = 31;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_057;
+			  model = m_w_stf_027;
+			i modifier_max = 6;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 22;
+				i damage_min = 18;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_041;
+			  model = m_w_stf_021;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 10;
+				i damage_min = 8;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_051;
+			  model = m_w_stf_031;
+			i modifier_max = 3;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 15;
+				i damage_min = 13;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_071;
+			  model = m_w_stf_031;
+			i modifier_max = 19;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 47;
+				i damage_min = 39;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_061;
+			  model = m_w_stf_031;
+			i modifier_max = 10;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 30;
+				i damage_min = 25;
+			}
+		}
+	}
+}
+[t:template,n:st_g_c_s_avg]
+{
+	  doc = "st_g_c_s_avg";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_049;
+	}
+	[attack]
+	{
+		i damage_max = 15;
+		i damage_min = 11;
+	}
+	[common]
+	{
+		  screen_name = "Steel Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  equip_requirements = strength:12;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_090;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_091;
+			  model = m_w_stf_050;
+			i modifier_max = 3;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 20;
+				i damage_min = 14;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_093;
+			  model = m_w_stf_052;
+			i modifier_max = 45;
+			i modifier_min = 6;
+			[attack]
+			{
+				i damage_max = 65;
+				i damage_min = 48;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_092;
+			  model = m_w_stf_051;
+			i modifier_max = 20;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 42;
+				i damage_min = 31;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_094;
+			  model = m_w_stf_053;
+			i modifier_max = 6;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 24;
+				i damage_min = 18;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_095;
+			  model = m_w_stf_054;
+			i modifier_max = 11;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 33;
+				i damage_min = 24;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_097;
+			  model = m_w_stf_056;
+			i modifier_max = 69;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 79;
+				i damage_min = 58;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_stf_096;
+			  model = m_w_stf_055;
+			i modifier_max = 29;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 52;
+				i damage_min = 38;
+			}
+		}
+	}
+}
+[t:template,n:st_g_d_r_avg]
+{
+	  doc = "Walking Stick";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_017;
+	}
+	[attack]
+	{
+		  damage_max = 2;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  screen_name = "Walking Stick";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_st_c_r;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_035;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_axe_str]
+{
+	  doc = "st_un_axe_str";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_038;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Axe Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_078;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_b_glaive]
+{
+	  doc = "st_un_b_glaive";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_046;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Bladed Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_087;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_b_hook]
+{
+	  doc = "st_un_b_hook";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_043;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Hooked Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_084;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_b_wing]
+{
+	  doc = "st_un_b_wing";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_043;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Wing Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_083;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_hand]
+{
+	  doc = "st_un_hand";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_041;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Hand Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_081;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_ice_c_d_b_avg]
+{
+	  doc = "st_un_ice_c_d_b_avg";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_013;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Ice Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_013;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_mc_s]
+{
+	  doc = "st_un_mc_s";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_044;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Mace Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_085;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_merik]
+{
+	  doc = "st_un_merik";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_014;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Merik's Staff";
+	}
+	[effect_manager]
+	{
+		repeat_rate		= 0.2;
+	    effect_name		= "staff_merik";
+	    rep_effect_name	= "staff_merik_curve";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_014;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_pointy]
+{
+	  doc = "st_un_pointy ";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_048;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Sharp Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_089;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_pudgel]
+{
+	  doc = "st_un_pudgel";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_039;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Pudgel Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_079;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_reaper]
+{
+	  doc = "st_un_reaper";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_035;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Reaper's Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_035;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_seck_gom]
+{
+	  doc = "st_un_seck_gom";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_037;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Gom's Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_077;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_seck_mage]
+{
+	  doc = "st_un_seck_mage";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_036;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Seck Mage Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_076;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_skull]
+{
+	  doc = "st_un_skull";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_040;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Skull Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_080;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_tiger]
+{
+	  doc = "st_un_tiger";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_047;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Tiger Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_088;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_toothpick]
+{
+	  doc = "st_un_toothpick";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_042;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Toothpick";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_082;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_toreck]
+{
+	  doc = "st_un_toreck";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_012;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Sickle Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_010;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:st_un_twirl]
+{
+	  doc = "st_un_twirl";
+	  specializes = base_staff;
+	[aspect]
+	{
+		  model = m_w_stf_045;
+	}
+	[attack]
+	{
+		  damage_max = 35;
+		  damage_min = 25;
+	}
+	[common]
+	{
+		  screen_name = "Twirled Staff";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_stf_magic-globe;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_stf_086;
+		  inventory_width = 1;
+	}
+}

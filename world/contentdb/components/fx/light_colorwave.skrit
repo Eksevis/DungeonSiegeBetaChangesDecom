@@ -1,0 +1,132 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  light_colorwave.skrit
+// Author(s):  Scott Bilas
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool		_server_only$			= false;
+property string		_doc$					= "Smoothly transition from one color to another and back";
+
+// exported properties
+property LightId	siege_light$			= 0					doc = "Identifier of siege light to attach this effect to";
+property float		secondary_color_r$		= 1.0				doc = "Secondary color red component (0.0-1.0)";
+property float		secondary_color_g$		= 1.0				doc = "Secondary color green component (0.0-1.0)";
+property float		secondary_color_b$		= 1.0				doc = "Secondary color blue component (0.0-1.0)";
+property float		secondary_intensity$	= 0.0				doc = "Secondary intensity";
+property float		duration$				= 0.0				doc = "Duration for effect to last in seconds (0 for infinite)";
+property float		period$					= 5.0				doc = "Period (seconds per cycle) of the waveform (0 for random wave)";
+property bool		initially_active$		= true				doc = "Start this effect on construction?";
+property bool		self_destruct$			= false				doc = "Self-destruct on algorithm completion";
+property bool		apply_to_color$			= true				doc = "Apply the effect to the color?";
+property bool		apply_to_intensity$		= true				doc = "Apply the effect to the intensity?";
+
+owner = GoSkritComponent;
+
+// globals
+float initial_color_r$;
+float initial_color_g$;
+float initial_color_b$;
+float initial_intensity$;
+float time$;
+
+//////////////////////////////////////////////////////////////////////////////
+
+trigger OnGoDrawDebugHud$
+{
+	if ( siege_light$.IsValid )
+	{
+		SiegePos pos$ = SiegePos.MakeDefault;
+		siege_light$.GetPosition( pos$ );
+		World.DrawDebugLine( owner.go.Placement.Position,
+							 pos$,
+							 MakeColor( 1.0, 1.0, 1.0, 0.5 ),
+							 "colorwave" );
+	}
+}
+
+startup state Constructed$
+{
+	// $ wait in this state until the siege light is in the world
+
+	event OnGoUpdate$( float /*deltaTime$*/ )
+	{
+		if ( siege_light$.IsValid )
+		{
+			initial_color_r$ = GetRed  ( siege_light$.Color );
+			initial_color_g$ = GetGreen( siege_light$.Color );
+			initial_color_b$ = GetBlue ( siege_light$.Color );
+			initial_intensity$ = siege_light$.Intensity;
+			setstate Wait$;
+		}
+	}
+
+	event OnExitState$
+	{
+		if ( initially_active$ )
+		{
+			PostWorldMessage( WE_REQ_ACTIVATE, owner.Goid, 0 );
+		}
+	}
+}
+
+state Wait$
+{
+	transition -> Play$: OnGoHandleMessage( WE_REQ_ACTIVATE ) =
+	{
+		time$ = 0;
+		if ( duration$ > 0 )
+		{
+			PostWorldMessage( self_destruct$ ? WE_REQ_DELETE : WE_REQ_DEACTIVATE, owner.Goid, duration$ );
+		}
+	}
+}
+
+float Filter$( float a$, float b$, float t$ )
+{
+	return ( a$ - ((a$ - b$) * t$) );
+}
+
+state Play$
+{
+	transition -> Wait$: OnGoHandleMessage( WE_REQ_DEACTIVATE );
+
+	event OnGoUpdate$( float deltaTime$ )
+	{
+		time$ += deltaTime$;
+
+		float t$;
+		if ( period$ == 0 )
+		{
+			t$ = Math.RandomFloat( 1.0 );
+		}
+		else
+		{
+			t$ = 0.5 + (0.5 * Math.Sin( (time$ / period$) * Math.Pi ));
+		}
+
+		if ( siege_light$.IsValid )
+		{
+			if ( apply_to_color$ )
+			{
+				siege_light$.Color = MakeColor( Filter$( secondary_color_r$, initial_color_r$, t$ ),
+												Filter$( secondary_color_g$, initial_color_g$, t$ ),
+												Filter$( secondary_color_b$, initial_color_b$, t$ ) );
+			}
+			if ( apply_to_intensity$ )
+			{
+				siege_light$.Intensity = Filter$( secondary_intensity$, initial_intensity$, t$ );
+			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

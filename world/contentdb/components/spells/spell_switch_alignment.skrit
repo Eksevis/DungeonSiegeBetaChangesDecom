@@ -1,0 +1,152 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_switch_alignment.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string 			effect_script$		= ""			doc = "Name of the SiegeFx script that will be providing the visual.";
+property string 			effect_params$		= ""   			doc = "Parameters to send to SiegeFx script";
+                                                        		
+property float  			alignment_freq_min$	= -1.0			doc = "how often to switch alignments";
+property float  			alignment_freq_max$	= -1.0			doc = "how often to switch alignments";
+
+property eActorAlignment	Alignment1$			= AA_GOOD		doc = "First alignment to choose from";
+property eActorAlignment	Alignment2$			= AA_NEUTRAL	doc = "Second alignment to choose from";
+property eActorAlignment	Alignment3$			= AA_EVIL		doc = "Third alignment to choose from";
+
+property int				Num_Alignments$		= 3				doc = "Number of alignments to choose from";
+property string 			description$		= ""			doc = "Description of enchantment being applied";
+property string 			screen_name$		= ""			doc = "Name of effect to use as a screen name.";
+property string 			state_name$			= "align"		doc = "Name of effect to use as a generic state.";
+
+owner = GoSkritComponent;
+
+eActorAlignment orig_alignment$;
+Goid			caster$;
+Goid			target$;
+GoActor			target_actor$;
+float 			spell_duration$;
+int				active_effect$ = 0;
+			
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+
+			target$ = MakeGoid( msg$.GetData1() );
+			target_actor$ = target$.Go.Actor;
+			caster$ = msg$.GetSendFrom();
+			spell_duration$ = owner.Go.Magic.EvaluateEffectDuration(target$, caster$);
+			orig_alignment$ = target$.go.actor.getalignment;	
+			
+			
+			if( target$.Go.Actor.HasGenericState( state_name$ ) ) {
+				SetState Abort$;
+			} else {
+				// Start the visual effect
+				active_effect$ = SiegeFx.SRunScript( effect_script$, target$, caster$, effect_params$, owner.Goid, e$ );
+				this.CreateTimer( 2, spell_duration$ );
+				this.SetTimerGlobal( 2, true );
+				SetState Loop$;
+			}
+		}
+	}
+}
+
+
+state Loop$
+{	
+	trigger OnTimer$( 1 )
+	{
+		SetState Loop$;
+	}
+	trigger OnTimer$( 2 )
+	{
+		SetState CleanUp$;
+	}
+	event OnEnterState$
+	{	
+		if( !target$.isvalid )
+		{
+			SetState Finished$;
+		} else {
+			if( ( target$.go.aspect.lifestate == LS_ALIVE_CONSCIOUS ) || 
+								( target$.go.aspect.lifestate == LS_ALIVE_UNCONSCIOUS ) )
+			{
+				int rand_align$ = Math.RandomInt( 0, Math.MaxInt( 0, Num_Alignments$-1 ) );
+				
+				if (rand_align$ == 0) {
+					target_actor$.ssetalignment( alignment1$ );
+				} else if (rand_align$ == 1) {
+					target_actor$.ssetalignment( alignment2$ );
+				} else if (rand_align$ == 2) {
+					target_actor$.ssetalignment( alignment3$ );
+				}
+				target$.Go.Mind.SDoJob( MakeJobReq( JAT_STOP, JQ_ACTION, QP_CLEAR, JO_REFLEX ));
+				target$.Go.Mind.ResetSensors();
+				
+				// Add the effected state so this can only happen once
+				target$.Go.Actor.AddGenericState( state_name$, screen_name$, description$, spell_duration$, caster$ );	
+				
+				if ( (alignment_freq_min$ > 0.0) && (alignment_freq_max$ > 0.0) )
+				{
+					float random_delay$ = Math.RandomFloat( alignment_freq_min$, alignment_freq_max$ );
+					this.CreateTimer( 1, random_delay$ );
+				}
+			} else	{
+				SetState CleanUp$;
+			}
+		}
+	}
+}
+
+state Abort$
+{
+	event OnEnterState$
+	{
+		report.generic("abort\n");
+		// Refund the players mana
+		Rules.ChangeMana( caster$, owner.go.getmagic.manacost );
+
+		SetState Finished$;
+	}
+}
+
+state CleanUp$
+{
+	event OnEnterState$
+	{
+		if( target$.isvalid )
+		{
+			target$.go.actor.ssetalignment( orig_alignment$ );
+			target$.Go.Actor.RemoveGenericState( state_name$ );	
+			
+			if( ( target$.go.aspect.lifestate == LS_ALIVE_CONSCIOUS ) || 
+				( target$.go.aspect.lifestate == LS_ALIVE_UNCONSCIOUS ) )
+			{
+				target$.Go.Mind.SDoJob( MakeJobReq( JAT_STOP, JQ_ACTION, QP_CLEAR, JO_REFLEX ));
+				target$.Go.Mind.ResetSensors();
+			}
+			if (active_effect$ != 0)
+			{
+				SiegeFx.StopScript( active_effect$ );
+			}
+		}
+	}
+}
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+}

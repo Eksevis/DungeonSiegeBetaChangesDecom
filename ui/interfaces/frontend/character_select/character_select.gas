@@ -1,0 +1,294 @@
+[character_select]
+{
+	interface = true;
+	[t:button,n:button_face_left]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 11;
+		rect = 176,355,213,375;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_prev_face);
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_face_right]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 6;
+		rect = 340,355,377,375;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_next_face);
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_gender_left]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 9;
+		rect = 176,453,213,473;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(previous_character);			
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_gender_right]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 8;
+		rect = 340,453,377,473;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(next_character);		
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_hair_left]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 10;
+		rect = 176,403,213,423;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_prev_hair);
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_hair_right]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 7;
+		rect = 340,403,377,423;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_next_hair);
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_next]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 25;
+		rect = 461,575,562,595;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(on_change_map);			
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 1;
+	}
+	[t:button,n:button_pants_left]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		rect = 176,306,213,326;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_prev_pants);
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_pants_right]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 5;
+		rect = 340,305,377,325;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_next_pants);			
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_previous]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 12;
+		rect = 237,575,338,595;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(back_to_single_player);			
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 1;
+	}
+	[t:button,n:button_shirt_left]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 3;
+		rect = 176,255,213,275;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_prev_shirt);
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:button,n:button_shirt_right]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 4;
+		rect = 340,255,377,275;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress=notify(char_next_shirt);
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 3;
+	}
+	[t:edit_box,n:name_edit_box]
+	{
+		alpha = 1.000000;
+		clear_select = false;
+		common_control = false;
+		common_template = ;
+		draw_order = 11;
+		font_color = -1;
+		font_size = 15;
+		font_type = b_gui_fnt_14p_lucinda-bright;		
+		max_string_size = 14;
+		permanent_focus = false;
+		rect = 297,518,530,542;
+		text = "";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[prompt] { texture=b_gui_fe_m_single_prompt; width=1; }
+
+		[messages]
+		{		
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 1;
+	}
+	[t:listener,n:listener]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 15;
+		rect = 408,73,649,494;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+}

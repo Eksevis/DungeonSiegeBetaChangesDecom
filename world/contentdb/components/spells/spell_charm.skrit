@@ -1,0 +1,135 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_charm.skrit
+// Author(s):  Rick Saenz
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string effect_script$		= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string effect_params$		= ""   	doc = "Parameters to send to SiegeFx script";
+property string description$		= ""	doc = "Description of enchantment being applied";
+property string state_name$			= ""	doc = "Name of effect to use as a generic state and as a screen name.";
+
+owner = GoSkritComponent;
+Goid target$;
+Goid caster$;
+float spell_duration$;
+int		active_effect$ = 0;
+
+eActorAlignment OriginalAlignment$;
+
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+			
+			spell_duration$ = owner.Go.Magic.EvaluateEffectDuration(target$, caster$);
+
+			if(target$.IsValid() && target$.IsValid())
+			{
+				// Filter out bogus targets
+				if( !target$.go.hasactor || !caster$.go.hasactor ) {
+					report.genericf( "%s being cast on invalid target\n", description$ );
+					SetState( Abort$ );
+	
+				} else {
+	
+					// Check to see if the enchantment has already been cast on this go
+					if( target$.Go.Actor.HasGenericState( state_name$ ) ) {
+						SetState( Abort$ );
+	
+					} else {
+						// Get caster alignment
+						eActorAlignment caster_alignment$ = caster$.go.actor.getalignment;
+	
+						// Save the old alignment so we can restore it later when the actor is un-charmed
+						OriginalAlignment$ = target$.go.actor.alignment;
+	
+						if( caster_alignment$ != OriginalAlignment$ ) {
+							// Set the alignment to the casters alignment
+							target$.go.actor.ssetalignment( caster$.go.actor.getalignment );
+						}
+	
+						// Start the visual
+						if(effect_script$ != "")
+						{
+							active_effect$ = SiegeFx.SRunScript( effect_script$, target$, caster$, effect_params$, owner.Goid, e$ );
+						}
+						// Give the charmed actor new orders
+						target$.Go.Mind.SDoJob( MakeJobReq( JAT_STOP, JQ_ACTION, QP_CLEAR, JO_REFLEX ));
+						target$.Go.Mind.SDoJob( MakeJobReq( JAT_GUARD, JQ_ACTION, QP_CLEAR, JO_REFLEX, caster$ ) );
+						target$.Go.Mind.ResetSensors();
+						
+						// Add the effected state so this can only happen once
+						target$.Go.Actor.AddGenericState( state_name$, state_name$, description$, spell_duration$, caster$ );
+						
+						this.CreateTimer( 1, spell_duration$ );
+					}
+				}
+			}
+		}
+	}
+
+	transition -> RestoreState$ :  OnTimer( 1 );
+}
+
+
+
+state RestoreState$
+{
+	event OnEnterState$
+	{
+		// If the go is still alive then restore his state
+		if( target$.IsValid ) {
+
+			// Attempt to restore the game object based on his alignment
+			target$.go.actor.ssetalignment( OriginalAlignment$ );
+
+			// Now tell the actor to defend himself
+			
+			target$.Go.Mind.SDoJob( MakeJobReq( JAT_STOP, JQ_ACTION, QP_CLEAR, JO_REFLEX ));
+			target$.Go.Mind.ResetSensors();
+			
+			// remove the state so this can be affected again
+			target$.Go.Actor.RemoveGenericState( state_name$ );	
+			if (active_effect$ != 0)
+			{
+				SiegeFx.StopScript( active_effect$ );
+			}
+		} else {
+			report.generic("spell_charm.skrit:Finished$: target$ is no longer valid...\n");
+		}
+
+		SetState( Finished$ );
+	}
+}
+
+
+state Abort$
+{
+	event OnEnterState$
+	{
+		// Refund the players mana
+		Rules.ChangeMana( caster$, owner.go.getmagic.manacost );
+
+		SetState( Finished$ );
+	}
+}
+
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Delete this skrit
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+}

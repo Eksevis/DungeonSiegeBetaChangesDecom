@@ -1,0 +1,566 @@
+[options_video]
+{
+	interface = true;
+	modal = true;
+	centered = background;
+//	intended_resolution_height = 480;
+//	intended_resolution_width = 640;
+
+	[t:dialog_box,n:background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 1;
+		rect = 105,22,535,390;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:options_bg]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 8;
+		rect = 117,80,524,345;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:options_title]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 10;
+		font_color = -1;
+		font_size = 22;
+		font_type = b_gui_fnt_22p_lucinda-bright;
+		justify = center;
+		rect = 200,38,440,52;
+		text = "Options Menu";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:tab,n:tab_video]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 1;
+		radio_group = options_menu_tabs;
+		rect = 118,64,218,80;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		enabled = false;
+		[messages]
+		{ 
+			oncreated=message(onrollover);
+		}
+		[t:text,n:tab_video_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 128,65,218,80;
+			text = "Video";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_audio]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 4;
+		radio_group = options_menu_tabs;
+		rect = 219,67,321,83;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { oncheck=notify(show_options_audio); }
+		[t:text,n:tab_audio_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;			
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 231,65,321,80;
+			text = "Audio";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_input]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 2;
+		radio_group = options_menu_tabs;
+		rect = 322,67,423,83;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { oncheck=notify(show_options_input); }
+		[t:text,n:tab_input_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 334,65,423,80;
+			text = "Input";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_game]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 3;
+		radio_group = options_menu_tabs;
+		rect = 424,67,524,83;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { oncheck=notify(show_options_game); }
+		[t:text,n:tab_game_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 435,65,524,80;
+			text = "Game";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+
+	[t:button,n:button_ok]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 8;
+		rect = 200,358,310,374;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_ok_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 200,359,310,374;
+			text = "OK";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(set_options) & playsound(s_e_interface_close); }
+	}
+	[t:button,n:button_cancel]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 8;
+		rect = 330,358,440,374;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_cancel_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_size = 14;
+			font_color = -1;
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 330,359,440,374;
+			text = "Cancel";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages]
+		{ 
+			onbuttonpress = notify(cancel_options);
+			onescape = notify(cancel_options);
+		}
+	}
+	[t:button,n:button_defaults]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 58;
+		rect = 361,318,501,334;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_defaults_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 14;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 406,319,516,334;
+			text = "Defaults";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(default_options_video) & playsound(s_e_interface_close.wav); }
+	}
+
+	[t:text,n:text_screen_res]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = button_4;
+		draw_order = 70;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		justify = right;
+		rect = 150,100,320,116;
+		text = "Screen Resolution";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_screen_res]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 15;
+		rect = 340,100,474,116;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+//		allow_user_press = false;
+		[t:text,n:button_screen_res_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 14;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 392,101,490,116;
+			text = ;
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:combo_box,n:combo_screen_res]
+	{
+		common_control = false;
+		common_template = ;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		text_color = -1;
+		draw_order = 30;
+		rect = 360,101,474,116;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		has_background = true;
+		auto_size = true;
+		max_visible_elements = 4;
+		[t:button,n:button_combo_show_screen_res]
+		{
+			common_control = true;
+			common_template = down;
+			draw_order = 32;
+			rect = 474,100,490,116;
+			texture = b_gui_cmn_button_down_up;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			[messages]
+			{
+				onlbuttondown = parentmessage(oncomboexpand);
+			}
+		}
+		[t:listbox,n:listbox_screen_res]
+		{
+			alpha = 0.2500000;
+			common_control = true;
+			common_template = ;
+			draw_order = 500;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			rect = 340,117,490,210;
+			text_color = 0xffffffff;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			left_indent = 4;
+			[t:selection_box,n:selection_box]
+			{
+				alpha = 0.8;
+				texture = b_gui_cmn_selection;
+			}
+			[messages]
+			{
+				oncreated = setelementheight(16);
+			}
+		}
+	}
+
+	[t:text,n:text_shadows]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 73;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		justify = right;
+		rect = 150,130,320,146;
+		text = "Shadows";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_shadows]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 15;
+		rect = 340,130,474,146;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_shadows_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = 0;
+			font_size = 12;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 392,161,490,176;
+			text = ;
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:combo_box,n:combo_shadows]
+	{
+		common_control = false;
+		common_template = ;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		text_color = -1;
+		draw_order = 30;
+		rect = 360,131,474,146;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;				
+		has_background = true;
+		auto_size = true;
+		max_visible_elements = 4;
+		[t:button,n:button_combo_show_shadows]
+		{
+			common_control = true;
+			common_template = down;
+			draw_order = 32;
+			rect = 474,130,490,146;
+			texture = b_gui_cmn_button_down_up;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			[messages]
+			{
+				onlbuttondown = parentmessage(oncomboexpand);
+			}
+		}
+		[t:listbox,n:listbox_shadows]
+		{
+			alpha = 0.2500000;
+			common_control = true;
+			common_template = ;
+			draw_order = 500;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			rect = 340,147,490,207;
+			text_color = 0xffffffff;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			left_indent = 4;
+			[t:selection_box,n:selection_box]
+			{
+				alpha = 0.5;
+				texture = b_gui_cmn_selection;
+			}
+			[messages]
+			{
+				oncreated = setelementheight(16);
+			}
+		}
+	}
+	
+	[t:text,n:text_filtering]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 74;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		justify = right;
+		rect = 150,160,320,176;
+		text = "Texture Filtering";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_texture_filtering]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 15;
+		rect = 340,160,490,176;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:button_texture_filtering_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 14;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 392,191,490,206;
+			text = ;
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(toggle_option_texture_filtering); }
+	}
+	
+	[t:text,n:text_gamma]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 78;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		justify = right;
+		rect = 150,190,320,206;
+		text = "Gamma Correction";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:slider,n:slider_gamma]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = track;
+		draw_order = 20;
+		rect = 335,190,495,206;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		slide_axis = horizontal;
+		min_value = 0;
+		max_value = 100;
+		step_value = 10;
+		[messages] { onchange=notify(slider_change_gamma); }
+	}
+
+	[t:text,n:text_objectdetail]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 78;
+		font_color = -1;
+		font_size = 14;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		//font_1024x768 = b_gui_fnt_16p_lucinda-bright;
+		justify = right;
+		rect = 150,220,320,236;
+		text = "Object Detail";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:slider,n:slider_objectdetail]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = track;
+		draw_order = 20;
+		rect = 335,220,495,236;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		slide_axis = horizontal;
+		min_value = 0;
+		max_value = 10;
+		step_value = 1;
+		default_value = 100;
+		[messages] { onchange=notify(slider_change_objectdetail); }
+	}
+}

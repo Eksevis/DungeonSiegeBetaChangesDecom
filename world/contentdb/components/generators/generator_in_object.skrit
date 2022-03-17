@@ -1,0 +1,52 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  generator_in_object.skrit
+// Author(s):  Eric Tams, modified from generator_basic from SB
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "A pop out a guy when an object breaks generator";
+property string _required_component$ = "placement";
+
+// exported properties
+property 	string		child_template_name$	="phrak"		doc ="template name of the actor to spawn";
+property	eWorldEvent spawn_event$			= WE_EXPLODED	doc ="message to spawn new go on.";
+property	float		spawn_chance$			= 0.25			doc ="chance to spawn 0-1";
+
+owner = GoSkritComponent;
+GoCloneReq cloneReq$;
+
+//////////////////////////////////////////////////////////////////////////////
+// local states
+
+startup state WaitToSpawn$
+{	
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == spawn_event$ )
+		{
+			if (Math.RandomFloat(1.0) <= spawn_chance$)
+			{
+				cloneReq$ = MakeGoCloneReq( owner.Goid, child_template_name$ );
+				cloneReq$.StartingPos = owner.Go.Placement.Position;
+				cloneReq$.SetStartingOrient = owner.Go.Placement.Orientation;
+				cloneReq$.SnapToTerrain = true;
+	   			Goid newGoid$	= GoDb.SCloneGo( cloneReq$ );
+	   		}
+	   		SetState Finished$;
+	   	}
+	}
+}
+
+state Finished$
+{
+}

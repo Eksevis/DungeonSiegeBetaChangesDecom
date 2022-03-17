@@ -1,0 +1,1349 @@
+[t:template,n:base_tree]
+{
+	doc = "Base template for all trees";
+	specializes = non_interactive_nonblocking;
+	[aspect] { does_block_camera=true; }
+	[common] { screen_name="Tree"; }
+}
+[t:template,n:tree_des_acacia]
+{
+	category_name = "trees";
+	doc = "des_acacia";
+	specializes = base_tree;
+	[aspect] { model=m_i_des_tree-01; }
+}
+[t:template,n:tree_des_dead_01]
+{
+	category_name = "trees";
+	doc = "des_dead_trunk";
+	specializes = base_tree;
+	[aspect] { model=m_i_des_tree-dead-01; }
+}
+[t:template,n:tree_des_dead_02]
+{
+	category_name = "trees";
+	doc = "des_dead_tree";
+	specializes = base_tree;
+	[aspect] { model=m_i_des_tree-dead-02; }
+}
+[t:template,n:tree_des_dead_03]
+{
+	category_name = "foliage";
+	doc = "des_bush_dead_lg";
+	specializes = base_tree;
+	[aspect] 
+	{ 
+		model=m_i_glb_tree-dead-03; 
+		[textures] {0 = b_i_des_tree-dead-02;}
+	}
+}
+[t:template,n:tree_des_pine_01]
+{
+	category_name = "trees";
+	doc = "des_pine_lg";
+	specializes = base_tree;
+	[aspect] { model=m_i_des_tree-pine-01; }
+}
+[t:template,n:tree_des_pine_02]
+{
+	category_name = "trees";
+	doc = "des_pine_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_des_tree-pine-02; }
+}
+[t:template,n:tree_des_yucca]
+{
+	category_name = "trees";
+	doc = "des_yucca";
+	specializes = base_tree;
+	[aspect] { model=m_i_des_tree-yucca; }
+}
+[t:template,n:tree_glb_maple_burnt_01]
+{
+	category_name = "trees";
+	doc = "maple_burnt";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-maple-burnt-01; }
+}
+[t:template,n:tree_glb_pine_burnt_01]
+{
+	category_name = "trees";
+	doc = "pine_burnt";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-pine-burnt-01; }
+}
+[t:template,n:tree_glb_pine_sequoia_01]
+{
+	category_name = "trees";
+	doc = "seq_pine_9m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-01;
+		scale_multiplier = 0.75;
+		[textures] { 0=b_i_grs_tree-pine-sequoia; }
+	}
+}
+[t:template,n:tree_glb_pine_sequoia_02]
+{
+	category_name = "trees";
+	doc = "seq_pine_12m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-01;
+		[textures] { 0=b_i_grs_tree-pine-sequoia; }
+	}
+}
+[t:template,n:tree_glb_pine_sequoia_03]
+{
+	category_name = "trees";
+	doc = "seq_pine_4m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-02;
+		scale_multiplier = 0.66;
+		[textures] { 0=b_i_grs_tree-pine-sequoia; }
+	}
+}
+[t:template,n:tree_glb_pine_sequoia_04]
+{
+	category_name = "trees";
+	doc = "seq_pine_6m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-02;
+		[textures] { 0=b_i_grs_tree-pine-sequoia; }
+	}
+}
+[t:template,n:tree_glb_sway_03]
+{
+	category_name = "trees";
+	doc = "grs_pine_12m_sway";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-03; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-03-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_glb_sway_04]
+{
+	category_name = "trees";
+	doc = "grs_pine_6m_sway";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-04; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-04-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_glb_sway_05]
+{
+	category_name = "trees";
+	doc = "grs_pine_9m_sway";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-03;
+		scale_multiplier = 0.75;
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-03-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_glb_sway_06]
+{
+	category_name = "trees";
+	doc = "grs_pine_4m_sway";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-04;
+		scale_multiplier = 0.66;
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-04-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_grs_apple_01]
+{
+	category_name = "trees";
+	doc = "grs_apple";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-apple-01; }
+}
+[t:template,n:tree_grs_cliff_01]
+{
+	category_name = "trees";
+	doc = "grs_willow_cliff";
+	specializes = base_tree;
+	[aspect] { model=m_i_grs_tree-cliff-01; }
+}
+[t:template,n:tree_grs_deciduous_01]
+{
+	category_name = "trees";
+	doc = "grs_madrona_lg_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-01;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_deciduous_02]
+{
+	category_name = "trees";
+	doc = "grs_laurel_lg_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-01;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_deciduous_03]
+{
+	category_name = "trees";
+	doc = "grs_mauve_lg_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-01;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_deciduous_04]
+{
+	category_name = "trees";
+	doc = "grs_ash_lg_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-01;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_deciduous_05]
+{
+	category_name = "trees";
+	doc = "grs_madrona_med_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-02;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_deciduous_06]
+{
+	category_name = "trees";
+	doc = "grs_laurel_med_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-02;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_deciduous_07]
+{
+	category_name = "trees";
+	doc = "grs_mauve_med_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-02;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_deciduous_08]
+{
+	category_name = "trees";
+	doc = "grs_ash_med_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-02;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_deciduous_09]
+{
+	category_name = "trees";
+	doc = "grs_madrona_sm_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-03;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_deciduous_10]
+{
+	category_name = "trees";
+	doc = "grs_laurel_sm_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-03;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_deciduous_11]
+{
+	category_name = "trees";
+	doc = "grs_mauve_sm_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-03;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_deciduous_12]
+{
+	category_name = "trees";
+	doc = "grs_ash_sm_bushy";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-03;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_deciduous_13]
+{
+	category_name = "trees";
+	doc = "grs_madrona_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-04;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_deciduous_14]
+{
+	category_name = "trees";
+	doc = "grs_laurel_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-04;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_deciduous_15]
+{
+	category_name = "trees";
+	doc = "grs_mauve_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-04;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_deciduous_16]
+{
+	category_name = "trees";
+	doc = "grs_ash_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-04;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_deciduous_17]
+{
+	category_name = "trees";
+	doc = "grs_madrona_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-05;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_deciduous_18]
+{
+	category_name = "trees";
+	doc = "grs_laurel_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-05;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_deciduous_19]
+{
+	category_name = "trees";
+	doc = "grs_mauve_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-05;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_deciduous_20]
+{
+	category_name = "trees";
+	doc = "grs_ash_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-05;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_deciduous_21]
+{
+	category_name = "trees";
+	doc = "grs_madrona_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-06;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_deciduous_22]
+{
+	category_name = "trees";
+	doc = "grs_laurel_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-06;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_deciduous_23]
+{
+	category_name = "trees";
+	doc = "grs_mauve_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-06;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_deciduous_24]
+{
+	category_name = "trees";
+	doc = "grs_ash_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-06;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_group_01]
+{
+	category_name = "bad";
+	doc = "grs_ash_clump_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-01;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_group_02]
+{
+	category_name = "bad";
+	doc = "grs_madrona_clump_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-01;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_group_03]
+{
+	category_name = "bad";
+	doc = "grs_mauve_clump_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-01;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_group_04]
+{
+	category_name = "bad";
+	doc = "grs_laurel_clump_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-01;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_group_05]
+{
+	category_name = "bad";
+	doc = "grs_ash_group_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-02;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_group_06]
+{
+	category_name = "bad";
+	doc = "grs_madrona_group_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-02;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_group_07]
+{
+	category_name = "bad";
+	doc = "grs_mauve_group_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-02;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_group_08]
+{
+	category_name = "bad";
+	doc = "grs_laurel_group_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-02;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_group_09]
+{
+	category_name = "bad";
+	doc = "grs_ash_clump_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-03;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_group_10]
+{
+	category_name = "bad";
+	doc = "grs_madrona_clump_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-03;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_group_11]
+{
+	category_name = "bad";
+	doc = "grs_mauve_clump_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-03;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_group_12]
+{
+	category_name = "bad";
+	doc = "grs_laurel_clump_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-03;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_group_13]
+{
+	category_name = "bad";
+	doc = "grs_ash_group_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-04;
+		[textures] { 0=b_i_grs_tree-ash; }
+	}
+}
+[t:template,n:tree_grs_group_14]
+{
+	category_name = "bad";
+	doc = "grs_madrona_group_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-04;
+		[textures] { 0=b_i_grs_tree-madrona; }
+	}
+}
+[t:template,n:tree_grs_group_15]
+{
+	category_name = "bad";
+	doc = "grs_mauve_group_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-04;
+		[textures] { 0=b_i_grs_tree-mauve; }
+	}
+}
+[t:template,n:tree_grs_group_16]
+{
+	category_name = "bad";
+	doc = "grs_laurel_group_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-04;
+		[textures] { 0=b_i_grs_tree-laurel; }
+	}
+}
+[t:template,n:tree_grs_hemlock_01]
+{
+	category_name = "trees";
+	doc = "grs_hemlock";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-hemlock-01; }
+}
+[t:template,n:tree_grs_leaning]
+{
+	category_name = "trees";
+	doc = "grs_willow_leaning";
+	specializes = base_tree;
+	[aspect] { model=m_i_grs_tree-leaning; }
+}
+[t:template,n:tree_grs_limb]
+{
+	category_name = "trees";
+	doc = "grs_tree_limb_grn";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-limb; }
+}
+[t:template,n:tree_grs_maple_burgandy_01]
+{
+	category_name = "trees";
+	doc = "grs_maple_red_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-01;
+		[textures] { 0=b_i_grs_tree-burgandy; }
+	}
+}
+[t:template,n:tree_grs_maple_burgandy_02]
+{
+	category_name = "trees";
+	doc = "grs_maple_red_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-02;
+		[textures] { 0=b_i_grs_tree-burgandy; }
+	}
+}
+[t:template,n:tree_grs_maple_burgandy_03]
+{
+	category_name = "trees";
+	doc = "grs_maple_red_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-03;
+		[textures] { 0=b_i_grs_tree-burgandy; }
+	}
+}
+[t:template,n:tree_grs_maple_burgandy_04]
+{
+	category_name = "trees";
+	doc = "grs_aspen_red_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-04;
+		[textures] { 0=b_i_grs_tree-burgandy-02; }
+	}
+}
+[t:template,n:tree_grs_maple_burgandy_05]
+{
+	category_name = "trees";
+	doc = "grs_aspen_red_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-05;
+		[textures] { 0=b_i_grs_tree-burgandy-02; }
+	}
+}
+[t:template,n:tree_grs_maple_burgandy_06]
+{
+	category_name = "trees";
+	doc = "grs_aspen_red_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-deciduous-06;
+		[textures] { 0=b_i_grs_tree-burgandy-02; }
+	}
+}
+[t:template,n:tree_grs_maple_red_group_01]
+{
+	category_name = "bad";
+	doc = "grs_aspen_red_clump_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-maple-group-01; }
+}
+[t:template,n:tree_grs_maple_red_group_02]
+{
+	category_name = "bad";
+	doc = "grs_aspen_red_group_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-maple-group-02; }
+}
+[t:template,n:tree_grs_maple_red_group_03]
+{
+	category_name = "bad";
+	doc = "grs_aspen_red_clump_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-03;
+		[textures] { 0=b_i_grs_tree-burgandy-02; }
+	}
+}
+[t:template,n:tree_grs_maple_red_group_04]
+{
+	category_name = "bad";
+	doc = "grs_aspen_red_group_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-04;
+		[textures] { 0=b_i_grs_tree-burgandy-02; }
+	}
+}
+[t:template,n:tree_grs_maple_yellow_01]
+{
+	category_name = "trees";
+	doc = "grs_maple_yllw_lg";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-deciduous-01; }
+}
+[t:template,n:tree_grs_maple_yellow_02]
+{
+	category_name = "trees";
+	doc = "grs_maple_yllw_med";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-deciduous-02; }
+}
+[t:template,n:tree_grs_maple_yellow_03]
+{
+	category_name = "trees";
+	doc = "grs_maple_yllw_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-deciduous-03; }
+}
+[t:template,n:tree_grs_maple_yellow_04]
+{
+	category_name = "trees";
+	doc = "grs_birch_yllw_lg";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-deciduous-04; }
+}
+[t:template,n:tree_grs_maple_yellow_05]
+{
+	category_name = "trees";
+	doc = "grs_birch_yllw_med";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-deciduous-05; }
+}
+[t:template,n:tree_grs_maple_yellow_06]
+{
+	category_name = "trees";
+	doc = "grs_birch_yllw_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-deciduous-06; }
+}
+[t:template,n:tree_grs_maple_ylw_group_01]
+{
+	category_name = "bad";
+	doc = "grs_birch_yllw_clump_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-01;
+		[textures] { 0=b_i_grs_tree-autumn-02; }
+	}
+}
+[t:template,n:tree_grs_maple_ylw_group_02]
+{
+	category_name = "bad";
+	doc = "grs_birch_yllw_group_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-maple-group-02;
+		[textures] { 0=b_i_grs_tree-autumn-02; }
+	}
+}
+[t:template,n:tree_grs_maple_ylw_group_03]
+{
+	category_name = "bad";
+	doc = "grs_birch_yllw_clump_lg";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-maple-group-03; }
+}
+[t:template,n:tree_grs_maple_ylw_group_04]
+{
+	category_name = "bad";
+	doc = "grs_birch_yllw_group_lg";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-maple-group-04; }
+}
+[t:template,n:tree_grs_oak_01]
+{
+	category_name = "trees";
+	doc = "grs_oak_tall";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-oak-01; }
+}
+[t:template,n:tree_grs_oak_02]
+{
+	category_name = "trees";
+	doc = "grs_oak_spreading_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-oak-02; }
+}
+[t:template,n:tree_grs_oak_03]
+{
+	category_name = "trees";
+	doc = "grs_oak_spreading_lg";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-oak-03; }
+}
+[t:template,n:tree_grs_oldgrowth_01]
+{
+	category_name = "misc";
+	doc = "grs_branches_2";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-oldgrowth-01; }
+}
+[t:template,n:tree_grs_oldgrowth_02]
+{
+	category_name = "misc";
+	doc = "grs_branches_3";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-oldgrowth-02; }
+}
+[t:template,n:tree_grs_pine_01]
+{
+	category_name = "trees";
+	doc = "grs_pine_9m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-01;
+		scale_multiplier = 0.75;
+	}
+}
+[t:template,n:tree_grs_pine_02]
+{
+	category_name = "trees";
+	doc = "grs_pine_12m";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-01; }
+}
+[t:template,n:tree_grs_pine_03]
+{
+	category_name = "trees";
+	doc = "grs_pine_4m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-02;
+		scale_multiplier = 0.66;
+	}
+}
+[t:template,n:tree_grs_pine_04]
+{
+	category_name = "trees";
+	doc = "grs_pine_6m";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-02; }
+}
+[t:template,n:tree_grs_pine_05]
+{
+	category_name = "trees";
+	doc = "tree_grs_pine_9m_brown";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-03;
+		scale_multiplier = 0.75;
+		[textures] { 0=b_i_grs_tree-pine-03; }
+	}
+}
+[t:template,n:tree_grs_pine_06]
+{
+	category_name = "trees";
+	doc = "tree_grs_pine_12m_brown";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-03;
+		[textures] { 0=b_i_grs_tree-pine-03; }
+	}
+}
+[t:template,n:tree_grs_pine_group_01]
+{
+	category_name = "trees";
+	doc = "grs_pine_group_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-pine-group-01; }
+}
+[t:template,n:tree_grs_pine_group_02]
+{
+	category_name = "trees";
+	doc = "grs_pine_group_wedge";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-pine-group-02; }
+}
+[t:template,n:tree_grs_pine_group_03]
+{
+	category_name = "trees";
+	doc = "grs_pine _group_square";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-pine-group-03; }
+}
+[t:template,n:tree_grs_pine_group_04]
+{
+	category_name = "trees";
+	doc = "grs_pine_group_path";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-pine-group-04; }
+}
+[t:template,n:tree_grs_pine_trunk_01]
+{
+	category_name = "trees";
+	doc = "grs_pine_trunk_sm";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-pine-giant; }
+}
+[t:template,n:tree_grs_pine_trunk_02]
+{
+	category_name = "trees";
+	doc = "grs_pine_trunk_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-giant;
+		scale_multiplier = 1.5;
+	}
+}
+[t:template,n:tree_grs_pine_trunk_03]
+{
+	category_name = "trees";
+	doc = "grs_pine_trunk_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-giant;
+		scale_multiplier = 2;
+	}
+}
+[t:template,n:tree_grs_poplar_01]
+{
+	category_name = "trees";
+	doc = "grs_poplar";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-poplar-01; }
+}
+[t:template,n:tree_grs_sapling_01]
+{
+	category_name = "trees";
+	doc = "grs_sapling";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-sapling-01; }
+}
+[t:template,n:tree_grs_sequoia_01]
+{
+	category_name = "trees";
+	doc = "grs_sequoia_trunk";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-sequoia-01; }
+}
+[t:template,n:tree_grs_sequoia_02]
+{
+	category_name = "trees";
+	doc = "grs_sequoia_trunk with roots";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-sequoia-02; }
+}
+[t:template,n:tree_grs_sequoia_03]
+{
+	category_name = "trees";
+	doc = "grs_sequoia_trunk_thin";
+	specializes = base_tree;
+	[aspect] { model=m_i_glb_tree-sequoia-03; }
+}
+[t:template,n:tree_ice_pine_01]
+{
+	category_name = "trees";
+	doc = "ice_pine_9m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-01;
+		scale_multiplier = 0.75;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_02]
+{
+	category_name = "trees";
+	doc = "ice_pine_12m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-01;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_03]
+{
+	category_name = "trees";
+	doc = "ice_pine_4m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-02;
+		scale_multiplier = 0.66;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_04]
+{
+	category_name = "trees";
+	doc = "ice_pine_6m";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-02;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_group_01]
+{
+	category_name = "trees";
+	doc = "ice_pine_group_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-group-01;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_group_02]
+{
+	category_name = "trees";
+	doc = "ice_pine_group_wedge";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-group-02;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_group_03]
+{
+	category_name = "trees";
+	doc = "ice_pine_group_square";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-group-03;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_group_04]
+{
+	category_name = "trees";
+	doc = "ice_pine_group_path";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-group-04;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+}
+[t:template,n:tree_ice_pine_trunk_01]
+{
+	category_name = "trees";
+	doc = "ice_pine_trunk_sm";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-giant;
+		[textures] { 0=b_i_ice_tree-pine-giant; }
+	}
+}
+[t:template,n:tree_ice_pine_trunk_02]
+{
+	category_name = "trees";
+	doc = "ice_pine_trunk_med";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-giant;
+		scale_multiplier = 2;
+		[textures] { 0=b_i_ice_tree-pine-giant; }
+	}
+}
+[t:template,n:tree_ice_pine_trunk_03]
+{
+	category_name = "trees";
+	doc = "ice_pine_trunk_lg";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-pine-giant;
+		scale_multiplier = 3;
+		[textures] { 0=b_i_ice_tree-pine-giant; }
+	}
+}
+[t:template,n:tree_ice_sway_03]
+{
+	category_name = "trees";
+	doc = "ice_pine_12m_sway";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-03;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-03-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_ice_sway_04]
+{
+	category_name = "trees";
+	doc = "ice_pine_6m_sway";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-04;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-04-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_ice_sway_05]
+{
+	category_name = "trees";
+	doc = "ice_pine_9m_sway";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-03;
+		scale_multiplier = 0.75;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-03-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_ice_sway_06]
+{
+	category_name = "trees";
+	doc = "ice_pine_4m_sway";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-04;
+		scale_multiplier = 0.66;
+		[textures] { 0=b_i_ice_tree-pine; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=tree-04-sway; }
+			}
+		}
+	}
+}
+[t:template,n:tree_ice_uproot]
+{
+	category_name = "trees";
+	doc = "ice_uprooted tree";
+	specializes = base_tree;
+	[aspect]
+	{
+		model = m_i_glb_tree-uproot;
+		[textures] { 0=b_i_ice_tree-uproot; }
+	}
+}
+[t:template,n:tree_swp_01]
+{
+	category_name = "trees";
+	doc = "swp_cypress_straight";
+	specializes = base_tree;
+	[aspect]
+	{
+		does_block_camera = FALSE;
+		model = m_i_swp_tree-01;
+	}
+}
+[t:template,n:tree_swp_02]
+{
+	category_name = "trees";
+	doc = "swp_cypress_split";
+	specializes = base_tree;
+	[aspect]
+	{
+		does_block_camera = FALSE;
+		model = m_i_swp_tree-02;
+	}
+}
+[t:template,n:tree_swp_03]
+{
+	category_name = "trees";
+	doc = "swp_cypress_trunk";
+	specializes = base_tree;
+	[aspect]
+	{
+		does_block_camera = FALSE;
+		model = m_i_swp_tree-03;
+	}
+}
+[t:template,n:tree_swp_dead_01]
+{
+	category_name = "trees";
+	doc = "swp_cypress_dead";
+	specializes = base_tree;
+	[aspect]
+	{
+		does_block_camera = FALSE;
+		model = m_i_swp_tree-dead-01;
+	}
+}
+[t:template,n:tree_swp_tretch_01]
+{
+	category_name = "trees";
+	doc = "swp_tretch";
+	specializes = base_tree;
+	[aspect]
+	{
+		does_block_camera = FALSE;
+		model = m_i_swp_tretch-01;
+	}
+}
+[t:template,n:tree_swp_tretch_02]
+{
+	category_name = "trees";
+	doc = "swp_tretch_split";
+	specializes = base_tree;
+	[aspect]
+	{
+		does_block_camera = FALSE;
+		model = m_i_swp_tretch-02;
+	}
+}

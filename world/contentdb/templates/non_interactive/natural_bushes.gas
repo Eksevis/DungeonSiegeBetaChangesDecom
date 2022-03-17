@@ -1,0 +1,204 @@
+[t:template,n:base_bush]
+{
+	doc = "Base template for all bushes";
+	specializes = non_interactive_nonblocking;
+	[aspect] { does_block_camera=true; }
+	[common] { screen_name="Bush"; }
+}
+[t:template,n:bush_des_01]
+{
+	category_name = "foliage";
+	doc = "des_bush_lg";
+	specializes = base_bush;
+	[aspect] { model=m_i_des_bush-01; }
+}
+[t:template,n:bush_des_02]
+{
+	category_name = "foliage";
+	doc = "des_bush_med";
+	specializes = base_bush;
+	[aspect] { model=m_i_des_bush-02; }
+}
+[t:template,n:bush_des_03]
+{
+	category_name = "foliage";
+	doc = "des_bush_sm";
+	specializes = base_bush;
+	[aspect] { model=m_i_des_bush-03; }
+}
+[t:template,n:bush_des_04]
+{
+	category_name = "foliage";
+	doc = "des_bush_lt_grn";
+	specializes = base_bush;
+	[aspect] 
+	{ 
+		model=m_i_des_bush-04; 
+		[textures] {0 = b_i_des_bush-02;}
+	}
+}
+[t:template,n:bush_des_05]
+{
+	category_name = "foliage";
+	doc = "des_bush_bottlebrush";
+	specializes = base_bush;
+	[aspect] 
+	{ 
+		model=m_i_des_bush-05; 
+		[textures] {0 = b_i_des_bush-05;}
+	}
+}
+[t:template,n:bush_des_06]
+{
+	category_name = "foliage";
+	doc = "des_bush_tropical";
+	specializes = base_bush;
+	[aspect] 
+	{ 
+		model=m_i_des_bush-06; 
+		[textures] {0 = b_i_des_bush-01;}
+	}
+}
+
+[t:template,n:bush_grs_03]
+{
+	category_name = "foliage";
+	doc = "grs_bush_jap_maple_red";
+	specializes = base_bush;
+	[aspect] { model=m_i_grs_bush-03; }
+}
+[t:template,n:bush_grs_04]
+{
+	category_name = "foliage";
+	doc = "grs_bush_hosta_grn";
+	specializes = base_bush;
+	[aspect] { model=m_i_grs_bush-04; }
+}
+[t:template,n:bush_grs_05]
+{
+	category_name = "foliage";
+	doc = "grs_bush_barberry_pink";
+	specializes = base_bush;
+	[aspect] { model=m_i_grs_bush-05; }
+}
+[t:template,n:bush_grs_06]
+{
+	category_name = "foliage";
+	doc = "grs_bush_tall_grn";
+	specializes = base_bush;
+	[aspect] { model=m_i_grs_bush-06; }
+}
+[t:template,n:bush_grs_07]
+{
+	category_name = "foliage";
+	doc = "grs_bush_pricker_yllw";
+	specializes = base_bush;
+	[aspect] 
+	{ 
+		model=m_i_grs_bush-07; 
+		dynamically_lit = false; 
+	}
+}
+[t:template,n:bush_grs_08]
+{
+	category_name = "foliage";
+	doc = "grs_bush_sumac_gold";
+	specializes = base_bush;
+	[aspect] { model=m_i_grs_bush-08; }
+}
+[t:template,n:bush_grs_09]
+{
+	category_name = "foliage";
+	doc = "grs_bush_box_winter";
+	specializes = base_bush;
+	[aspect] { model=m_i_grs_bush-09; }
+}
+[t:template,n:bush_grs_button_01]
+{
+	category_name = "foliage";
+	doc = "grs_bush_button_sm";
+	specializes = base_bush;
+	[aspect] { model=m_i_glb_bush-button-01; }
+}
+[t:template,n:bush_grs_button_02]
+{
+	category_name = "foliage";
+	doc = "grs_bush_button_lg";
+	specializes = base_bush;
+	[aspect] { model=m_i_glb_bush-button-02; }
+}
+[t:template,n:bush_grs_rhod_01]
+{
+	category_name = "foliage";
+	doc = "grs_bush_rhod_sm";
+	specializes = base_bush;
+	[aspect] { model=m_i_glb_bush-01; }
+}
+[t:template,n:bush_grs_rhod_02]
+{
+	category_name = "foliage";
+	doc = "grs_bush_rhod_lg";
+	specializes = base_bush;
+	[aspect]
+	{
+		model = m_i_glb_bush-10;
+		[textures] { 0=b_i_grs_bush-rhod; }
+	}
+}
+[t:template,n:bush_ice_rhod_01]
+{
+	category_name = "foliage";
+	doc = "ice_bush_rhod";
+	specializes = base_bush;
+	[aspect]
+	{
+		model = m_i_glb_bush-01;
+		[textures] { 0=b_i_ice_bush-rhod; }
+	}
+}
+[t:template,n:bush_swp_01]
+{
+	category_name = "foliage";
+	doc = "swp_bush_sundew";
+	specializes = base_bush;
+	[aspect] { model=m_i_swp_bush-01; }
+}
+[t:template,n:bush_swp_02]
+{
+	category_name = "foliage";
+	doc = "swp_bush_venus flytrap";
+	specializes = base_bush;
+	[aspect] { model=m_i_swp_bush-02; }
+	[common] 
+	{ 
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("flys");  // -ET $$$ probably need to move this puppy.
+				condition* = receive_world_message("we_constructed");
+			}
+		}
+	}
+}
+[t:template,n:bush_swp_03]
+{
+	category_name = "foliage";
+	doc = "swp_grndcvr_trefoils";
+	specializes = base_bush;
+	[aspect] { model=m_i_swp_bush-03; }
+}
+[t:template,n:bush_swp_04]
+{
+	category_name = "foliage";
+	doc = "swp_fern_palm";
+	specializes = base_bush;
+	[aspect] { model=m_i_swp_bush-04; }
+}
+[t:template,n:bush_temp]
+{
+	category_name = "bushes";
+	doc = "des_acacia";
+	specializes = base_bush;
+	[aspect] { model=m_i_des_bush-01; }
+}

@@ -1,0 +1,800 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	brain_hero.skrit
+
+	Author(s)	: 	Bartosz Kijanka
+
+	Purpose		:	This says "hero" but this is still a pretty generic brain.
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+
+	Exptected Behavior:
+	-------------------
+
+		This brain will react to a number of world events.  The reaction is based
+		on what world events are processed and which permission were set in
+		the Mind.  Below, for each permission, the action(s) the brain will
+		take are listed.
+
+	Convention Note:
+	----------------
+		Any time we speak of the brain taking any action, the brain
+		actually only calls for action to take place by pushing
+		job(s) onto the action quque (JQ_ACTION).  The brain
+		never actually performs the action(s) itself.  Is should
+		never call for animations or MCP plans to take place.  It
+		should only call for jobs to be executed on the job queue.
+
+	------------------------------------------------------------------------
+
+	Terms:
+	------
+		Actor 	= owner of the brain.
+		Target 	= the actor that the owner is attacking or interacting with.
+
+
+	Mind.ActorAlertsFriends
+
+		On WE_ENEMY_SPOTTED, the brain will send WE_ALERT_ENEMY spotted to visible
+		friends who share the same com channel.
+
+
+	Mind.OnEnemySpottedAttack
+
+		On WE_ENEMY_SPOTTED, the brain will attack the enemy, permitting standing orders
+		allow it.
+
+
+	Mind.OnEngagedFleedAbortAttack
+
+		On WE_ENGAGED_FLED the brain will terminate any current attack action.  While
+		fleeing, the fleeing actor will also no longer be seen as an enemy, so the
+		fleeing actor will not be auto-attacked.
+
+
+	Mind.ActorAttacksOthersInICZ
+
+		If -anyone- is found in the "inner comfort zone", the brain will attack them.
+
+	
+	Mind.OnEngagedLostConsciousnessAbortAttack 
+
+		The actor still consider unconsicous actors a threat, and auto-attack them
+		when possible, given the current standing-orders.
+
+
+	Mind.ActorAutoHealsSelfLife
+
+		On WE_LIFE_RATIO_REACHED_LOW actor will drink a health potion if he has one.
+
+
+	Mind.ActorAutoHealsSelfMana                       
+
+		On WE_MANA_RATIO_REACHED_LOW actor will drink a health potion if he has one.
+
+
+	Mind.ActorAutoPicksUpItems
+
+		If the actor is not busy, he will periodically auto-pick up nearby items.
+
+
+	Mind.ActorAutoPicksWeaponBeforeAttack
+
+		Used by the common attack job:  Before each attack, the actor will find the
+		most appropriate weapon from amoung the active items.  Which active items
+		are considered depends on:
+
+		Mind.ActorAutoUsesActiveSpells                    
+		Mind.ActorAutoUsesActiveWeapons                   
+
+	Mind.ActorAutoPicksWeaponDuringAttack
+
+		Not used.  Note: all ranged fighters will auto-switch to melee combat if
+		there is an enemy present in their "inner comfort zone."
+
+
+	Mind.ActorAutoUsesActiveSpells                    
+	
+		Any time the actor takes an autonomous action which require using an active
+		item, he will consider using any of the active spells.
+
+
+	Mind.ActorAutoUsesActiveWeapons                   
+
+		Any time the actor takes an autonomous action which require using an active
+		item, he will consider using any of the active weapons.
+
+
+	Mind.OnEnemyEnteredICZFlee                     
+
+		Actor will flee from any enemy in his "inner comfort zone."
+
+
+	Mind.OnEnemyEnteredOCZFlee                     
+
+		Actor will flee from any enemy in his "outer comfort zone."
+
+
+	Mind.OnFriendEnteredICZFlee                     
+
+		Actor will flee from any friend in his "inner comfort zone."
+
+
+	Mind.OnFriendEnteredOCZFlee                     
+
+		Actor will flee from any friend in his "outer comfort zone."
+
+
+	Mind.OnLifeRatioLowFlee
+
+		On WE_LIFE_RATIO_REACHED_LOW the actor will run away from the nearest enemy.
+
+
+	Mind.OnManaRatioLowFlee                     
+
+		On WE_MANA_RATIO_REACHED_LOW the actor will run away from the nearest enemy.
+
+
+	Mind.OnJobReachedTravelDistanceAbortAttack
+
+		On WE_JOB_REACHED_TRAVEL_DISTANCE, the actor will terminate any attacking
+		action.
+
+
+	Mind.OnEngagedLostLoiter                    
+
+		On WE_ENGAGED_LOST, the actor will terminate any current attacking
+		behavior.
+
+
+	Mind.OnEngagedLostReturnToJobOrigin         
+
+		On WE_ENGAGED_LOST, the actor will terminate any current attacking
+		action and walk back to where the attacking action begun.
+
+
+	Mind.ActorAutoDefendsOthers
+	Mind.ActorAutoHealsOthersLife                     
+	Mind.ActorAutoHealsOthersMana                     
+	Mind.ActorAutoXfersMana                           
+	
+		Used only by party ai, if the actor happens to be in a party.
+
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Start$;
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	helper functions
+
+
+////////////////////////////////////////
+//	TryAttack
+
+bool TryAttack$( Go target$ )
+{
+	if( target$ == NULL )
+	{
+		return( false );
+	}
+
+	if( m_Mind$.MovementOrders == MO_HOLD )
+	{
+		float rangeToTarget$ = m_Mind$.WeaponRange + m_Go$.Mind.PersonalSpaceRange;
+
+		if target$.HasMind()
+		{
+			 rangeToTarget$ += target$.mind.PersonalSpaceRange;
+		}
+		else
+		{
+			 rangeToTarget$ += target$.aspect.BoundingSphereRadius;
+		}
+
+		// $$$ hack hack hack to be consistent with job_attack_object_melee.skrit
+		rangeToTarget$ *= 0.9;
+		rangeToTarget$ *= 1.35;	// a little stricter than attac
+
+		if( !AIQuery.IsInRange( m_Go$.Placement.Position, target$.Placement.Position, rangeToTarget$ ) )
+		{
+			return( false );
+		}
+	}
+
+	if( m_Mind$.MayAttack( target$ ) )
+	{
+		//report.genericf( "%s attacking 1\n\n", m_Go$.TemplateName );
+		Job attack$ = m_Mind$.SDoJob( MakeJobReq( JAT_ATTACK_OBJECT, JQ_ACTION, QP_FRONT, JO_REFLEX, target$.Goid ));
+		if( attack$ != NULL )
+		{
+			return( attack$.IsMarkedForDeletion == false );
+		}
+	}
+
+	return false;
+}
+
+
+////////////////////////////////////////
+//	MayRespondToAttack
+
+bool MayRespondToAttack$( Go target$ )
+{
+	if( target$ == NULL )
+	{
+		return( false );
+	}
+
+	if( m_Mind$.CombatOrders == CO_HOLD )
+	{
+		return( false );
+	}
+
+	if( m_Mind$.MovementOrders == MO_HOLD )
+	{
+		float rangeToTarget$ = m_Mind$.WeaponRange + m_Go$.Mind.PersonalSpaceRange;
+
+		if target$.HasMind()
+		{
+			 rangeToTarget$ += target$.mind.PersonalSpaceRange;
+		}
+		else
+		{
+			 rangeToTarget$ += target$.aspect.BoundingSphereRadius;
+		}
+
+		// $$$ hack hack hack to be consistent with job_attack_object_melee.skrit
+		rangeToTarget$ *= 0.9;
+		rangeToTarget$ *= 1.35;	// a little stricter than attac
+
+		if( !AIQuery.IsInRange( m_Go$.Placement.Position, target$.Placement.Position, rangeToTarget$ ) )
+		{
+			return( false );
+		}
+	}
+
+	if( IsAlive( m_Go$.LifeState ) && IsAlive( target$.LifeState ) )
+	{
+		if( !target$.HasActor )
+		{
+			return( false );
+		}
+		return( true );
+	}
+	return( false );
+}
+
+
+////////////////////////////////////////
+//	TryRespondToAttack
+
+bool TryRespondToAttack$( Go target$ )
+{
+	if( MayRespondToAttack$( target$ ) )
+	{
+		//report.genericf( "%s attacking 2\n\n", m_Go$.TemplateName );
+		m_Mind$.SDoJob( MakeJobReq( JAT_ATTACK_OBJECT, JQ_ACTION, QP_FRONT, JO_REFLEX, target$.Goid ));
+		return true;
+	}
+
+	return false;
+}
+
+
+////////////////////////////////////////
+//	TryFlee
+
+void TryFlee$( Go From$ )
+{
+	// human player's actors can flee indefinitely, others are limited
+	if( m_Go$.Player.IsScreenPlayer || ( !m_Go$.Player.IsScreenPlayer && m_Mind$.FleeCount > 0 ) )
+	{
+		// $ These checks were placed to avoid neutral creatures fleeing from each other.
+		// maybe we should solve this with Memeberships? -ET
+	
+		if( From$ == NULL )
+		{
+			return;
+		}
+		
+		if(From$.HasActor())
+		{
+			if( From$.actor.getalignment == AA_NEUTRAL )
+			{
+				return;
+			}
+		}
+		m_Mind$.SDoJob( MakeJobReq( JAT_FLEE_FROM_OBJECT, JQ_ACTION, QP_CLEAR, JO_REFLEX, From$.Goid ) );
+	}
+}
+
+////////////////////////////////////////
+//	TryAnim
+
+bool TryAnim$( int FourCC$ )
+{
+	int Anim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,FourCC$);
+		
+	if (Anim$ >= 0)
+	{
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_PLAYANIM, CHORE_MISC, Anim$, 0 );
+		return true;	
+	}
+	return false;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	main state machine
+
+////////////////////////////////////////////////////////////////////////////////
+//	state Start$
+//
+//  On entering the start state The brain checks to see if a Sleeping Animation exists.
+//  If the character has a sleeping animation it will play it until an enemy is spotted.
+
+state Start$
+{
+	transition
+	{
+		-> Start$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+	
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( (e$ == WE_ENEMY_SPOTTED) || (e$ == WE_DAMAGED) )
+		{
+			SetState Wakeup$;
+		}
+	}
+	
+	event OnEnterState$
+	{	
+		if ( !TryAnim$('slep') )
+		{
+			SetState Thinking$;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	state Wakeup$
+//
+//  When entering this stats the Brain tries to play the wakeup animation.
+//  When it is finished auto fidgeting is turned on and the brain enters the main state machine.
+
+state Wakeup$
+{
+	transition
+	{
+		-> StartFidget$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+	event OnEnterState$
+	{
+		if ( !TryAnim$('wake') )
+		{
+			SetState StartFidget$;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	state StartFidget$
+
+state StartFidget$
+{
+	event OnEnterState$
+	{
+		m_Mind$.SetActorAutoFidgets( true );
+		SetState Thinking$;
+	}
+	
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	state Thinking$
+
+state Thinking$
+{
+	transition
+	{
+		-> Thinking$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+		-> Unconscious$:	OnWorldMessage( WE_LOST_CONSCIOUSNESS );
+//		-> Thinking$:		OnWorldMessage( WE_MIND_PROCESSING_NEW_JOB );
+//		-> Thinking$:		OnWorldMessage( WE_ENEMY_SPOTTED );
+//		-> Thinking$:		OnWorldMessage( WE_DAMAGED );
+//		-> Thinking$:		OnWorldMessage( WE_ATTACKED_MELEE );
+//		-> Thinking$:		OnWorldMessage( WE_DAMAGED );
+//		-> Thinking$:		OnWorldMessage( WE_LIFE_RATIO_REACHED_LOW );
+//		-> Thinking$:		OnWorldMessage( WE_ALERT_ENEMY_SPOTTED );
+	}
+
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_MIND_PROCESSING_NEW_JOB )
+		{
+			Job newAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+			if( newAction$ != NULL )
+			{
+				if( newAction$.IsOffensive )
+				{
+					SetState Attacking$;
+				}
+				else if ( m_Mind$.AmBusy )
+				{
+					return;
+				}
+			}
+		}
+		else if( m_Mind$.OnEnemySpottedAttack() && e$ == WE_ENEMY_SPOTTED )
+		{
+			if( TryAttack$( MakeGoid( msg$.Data1 ).Go ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+		else if( e$ == WE_ALERT_PROJECTILE_NEAR_MISSED && m_Mind$.OnAlertProjectileNearMissedFlee )
+		{
+			TryFlee$( MakeGoid( msg$.Data1 ).Go );
+		}
+		else if( e$ == WE_ALERT_PROJECTILE_NEAR_MISSED && m_Mind$.OnAlertProjectileNearMissedAttack )
+		{
+			Go enemy$ = MakeGoid( msg$.Data1 ).Go;
+			if( TryAttack$( enemy$ ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+		else if( e$ == WE_ENEMY_ENTERED_OUTER_COMFORT_ZONE && m_Mind$.OnEnemyEnteredOCZFlee )
+		{
+			TryFlee$( MakeGoid( msg$.Data1 ).Go );
+		}
+		else if( e$ == WE_FRIEND_ENTERED_OUTER_COMFORT_ZONE && m_Mind$.OnFriendEnteredOCZFlee )
+		{
+			TryFlee$( MakeGoid( msg$.Data1 ).Go );
+		}
+		else if( e$ == WE_ENEMY_ENTERED_INNER_COMFORT_ZONE && m_Mind$.OnEnemyEnteredICZFlee )
+		{
+			TryFlee$( MakeGoid( msg$.Data1 ).Go );
+		}
+		else if( e$ == WE_FRIEND_ENTERED_INNER_COMFORT_ZONE && m_Mind$.OnFriendEnteredICZFlee )
+		{
+			TryFlee$( MakeGoid( msg$.Data1 ).Go );
+		}
+		else if( ( e$ == WE_ENEMY_ENTERED_INNER_COMFORT_ZONE ) && m_Mind$.OnEnemyEnteredICZAttack )
+		{
+			Go enemy$ = MakeGoid( msg$.Data1 ).Go;
+			if( TryAttack$( enemy$ ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+	   	else if( ( e$ == WE_FRIEND_ENTERED_INNER_COMFORT_ZONE ) && m_Mind$.OnFriendEnteredICZAttack )
+	   	{
+	   		Go enemy$ = MakeGoid( msg$.Data1 ).Go;
+	   		if( TryAttack$( enemy$ ) )
+	   		{
+	   			SetState( Attacking$ );
+	   		}
+	   	}
+	   	else if( ( e$ == WE_DAMAGED ) || ( e$ == WE_ATTACKED_MELEE ) )
+		{
+			if( !m_Mind$.AmBusy() )
+			{
+				if( TryRespondToAttack$( MakeGoid( msg$.Data1 ).Go ) )
+				{
+					SetState( Attacking$ );
+				}
+			}
+		}
+		else if( e$ == WE_ALERT_ENEMY_SPOTTED )
+		{
+			if( !m_Mind$.AmBusy() )
+			{
+				m_Mind$.RSGuard( msg$.SendFrom.Go, QP_CLEAR, JO_REFLEX );
+			}
+		}
+		else if ( e$ == WE_REQ_TALK_BEGIN )
+		{
+			if( !m_Mind$.AmBusy() )
+			{
+				m_Mind$.SDoJob( MakeJobReq( JAT_TALK, JQ_ACTION, QP_FRONT, JO_REFLEX, MakeGoid( msg$.Data1 ) ) );
+			}
+		}
+	}
+
+	event OnEnterState$
+	{
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+
+		m_Mind$.SetBrainReady( true );
+
+		////////////////////////////////////////
+		//	set state based on what action we're running
+
+		Job currentAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		if( currentAction$ != NULL )
+		{
+			if( currentAction$.IsOffensive )
+			{
+				SetState Attacking$;
+				return;
+			}
+			else if ( m_Mind$.AmBusy )
+			{
+				return;
+			}
+		}
+
+		if( m_Mind$.OnEnemySpottedAttack() && m_Mind$.EnemiesVisible() )
+		{				
+			Go enemy$ = m_Mind$.GetFocusedEnemy();
+			if( TryAttack$( enemy$ ) )
+			{												 
+				SetState( Attacking$ );		
+				return;
+			}
+		}
+		else if( m_Mind$.EnemiesVisible() && m_Mind$.OnEnemyEnteredICZAttack )
+		{
+			// $$$ get closest enemy within ICZ range
+			Go enemy$ = m_Mind$.GetClosestEnemy();
+			if( TryAttack$( enemy$ ) )
+			{												 
+				SetState( Attacking$ );
+				return;
+			}
+		}
+		else if ( m_Mind$.FriendsVisible() && m_Mind$.OnFriendEnteredICZAttack )
+		{
+			// $$$ get closest friend within ICZ range
+			Go friend$ = m_Mind$.GetClosestFriend();
+			if( TryAttack$( friend$ ) )
+			{												 
+				SetState( Attacking$ );
+				return;
+			}
+		}
+		else if( m_Mind$.EnemiesVisible() && m_Mind$.OnEnemyEnteredICZFlee )
+		{
+			// $$$ get closest enemy within ICZ range
+			Go enemy$ = m_Mind$.GetClosestEnemy();
+			TryFlee$( enemy$ );
+		}
+		else if ( m_Mind$.FriendsVisible() && m_Mind$.OnFriendEnteredICZFlee )
+		{
+			// $$$ get closest friend within ICZ range
+			Go friend$ = m_Mind$.GetClosestFriend();
+			TryFlee$( friend$ );
+		}
+		else if( m_Mind$.EnemiesVisible() && m_Mind$.OnEnemyEnteredOCZFlee )
+		{
+			// $$$ get closest enemy within ICZ range
+			Go enemy$ = m_Mind$.GetClosestEnemy();
+			TryFlee$( enemy$ );
+		}
+		else if ( m_Mind$.FriendsVisible() && m_Mind$.OnFriendEnteredOCZFlee )
+		{
+			// $$$ get closest friend within ICZ range
+			Go friend$ = m_Mind$.GetClosestFriend();
+			TryFlee$( friend$ );
+		}
+		else if( m_Mind$.ActorAutoPicksUpItems() && m_Mind$.ItemsVisible() )
+		{
+			Go item$ = m_Mind$.GetClosestItem();
+			m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, JO_REFLEX, m_Go$.Placement.Position ) );
+			m_Mind$.SDoJob( MakeJobReq( JAT_GET, JQ_ACTION, QP_FRONT, JO_REFLEX, item$.Goid ) );
+		}
+
+		return;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	state Attacking$
+
+state Attacking$
+{
+	transition
+	{
+		-> Thinking$:	OnWorldMessage( WE_JOB_CURRENT_ACTION_BASE_JAT_CHANGED );
+	}
+
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+
+		////////////////////////////////////////
+		//	set state according to action
+
+		Job currentAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		if( currentAction$ != NULL )
+		{
+			if( !currentAction$.IsOffensive )
+			{
+				SetState Thinking$;
+				return;
+			}
+		}
+		else
+		{
+			SetState Thinking$;
+			return;
+		}
+
+		////////////////////////////////////////
+		//	process events
+
+		if( e$ == WE_LIFE_RATIO_REACHED_LOW )
+		{
+			if( m_Mind$.ActorAutoHealsSelfLife() )
+			{
+				m_Mind$.RSDrinkLifeHealingPotion( JO_REFLEX );
+			}
+
+			if( m_Mind$.IsLifeLow() )
+			{
+				if( m_Mind$.ActorAutoHealsSelfLife() )
+				{
+					m_Mind$.RSCastLifeHealingSpell( JO_REFLEX );
+				}
+			}
+
+			if( m_Mind$.IsLifeLow() )
+			{
+				if( m_Mind$.OnLifeRatioLowFlee()  && ( m_Mind$.ClosestEnemy != NULL ) )
+				{
+					TryFlee$( m_Mind$.ClosestEnemy );
+				}
+			}
+			return;
+		}
+		else if( e$ == WE_MANA_RATIO_REACHED_LOW )
+		{
+			if( m_Mind$.ActorAutoHealsSelfMana() )
+			{
+				m_Mind$.RSDrinkManaHealingPotion( JO_REFLEX );
+			}
+
+			if( m_Mind$.IsManaLow() )
+			{
+				if( m_Mind$.OnManaRatioLowFlee()  && ( m_Mind$.ClosestEnemy != NULL ) )
+				{
+					TryFlee$( m_Mind$.ClosestEnemy );
+				}
+			}
+			return;
+		}
+		else if( e$ == WE_ENGAGED_LOST )
+		{
+			if( currentAction$ == NULL )
+			{
+				return;
+			}
+
+			if( m_Mind$.OnEngagedLostReturnToJobOrigin )
+			{
+				// $$ the original job creation position may have been unloaded... what to do then?
+				m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, JO_REFLEX, currentAction$.InitPosition ) );
+			}
+			else if ( m_Mind$.OnEngagedLostLoiter )
+			{
+				// $$$ do something to loiter
+				currentAction$.RequestFinish();
+			}
+		}
+		else if ( e$ == WE_JOB_REACHED_TRAVEL_DISTANCE )
+		{
+			if( currentAction$ == NULL )
+			{
+				return;
+			}
+
+			if( m_Mind$.OnJobReachedTravelDistanceAbortAttack )
+			{
+				TryFlee$( m_Mind$.EngagedObject.Go );
+				//currentAction$.RequestFinish();
+			}
+		}
+		else if ( e$ == WE_ENGAGED_FLED && m_Mind$.OnEngagedFleedAbortAttack )
+		{
+			if( currentAction$ == NULL )
+			{
+				return;
+			}
+			currentAction$.RequestFinish();
+		}
+		else if ( (e$ == WE_ENGAGED_LOST_CONSCIOUSNESS ) && m_Mind$.OnEngagedLostConsciousnessAbortAttack )
+		{
+			if( currentAction$ == NULL )
+			{
+				return;
+			}
+			report.generic( "requesting job finish\n" );
+			currentAction$.RequestFinish();
+		}
+		else if ( e$ == WE_ENEMY_ENTERED_INNER_COMFORT_ZONE )
+		{
+			if( ( m_Go$.Inventory.IsRangedWeaponEquipped || m_Go$.Inventory.IsSpellSelected ) && m_Mind$.OnEnemyEnteredICZSwitchToMelee )
+			{
+				
+				Go weapon$ = m_Go$.Inventory.GetItem( IL_ACTIVE_MELEE_WEAPON );
+				if( weapon$ != NULL )
+				{
+					//report.genericf( "%s attacking 3\n\n", m_Go$.TemplateName );
+					m_Mind$.SDoJob( MakeJobReq( JAT_ATTACK_OBJECT_MELEE, JQ_ACTION, QP_FRONT, JO_REFLEX, m_Mind$.ClosestEnemy.Goid, weapon$.Goid ) );
+				} else {
+					//report.genericf( "%s attacking 4\n\n", m_Go$.TemplateName );
+					m_Mind$.SDoJob( MakeJobReq( JAT_ATTACK_OBJECT_MELEE, JQ_ACTION, QP_FRONT, JO_REFLEX, m_Mind$.ClosestEnemy.Goid, m_Go$.Goid ) );
+				}
+			}
+		}
+		else if ( e$ == WE_DAMAGED )
+		{
+			////////////////////////////////////////
+			//	if I was attacked, but whom I'm attacking isn't attacking back, attack back
+			Go victim$ = m_Mind$.EngagedObject.Go;
+			if( victim$ != NULL )
+			{
+				if( victim$.HasActor )
+				{
+					if( victim$.Mind.EngagedObject != m_Go$.Goid )
+					{
+						TryRespondToAttack$( MakeGoid( msg$.Data1 ).Go );
+					}
+				}
+			}
+		}
+	}
+
+	event OnEnterState$
+	{
+	}
+}
+
+
+state Unconscious$
+{
+	transition
+	{
+		-> Thinking$:	OnWorldMessage( WE_GAINED_CONSCIOUSNESS );
+	}
+}
+

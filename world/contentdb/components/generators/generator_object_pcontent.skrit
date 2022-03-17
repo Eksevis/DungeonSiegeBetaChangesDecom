@@ -1,0 +1,85 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  generator_object_pcontent.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "A pop out a guy when an object breaks generator guy is defined in pcontent";
+property string _required_component$ = "placement";
+
+// exported properties
+property	eWorldEvent create_msg$				= WE_EXPLODED		doc = "message create go on.";
+
+property 	Scid   		Spawnpoint$									doc = "Scid of Spawnpoint Object if applicable";
+property	scid 		msg_scid$ 									doc = "Scid to send message to when CC'd trigger message is recieved";
+property	eWorldEvent msg_type$				= WE_REQ_ACTIVATE	doc = "message to send when trigger is recieved";
+property	eWorldEvent trigger_msg$			= WE_KILLED			doc = "CC'd message to trigger on";
+
+property	bool		get_child_cc$			= false				doc = "Recieve cc'd messages from the kidlet.";
+property	bool		one_shot$				= false				doc = "make object non-selectable an useable after spewing.";
+
+owner = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+// global state
+
+event OnGoHandleCcMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{		
+	if ( get_child_cc$ )
+	{
+		if ( e$ == trigger_msg$)
+		{	
+			if ( msg_scid$.getgoid.isvalid() )
+			{
+				SendWorldMessage( msg_type$, msg_scid$.getgoid );
+			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// local states
+
+startup state WaitToSpawn$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == create_msg$ )
+		{
+			owner.go.inventory.AddDelayedPcontent();
+			
+			if ( owner.go.children.size > 0 )
+			{
+				Go item$ = owner.go.children.get( 0 );
+			
+				if ( SpawnPoint$.IsValid() && SpawnPoint$.getgoid.isvalid() )
+				{
+					SiegePos SpawnPos$ = Spawnpoint$.go.placement.position;
+					owner.go.Inventory.RCRemove( item$, SpawnPos$ );
+				} else {
+					owner.go.inventory.RSRemove( item$, true );
+				}
+				
+				if ( get_child_cc$ )
+				{
+					GoDb.StartWatching( owner.Goid, item$.goid);
+				}
+			}
+			if( one_shot$ )
+			{
+				Owner.Go.Aspect.SSetIsSelectable( false );
+				Owner.Go.Aspect.SSetIsUsable( false );
+			}
+		}
+	}
+}

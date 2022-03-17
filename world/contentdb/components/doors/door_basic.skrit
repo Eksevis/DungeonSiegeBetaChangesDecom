@@ -1,0 +1,285 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  door_basic.skrit
+// Author(s):  James Loe and Chooch and Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        	= true;
+property string _doc$                	= "Basic Open/Closed Door";
+property string _required_component$	= "placement";
+
+// exported properties
+property bool   can_use$                = true             	doc = "If false you will not be able to use the door.";
+property float  speed_bias$     		= 1.0;
+property float  close_time$     		= -1.0				doc = "How long the door will remain open before closing automaticaly, off with default value";
+property bool   initially_open$			= false				doc = "If true the door will be open when constructed otherwise closed.";
+property bool   oneshot$        		= false				doc = "Use this to allow the door to open only once.";
+//----Double Door Handlers
+property scid   second_door$            					doc = "Scid of Second Door to open if double doors.";
+property bool   non_blocking$ 			= false     		doc = "If true the door will never block pathfinding.";
+//----Close Effects----
+property Scid   sfxpoint$                           		doc = "Scid of spawnpoint to attach sfx if applicable.";
+property bool	close_sfx_on$			= false				doc = "Is the closing dust effect on?";
+property bool   close_sfx_at_sfxpoint$	= true          	doc = "Use an external spawnpoint for the effect location?";
+property string	close_sfx$				= "door_dust"		doc = "Must Specify SiegeFx Script if Close Sfx On";
+property string close_sfx_params$		= ""				doc = "Parameters for the SiegeFx script";  //Rick do I need this?  -J
+property string	open_sfx$				= ""				doc = "Must Specify SiegeFx Script if Close Sfx On";
+property bool   sound_start$            = true;
+property bool   sound_end$              = true;
+property bool   		msg_on_open$    = false;
+property bool   		msg_on_close$   = false;
+property scid 			msg_scid_opening$ 						doc = "Scid to send message to when door is opening";
+property eWorldEvent 	msg_type_opening$	= WE_REQ_ACTIVATE	doc = "message to send when door is opening";
+property scid 			msg_scid_open$ 						doc = "Scid to send message to when door is opened";
+property eWorldEvent 	msg_type_open$	= WE_REQ_ACTIVATE	doc = "message to send when door is opened";
+property scid 			msg_scid_open2$ 					doc = "second Scid to send message to when door is opened";
+property eWorldEvent 	msg_type_open2$	= WE_REQ_ACTIVATE	doc = "second message to send when door is opened";
+property scid 			msg_scid_open3$ 					doc = "third Scid to send message to when door is opened";
+property eWorldEvent 	msg_type_open3$	= WE_REQ_ACTIVATE	doc = "third message to send when door is opened";
+property scid 			msg_scid_close$ 					doc = "Scid to send message to when door is closed";
+property eWorldEvent 	msg_type_close$	= WE_REQ_ACTIVATE	doc = "message to send when door is closed";
+
+//internal properties
+bool double_door$   = true;
+bool used_up$ = false;
+
+owner                                = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+#option -explicit_states
+
+
+trigger OnGoHandleMessage$( WE_LEFT_WORLD )
+{
+	if (!non_blocking$ && !used_up$)
+	{
+		Report.ReportF("jedi","I un-block:%s\n",owner.goid.go.templatename);
+		WorldTerrain.RequestObjectUnblock( owner.goid );
+		SetState Setup$;
+	}	
+}
+
+trigger OnGoHandleMessage$( WE_EXPLODED )
+{
+	if (!non_blocking$ && !used_up$)
+	{
+		WorldTerrain.RequestObjectUnblock( owner.goid );
+		SetState Done$;
+	}	
+}
+
+startup state WaitForSetup$
+{
+	event OnEnterState$
+	{
+    	SetState Setup$;
+    }
+}
+
+state Setup$
+{
+	trigger OnGoHandleMessage$( WE_ENTERED_WORLD )
+	{
+		if ( second_door$ != NULL )
+        {
+			if ( second_door$.goid.isvalid() )
+        	{
+        	    double_door$ = true;
+			}
+        	else
+        	{
+        		double_door$ = false;
+			}
+		}
+        else
+        {
+        	 double_door$ = false;
+		}
+		
+		if( (initially_open$) && (!oneshot$) )
+		{
+			// Request animation
+			MCPManager.MakeRequest( 0, owner.goid, PL_PLAYANIM, CHORE_OPEN, 0, 1);
+			WorldTerrain.RequestObjectUnblock( owner.goid );
+		
+			if (!can_use$)
+		    {
+				SetState Done$;
+			}
+		    else
+		    {
+			Report.ReportF("jedi","[%8.3f] Set initial setup state to [Open$] for %s\n",WorldTime.time,owner.goid.go.templatename);
+		    SetState Open$;
+		    }
+		}
+		else
+		{
+			if (!oneshot$)
+			{
+				MCPManager.MakeRequest( 0, owner.goid, PL_PLAYANIM, CHORE_CLOSE, 0, 1);
+			}
+			// Request initial door setup
+			if (!non_blocking$)
+			{
+				Report.ReportF("jedi","I block:%s\n",owner.goid.go.templatename);
+				WorldTerrain.RequestObjectBlock( owner.goid );
+			}
+		
+			if (!can_use$)
+			{
+			    SetState Done$;
+			}
+			else
+			{
+				Report.ReportF("jedi","[%8.3f] Set initial setup state to [Closed$] for %s\n",WorldTime.time,owner.goid.go.templatename);
+				SetState Closed$;
+			}
+		
+		}
+	}
+}
+
+void Open_Door$()
+{
+	if ( sound_start$ )
+    {
+		owner.Go.PlayMaterialSound( "door_open", "generic", true);
+    }
+	
+	if ( msg_scid_opening$.goid.isvalid() )
+	{
+		SendWorldMessage( msg_type_opening$, msg_scid_opening$.goid );
+	}
+	
+	Report.ReportF("jedi","[%8.3f] Transition [Closed$ -> Opening$] for %s\n",WorldTime.time,owner.goid.go.templatename);
+	// Request animation
+	MCPManager.MakeRequest( 0, owner.goid, PL_OPEN);
+	WorldTerrain.RequestObjectUnblock( owner.goid );
+	if( close_time$ > 0 )
+	{
+		this.CreateTimer( 1, close_time$ );
+		this.SetTimerGlobal( 1, true );
+	}
+    if (double_door$)
+    {
+		//Send World Message
+		PostWorldMessage( WE_REQ_USE, second_door$, 0 );
+    }
+}
+
+void Close_Door$()
+{
+	if ( sound_end$ == true )
+    {
+		owner.Go.PlayMaterialSound( "door_close", "generic", true);
+    }
+	
+	Report.ReportF("jedi","[%8.3f] Transition [Open$ -> Closing$] for %s\n",WorldTime.time,owner.goid.go.templatename);
+	// Request animation
+	MCPManager.MakeRequest( 0, owner.goid, PL_CLOSE);
+
+    if (double_door$)
+    {
+		//Send World Message
+		PostWorldMessage( WE_REQ_USE, second_door$, 0 );
+	}
+}
+
+transition
+{
+	Closed$ -> Opening$: OnGoHandleMessage( WE_REQ_USE ) = { Open_Door$(); }
+	Closed$ -> Opening$: OnGoHandleMessage( WE_REQ_ACTIVATE ) = { Open_Door$(); }
+
+	Opening$ -> Open$: OnGoHandleMessage( WE_ANIM_DONE ) =
+	{
+		if ( open_sfx$ != "")
+		{
+			SiegeFx.SRunScript( open_sfx$, owner.Goid, owner.Goid, "", owner.Goid, WE_ANIM_DONE );
+		}
+		if ( msg_on_open$)
+		{
+			if ( msg_scid_open$.goid.isvalid() )
+			{
+				SendWorldMessage( msg_type_open$, msg_scid_open$.goid );
+			}
+			if ( msg_scid_open2$.goid.isvalid() )
+			{
+				SendWorldMessage( msg_type_open2$, msg_scid_open2$.goid );
+			}
+			if ( msg_scid_open3$.goid.isvalid() )
+			{
+				SendWorldMessage( msg_type_open3$, msg_scid_open3$.goid );
+			}
+		}
+		Report.ReportF("jedi","[%8.3f] Transition [Opening$ -> Open$] for %s\n",WorldTime.time,owner.goid.go.templatename);
+        if (oneshot$)
+        {
+            SetState Done$;
+		}
+	}
+
+	Open$ -> Closing$: OnGoHandleMessage( WE_REQ_USE ) = { Close_Door$(); }
+	Open$ -> Closing$: OnGoHandleMessage( WE_REQ_ACTIVATE ) = { Close_Door$(); }
+	Open$ -> Closing$: OnTimer( 1 ) = { Close_Door$(); }
+
+	Closing$ -> Closed$: OnGoHandleMessage( WE_ANIM_DONE ) =
+	{
+		if ( msg_on_close$)
+		{
+			if ( msg_scid_close$.goid.isvalid() )
+			{
+				SendWorldMessage( msg_type_close$, msg_scid_close$.goid );
+			}
+		}
+		
+		Report.ReportF("jedi","[%8.3f] Transition [Closing$ -> Closed$] for %s\n",WorldTime.time,owner.goid.go.templatename);
+		Report.ReportF("jedi","close_sfx_at_sfxpoint = %s\n",close_sfx_at_sfxpoint$?"true":"false");
+		Report.ReportF("jedi","close_sfx_on = %s\n",close_sfx_on$?"true":"false");
+    	if (!non_blocking$)
+        {
+			WorldTerrain.RequestObjectBlock( owner.goid );
+        }
+
+        if ((close_sfx_at_sfxpoint$) && (close_sfx_on$))
+		{
+   			if ( SfxPoint$.IsValid() && SfxPoint$.goid.isvalid() )
+			{
+				Report.ReportF("jedi","[%8.3f] Starting an sfxpoint [%s][%s] for %s at %s\n",WorldTime.time,close_sfx$,close_sfx_params$,owner.goid.go.templatename,sfxPoint$.Goid.go.templatename);
+				int ret$ = SiegeFx.SRunScript( close_sfx$, sfxPoint$.Goid, sfxPoint$.Goid, close_sfx_params$, sfxPoint$.Goid, WE_ANIM_DONE );
+				Report.ReportF("jedi","Returned an ID value of %d\n",ret$);
+			}
+		}
+        else if (close_sfx_on$)
+		{
+			Report.ReportF("jedi","[%8.3f] Starting a non-sfxpoint [%s][%s] for %s\n",WorldTime.time,close_sfx$,close_sfx_params$,owner.goid.go.templatename);
+			int ret$ = SiegeFx.SRunScript( close_sfx$, owner.Goid, owner.Goid, close_sfx_params$, owner.Goid, WE_ANIM_DONE );
+			Report.ReportF("jedi","Returned an ID value of %d\n",ret$);
+		}
+	}
+}
+
+State Done$
+{
+    event OnEnterState$
+    {
+		Report.ReportF("jedi","[%8.3f] Entered State [DONE] for [%s]\n",WorldTime.time,owner.goid.go.templatename);
+		if ( Owner.Go != NULL)
+		{
+			Owner.Go.Aspect.SSetIsSelectable( false );
+			Owner.Go.Aspect.SSetIsUsable( false );
+		}
+		used_up$ = true;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////

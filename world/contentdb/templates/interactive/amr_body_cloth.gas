@@ -1,0 +1,910 @@
+[t:template,n:base_body_armor_cloth]
+{
+	doc = "Body armor base template";
+	specializes = armor;
+	[aspect]
+	{
+		material = flesh_hero;
+		[voice]
+		{
+			[put_down] { *=s_e_gui_put_down_robe; }
+		}
+	}
+	[gui] { equip_slot=es_chest; }
+}
+[t:template,n:bd_ro_m_d_c_003]
+{
+	doc = "bd_ro_m_d_c_003";
+	specializes = base_body_armor_cloth;
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Dirty Cloak";
+	}
+	[defend]
+	{
+		armor_style = 010;
+		armor_type = a7;
+		defense = 1;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_010;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 2;
+			modifier_min = 1;
+		}
+	}
+}
+[t:template,n:bd_ro_m_d_c_004]
+{
+	doc = "bd_ro_m_d_c_004";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 012;
+		armor_type = a7;
+		defense = 2;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_012;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 2;
+			modifier_min = 1;
+		}
+	}
+}
+[t:template,n:bd_ro_m_d_c_009]
+{
+	doc = "bd_ro_m_d_c_009";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 020;
+		armor_type = a7;
+		defense = 4;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_020;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 5;
+			modifier_min = 4;
+		}
+	}
+}
+[t:template,n:bd_ro_m_d_c_041]
+{
+	doc = "bd_ro_m_d_c_041";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 004;
+		armor_type = a7;
+		defense = 17;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_004;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 49;
+			modifier_min = 45;
+		}
+	}
+}
+[t:template,n:bd_ro_m_d_c_043]
+{
+	doc = "bd_ro_m_d_c_043";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Cloak"; }
+	[defend]
+	{
+		armor_style = 005;
+		armor_type = a7;
+		defense = 18;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_005;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 57;
+			modifier_min = 53;
+		}
+	}
+}
+[t:template,n:bd_ro_m_d_c_077]
+{
+	doc = "bd_ro_m_d_c_077";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 026;
+		armor_type = a7;
+		defense = 33;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_026;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 128;
+			modifier_min = 120;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_001]
+{
+	doc = "bd_ro_m_g_c_001";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 030;
+		armor_type = a7;
+		defense = 1;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_030;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_002]
+{
+	doc = "bd_ro_m_g_c_002";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 011;
+		armor_type = a7;
+		defense = 1;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_011;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 2;
+			modifier_min = 1;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_005]
+{
+	doc = "bd_ro_m_g_c_005";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 009;
+		armor_type = a7;
+		defense = 2;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_009;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 3;
+			modifier_min = 1;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_005a]
+{
+	doc = "bd_ro_m_g_c_005a";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 031;
+		armor_type = a7;
+		defense = 2;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_031;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_008]
+{
+	doc = "bd_ro_m_g_c_008";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 032;
+		armor_type = a7;
+		defense = 4;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_032;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_012]
+{
+	doc = "bd_ro_m_g_c_012";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 023;
+		armor_type = a7;
+		defense = 5;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_023;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 6;
+			modifier_min = 5;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_014]
+{
+	doc = "bd_ro_m_g_c_014";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 033;
+		armor_type = a7;
+		defense = 6;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_033;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_015]
+{
+	doc = "bd_ro_m_g_c_015";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 001;
+		armor_type = a7;
+		defense = 7;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_001;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 10;
+			modifier_min = 8;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_018]
+{
+	doc = "bd_ro_m_g_c_018";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 034;
+		armor_type = a7;
+		defense = 8;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_034;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_020]
+{
+	doc = "bd_ro_m_g_c_020";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 016;
+		armor_type = a7;
+		defense = 8;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_016;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 14;
+			modifier_min = 12;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_021]
+{
+	doc = "bd_ro_m_g_c_021";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 035;
+		armor_type = a7;
+		defense = 8;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_035;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_023]
+{
+	doc = "bd_ro_m_g_c_023";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Cloak"; }
+	[defend]
+	{
+		armor_style = 015;
+		armor_type = a7;
+		defense = 9;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_015;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 17;
+			modifier_min = 15;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_024]
+{
+	doc = "bd_ro_m_g_c_024";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 036;
+		armor_type = a7;
+		defense = 9;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_036;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_026]
+{
+	doc = "bd_ro_m_g_c_026";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 013;
+		armor_type = a7;
+		defense = 11;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_013;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 23;
+			modifier_min = 21;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_029]
+{
+	doc = "bd_ro_m_g_c_029";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 037;
+		armor_type = a7;
+		defense = 12;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_037;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_031]
+{
+	doc = "bd_ro_m_g_c_031";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 021;
+		armor_type = a7;
+		defense = 13;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_021;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 31;
+			modifier_min = 28;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_034]
+{
+	doc = "bd_ro_m_g_c_034";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 038;
+		armor_type = a7;
+		defense = 14;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_038;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_037]
+{
+	doc = "bd_ro_m_g_c_037";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 025;
+		armor_type = a7;
+		defense = 16;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_025;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 45;
+			modifier_min = 41;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_039]
+{
+	doc = "bd_ro_m_g_c_039";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 039;
+		armor_type = a7;
+		defense = 16;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_039;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_042]
+{
+	doc = "bd_ro_m_g_c_042";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 040;
+		armor_type = a7;
+		defense = 18;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_040;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_045]
+{
+	doc = "bd_ro_m_g_c_045";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 041;
+		armor_type = a7;
+		defense = 19;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_041;
+		inventory_width = 2;
+	}
+}
+[t:template,n:bd_ro_m_g_c_046]
+{
+	doc = "bd_ro_m_g_c_046";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 002;
+		armor_type = a7;
+		defense = 20;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_002;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 66;
+			modifier_min = 61;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_053]
+{
+	doc = "bd_ro_m_g_c_053";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 022;
+		armor_type = a7;
+		defense = 23;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_022;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 78;
+			modifier_min = 73;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_059]
+{
+	doc = "bd_ro_m_g_c_059";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 024;
+		armor_type = a7;
+		defense = 25;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_024;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 90;
+			modifier_min = 84;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_065]
+{
+	doc = "bd_ro_m_g_c_065";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 028;
+		armor_type = a7;
+		defense = 28;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_028;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 102;
+			modifier_min = 95;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_071]
+{
+	doc = "bd_ro_m_g_c_071";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 029;
+		armor_type = a7;
+		defense = 30;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_029;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 114;
+			modifier_min = 107;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_084]
+{
+	doc = "bd_ro_m_g_c_084";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 014;
+		armor_type = a7;
+		defense = 36;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_014;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 143;
+			modifier_min = 135;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_089]
+{
+	doc = "bd_ro_m_g_c_089";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 006;
+		armor_type = a7;
+		defense = 38;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_006;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 156;
+			modifier_min = 147;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_094]
+{
+	doc = "bd_ro_m_g_c_094";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 008;
+		armor_type = a7;
+		defense = 40;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_008;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 169;
+			modifier_min = 160;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_100]
+{
+	doc = "bd_ro_m_g_c_100";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 027;
+		armor_type = a7;
+		defense = 42;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_027;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 185;
+			modifier_min = 175;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_105]
+{
+	doc = "bd_ro_m_g_c_105";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 017;
+		armor_type = a7;
+		defense = 45;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_017;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 199;
+			modifier_min = 188;
+		}
+	}
+}
+[t:template,n:bd_ro_m_g_c_110]
+{
+	doc = "bd_ro_m_g_c_110";
+	specializes = base_body_armor_cloth;
+	[common] { screen_name="Robe"; }
+	[defend]
+	{
+		armor_style = 003;
+		armor_type = a7;
+		defense = 47;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a7_003;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 222;
+			modifier_min = 202;
+		}
+	}
+}

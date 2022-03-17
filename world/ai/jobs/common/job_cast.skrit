@@ -1,0 +1,331 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_cast.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: This is a basic cast the darn spell job.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Go		m_Spell$;
+int		m_Anim$;
+
+Goid	m_Target$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "k_job_c_attack-utils" 
+
+////////////////////////////////////////////////////////////////////////////////
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+	m_Spell$ 	= job$.GoalModifier.Go;
+	m_Anim$		= job$.GoalModifier.Go.Magic.CastSubAnimation;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$ = job$.GoalObject;
+
+	if( m_Target$.Go == NULL )
+	{
+		SetState Exiting$;
+	}
+	else if( !m_Spell$.Magic.IsCastableOn( m_Target$ ) )
+	{
+		SetState Exiting$;
+	}
+	else
+	{
+		ResetPathFindingParameters$();
+
+		SetState( Begin$ );
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{
+	if( ( e$ == WE_REQ_JOB_FINISH ) ||
+		( e$ == WE_ENGAGED_INVALID ) ||
+		( e$ == WE_ENGAGED_KILLED ) ||
+		( e$ == WE_ENGAGED_HIT_KILLED ) )
+	{
+		SetState CleaningUpAndExiting$;
+	}
+	else if ( e$ == WE_MCP_INVALIDATED )
+	{
+		SetState Exiting$;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Begin$
+{
+	////////////////////////////////////////////////////////////////////////////////
+	//	check standing orders
+
+	event OnEnterState$
+	{
+		if( m_Target$ != m_Go$.Goid )
+		{
+			////////////////////////////////////////
+			//	casting on other
+			if( m_Mind$.MovementOrders == MO_HOLD )
+			{
+				if( m_Mind$.IsInSpellRange( m_Target$.Go, m_Spell$ ) )
+				{
+					eAnimStance stance$ = m_Go$.inventory.animstance;
+			 		float cast_loop_duration$ = m_Spell$.Magic.CastReloadDelay;
+					cast_loop_duration$ += m_Go$.Aspect.AspectHandle.GetBaseDurationForChoreStance(CHORE_MAGIC,stance$);
+
+					int num_anims$ = m_Go$.Aspect.AspectHandle.NumSubAnimsForChoreAndStance(CHORE_MAGIC,stance$);
+					
+					if( num_anims$ < m_Anim$ )
+					{
+						m_Anim$ = 0;
+					}
+					eReqRetCode ret$ = MCPManager.MakeRequest(  m_Job$.Id,
+																m_Go$.Goid,
+																PL_CAST_ON_OBJECT,
+																cast_loop_duration$,
+																m_Anim$,
+																m_Target$,
+																m_Spell$.Magic.CastRange,
+																m_LookAhead$, m_MaxApproachTime$,														
+																REQFLAG_NOMOVE );
+
+					report.ReportF( "aimove","[%s] PL_CAST_ON_OBJECT [%s] returned [%s]\n",
+									 	m_Go$.TemplateName,
+										m_Target$.go.TemplateName,
+										ToString(ret$) );
+
+					if (RequestFailed(ret$))
+					{
+						SetState( Exiting$ );
+					}
+					else
+					{
+						SetState( ContinueAction$ );
+					} 
+				}
+				else
+				{
+					m_Job$.MarkForDeletion( false );
+				}
+			}
+			else if ( m_Mind$.CombatOrders == CO_HOLD )
+			{
+				m_Job$.MarkForDeletion( false );
+			}
+			else
+			{
+				SetState RequestAction$;
+			}
+		}
+		else
+		{
+			SetState CastOnSelf$;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastOnSelf$
+{
+	transition
+	{
+		-> TargetMoved$:			OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> CastAndFollowThrough$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> CastWithoutFireEvent$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Spell$.Magic.EvaluateManaCost( m_Go$.Goid, m_Target$ ) <= m_Go$.Aspect.CurrentMana )
+		{
+			MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_CAST );
+		}
+		else
+		{
+			SetState( Exiting$ );
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state RequestAction$
+{
+
+	event OnEnterState$
+	{
+		if( m_Spell$.Magic.EvaluateManaCost( m_Go$.Goid, m_Target$ ) <= m_Go$.Aspect.CurrentMana )
+		{
+			eAnimStance stance$ = m_Go$.inventory.animstance;
+	 		float cast_loop_duration$ = m_Spell$.Magic.CastReloadDelay;
+			cast_loop_duration$ += m_Go$.Aspect.AspectHandle.GetBaseDurationForChoreStance(CHORE_MAGIC,stance$);
+
+			int num_anims$ = m_Go$.Aspect.AspectHandle.NumSubAnimsForChoreAndStance(CHORE_MAGIC,stance$);
+				
+			if( num_anims$ < m_Anim$ )
+			{
+				m_Anim$ = 0;
+			}
+			eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id,
+													m_Go$.Goid,
+													PL_CAST_ON_OBJECT,
+													cast_loop_duration$,
+													m_Anim$,
+													m_Target$,
+													m_LookAhead$, m_MaxApproachTime$,
+													m_Spell$.Magic.CastRange
+													);
+
+			report.ReportF("aimove","[%s] PL_CAST_ON_OBJECT [%s] returned [%s]\n",
+			 	m_Go$.TemplateName,
+				m_Target$.go.TemplateName,
+				ToString(ret$) );
+
+			if( RequestFailed(ret$) )
+			{
+				SetState( Exiting$ );
+			}
+			else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+			{
+				SetState( MovingCloser$ );
+			}
+			else if (ret$ == REQUEST_OK)
+			{
+				SetState( ContinueAction$ );
+			}
+			else // (ret$ == REQUEST_OK_IN_RANGE)
+			{
+				SetState( ContinueAction$ );
+			}
+
+		}
+		else
+		{
+			SetState( Exiting$ );
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	 
+state ContinueAction$
+{
+	transition
+	{
+//		-> TargetMoved$:			OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );			// $$$ REVISIT WITH MIKE -BK
+		-> CastAndFollowThrough$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> CastWithoutFireEvent$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastWithoutFireEvent$
+{
+	event OnEnterState$
+	{
+		//report.warningf("$$$$ The casting anim for [%s] has no FIRE event\n",m_Go$.TemplateName);
+
+		m_Spell$.Magic.SCast( m_Mind$.GetEngagedObject.GetGo );
+
+		SetState( CastAgain$ );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastAndFollowThrough$
+{
+
+	transition
+	{
+		-> CastAgain$: 		OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		//report.warningf("$$$$ The casting anim for [%s] has no FIRE event\n",m_Go$.TemplateName);
+		m_Spell$.Magic.SCast( m_Mind$.GetEngagedObject.GetGo );
+	}
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastAgain$
+{
+	event OnEnterState$
+	{
+		if( m_Spell$.Magic.IsOneShot || (m_Spell$.Magic.EvaluateManaCost( m_Go$.Goid, m_Target$ ) > m_Go$.Aspect.CurrentMana) )
+		{
+			SetState Exiting$;
+		}
+		else
+		{
+			SetState Begin$;
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CleaningUpAndExiting$
+{
+	transition
+	{
+		-> Exiting$:						OnWorldMessage( WE_ANIM_DONE );
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}

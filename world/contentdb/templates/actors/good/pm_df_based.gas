@@ -1,0 +1,278 @@
+[t:template,n:base_pm_dwarf]
+{
+	category_name = "character";
+	doc = "Base template for dwarf party members based on the dwarf.";
+	specializes = base_dwarf;
+	[actor]
+	{
+		can_level_up = TRUE;
+		race = human;
+	}
+    [common] { membership = hero; }
+	[conversation]
+	{
+	}
+   	[aspect]
+	{
+		life_recovery_unit		= 1;
+        life_recovery_period	= 4;
+
+		mana_recovery_unit		= 1;
+		mana_recovery_period	= 3;
+    }
+	[inventory]
+	{
+		grid_height = 13;
+		grid_width = 4;
+	}
+	[water_effects] {}
+	[store]
+	{
+	}
+	[mind]
+	{
+		actor_auto_defends_others = true;
+		jat_brain 	= world\ai\jobs\common\brain_hero.skrit;
+		jat_listen 	= world\ai\jobs\common\job_listen.skrit;
+	}
+}
+[t:template,n:dornek_firehammer]
+{
+	category_name = "character";
+	doc = "dornek_firehammer";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_df; }
+	[actor]
+	{
+		[skills]
+		{
+			strength 	=	0, 0, 10;
+			intelligence= 	0, 0, 10;
+			dexterity	= 	0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		[textures]
+		{
+			0 = b_c_gan_df_skin_05;
+			1 = b_c_pos_a1_032;
+		}
+	}
+	[common] { screen_name="Dornek Firehammer"; }
+	[mind]
+	{
+		melee_engage_range = 1.9;
+		ranged_engage_range = 9;
+		sight_range = 12;
+	}
+}
+[t:template,n:gloern]
+{
+	category_name = "character";
+	doc = "gloern";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_gl; }
+	[actor]
+	{
+		[skills]
+		{
+			strength 	=	0, 0, 10;
+			intelligence= 	0, 0, 10;
+			dexterity	= 	0, 0, 10;
+
+            [override]
+            {
+                Melee = 26,0,0;
+            }
+
+		}
+	}
+	[aspect]
+	{
+        gold_value = 900;
+		[textures]
+		{
+			0 = b_c_gan_df_skin_05;
+			1 = b_c_pos_a1_032;
+		}
+	}
+	[common] { screen_name="Gloern"; }
+   	[inventory]
+	{
+		[equipment]
+		{
+			es_weapon_hand = #hammer/-no_mod/15-22;
+            es_chest = #body,f/-no_mod/40-70;
+            es_feet = #boots/-no_mod/40-70;
+            es_forearms = #gloves/-no_mod/40-70;
+            es_head =  #helm/-no_mod/40-70;
+		}
+
+	}
+
+	[mind]
+	{
+		melee_engage_range = 1.9;
+		ranged_engage_range = 9;
+		sight_range = 12;
+	}
+}
+[t:template,n:goquua]
+{
+	category_name = "character";
+	doc = "goquua";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_go; }
+	[actor]
+	{
+		[skills]
+		{
+			strength 	=	0, 0, 10;
+			intelligence= 	0, 0, 10;
+			dexterity	= 	0, 0, 10;
+
+            [override]
+            {
+                combat_magic = 5,0,0;
+            }
+
+		}
+	}
+	[aspect]
+	{
+        gold_value = 800;
+		[textures]
+		{
+			0 = b_c_gan_df_skin_05;
+			1 = b_c_pos_a1_032;
+		}
+	}
+	[common] { screen_name="Goquua"; }
+   	[inventory]
+	{
+		[equipment]
+		{
+			es_weapon_hand = #staff/-no_mod/7-9;
+            es_chest = #body,m/-no_mod/4-12;
+            es_feet = #boots/-no_mod/2-6;
+		}
+	}
+
+	[mind]
+	{
+		melee_engage_range = 1.9;
+		ranged_engage_range = 9;
+		sight_range = 12;
+	}
+}
+[t:template,n:kroduk]
+{
+	category_name = "character";
+	doc = "kroduk";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_kr; }
+	[actor]
+	{
+		[skills]
+		{
+			strength 	=	0, 0, 10;
+			intelligence= 	0, 0, 10;
+			dexterity	= 	0, 0, 10;
+
+            [override]
+            {
+                melee = 6,0,0;
+            }
+
+		}
+	}
+	[aspect]
+	{
+        gold_value = 900;
+		[textures]
+		{
+			0 = b_c_gan_df_skin_06;
+			1 = b_c_pos_a1_034;
+		}
+	}
+	[common] { screen_name="Kroduk"; }
+   	[inventory]
+	{
+		[equipment]
+		{
+			es_weapon_hand = #axe/-no_mod/8-10;
+            es_chest = #body,f/-no_mod/9-14;
+            es_feet = #boots/-no_mod/9-14;
+		}
+	}
+
+	[mind]
+	{
+		melee_engage_range = 1.9;
+		ranged_engage_range = 9;
+		sight_range = 12;
+	}
+}
+[t:template,n:rhut]
+{
+	category_name = "character";
+	doc = "rhut";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_df; }
+	[actor]
+	{
+		[skills]
+		{
+			strength 	=	0, 0, 10;
+			intelligence= 	0, 0, 10;
+			dexterity	= 	0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		[textures]
+		{
+			0 = b_c_gan_df_skin_05;
+			1 = b_c_pos_a1_032;
+		}
+	}
+	[common] { screen_name="Rhut"; }
+	[mind]
+	{
+		melee_engage_range = 1.9;
+		ranged_engage_range = 9;
+		sight_range = 12;
+	}
+}
+[t:template,n:ulfgrim]
+{
+	category_name = "character";
+	doc = "ulfgrim";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_df; }
+	[actor]
+	{
+		[skills]
+		{
+			strength 	=	0, 0, 10;
+			intelligence= 	0, 0, 10;
+			dexterity	= 	0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		[textures]
+		{
+			0 = b_c_gan_df_skin_05;
+			1 = b_c_pos_a1_032;
+		}
+	}
+	[common] { screen_name="Ulfgrim"; }
+	[mind]
+	{
+		melee_engage_range = 1.9;
+		ranged_engage_range = 9;
+		sight_range = 12;
+	}
+}

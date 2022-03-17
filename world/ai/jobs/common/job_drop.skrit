@@ -1,0 +1,70 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_drop.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: Drop an item on the ground.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+
+
+startup state Startup$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Dropping$;
+}
+
+
+event OnWorldMessage$( eWorldEvent /*e$*/, WorldMessage /*message$*/ )
+{
+}	
+
+
+state Dropping$
+{
+	event OnEnterState$
+	{
+
+		if( m_Go$.Inventory.GetEquippedSlot( m_Job$.GoalModifier ) != ES_NONE )
+		{
+			m_Go$.Inventory.RCUnequip( m_Go$.Inventory.GetEquippedSlot( m_Job$.GoalObject ) );
+		}
+
+		AIQuery.FindLocationToDrop( m_Job$.GoalObject.Go, m_Mind$.TempPos1 );
+		m_Go$.Inventory.RCRemove( m_Job$.GoalObject.Go, m_Mind$.TempPos1 );
+
+		m_Job$.MarkForDeletion( true );
+
+	}
+}
+

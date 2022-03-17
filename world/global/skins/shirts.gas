@@ -1,0 +1,81 @@
+[shirts*]
+{
+	group = farmboy;
+
+	texture = b_c_pos_a1_shrt_008;
+}
+[shirts*]
+{
+	group = farmboy;
+
+	texture = b_c_pos_a1_shrt_009;
+}
+[shirts*]
+{
+	group = farmboy;
+
+	texture = b_c_pos_a1_shrt_010;
+}
+[shirts*]
+{
+	group = farmboy;
+
+	texture = b_c_pos_a1_shrt_011;
+}
+[shirts*]
+{
+	group = farmboy;
+
+	texture = b_c_pos_a1_shrt_014;
+}
+[shirts*]
+{
+	group = farmboy;
+
+	texture = b_c_pos_a1_shrt_017;
+}
+
+
+
+[shirts*]
+{
+	group = farmgirl;
+
+	texture = b_c_pos_a1_shrt_008;
+}
+[shirts*]
+{
+	group = farmgirl;
+
+	texture = b_c_pos_a1_shrt_009;
+}
+[shirts*]
+{
+	group = farmgirl;
+
+	texture = b_c_pos_a1_shrt_010;
+}
+[shirts*]
+{
+	group = farmgirl;
+
+	texture = b_c_pos_a1_shrt_011;
+}
+[shirts*]
+{
+	group = farmgirl;
+
+	texture = b_c_pos_a1_shrt_014;
+}
+[shirts*]
+{
+	group = farmgirl;
+
+	texture = b_c_pos_a1_shrt_016;
+}
+[shirts*]
+{
+	group = farmgirl;
+
+	texture = b_c_pos_a1_shrt_017;
+}

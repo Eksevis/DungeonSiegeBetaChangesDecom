@@ -1,0 +1,149 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  user_education_tooltips.gas
+// Author(s):  Chad Queen
+//
+// Summary  :  Appends information to existing tooltips or rollovers when 
+//			   user education is enabled in the game.  These tips are meant
+//			   for novice users
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+
+[user_education_tooltips]
+{
+	[item_rollover]
+	{
+		// inventory
+		item_equippable = "Drag to paper doll to equip.";
+		item_spell_inv = "Open spell book and drag to slot to equip.";	
+		item_spell_book_slot = "Drag to inventory to unequip.";
+		
+		// paperdoll
+		item_paperdoll_rollover = "Drag to inventory to unequip.";
+		item_paperdoll_spellbook_rollover = "Drag to inventory to unequip.";
+			
+		// world rollover
+		breakable = "Click to break.";
+		usable = "Click to open or use.";
+		potion = "Right-click to use.";			
+		
+		// Interface windows
+		awp_character_slot_1 = "Click to use melee weapon.";
+		awp_character_slot_2 = "Click to use ranged weapon.";
+		awp_character_slot_3 = "Click to use spell, or click and hold to select spell.";
+		awp_character_slot_4 = "Click to use spell, or click and hold to select spell.";
+		
+		awp_portrait_rollover = "Click to select character, or click and drag to change order.";		
+	}
+	
+	[gui_rollover]
+	{		
+		// Character Panel		
+		character_name = "Character name.";
+		character_class = "Current character class.";		
+		
+		status_bar_health = "Current health.";
+		status_bar_mana = "Current mana.";
+		character_mana_value = "Mana";
+		character_health_value = "Health";
+
+		text_dex = "Dexterity";
+		character_dex_value = "Dexterity";		
+		text_int = "Intelligence";
+		character_int_value = "Intelligence";		
+		text_str = "Strength";
+		character_str_value = "Strength";
+				
+		text_skill_melee = "Melee Skill progress.";
+		text_skill_nature = "Nature Magic Skill progress.";
+		text_skill_combat = "Combat Magic Skill progress.";
+		text_skill_ranged = "Ranged Skill progress.";
+		character_combat_magic_value = "Combat Magic";
+		character_nature_magic_value = "Nature Magic";
+		character_melee_value = "Melee";
+		character_ranged_value = "Ranged";
+		
+		text_armor = "Current armor rating.";
+		character_armor_value = "Current armor rating.";				
+		text_melee_damage = "Melee Damage";
+		melee_damage_value = "Melee Damage";	
+		text_ranged_damage = "Ranged Damage";
+		ranged_damage_value = "Ranged Damage";			
+
+		spellbook_hide = "Click to close spell book.";
+		spellbook_show = "Click to open spell book.";
+		button_view = "Click and hold to view character.  Move mouse from left to right to rotate.";		
+
+		empty_amulet = "Equip amulet here.";
+		empty_ring = "Equip ring here.";
+		empty_armor = "Equip armor here.";
+		empty_boots = "Equip boots here.";
+		empty_gauntlets = "Equip gauntlets here.";
+		empty_helmet = "Equip helmet here.";
+		empty_melee = "Equip melee weapon here.";
+		empty_shield = "Equip shield here.";
+		empty_ranged = "Equip ranged weapon here.";
+		empty_spellbook = "Equip spell book here.";
+
+		// Status Bar
+		awp_maximize = "Click to maximize all Character Profiles.";
+		awp_minimize = "Click to minimize all Character Profiles.";
+		button_health_potions = "Click to make all characters drink health potion.";
+		button_mana_potions = "Click to make all characters drink mana potion.";
+		button_mega_map = "Click to view or hide the overview map.";		
+		button_menu = "Click to view the menu.";
+		button_quest_log = "Click to view or hide the quest log.";
+
+		// Compass
+		compass_hide = "Click to hide the compass.";
+		compass_show = "Click to view the compass.";
+		compass_drag_window = "Compass indicates which direction the camera is facing.";
+		
+		// Field Commands
+		formation_circle = "Click to use circle formation.";
+		formation_column = "Click to use column formation.";
+		formation_double_column = "Click to use double-column formation.";
+		formation_double_row = "click to use double-row formation.";
+		formation_double_wedge = "Click to use double-wedge formation.";
+		formation_pyramid = "Click to use pyramid formation.";
+		formation_row = "Click to use row formation.";
+		formation_t = "Click to use T formation.";
+		formation_none = "Click to use no formation.";
+		button_formations = "Click to view or hide formation options.";
+		button_movement = "Click to select movement order.";
+		button_attack = "Click to select attack order.";
+		button_targeting = "Click to select targeting order.";
+		button_field_commands = "Clicke to toggle field commands.";
+		button_maximize_fc = "Click to show commands.";
+		button_minimize_fc = "Click to hide commands.";
+		button_selectall = "Click to select all party members.";
+		button_disband = "Click to disband selected party members";
+		attack_fightback = "Fight Back.";
+		attack_free = "Attack Freely.";
+		attack_holdfire = "Hold Fire.";
+		movement_free = "Move Freely.";
+		movement_collectloot = "Collect Loot.";
+		movement_holdground = "Hold Ground.";
+		target_strongest = "Target Strongest.";
+		target_weakest = "Target Weakest.";	
+		
+		// Inventory
+		inventory_arrange = "Click to arrange inventory.";	
+		button_gold = "Click to pick up gold.";
+		inventory_exit = "Click to exit inventory.";
+
+		// Spellbook
+		spellbook_exit = "Click to close spellbook.";
+
+		// Mega Map
+		map_exit = "Click to exit overhead map.";
+
+		// Character AWP
+		toggle_inventory = "Click to toggle inventory and character panels.";
+	}
+}

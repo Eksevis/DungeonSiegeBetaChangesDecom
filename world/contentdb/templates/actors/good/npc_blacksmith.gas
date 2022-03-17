@@ -1,0 +1,117 @@
+[t:template,n:base_npc_bs]
+{
+	category_name = "npc";
+	doc = "blacksmith";
+	specializes = actor_good;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  5, 0;
+			intelligence =  5, 0;
+			dexterity =  5, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 1;
+		life = 1;
+		model = m_c_gbn_bk_pos_1;
+		scale_base = 0.85;
+		[textures] { 0=b_c_gbn_bs; }
+	}
+	[attack]
+	{
+		attack_range = 1;
+		damage_max = 1;
+		damage_min = 1;
+		reload_delay = 1;
+	}
+	[body]
+	{
+		avg_move_velocity = 1;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine1;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_pelvis;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_gbn_bs_fs;
+			[chore_attack]
+			{
+				chore_stances = 0,2;
+				skrit = select_attack;
+				[anim_files] { 00=ds; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0,2;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0,2;
+				skrit = select_transition;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0,2;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0,2;
+				skrit = select_walk;
+				[anim_files] { 00=ds; }
+			}
+		}
+	}
+	[common]
+	{
+		screen_name="Blacksmith";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("blacksmith_hammer");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[conversation]{}
+	[mind]
+	{
+		jat_talk = world\ai\jobs\common\job_talk.skrit;
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10;
+		sight_range = 10.0;
+	}
+}
+[t:template,n:merchant_blacksmith]
+{
+	category_name = "npc";
+	doc = "blacksmith, bt_r1";
+	specializes = base_npc_bs;
+}
+[t:template,n:merchant_blacksmith_glacern]
+{
+	category_name = "npc";
+	doc = "blacksmith, nt_r1";
+	specializes = base_npc_bs;
+	[aspect]
+	{
+		model = m_c_gbn_bk_pos_1;
+		[textures] { 0=b_c_gbn_bs-02; }
+	}
+}
+
+

@@ -1,0 +1,245 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  generator_advanced_a1.skrit
+// Author(s):  Chooch
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+/*//////////////////////////////////////////////////////////////////////////////
+DEV NOTES:
+
+/*///////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "Advanced Gen which Supports One Anims, Accel/Decel, and External Spawnpoints";
+property string _required_component$ = "placement";
+
+//Internal Properties
+bool	accel_on$		= true;
+bool	accel_over$		= false;
+bool	anim_over$      = false;
+// exported properties
+//----Movement--------
+property Scid   Spawnpoint$;
+property Scid   Initial_Command$;
+//----Generator-------
+property string child_template_name$;
+property int    num_children_incubating$ = 1;
+property float  spawn_period$            = 2.0;
+property int    max_alive_children$      = 1;
+//----Anims-----------
+property bool   	anim_one_shot$          = true			doc = "False will animate on every spawn.";
+property eAnimChore anim_chore$    			= chore_open    doc = "Play this anim chore before spawning the actor.";
+property bool   	accelerate$             = true;
+property int    	accel_delay$            = 1;
+property float  	accel_rate$      		= 0.2;
+property int		accel_count$            = 10;
+property float  	accel_cap$              = 0.2;
+property float  	decel_cap$              = 2.0;
+//----Sound-----------
+//property bool   sound_start$            = true;
+//property bool   sound_end$              = true;
+//property bool   sound_transition_start$ = false;
+//property bool   sound_transition_end$   = false;
+
+
+
+
+owner = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+// global state
+
+event OnGoDrawDebugHud$
+{
+	World.DrawDebugSphere( owner.Go.Placement.Position,
+						   1.5,
+						   MakeColor( 1.0, 0.0, 0.0 ),
+						   Debug.Format( "accel_delay: %d\naccel_count: %d\nincubating: %d\nspawn period: %f\nmax alive: %d\nspawn template: %s",
+										 accel_delay$, accel_count$, num_children_incubating$, spawn_period$, max_alive_children$, child_template_name$ ) );
+
+
+    if ( SpawnPoint$.IsValid() && SpawnPoint$.getgoid.isvalid() )
+    {
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 SpawnPoint$.go.Placement.Position,
+                                     MakeColor( 1.0, 1.0, 0.0 ),
+                                     "Spawnpoint" );
+    }
+
+    if ( ( Initial_Command$.IsValid() && Initial_Command$.getgoid.isvalid() ) && ( SpawnPoint$.IsValid() && SpawnPoint$.getgoid.isvalid() ) )
+    {
+		World.DrawDebugDirectedLine( Spawnpoint$.go.Placement.Position,
+									 Initial_Command$.go.Placement.Position,
+                                     MakeColor( 1.0, 1.0, 0.0 ),
+                                     "Initial_Command" );
+    }
+
+
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// local states
+
+startup state Inactive$
+{
+	transition -> Startup$: OnGoHandleMessage( WE_REQ_ACTIVATE );
+
+	event OnEnterState$
+	{
+		//ACCEL CAP CAN'T BE = 0!  Big Bad-da Boom!!
+		if (accel_cap$ < 0.2)
+		{
+       		accel_cap$ == 0.2;
+		}
+
+	}
+}
+
+state Startup$
+{
+    transition -> Inactive$: OnGoHandleMessage( WE_REQ_DEACTIVATE );
+
+	event OnEnterState$
+	{
+        if ( num_children_incubating$ > 0 )
+		{
+			PostWorldMessage( WE_GO_TIMER_DONE, owner.Go.Goid, spawn_period$ );
+		}
+		else
+		{
+			SetState Inactive$;
+		}
+    }
+
+	transition -> Startup$: OnGoHandleMessage( WE_GO_TIMER_DONE ) =
+	{
+    	if ( AiQuery.GetCount( QT_ALIVE_CONSCIOUS, owner.Go.Children ) < max_alive_children$ )
+		{
+        	SetState Opening$;
+        }
+	}
+
+}
+
+State Opening$
+{
+    event OnenterState$
+    {
+		PostWorldMessage( WE_GO_TIMER_DONE, owner.Go.Goid, spawn_period$ );
+    
+		if (!anim_over$)
+		{
+			//open the grate
+			AnimReq aReq$		= MakeAnimReq( anim_chore$ );
+			aReq$.ReqFlags		= 1;        // ANIMFLAG_STARTATEND
+			owner.Go.Body.RCAnimate( aReq$ );
+
+            if (anim_one_shot$)
+            {
+              	anim_over$ = true;
+            }
+		}
+
+        // make a new child
+		GoCloneReq cloneReq$ = MakeGoCloneReq( owner.Goid, child_template_name$ );
+            
+		if ( SpawnPoint$.IsValid() && SpawnPoint$.getgoid.isvalid() )
+		{
+			SiegePos SpawnPos$ = Spawnpoint$.go.placement.position;
+			cloneReq$.StartingPos	= SpawnPos$;
+            cloneReq$.SetStartingOrient = Spawnpoint$.Go.Placement.Orientation;
+		}
+		else
+		{
+			SiegePos SpawnPos$ = owner.go.placement.position;
+			cloneReq$.StartingPos	= SpawnPos$;
+            cloneReq$.SetStartingOrient = owner.Go.Placement.Orientation;
+		}
+
+		cloneReq$.SnapToTerrain = true;
+        Goid newGoid$ = GoDb.SCloneGo( cloneReq$ );
+
+		//If valid give clone an initial command
+		if ( Initial_Command$.IsValid() && Initial_Command$.getgoid.isvalid() )
+        {
+				newGoid$.Go.Mind.SetInitialCommand( Initial_Command$ );
+        }
+		// one less monster
+		num_children_incubating$ -= 1;
+
+		if (accel_delay$ > 0)
+		{
+			accel_delay$ -= 1;
+		}
+		if (accelerate$)
+		{
+			SetState Accel$;
+		}
+	}
+
+	transition -> Startup$: OnGoHandleMessage( WE_GO_TIMER_DONE );
+}
+
+State Accel$
+{
+    event OnEnterState$
+    {
+        float period_check$ = spawn_period$ - accel_rate$;
+
+		//Peek ahead to make sure the next accel > 0
+		if ( period_check$ > 0.1)
+    	{
+    		accel_on$ == false;
+		}
+		//Is accel up done?
+		else if (spawn_period$ < accel_cap$)
+    	{
+    	   	accel_on$ = false;
+    	}
+
+		//Is entire accel up/down done?
+		if ( spawn_period$ > decel_cap$)
+    	{
+			accel_over$ = true;
+    	}
+
+    	//Is accel cycle over?
+    	if (( !accel_over$ ) && (accel_delay$ == 0))
+    	{
+    	//accelerate then decelerate
+    		if (accel_on$)
+    	    {
+       		   	spawn_period$ -= accel_rate$;
+        	}
+        	else if (accel_count$ == 0)
+        	{
+        		spawn_period$ += accel_rate$;
+        	}
+            else
+            {
+				accel_count$ -= 1;
+			}
+    	}
+
+    	SetState Startup$;
+    }
+}
+
+
+
+
+
+
+
+
+
+

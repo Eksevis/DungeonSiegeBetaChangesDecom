@@ -1,0 +1,116 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	brain_mana_plant.skrit
+
+	Author(s)	: 	Bartosz Kijanka
+
+	Purpose		:	The mana mushroom will automatically give mana to anyone
+					nearby.
+
+	ToDo:
+	
+	$$$ 	Re-evaluate transmitting state only as often as spell re-casting.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+Goid	m_Target$;
+
+
+startup state Startup$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo();
+	m_Mind$		= job$.GetGo.GetMind();
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Meditating$;
+}
+
+
+state Meditating$
+{
+	transition
+	{
+		-> Meditating$:		OnWorldMessage( WE_FRIEND_SPOTTED );
+	}
+
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_FRIEND_SPOTTED )
+		{
+			Go bud$ = MakeGoid( msg$.Data1 ).Go;
+			if( bud$ != NULL )
+			{
+				if( bud$.Aspect.ManaRatio < 1.0 )
+				{
+					Go spell$ = m_Go$.Inventory.SelectedSpell;
+					if( spell$ != NULL )
+					{
+						spell$.Magic.SCast( bud$ );
+						m_Target$ = bud$.Goid;
+						m_Job$.SetTimer( 0 );
+						SetState( Transferring$ );
+					}
+				}
+			}
+		}
+	}
+
+	event OnEnterState$
+	{
+	}
+}
+
+
+state Transferring$
+{
+	transition
+	{
+		-> Transferring$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_JOB_TIMER_DONE )
+		{
+			Go target$ = m_Target$.Go;
+			if( target$ != NULL )
+			{
+				if( target$.Aspect.ManaRatio >= 1.0 )
+				{
+					SetState( Meditating$ );
+				}
+			}
+		}
+	}
+
+	event OnEnterState$
+	{
+		//m_Go$.DebugProbeReport( "attacking\n" );
+		// $$$ change this period to only as often as required to keep the spell going continuously...
+		// $$$ Rick needs to add interface to Magic for this...
+		m_Job$.SetTimer( 1.0 );
+	}
+}

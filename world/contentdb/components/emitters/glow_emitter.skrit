@@ -1,0 +1,71 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  glow_emitter.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property bool	start_on_creation$	=	false	doc = "Start Emitter when it enters the world";
+
+property float	red$				=	0.3		doc = "Red color intensity 0-1";
+property float	green$				=	0.3		doc = "Green color intensity 0-1";
+property float	blue$				=	0.3		doc = "Blue color intensity 0-1";
+
+property float	scale$				=	1.0		doc = "Size of the particle";
+
+property float	radius$				=	0.0		doc = "Distance Glow is drawn from the emitter, used when rotating";
+property float	phi$				=	1.0		doc = "spherical rotational increment in radians";
+property float	theta$				=	0.0		doc = "spherical rotational increment in radians";
+
+property bool	use_star$			=	false	doc = "Use an eight pointed star texture";
+property bool	sparkle$			=	false	doc = "If using a star does it twinkle";
+
+
+owner = GoSkritComponent;
+int active_script_id$ = 0;
+
+
+startup state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		// Only start the effect if there isn't one already going
+		if( (active_script_id$ == 0) && (( e$ == WE_REQ_ACTIVATE )  || (( e$ == WE_ENTERED_WORLD ) && (start_on_creation$ == true))) )
+		{
+ 			string params$ = "[-";
+			
+			StringTool.Appendf( params$, "radius(%g)", radius$ );
+			StringTool.Appendf( params$, "iphi(%g)", phi$ );
+			StringTool.Appendf( params$, "itheta(%g)", theta$ );
+			
+			StringTool.Appendf( params$, "color0(%g,%g,%g)", red$, green$, blue$ );
+			StringTool.Appendf( params$, "scale(%g)", scale$ );
+			
+			if (use_star$)
+			{
+				if (sparkle$)
+				{
+					StringTool.Append( params$, "texture(b_sfx_sparkle01_tsd)" );
+				} else {
+					StringTool.Append( params$, "texture(b_sfx_sparkle01)" );
+				}	
+			}			
+			StringTool.Append( params$, "]" );
+
+			// Run the generic_spawn script
+			active_script_id$ =	SiegeFx.RunScript( "glow_emitter", owner.Goid, owner.Goid, params$, owner.Goid, WE_REQ_ACTIVATE );
+		}
+		else if( (e$ == WE_REQ_DEACTIVATE) && (active_script_id$ != 0) )
+		{
+			// Let the effect know that it should finish what it is doing and not spawn anything else
+			SiegeFx.FinishScript( active_script_id$ );
+
+			// Clear the script id
+			active_script_id$ = 0;
+		}
+	}
+}

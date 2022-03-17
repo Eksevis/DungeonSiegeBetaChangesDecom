@@ -1,0 +1,180 @@
+[new_exit]
+{
+	  intended_resolution_height = 480;
+	  intended_resolution_width = 640;
+	b interface = true;
+	  modal = true;
+	  centered = exit_main_dialog;
+
+	[t:button,n:exit_button_no]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 6;
+		  rect = 323,266,415,282;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+
+		[t:text,n:exit_text_no]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 9;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 333,266,404,283;
+			  text = "No";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+			b topmost = true;
+		}
+
+		[messages] 
+		{
+			onbuttonpress = notify(back_to_menu);
+		}		
+	}
+	[t:button,n:exit_windows_yes_button]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 5;
+		  rect = 216,266,308,282;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+
+		[messages]
+		{
+			onenter = notify(exit_to_windows);
+			onbuttonpress = notify(exit_to_windows);
+		}
+
+		[t:text,n:exit_windows_text_yes]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 8;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 229,266,295,282;
+			  text = "Yes";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+			b topmost = true;
+		}		
+	}
+	[t:button,n:exit_game_yes_button]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 5;
+		  rect = 216,266,308,282;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+
+		[messages]
+		{
+			onenter = notify(exit_game);
+			onbuttonpress = notify(exit_game);
+		}
+
+		[t:text,n:exit_game_text_yes]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 8;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 229,266,295,282;
+			  text = "Yes";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+			b topmost = true;
+		}		
+	}
+	[t:dialog_box,n:exit_main_dialog]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 1;
+		  rect = 153,164,488,309;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+	}
+	[t:dialog_box,n:exit_text_dialog]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 2;
+		  rect = 234,187,399,211;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+	}
+	[t:text,n:exit_text_exit]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 3;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+		  rect = 238,191,395,207;
+		  text = "Exit?";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+	}
+	[t:text,n:text_exit_game]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 4;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+		  rect = 166,228,476,249;
+		  text = "Do you wish to exit to the main menu?";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+	}
+	[t:text,n:text_exit_windows]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 4;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+		  rect = 166,228,476,249;
+		  text = "Do you wish to exit to Windows?";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		b topmost = true;
+	}	
+}

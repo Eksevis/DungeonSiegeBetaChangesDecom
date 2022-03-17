@@ -1,0 +1,129 @@
+[t:template,n:norick]
+{
+	category_name = "character";
+	doc = "norick";
+	specializes = actor_good;
+
+	[conversation] {  }
+
+	[actor]
+	{
+		alignment			= aa_neutral;
+		[skills]
+		{
+			strength =  5, 0;
+			intelligence =  5, 0;
+			dexterity =  5, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 1;
+		life = 1;
+		max_life = 1;
+//		life_state = ls_ignore;
+//		draw_shadow = false;
+		model = m_c_gbn_pmo_pos_1;
+	}
+	[attack]
+	{
+		attack_range = 1;
+		damage_max = 1;
+		damage_min = 1;
+		is_melee = false;
+		reload_delay = 1;
+	}
+	[body]
+	{
+		avg_move_velocity = 0.520000;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine1;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_pelvis;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_gbn_pmo_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf-02; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=di; }
+			}
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+				[anim_files]
+				{
+					hurt = a_c_gbn_pmo_fs0_dsf-02;
+					dead = a_c_gbn_pmo_fs0_di-02;
+					fall = a_c_gbn_pmo_fs0_dsf-03;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl-02; }
+			}
+		}
+	}
+	[common] { screen_name="Norick"; }
+	[inventory]
+	{
+		[other]
+		{
+			il_main = spell_zap;
+		}
+	}
+	[mind]
+	{
+		jat_die = jat_none;
+		jat_fidget = jat_none;
+
+		actor_auto_fidgets = false;
+
+		on_enemy_spotted_alert_friends             = false;
+		on_enemy_spotted_attack                    = false;
+		actor_auto_defends_others                  = false;
+		actor_auto_heals_others_life               = false;
+		actor_auto_heals_others_mana               = false;
+		actor_auto_heals_self_life                 = false;
+		actor_auto_heals_self_mana                 = false;
+		actor_auto_picks_weapon_before_attack      = false;
+		actor_auto_uses_active_spells              = false;
+		actor_auto_uses_active_weapons             = false;
+		actor_auto_xfers_mana                      = false;
+		melee_engage_range                         = 10;
+		personal_space_range                       = 0.7;
+		ranged_engage_range                        = 10;
+		sight_range                                = 10;
+		combat_orders                              = co_invalid;
+		disposition_orders                         = ad_invalid;
+		focus_orders                               = fo_invalid;
+		movement_orders                            = mo_invalid;
+	}
+}

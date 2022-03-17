@@ -1,0 +1,169 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_drink.skrit
+
+	Author(s)	: 	Bartosz Kijanka
+
+	Purpose		: 	Take a swig of the "hard stuff."
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+Go 		m_Beverage$;
+
+Goid	m_Weapon$;
+Goid	m_Shield$;
+eInventoryLocation m_ilSelected$;
+
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+	m_Beverage$	= job$.GoalObject.Go;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState UnequippingGear$;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	global event handler
+
+trigger OnWorldMessage$( WE_DESTRUCTED )
+{
+	SetState RequippingGear$;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	unequip
+
+state UnequippingGear$
+{
+	event OnEnterState$
+	{
+		////////////////////////////////////////
+		//	unequip gear
+
+		m_ilSelected$ = m_Go$.Inventory.GetSelectedLocation();
+
+		Go weapon$ = m_Go$.Inventory.GetEquipped( ES_WEAPON_HAND );
+		Go shield$ = m_Go$.Inventory.GetEquipped( ES_SHIELD_HAND );
+	
+		if( weapon$ != NULL )
+		{
+			m_Weapon$ = weapon$.Goid;
+			m_Go$.Inventory.RCUnequip( ES_WEAPON_HAND );
+		}
+
+		if( shield$ != NULL )
+		{
+			m_Shield$ = shield$.Goid;
+			m_Go$.Inventory.RCUnequip( ES_SHIELD_HAND );
+		}
+
+		////////////////////////////////////////
+		//	equip potion
+		m_Go$.Inventory.RCEquip( ES_WEAPON_HAND, m_Beverage$.Goid );
+
+		SetState Drinking$;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	drink
+
+state Drinking$
+{
+	transition
+	{
+		-> ApplyBeverage$:		OnWorldMessage( WE_ANIM_DONE );
+		-> RequippingGear$:		OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+
+	event OnEnterState$
+	{
+		m_Beverage$.PlayVoiceSound( "drink", true );		
+
+		int drinkanim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,'drnk');
+
+		if (drinkanim$ >= 0)
+		{
+		   eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_PLAYANIM, CHORE_MISC, drinkanim$, 0 );
+		   if ( RequestFailed(ret$) )
+		   {
+			   SetState	ApplyBeverage$;
+		   }
+		}
+		else
+		{
+			// No 'drink' animation in the chore
+		   SetState	ApplyBeverage$;
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	drink GOOOOOD
+
+state ApplyBeverage$
+{
+	event OnEnterState$
+	{
+		m_Go$.Inventory.SAutoUse( m_Beverage$.Goid );
+		SetState RequippingGear$;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	re-equip
+
+state RequippingGear$
+{
+	event OnEnterState$
+	{
+		if( m_Weapon$.Go != NULL )
+		{
+			m_Go$.Inventory.RCEquip( ES_WEAPON_HAND, m_Weapon$ );
+		}
+		else
+		{
+			m_Go$.Inventory.RCEquip( ES_WEAPON_HAND, Goid.NoneGoid );
+		}
+
+		if( m_Shield$.Go != NULL )
+		{
+			m_Go$.Inventory.RCEquip( ES_SHIELD_HAND, m_Shield$ );
+		}
+
+		m_Go$.Inventory.RSSelect( m_ilSelected$ );
+
+		m_Job$.MarkForDeletion( true );
+	}
+}

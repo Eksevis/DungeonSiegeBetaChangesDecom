@@ -1,0 +1,196 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_attack_object.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: This is a generic attack an object job - that object can
+				  be an actor or an item.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+startup state Startup$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job /*job$*/ )
+{
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	Go		m_Go$;
+	GoMind	m_Mind$;
+	Job		m_Job$;
+
+	m_Job$	= job$;
+	m_Go$	= job$.GetGo;
+	m_Mind$	= job$.GetGo.GetMind;
+
+	Go weapon$ 	= m_Job$.GoalModifier.Go;
+	Go target$  = m_Job$.GoalObject.Go;
+
+	if( target$ == NULL )
+	{
+		m_Job$.MarkForDeletion( false );
+		return;
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	// if we attack enimies in our inner comfort zone with melee weapons,
+	// we want to select a melee weapon and forget all of the ranged and spell business.
+	if( weapon$ == NULL )
+	{
+		if( m_Mind$.OnEnemyEnteredICZSwitchToMelee )
+		{
+			if( m_Mind$.IsInRange( target$, m_Mind$.InnerComfortZoneRange ) )
+			{
+				weapon$ = m_Go$.Inventory.GetItem( IL_ACTIVE_MELEE_WEAPON );
+			}
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	//	auto pick weapon if none specified
+	if( weapon$ == NULL )
+	{
+		////////////////////////////////////////
+		//	if this is not a user assigned job, auto pick an item
+		if( m_Go$.Player.Controller == PC_COMPUTER )
+		{
+			////////////////////////////////////////
+			//	get best spell
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_SPELL );
+			m_Mind$.TempQtColl1.Add( QT_CASTABLE );
+			m_Mind$.TempQtColl1.Add( QT_LIFE_DAMAGING );
+        	
+			m_Mind$.TempGopColl1.Clear;
+			m_Mind$.GetAutoItems( m_Mind$.TempQtColl1, m_Mind$.TempGopColl1 );
+        	
+			m_Mind$.TempGopColl2.Clear;
+			AIQuery.GetMax( QT_LIFE_DAMAGING, m_Mind$.TempGopColl1, m_Mind$.TempGopColl2 );
+			
+			////////////////////////////////////////
+			//	get best weapon
+			m_Mind$.TempQtColl1.Clear;
+			if( m_Mind$.IsInRange( target$, m_Mind$.InnerComfortZoneRange ) )
+			{
+				m_Mind$.TempQtColl1.Add( QT_MELEE_WEAPON );
+			}
+			else
+			{											
+				m_Mind$.TempQtColl1.Add( QT_WEAPON );
+			}
+			m_Mind$.TempQtColl1.Add( QT_LIFE_DAMAGING );
+        	
+			m_Mind$.TempGopColl1.Clear;
+			m_Mind$.GetAutoItems( m_Mind$.TempQtColl1, m_Mind$.TempGopColl1 );
+			AIQuery.GetMax( QT_LIFE_DAMAGING, m_Mind$.TempGopColl1, m_Mind$.TempGopColl2 );
+        	
+			////////////////////////////////////////
+			//	get best weapon between spell vs conventional weapon
+			weapon$ = AIQuery.GetMax( QT_LIFE_DAMAGING, m_Mind$.TempGopColl2 );
+		}
+		else
+		{
+			////////////////////////////////////////
+			//	user assigned, so use explicitly selected weapon
+			weapon$ = m_Go$.Inventory.SelectedItem;
+		}
+
+		////////////////////////////////////////
+		//	if we couldn't find a weapon, the actor is the weapon ( hand-to-hand combat )
+		if( weapon$ == NULL )
+		{
+			weapon$ = m_Go$;
+		}
+	}
+
+	////////////////////////////////////////
+	//	make sure picked weapon is equipped
+
+	if( weapon$ == m_Go$ )
+	{
+		//report.generic( "\n*** hand to hand\n\n" );
+		if( !m_Go$.Inventory.IsPackOnly )
+		{
+			m_Go$.Inventory.RSAutoEquip( ES_WEAPON_HAND, Goid.NoneGoid, false );
+		}
+		//m_Go$.Inventory.RSAutoEquip( ES_SHIELD_HAND, Goid.NoneGoid );
+		m_Go$.Inventory.RSSelect( IL_ACTIVE_MELEE_WEAPON );
+	}
+	else
+	{
+		// equip the weapon... spells don't need equipping
+		if( weapon$.IsWeapon )
+		{
+			if( !m_Go$.Inventory.IsEquipped( weapon$ ) )
+			{
+				//report.generic( "\n*** equip new weapon\n\n" );
+				m_Go$.Inventory.RSSelect( m_Go$.Inventory.GetLocation( weapon$ ) );
+				m_Go$.Inventory.RSAutoEquip( ES_ANY, weapon$.Goid, false);
+			}
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	//	pick job based on weapon
+
+	eJobAbstractType jat$;
+	jat$ = JAT_NONE;
+
+	if( weapon$ == m_Go$ )
+	{
+		jat$ = JAT_ATTACK_OBJECT_MELEE;
+	}
+	else if( weapon$.IsMeleeWeapon )
+	{
+		jat$ = JAT_ATTACK_OBJECT_MELEE;
+	}
+	else if( weapon$.IsRangedWeapon )
+	{
+		jat$ = JAT_ATTACK_OBJECT_RANGED;
+	}
+	// Attack with any active offensive magic we have
+	else if( weapon$.IsOffensiveSpell )
+	{
+		jat$ = JAT_CAST;
+	}
+
+	if( jat$ != JAT_NONE )
+	{
+		JobReq req$ = MakeJobReq( jat$, JQ_ACTION, QP_NONE, m_Job$.GetOrigin, m_Job$.GoalObject, weapon$.Goid );
+		req$.PlaceRelativeTo = m_Job$.Id;
+
+		Job newJob$ = m_Mind$.SDoJob( req$ );
+		if( newJob$ != NULL )
+		{
+			newJob$.TakesOver( job$ );
+		}
+		else
+		{
+			report.warningf( "Job %s for actor %s failed to assign another attack.\n", ToString( m_Job$.GetJobAbstractType() ), m_Go$.GetTemplateName );
+		}
+		m_Job$.MarkForDeletion( true );
+	}
+	else
+	{
+		// $$$ error message here
+	}
+
+	m_Job$.MarkForDeletion( false );
+}
+
+

@@ -1,0 +1,209 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	brain_dragon.skrit
+
+	Author(s)	: 	Eric Tams
+
+	Purpose		:	Customized brain for the Dragon
+	
+	Expected Behavior	: The dragon should rest until an enemy comes into range.
+					When an enemy comes too close the dragon should wake up and 
+					toast anything nearby. once everyone is dead he should sit around
+					chillin.
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+Go		m_Target$;
+GoMind	m_Mind$;
+Job		m_Job$;
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Target$	= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Resting$;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//  Helper Functions
+
+////////////////////////////////////////
+//	PlayAnim
+
+bool PlayAnim$( int Anim$ )
+{
+	if (Anim$ >= 0)
+	{
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_PLAYANIM, CHORE_MISC, Anim$, 0 );
+		return true;	
+	}
+	return false;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//  State Machine
+trigger OnWorldMessage$( WE_KILLED )
+{
+	SetState Finished$;
+}
+
+state Resting$
+{
+	transition
+	{
+		-> Resting$:	OnWorldMessage( WE_ANIM_DONE );
+		-> WakeUp$:		OnWorldMessage( WE_ENEMY_SPOTTED );
+	}
+	event OnEnterState$
+	{
+		if( m_Mind$.EnemiesVisible() )
+		{				
+			report.generic("I see you.");
+			SetState WakeUp$;
+		} else {
+			int sleepanim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,'slep');
+			PlayAnim$(sleepanim$);
+		}
+	}
+}
+
+state WakeUp$
+{
+	transition
+	{
+		-> Awake$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+	event OnEnterState$
+	{
+		int wakeanim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,'wake');
+		PlayAnim$(wakeanim$);
+	}
+}
+
+state Awake$
+{
+	transition
+	{
+		-> Awake$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+	event OnEnterState$
+	{
+		if( m_Mind$.EnemiesVisible() )
+		{				
+			SetState TryToAttack$;
+		}
+		else
+		{
+			int fidganim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,'fidg');
+	
+			if (fidganim$ >= 0)
+			{
+				// Use the generic PL_PLAYANIM request type
+				eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_PLAYANIM, CHORE_MISC, fidganim$, 0 );
+			}
+			else
+			{
+				
+			}
+		}
+	}
+}
+
+state TryToAttack$
+{
+	transition
+	{
+		-> TryToAttack$:	OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+	event OnEnterState$
+	{
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		
+		if( m_Mind$.EnemiesVisible() )
+		{
+			m_Target$ = m_Mind$.GetClosestEnemy();
+
+			// Very dangerous to allow access to the position directly! --biddle
+			//SiegePos m_TargetPos$ = m_Mind$.GetClosestEnemy().Placement.Position;
+			SiegePos targpos$ = SiegePos.Copy( m_Mind$.GetClosestEnemy().Placement.Position );
+
+			float duration$ = Math.RandomFloat(2,6);
+			duration$ = 4;
+			report.genericf("%5.3f",duration$);
+							
+			// attack			
+			eReqRetCode ret$ = MCPManager.MakeRequest(
+								m_Job$.Id,
+								m_Go$.Goid,
+								PL_ATTACK_POSITION_RANGED,
+								duration$,					   	// Attack duration
+								0,								// Sub animation (ignored)
+								targpos$,
+								100000,							// attack range
+								REQFLAG_NOMOVETURN
+								);
+
+			if (RequestOk(ret$))
+			{
+				SetState Attacking$;
+			}
+		}
+		else
+		{
+			SetState Awake$;
+		}
+	}
+}
+
+state Attacking$
+{
+	transition
+	{
+		-> TryToAttack$:	OnWorldMessage( WE_ANIM_DONE );
+		-> TryToAttack$:	OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_ANIM_WEAPON_FIRE )
+		{
+			float m_Hold$ = 1.4;
+			m_Job$.SetTimer( m_Hold$ );
+			//m_Go$.Aspect.AspectHandle.DisableUpdate();
+			Siegefx.RunScript("dragon_fire_breath",m_Go$.goid,m_Go$.goid,"",m_Go$.goid, e$ );
+		}
+		if( e$ == WE_JOB_TIMER_DONE )
+		{
+			//m_Go$.Aspect.AspectHandle.EnableUpdate();
+		}
+	}
+}
+
+state Finished$
+{
+}

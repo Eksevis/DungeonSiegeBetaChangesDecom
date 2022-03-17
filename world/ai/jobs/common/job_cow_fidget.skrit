@@ -1,0 +1,53 @@
+// $$$ someone please make me work.  -mm
+
+Job		m_Job$;
+Mind	m_Mind$;
+GO		m_GO$;
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	m_Job$		= job$;
+	m_GO$		= job$.GetGO();
+	m_Mind$		= job$.GetGO.GetMind();
+
+	SetState CycleFidget$;
+}
+
+
+event OnWorldMessage$( eWorldEvent /*Event$*/, WorldMessage /*Message$*/ )
+{
+}
+
+startup state Wait$
+{
+}
+
+
+state CycleFidget$
+{
+	transition
+	{
+		-> Dead$: OnWorldMessage( WE_KILLED );
+	}
+
+	event OnEnterState$
+	{
+
+		m_Job$.GetAnimator.RCAnimate( CHORE_FIDGET,0 , false, m_Job$ );
+		// The choreographer now handles all the fidgeting
+ 	}
+}
+
+
+state Dead$
+{
+	// ha ha
+}

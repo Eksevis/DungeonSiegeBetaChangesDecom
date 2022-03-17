@@ -1,0 +1,1147 @@
+[t:template,n:body_cav_dust_01]
+{
+	category_name = "dead";
+	doc = "body_dust";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_body-dust-01; }
+}
+[t:template,n:body_csl_corpse_01]
+{
+	category_name = "dead";
+	doc = "body_shackled";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_corpse-01; }
+}
+[t:template,n:body_csl_corpse_02]
+{
+	category_name = "dead";
+	doc = "body_leaning";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_corpse-02; }
+}
+[t:template,n:body_csl_corpse_07]
+{
+	category_name = "dead";
+	doc = "body_dry";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_corpse-dry-01; }
+}
+[t:template,n:body_csl_pile_01]
+{
+	category_name = "dead";
+	doc = "lump_carcassy_webbed";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_column-spider-01; }
+}
+[t:template,n:body_csl_webbed_01]
+{
+	category_name = "dead";
+	doc = "carcass_webbed";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_body-webbed-01; }
+}
+[t:template,n:body_glb_barkeep_01]
+{
+	category_name = "dead";
+	doc = "body_barkeep";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_barkeep-01; }
+}
+[t:template,n:body_glb_blacksmith_01]
+{
+	category_name = "dead";
+	doc = "body_blacksmith";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_barkeep-01;
+		[textures] { 0=b_c_gbn_bs; }
+	}
+}
+[t:template,n:body_glb_burned_01]
+{
+	category_name = "dead";
+	doc = "body_burned_prone";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_body-burned-01; }
+}
+[t:template,n:body_glb_burned_02]
+{
+	category_name = "dead";
+	doc = "body_burned_splayed";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_body-burned-02; }
+}
+[t:template,n:body_glb_burned_03]
+{
+	category_name = "dead";
+	doc = "body_burned_fetal";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_body-burned-03; }
+}
+[t:template,n:body_glb_chicken_01]
+{
+	category_name = "dead";
+	doc = "body_chicken";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_chicken-01; }
+}
+[t:template,n:body_glb_cyclops_01]
+{
+	category_name = "dead";
+	doc = "body_cyclops";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_cyclops-01; }
+}
+[t:template,n:body_glb_deer_01]
+{
+	category_name = "dead";
+	doc = "body_deer";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_deer-01; }
+}
+[t:template,n:body_glb_dog_01]
+{
+	category_name = "dead";
+	doc = "body_dog";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_dog-01; }
+}
+[t:template,n:body_glb_droog_01]
+{
+	category_name = "dead";
+	doc = "body_droog_archer";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_droog-01; }
+}
+[t:template,n:body_glb_droog_02]
+{
+	category_name = "dead";
+	doc = "body_droog_grunt";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_droog-02; }
+}
+[t:template,n:body_glb_dwarf_01]
+{
+	category_name = "dead";
+	doc = "body_dwarf_front";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_dwarf-01; }
+}
+[t:template,n:body_glb_dwarf_02]
+{
+	category_name = "dead";
+	doc = "body_dwarf_back";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_dwarf-02; }
+}
+[t:template,n:body_glb_dwarf_foreman_01]
+{
+	category_name = "dead";
+	doc = "body_dwarf_foreman";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_dwarf-foreman-01; }
+}
+[t:template,n:body_glb_dwarf_foreman_02]
+{
+	category_name = "dead";
+	doc = "body_dwarf_foreman_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_dwarf-foreman-02;
+		[textures]
+		{
+			0 = b_c_gan_df_skin_02;
+			1 = b_c_pos_a1_006;
+		}
+	}
+}
+[t:template,n:body_glb_dwarf_foreman_03]
+{
+	category_name = "dead";
+	doc = "body_dwarf_foreman_side";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_dwarf-foreman-03;
+		[textures]
+		{
+			0 = b_c_gan_df_skin_02;
+			1 = b_c_pos_a1_006;
+		}
+	}
+}
+[t:template,n:body_glb_dwarf_worker_01]
+{
+	category_name = "dead";
+	doc = "body_dwarf_worker";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_dwarf-worker-01; }
+}
+[t:template,n:body_glb_dwarf_worker_02]
+{
+	category_name = "dead";
+	doc = "body_dwarf_worker_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_dwarf-worker-02;
+		[textures]
+		{
+			0 = b_c_gan_df_skin_03;
+			1 = b_c_pos_a1_006;
+		}
+	}
+}
+[t:template,n:body_glb_dwarf_worker_03]
+{
+	category_name = "dead";
+	doc = "body_dwarf_worker_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_dwarf-worker-03;
+		[textures]
+		{
+			0 = b_c_gan_df_skin_01;
+			1 = b_c_pos_a1_006;
+		}
+	}
+}
+
+[t:template,n:body_glb_farmer_01]
+{
+	category_name = "dead";
+	doc = "body_farmer_grn";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_farmer-01;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_11;
+			1 = b_c_pos_a1_051;
+		}
+	}
+}
+[t:template,n:body_glb_farmer_02]
+{
+	category_name = "dead";
+	doc = "body_farmer_blue";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_farmer-02;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_19;
+			1 = b_c_pos_a1_015;
+		}
+	}
+}
+[t:template,n:body_glb_farmer_03]
+{
+	category_name = "dead";
+	doc = "body_farmer_old_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_farmer-03;
+		[textures]
+		{
+			0 = b_c_gbn_pmo-03;
+		}
+	}
+}
+[t:template,n:body_glb_farmer_04]
+{
+	category_name = "dead";
+	doc = "body_townsfolk_m_old_side";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_farmer-04;
+		[textures]
+		{
+			0 = b_c_gbn_pmo-04;
+		}
+	}
+}
+
+[t:template,n:body_glb_goblin_01]
+{
+	category_name = "dead";
+	doc = "body_goblin";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_goblin-01; }
+}
+[t:template,n:body_glb_gorack_01]
+{
+	category_name = "dead";
+	doc = "body_gorack";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_gorack-01; }
+}
+[t:template,n:body_glb_gremal_01]
+{
+	category_name = "dead";
+	doc = "body_gremal";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_gremal-01; }
+}
+
+[t:template,n:body_glb_guard_01]
+{
+	category_name = "dead";
+	doc = "body_guard_leather_front_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_gaurd-01;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_13;
+			1 = b_c_pos_a3_014;
+		}
+	}
+}
+
+[t:template,n:body_glb_guard_02]
+{
+	category_name = "dead";
+	doc = "body_knight_scale_back_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_gaurd-02;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_05;
+			1 = b_c_pos_a3_015;
+		}
+	}
+}
+
+[t:template,n:body_glb_guard_03]
+{
+	category_name = "dead";
+	doc = "body_guard_leather_front_c";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_gaurd-03;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_06;
+			1 = b_c_pos_a3_014;
+		}
+	}
+}
+[t:template,n:body_glb_guard_04]
+{
+	category_name = "dead";
+	doc = "body_knight_chain_side_b";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_gaurd-04;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_11;
+			1 = b_c_pos_a3_016;
+		}
+	}
+}
+
+[t:template,n:body_glb_innkeeper_01]
+{
+	category_name = "dead";
+	doc = "body_innkeeper";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_barkeep-01;
+		[textures] { 0=b_c_gbn_ik; }
+	}
+}
+
+[t:template,n:body_glb_knight_01]
+{
+	category_name = "dead";
+	doc = "body_guard_leather_front_b";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_knight-01;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_003;
+			1 = b_c_pos_a3_014;
+		}
+	}
+}
+[t:template,n:body_glb_knight_02]
+{
+	category_name = "dead";
+	doc = "body_knight_scale_back_b";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_knight-02;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_20;
+			1 = b_c_pos_a3_015;
+		}
+	}
+}
+[t:template,n:body_glb_knight_03]
+{
+	category_name = "dead";
+	doc = "body_knight_chain_side_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_knight-03;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_12;
+			1 = b_c_pos_a3_016;
+		}
+	}
+}
+
+[t:template,n:body_glb_knight_04]
+{
+	category_name = "dead";
+	doc = "body_knight_scale_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_knight-04;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_003;
+			1 = b_c_pos_a3_015;
+		}
+	}
+}
+[t:template,n:body_glb_knight_05]
+{
+	category_name = "dead";
+	doc = "body_guard_leather_front_d";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_knight-05;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_01;
+			1 = b_c_pos_a3_014;
+		}
+	}
+}
+[t:template,n:body_glb_knight_06]
+{
+	category_name = "dead";
+	doc = "body_knight_chain_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_knight-06;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_01;
+			1 = b_c_pos_a3_016;
+		}
+	}
+}
+
+[t:template,n:body_glb_krug_01]
+{
+	category_name = "dead";
+	doc = "body_krug_grunt";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_krug-01; }
+}
+[t:template,n:body_glb_krug_02]
+{
+	category_name = "dead";
+	doc = "body_krug_guard";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_krug-02; }
+}
+[t:template,n:body_glb_krug_03]
+{
+	category_name = "dead";
+	doc = "body_krug_commander";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_krug-03; }
+}
+
+[t:template,n:body_glb_krug_04]
+{
+	category_name = "dead";
+	doc = "body_krug_scout_back_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-04;
+		[textures] { 0 = b_c_eam_ksc; }
+	}
+}
+[t:template,n:body_glb_krug_05]
+{
+	category_name = "dead";
+	doc = "body_krug_scout_side";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-05;
+		[textures] { 0 = b_c_eam_ksc; }
+	}
+}
+[t:template,n:body_glb_krug_06]
+{
+	category_name = "dead";
+	doc = "body_krug_scout_back_b";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-06;
+		[textures] { 0 = b_c_eam_ksc; }
+	}
+}
+[t:template,n:body_glb_krug_07]
+{
+	category_name = "dead";
+	doc = "body_krug_scout_back_c";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-07;
+		[textures] { 0 = b_c_eam_ksc; }
+	}
+}
+
+[t:template,n:body_glb_krug_08]
+{
+	category_name = "dead";
+	doc = "body_krug_grunt_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-08;
+		[textures] { 0 = b_c_eam_kg; }
+	}
+}
+[t:template,n:body_glb_krug_09]
+{
+	category_name = "dead";
+	doc = "body_krug_grunt_side";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-09;
+		[textures] { 0 = b_c_eam_kg; }
+	}
+}
+[t:template,n:body_glb_krug_10]
+{
+	category_name = "dead";
+	doc = "body_krug_grunt_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-10;
+		[textures] { 0 = b_c_eam_kg; }
+	}
+}
+[t:template,n:body_glb_krug_11]
+{
+	category_name = "dead";
+	doc = "body_krug_grunt_sitting";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_krug-11;
+		[textures] { 0 = b_c_eam_kg; }
+	}
+}
+
+[t:template,n:body_glb_mangler_01]
+{
+	category_name = "dead";
+	doc = "body_mangler";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_mangler-01; }
+}
+
+[t:template,n:body_glb_minstrel_01]
+{
+	category_name = "dead";
+	doc = "body_minstrel_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		is_selectable = true;
+		model = m_i_glb_dead_minstrel-01;
+		[textures]
+		{
+			0 = b_i_glb_minstrel-skin;
+			1 = b_i_glb_minstrel-01;
+		}
+	}
+	[common]
+	{
+		rollover_display = true;
+		screen_name = "Dead Skricko the Minstrel";
+	}
+}
+[t:template,n:body_glb_minstrel_02]
+{
+	category_name = "dead";
+	doc = "body_minstrel_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		is_selectable = true;
+		model = m_i_glb_dead_minstrel-02;
+		[textures]
+		{
+			0 = b_i_glb_minstrel-skin;
+			1 = b_i_glb_minstrel-02;
+		}
+	}
+	[common]
+	{
+		rollover_display = true;
+		screen_name = "Dead Mazpar the Minstrel";
+	}
+}
+[t:template,n:body_glb_mucosa_01]
+{
+	category_name = "dead";
+	doc = "body_mucosa_grey";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_mucosa-01;
+		[textures] { 0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:body_glb_mucosa_02]
+{
+	category_name = "dead";
+	doc = "body_mucosa_grn";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_mucosa-01;
+		scale_base = 0.80;
+		[textures] { 0 = b_c_edm_mu-02; }
+	}
+}
+[t:template,n:body_glb_mucosa_03]
+{
+	category_name = "dead";
+	doc = "body_mucosa_red";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_mucosa-01;
+		scale_base = 1.20;
+		[textures] { 0 = b_c_edm_mu-03; }
+	}
+}
+
+[t:template,n:body_glb_peasant_female_01]
+{
+	category_name = "dead";
+	doc = "body_female_apron_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_body-pf-01;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_09;
+			1 = b_c_pos_a1_020;
+		}
+	}
+}
+[t:template,n:body_glb_peasant_female_big_01]
+{
+	category_name = "dead";
+	doc = "body_female_fat";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_body-pfb-01; }
+}
+[t:template,n:body_glb_peasant_male_big_01]
+{
+	category_name = "dead";
+	doc = "body_male_fat";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_body-pmb-01; }
+}
+[t:template,n:body_glb_peasant_male_old_01]
+{
+	category_name = "dead";
+	doc = "body_male_old";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_body-pmo-01; }
+}
+[t:template,n:body_glb_pig_01]
+{
+	category_name = "dead";
+	doc = "body_pig";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_pig-01; }
+}
+
+[t:template,n:body_glb_seck_01]
+{
+	category_name = "dead";
+	doc = "body_seck_grunt_side_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-01;
+		[textures] { 0 = b_c_eam_sg; }
+	}
+}
+[t:template,n:body_glb_seck_02]
+{
+	category_name = "dead";
+	doc = "body_seck_grunt_back_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-02;
+		[textures] { 0 = b_c_eam_sg; }
+	}
+}
+[t:template,n:body_glb_seck_03]
+{
+	category_name = "dead";
+	doc = "body_seck_grunt_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-03;
+		[textures] { 0 = b_c_eam_sg; }
+	}
+}
+[t:template,n:body_glb_seck_04]
+{
+	category_name = "dead";
+	doc = "body_seck_mage_front_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-04;
+		[textures] { 0 = b_c_eam_sm; }
+	}
+}
+[t:template,n:body_glb_seck_05]
+{
+	category_name = "dead";
+	doc = "body_seck_mage_front_b";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-05;
+		[textures] { 0 = b_c_eam_sm; }
+	}
+}
+[t:template,n:body_glb_seck_06]
+{
+	category_name = "dead";
+	doc = "body_seck_archer_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-06;
+		[textures] { 0 = b_c_eam_sa; }
+	}
+}
+[t:template,n:body_glb_seck_07]
+{
+	category_name = "dead";
+	doc = "body_seck_archer_back_a";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-07;
+		[textures] { 0 = b_c_eam_sa; }
+	}
+}
+[t:template,n:body_glb_seck_08]
+{
+	category_name = "dead";
+	doc = "body_seck_grunt_side_b";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-08;
+		[textures] { 0 = b_c_eam_sg; }
+	}
+}
+[t:template,n:body_glb_seck_09]
+{
+	category_name = "dead";
+	doc = "body_seck_grunt_back_b";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-09;
+		[textures] { 0 = b_c_eam_sg; }
+	}
+}
+
+[t:template,n:body_glb_seck_10]
+{
+	category_name = "dead";
+	doc = "body_seck_archer_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-10;
+		[textures] { 0 = b_c_eam_sa; }
+	}
+}
+[t:template,n:body_glb_seck_11]
+{
+	category_name = "dead";
+	doc = "body_seck_mage_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_seck-11;
+		[textures] { 0 = b_c_eam_sm; }
+	}
+}
+
+[t:template,n:body_glb_spider_01]
+{
+	category_name = "dead";
+	doc = "body_spider";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_spider-01; }
+}
+[t:template,n:body_glb_townsfolk_01]
+{
+	category_name = "dead";
+	doc = "body_male_gypsy";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-01;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_04;
+			1 = b_c_pos_a1_004;
+		}
+	}
+}
+[t:template,n:body_glb_townsfolk_02]
+{
+	category_name = "dead";
+	doc = "body_male_tunic";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-02;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_06;
+			1 = b_c_pos_a1_010;
+		}
+	}
+}
+[t:template,n:body_glb_townsfolk_03]
+{
+	category_name = "dead";
+	doc = "body_female_apron_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-03;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_04;
+			1 = b_c_pos_a1_020;
+		}
+	}
+}
+[t:template,n:body_glb_townsfolk_04]
+{
+	category_name = "dead";
+	doc = "body_female_dress";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-04;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_05;
+			1 = b_c_pos_b1_004;
+		}
+	}
+}
+[t:template,n:body_glb_townsfolk_05]
+{
+	category_name = "dead";
+	doc = "body_glb_townsfolk_05";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_townsfolk-05; }
+}
+
+[t:template,n:body_glb_townsfolk_06]
+{
+	category_name = "dead";
+	doc = "body_townsfolk_m_side";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-06;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_08;
+			1 = b_c_pos_a1_010;
+		}
+	}
+}
+[t:template,n:body_glb_townsfolk_07]
+{
+	category_name = "dead";
+	doc = "body_townsfolk_f_front";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-07;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_14;
+			1 = b_c_pos_a1_032;
+		}
+	}
+}
+[t:template,n:body_glb_townsfolk_08]
+{
+	category_name = "dead";
+	doc = "body_townsfolk_m_fat_back";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-08;
+		[textures]
+		{
+			0 = b_c_gbn_bs;
+		}
+	}
+}
+[t:template,n:body_glb_townsfolk_09]
+{
+	category_name = "dead";
+	doc = "body_townsfolk_f_dress_prpl";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_dead_townsfolk-09;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_10;
+			1 = b_c_pos_b1_003;
+		}
+	}
+}
+
+[t:template,n:body_glb_zombie_01]
+{
+	category_name = "dead";
+	doc = "body_zombie";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_zombie-01; }
+}
+[t:template,n:body_glb_zombie_02]
+{
+	category_name = "dead";
+	doc = "body_zombie_fat";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_dead_zombie-02; }
+}
+[t:template,n:body_ice_01]
+{
+	category_name = "dead";
+	doc = "body_ice_01";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_body-01; }
+}
+[t:template,n:body_ice_02]
+{
+	category_name = "dead";
+	doc = "body_ice_02";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_body-02; }
+}
+[t:template,n:body_ice_03]
+{
+	category_name = "dead";
+	doc = "body_ice_03";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_body-03; }
+}
+[t:template,n:body_ice_04]
+{
+	category_name = "dead";
+	doc = "body_ice_04";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_body-04; }
+}
+[t:template,n:body_ice_carcass_01]
+{
+	category_name = "dead";
+	doc = "body_carcass_cow_ice";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_frozen-cow; }
+}
+[t:template,n:body_ice_carcass_02]
+{
+	category_name = "dead";
+	doc = "body_carcass_deer_ice";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_frozen-deer; }
+}
+[t:template,n:body_ice_carcass_03]
+{
+	category_name = "dead";
+	doc = "body_carcass_horse_ice";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_frozen-horse; }
+}
+[t:template,n:body_ice_carcass_04]
+{
+	category_name = "dead";
+	doc = "body_carcass_packmule_ice";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_frozen-mule; }
+}
+[t:template,n:bones_csl_skulls_01]
+{
+	category_name = "dead";
+	doc = "bones_skull_side";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_skulls-01; }
+}
+[t:template,n:bones_csl_skulls_02]
+{
+	category_name = "dead";
+	doc = "bones_skull";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_skulls-02; }
+}
+[t:template,n:bones_csl_skulls_03]
+{
+	category_name = "dead";
+	doc = "bones_skulls_group";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_skulls-03; }
+}
+[t:template,n:bones_csl_skulls_04]
+{
+	category_name = "dead";
+	doc = "bones_skulls_stacked";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_skulls-04; }
+}
+[t:template,n:fan_gob_01]
+{
+	category_name = "indoor";
+	doc = "fan-08";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_gob_fan-08;
+		[textures] { 0=b_t_gi_pipe-big; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_gob;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=fan-08-rotate; }
+			}
+		}
+	}
+}
+
+[t:template,n:gear_gob_01]
+{
+	category_name = "indoor";
+	doc = "gear_gob_01";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_gob_gear-01; }
+}
+[t:template,n:gear_gob_02]
+{
+	category_name = "indoor";
+	doc = "gear_flat-01";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_gob_gear-02;
+		[textures] { 0=b_i_gob_gear-02; }
+	}
+}
+[t:template,n:gear_gob_03]
+{
+	category_name = "indoor";
+	doc = "gear_wpost-01";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_gob_gear-03;
+		[textures] { 0=b_t_gi_mtl-1a; }
+	}
+}
+[t:template,n:trapdoor_cav_01]
+{
+	category_name = "node";
+	doc = "mines_trapdoor";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_trapdoor-01; }
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_cav;
+			[chore_close]
+			{
+				skrit = transition;
+				speed_bias = 2.5;
+				[anim_files] { 00=trapdoor-01-close; }
+			}
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=trapdoor-01-open; }
+			}
+		}
+	}
+	[door_basic] { non_blocking=TRUE; }
+}
+
+[t:template,n:tie_cav]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "train_tie";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_tie;
+}

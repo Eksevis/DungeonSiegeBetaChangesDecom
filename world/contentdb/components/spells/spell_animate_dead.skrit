@@ -1,0 +1,112 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_animate_dead.skrit
+// Author(s):  Rick Saenz
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+property string effect_script$	= "animate_dead"	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string script_params$	= ""				doc = "Parameters to pass along to the SiegeFx script";
+
+owner = GoSkritComponent;
+
+
+Goid caster$;
+Goid target$;
+Go animated_go$;
+float life$;
+
+int starting_pos$;
+
+startup state Start$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST )
+		{
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+
+			// Make sure the go is actually dead before going through with the spell
+			if( target$.IsValid() && caster$.IsValid())
+			{
+				// Start the visual effect at the point of re-birth
+				// script will signal the GoSkritComponent when it is time to create the new go
+				SiegeFx.SRunScript( effect_script$, target$, caster$, script_params$, owner.Goid, e$ );
+
+				starting_pos$ = SiegeFx.AddVariable( target$.go.placement.position, owner.goid );
+			} else {
+				SetState( Finished$ );
+			}
+		}
+	}
+	transition -> CreateSkeleton$ : OnGoHandleMessage( WE_SPELL_SYNC_MID );
+}
+
+state CreateSkeleton$
+{
+	trigger OnTimer$( 1 )
+	{
+		SetState Finished$;
+	}
+	event OnEnterState$
+	{
+		// We don't care what this go used to be so delete it and replace with a nice skeleton
+		
+		if(target$.IsValid)
+		{
+			life$ = target$.Go.Aspect.Maxlife;
+			if( !Physics.SExplodeGo( target$, 5, MakeVector(0,1,0) ) ) 
+			{
+				GoDb.SMarkForDeletion( target$ );
+			}
+			
+			GoDb.SMarkForDeletion( target$ );
+
+			if(caster$.IsValid)
+			{
+				// Create new game objects as specified in delayed_pcontent block
+				owner.go.inventory.AddDelayedPcontent();
+		
+				// Now match the alignment to whatever the caster is 
+				eActorAlignment caster_alignment$ = caster$.go.actor.getalignment;
+					
+				animated_go$ = owner.go.children.get( 0 );
+		
+				animated_go$.actor.ssetalignment( caster_alignment$ );
+				owner.go.inventory.rcremove( animated_go$, SiegeFX.GetVariable(starting_pos$, owner.goid) );
+			}
+		}
+		this.CreateTimer( 1, 0 );
+	}	
+}
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		if (animated_go$ != NULL)
+		{
+			// make summoned goid our friend
+			animated_go$.Mind.SDoJob( MakeJobReq( JAT_GUARD, JQ_ACTION, QP_BACK, JO_REFLEX, caster$ ) );
+			
+			// Have the skeleton join the caster's party
+			caster$.go.parent.AddChild( animated_go$ );
+			
+			animated_go$.Aspect.RCSetCurrentLife(1+life$/3);
+			animated_go$.Aspect.RCSetMaxLife(1+life$/3);
+			
+			// $$$ Need to tweak the life of the animated monster to be 1/3 of it's original max by doing something like this:
+			//animated_go$.aspect.currentlife = (animated_go$.aspect.maxlife / 3.0 ) + 1.0;
+			//animated_go$.aspect.maxlife = animated_go$.aspect.currentlife;
+		}
+
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+		
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+}

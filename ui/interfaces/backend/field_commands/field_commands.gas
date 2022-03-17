@@ -1,0 +1,806 @@
+[field_commands]
+{
+	b interface = true;
+	i intended_resolution_height = 480;
+	i intended_resolution_width = 640;
+
+	[t:button,n:button_maximize_fc]
+	{
+	  f alpha = 1.000000;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x0000004D;
+		rect = 602,421,635,437;
+		texture = b_gui_ig_mnu_minimize-up;
+		uvcoords = 0.484375,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(maximize_fc);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_minimize-dwn);
+			onlbuttonup = loadtexture(b_gui_ig_mnu_minimize-up);
+			onrolloff = loadtexture(b_gui_ig_mnu_minimize-up);
+			onrollover = loadtexture(b_gui_ig_mnu_minimize-hov);
+		}
+
+		is_bottom_anchor = true;
+		is_right_anchor = true;
+		bottom_anchor = 59;
+		right_anchor = 38;	
+		
+		visible = false;	
+
+		group = fc_min;
+
+		rollover_help = button_maximize_fc;
+	}
+	[t:button,n:button_minimize_fc]
+	{
+	  f alpha = 1.000000;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x0000004C;
+		rect = 601,284,632,300;
+		texture = b_gui_ig_mnu_minimize-up;
+		uvcoords = 0.000000,0.000000,0.484375,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(minimize_fc);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_minimize-dwn);
+			onlbuttonup = loadtexture(b_gui_ig_mnu_minimize-up);
+			onrolloff = loadtexture(b_gui_ig_mnu_minimize-up);
+			onrollover = loadtexture(b_gui_ig_mnu_minimize-hov);
+		}
+
+		is_bottom_anchor = true;
+		is_right_anchor = true;
+		bottom_anchor = 196;
+		right_anchor = 39;		
+
+		group = fc_max;
+
+		rollover_help = button_minimize_fc;
+	}
+
+	[t:button,n:button_selectall]
+	{
+	  f alpha = 1.000000;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x00000049;
+		rect = 601,321,633,341;
+		texture = b_gui_ig_mnu_select_up;
+		uvcoords = 0.000000,0.343750,1.000000,0.968750;
+		wrap_mode = clamp;
+		consumable = true;
+
+		[messages]
+		{
+			onbuttonpress = notify(select_all_members);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_select_dwn);
+			onlbuttonup = loadtexture(b_gui_ig_mnu_select_up);
+			onrolloff = loadtexture(b_gui_ig_mnu_select_up);
+			onrollover = loadtexture(b_gui_ig_mnu_select_hov);
+		}
+		
+		is_bottom_anchor = true;
+		is_right_anchor = true;
+		bottom_anchor = 159;
+		right_anchor = 39;	
+		
+		group = fc_max;	
+
+		rollover_help = button_selectall;
+	}
+	[t:button,n:button_disband]
+	{
+	  f alpha = 1.000000;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x0000004A;
+		rect = 601,300,633,321;
+		texture = b_gui_ig_mnu_disband_up;
+		uvcoords = 0.000000,0.343750,1.000000,1.000000;
+		wrap_mode = clamp;
+		consumable = true;
+		
+		[messages]
+		{
+			onbuttonpress = notify(disband_selected_members);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_disband_dwn);
+			onlbuttonup = loadtexture(b_gui_ig_mnu_disband_up);
+			onrolloff = loadtexture(b_gui_ig_mnu_disband_up);
+			onrollover = loadtexture(b_gui_ig_mnu_disband_hov);
+		}	
+		
+		is_bottom_anchor = true;
+		is_right_anchor = true;
+		bottom_anchor = 180;
+		right_anchor = 39;	
+
+		group = fc_max;
+
+		rollover_help = button_disband;
+	}
+	
+	[t:button,n:button_field_commands]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 71;
+		  rect = 601,341,635,405;
+		  texture = b_gui_ig_mnu_fieldcom_up;
+		  uvcoords = 0.468750,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_fieldcom_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_fieldcom_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_fieldcom_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_fieldcom_up);
+			onbuttonpress = notify(toggle_field_commands);
+		}
+
+		rollover_help = button_field_commands;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 139;
+		is_right_anchor = true;
+		right_anchor = 39;
+
+		group = fc_max;
+	}
+	[t:button,n:button_formation_circle]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 30;
+		  rect = 457,409,482,433;
+		  texture = b_gui_ig_mnu_form7_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+		
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form7_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form7_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form7_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form7_up);
+			onbuttonpress = notify(formation_circle);
+		}
+
+		group = formations;
+
+		rollover_help = formation_circle;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 183;		
+	}
+	[t:button,n:button_formation_column]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 26;
+		  rect = 553,409,578,433;
+		  texture = b_gui_ig_mnu_form3_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+		
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form3_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form3_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form3_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form3_up);
+			onbuttonpress = notify(formation_column);
+		}
+
+		group = formations;
+
+		rollover_help = formation_column;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 87;
+	}
+	[t:button,n:button_formation_double_column]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 27;
+		  rect = 481,409,506,433;
+		  texture = b_gui_ig_mnu_form4_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form4_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form4_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form4_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form4_up);
+			onbuttonpress = notify(formation_double_column);
+		}
+
+		group = formations;
+
+		rollover_help = formation_double_column;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 159;
+	}
+	[t:button,n:button_formation_double_row]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 25;
+		  rect = 433,409,458,433;
+		  texture = b_gui_ig_mnu_form2_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form2_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form2_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form2_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form2_up);
+			onbuttonpress = notify(formation_double_row);
+		}
+
+		group = formations;
+
+		rollover_help = formation_double_row;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 207;
+	}
+	[t:button,n:button_formation_double_wedge]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 31;
+		  rect = 505,409,530,433;
+		  texture = b_gui_ig_mnu_form8_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+
+		  rollover_help = formation_double_wedge;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form8_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form8_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form8_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form8_up);
+			onbuttonpress = notify(formation_double_wedge);
+		}
+
+		group = formations;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 135;
+	}
+	[t:button,n:button_formation_none]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 32;
+		  rect = 577,409,602,433;
+		  texture = b_gui_ig_mnu_form9_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+
+		  rollover_help = formation_none;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form9_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form9_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form9_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form9_up);
+			onbuttonpress = notify(formation_none);
+		}
+
+		group = formations;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 63;
+	}
+	[t:button,n:button_formation_pyramid]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 29;
+		  rect = 409,409,434,433;
+		  texture = b_gui_ig_mnu_form6_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+
+		  rollover_help = formation_pyramid;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form6_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form6_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form6_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form6_up);
+			onbuttonpress = notify(formation_pyramid);
+		}
+
+		group = formations;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 231;
+	}
+	[t:button,n:button_formation_row]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 24;
+		  rect = 385,409,410,433;
+		  texture = b_gui_ig_mnu_form1_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+
+		  rollover_help = formation_row;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form1_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form1_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form1_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form1_up);
+			onbuttonpress = notify(formation_row);
+		}
+
+		group = formations;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 255;
+	}
+	[t:button,n:button_formation_t]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 28;
+		  rect = 529,409,554,433;
+		  texture = b_gui_ig_mnu_form5_up;
+		  uvcoords = 0.000000,0.250000,0.781250,1.000000;
+		  wrap_mode = clamp;
+		  consumable = true;
+
+		  rollover_help = formation_t;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_form5_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_form5_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_form5_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_form5_up);
+			onbuttonpress = notify(formation_t);
+		}
+
+		group = formations;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 71;
+		is_right_anchor = true;
+		right_anchor = 111;
+	}
+	[t:button,n:button_formations]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 23;
+		  rect = 601,405,633,437;
+		  texture = b_gui_ig_mnu_formations_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		  rollover_help = button_formations;
+
+		[messages]
+		{
+			onlbuttondown	= loadtexture(b_gui_ig_mnu_formations_dwn);
+			onlbuttonup		= loadtexture(b_gui_ig_mnu_formations_up);
+			onrollover		= loadtexture(b_gui_ig_mnu_formations_hov);
+			onrolloff		= loadtexture(b_gui_ig_mnu_formations_up);
+			onbuttonpress = notify(toggle_formations);
+		}		
+
+		is_bottom_anchor = true;
+		bottom_anchor = 75;
+		is_right_anchor = true;
+		right_anchor = 39;
+
+		group = fc_max;
+	}
+	[t:button,n:button_movement]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 5;
+		  rect = 451,348,576,364;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(orders_movement);
+		}
+
+		[t:text,n:text_movement]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 21;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 455,313,570,328;
+			  text = "Move Freely";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+
+		rollover_help = button_movement;
+
+		group = orders;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 132;
+		is_right_anchor = true;
+		right_anchor = 189;
+	}
+	[t:button,n:button_attack]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 8;
+		  rect = 451,364,576,380;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{			
+			onbuttonpress = notify(orders_attack);
+		}
+
+		[t:text,n:text_attack]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 21;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 455,313,570,328;
+			  text = "Attack Freely";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+
+		rollover_help = button_attack;
+
+		group = orders;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 116;
+		is_right_anchor = true;
+		right_anchor = 189;
+	}
+	[t:button,n:button_targeting]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 9;
+		  rect = 451,380,576,396;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(orders_targeting);
+		}
+
+		[t:text,n:text_targeting]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 21;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 455,313,570,328;
+			  text = "Target Weakest";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+
+		rollover_help = button_targeting;
+
+		group = orders;
+
+		is_bottom_anchor = true;
+		bottom_anchor = 100;
+		is_right_anchor = true;
+		right_anchor = 189;
+	}
+	[t:radio_button,n:radio_button_attack_fightback]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 45;
+		  radio_group = radio_attack;
+		  rect = 584,364,592,380;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 116;
+		b is_right_anchor = true;
+		i right_anchor = 56;
+
+		[messages]
+		{
+			oncheck = notify(orders_change);
+		}
+
+		group = fc_max;
+
+		rollover_help = attack_fightback;
+	}
+	[t:radio_button,n:radio_button_attack_free]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 44;
+		  radio_group = radio_attack;
+		  rect = 576,364,584,380;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 116;
+		b is_right_anchor = true;
+		i right_anchor = 64;
+
+		[messages]
+		{
+			oncreate = setcheck(1);
+			oncheck = notify(orders_change);		
+		}
+
+		group = fc_max;
+
+		rollover_help = attack_free;
+	}
+	[t:radio_button,n:radio_button_attack_holdfire]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 16;
+		  radio_group = radio_attack;
+		  rect = 592,364,600,380;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 116;
+		b is_right_anchor = true;
+		i right_anchor = 48;
+
+		[messages]
+		{
+			oncheck = notify(orders_change);
+		}
+
+		group = fc_max;
+
+		rollover_help = attack_holdfire;
+	}
+	[t:radio_button,n:radio_button_movement_collectloot]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 19;
+		  radio_group = radio_movement;
+		  rect = 592,346,600,362;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 134;
+		b is_right_anchor = true;
+		i right_anchor = 48;
+
+		[messages]
+		{
+			oncheck = notify(orders_change);
+		}
+
+		group = fc_max;
+
+		rollover_help = movement_collectloot;
+	}
+	[t:radio_button,n:radio_button_movement_free]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 31;
+		  radio_group = radio_movement;
+		  rect = 576,346,584,362;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 134;
+		b is_right_anchor = true;
+		i right_anchor = 64;
+
+		[messages]
+		{
+			oncreate = setcheck(1);
+			oncheck = notify(orders_change);		
+		}
+
+		group = fc_max;
+
+		rollover_help = movement_free;
+	}
+	[t:radio_button,n:radio_button_movement_holdground]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 18;
+		  radio_group = radio_movement;
+		  rect = 584,346,592,362;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 134;
+		b is_right_anchor = true;
+		i right_anchor = 56;
+
+		[messages]
+		{
+			oncheck = notify(orders_change);
+		}
+
+		group = fc_max;
+
+		rollover_help = movement_holdground;
+	}
+	[t:radio_button,n:radio_button_target_strongest]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 63;
+		  radio_group = radio_targeting;
+		  rect = 587,382,595,398;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 98;
+		b is_right_anchor = true;
+		i right_anchor = 53;
+
+		[messages]
+		{
+			oncheck = notify(orders_change);
+		}
+
+		group = fc_max;
+
+		rollover_help = target_strongest;
+	}
+	[t:radio_button,n:radio_button_target_weakest]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = crystal;
+		i draw_order = 60;
+		  radio_group = radio_targeting;
+		  rect = 580,382,588,398;
+		  texture = b_gui_cmn_crystal_off_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 98;
+		b is_right_anchor = true;
+		i right_anchor = 60;
+		
+		[messages]
+		{
+			oncreate = setcheck(1);
+			oncheck = notify(orders_change);		
+		}	
+		
+		group = fc_max;	
+
+		rollover_help = target_weakest;
+	}	
+	[t:window,n:window_field_panel]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 14;
+		  rect = 571,341,635,405;
+		  texture = b_gui_ig_mnu_fieldcom_up;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 139;
+		b is_right_anchor = true;
+		i right_anchor = 69;
+
+		group = fc_max;
+	}
+}

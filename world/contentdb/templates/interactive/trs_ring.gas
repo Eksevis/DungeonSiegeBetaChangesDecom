@@ -1,0 +1,171 @@
+[t:template,n:ring_common]
+{
+	doc = "Template common to all rings";
+	specializes = ring;
+
+	[pcontent]
+	{
+		[b_c_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_006;
+			modifier_max = 32;
+			modifier_min = 29;
+		}
+		[b_c_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_007;
+			modifier_max = 35;
+			modifier_min = 32;
+		}
+		[b_c_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_008;
+			modifier_max = 37;
+			modifier_min = 35;
+		}
+		[b_d_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_003;
+			modifier_max = 8;
+			modifier_min = 6;
+		}
+		[b_d_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_004;
+			modifier_max = 11;
+			modifier_min = 8;
+		}
+		[b_d_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_005;
+			modifier_max = 13;
+			modifier_min = 11;
+		}
+		[b_o_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_009;
+			modifier_max = 55;
+			modifier_min = 53;
+		}
+		[b_o_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_010;
+			modifier_max = 58;
+			modifier_min = 55;
+		}
+		[b_o_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_011;
+			modifier_max = 60;
+			modifier_min = 58;
+		}
+		[g_c_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_024;
+			modifier_max = 48;
+			modifier_min = 45;
+		}
+		[g_c_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_025;
+			modifier_max = 50;
+			modifier_min = 48;
+		}
+		[g_c_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_026;
+			modifier_max = 53;
+			modifier_min = 50;
+		}
+		[g_d_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_021;
+			modifier_max = 24;
+			modifier_min = 21;
+		}
+		[g_d_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_022;
+			modifier_max = 27;
+			modifier_min = 24;
+		}
+		[g_d_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_023;
+			modifier_max = 29;
+			modifier_min = 27;
+		}
+		[g_o_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_027;
+			modifier_max = 71;
+			modifier_min = 68;
+		}
+		[g_o_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_028;
+			modifier_max = 74;
+			modifier_min = 71;
+		}
+		[g_o_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_029;
+			modifier_max = 90;
+			modifier_min = 74;
+		}
+		[s_c_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_015;
+			modifier_max = 40;
+			modifier_min = 37;
+		}
+		[s_c_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_016;
+			modifier_max = 42;
+			modifier_min = 40;
+		}
+		[s_c_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_017;
+			modifier_max = 42;
+			modifier_min = 45;
+		}
+		[s_d_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_012;
+			modifier_max = 16;
+			modifier_min = 13;
+		}
+		[s_d_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_013;
+			modifier_max = 19;
+			modifier_min = 16;
+		}
+		[s_d_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_014;
+			modifier_max = 21;
+			modifier_min = 19;
+		}
+		[s_o_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_018;
+			modifier_max = 64;
+			modifier_min = 60;
+		}
+		[s_o_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_019;
+			modifier_max = 66;
+			modifier_min = 64;
+		}
+		[s_o_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_ring_020;
+			modifier_max = 68;
+			modifier_min = 66;
+		}
+	}
+}

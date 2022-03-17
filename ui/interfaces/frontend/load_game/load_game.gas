@@ -1,0 +1,73 @@
+[load_game]
+{
+	interface = true;
+	[t:listbox,n:load_game_listbox]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = ;
+		draw_order = 3;
+		rect = 277,263,521,416;
+		font_color = 0x00959290;
+		font_type = b_gui_fnt_14p_lucinda-bright;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages] 
+		{ 
+			oncreated=setelementheight(20); 
+			onselect=notify(load_select_game); 
+			onldoubleclick=notify(load_game_ok); 
+		}
+
+		[t:selection_box,n:selection_box] 
+		{
+			alpha = 0.5;
+			texture = b_gui_cmn_selection;
+		}
+	}
+
+	[t:button,n:button_next]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 25;
+		rect = 461,575,562,595;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(load_game_ok) & playsound(s_e_interface_close.wav);			
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}
+
+		index = 1;		
+	}
+
+	[t:button,n:button_previous]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 12;
+		rect = 237,575,338,595;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(load_game_to_single_player);			
+			onlbuttondown = notify(button_down);
+			onlbuttonup = notify(button_up);
+			onrolloff = notify(button_up);
+			onrollover = notify(button_rollover);
+		}		
+
+		index = 1;		
+	}
+}

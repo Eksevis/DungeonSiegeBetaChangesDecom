@@ -1,0 +1,1599 @@
+[t:template,n:base_bow]
+{
+	  doc = "Bow";
+	  specializes = weapon_ranged;
+	[aspect]
+	{
+		material = arrow;
+		[voice]
+		{
+			[put_down]
+			{
+				  * = s_e_gui_put_down_bow;
+			}
+		}
+	}
+	[attack]
+	{
+		  ammo_attach_bone = weapon_grip;
+		  ammo_template = arrow;
+		  attack_class = ac_bow;
+		  attack_range = 9.0;
+		  damage_max = 4;
+		  damage_min = 2;
+		  is_projectile = true;
+		  is_two_handed = true;
+		  reload_delay = 0.0;
+		  skill_class = ranged;
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_bow_hum-hunter;
+		  equip_slot = es_shield_hand;
+	}
+	[physics]
+	{
+		  velocity = 14.0;
+	}
+}
+[t:template,n:bw_g_c_c_l_4_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_l_4_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_028;
+	}
+	[attack]
+	{
+		  attack_range = 14;
+		i damage_max = 30;
+		i damage_min = 25;
+		  reload_delay = 0.6;
+	}
+	[common]
+	{
+		  screen_name = "Long Backed Bow";
+	}
+	[gui]
+	{
+		  equip_requirements = strength:18, dexterity:24;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_080;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 6;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_081;
+			  model = m_w_bow_028;
+			i modifier_max = 11;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 36;
+				i damage_min = 29;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_083;
+			  model = m_w_bow_037;
+			i modifier_max = 89;
+			i modifier_min = 9;
+			[attack]
+			{
+				i damage_max = 97;
+				i damage_min = 80;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_082;
+			  model = m_w_bow_023;
+			i modifier_max = 48;
+			i modifier_min = 6;
+			[attack]
+			{
+				i damage_max = 66;
+				i damage_min = 54;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_084;
+			  model = m_w_bow_037;
+			i modifier_max = 31;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 53;
+				i damage_min = 43;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_086;
+			  model = m_w_bow_031;
+			i modifier_max = 106;
+			i modifier_min = 11;
+			[attack]
+			{
+				i damage_max = 116;
+				i damage_min = 95;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_085;
+			  model = m_w_bow_028;
+			i modifier_max = 70;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 81;
+				i damage_min = 66;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_c_l_r_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_l_r_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_028;
+	}
+	[attack]
+	{
+		  attack_range = 14;
+		i damage_max = 27;
+		i damage_min = 22;
+		  reload_delay = 0.6;
+	}
+	[common]
+	{
+		  screen_name = "Long Recurve";
+	}
+	[gui]
+	{
+		  equip_requirements = strength:15, dexterity:21;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_072;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 5;
+			i modifier_min = 0;
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_074;
+			  model = m_w_bow_031;
+			i modifier_max = 85;
+			i modifier_min = 8;
+			[attack]
+			{
+				i damage_max = 93;
+				i damage_min = 76;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_073;
+			  model = m_w_bow_037;
+			i modifier_max = 45;
+			i modifier_min = 6;
+			[attack]
+			{
+				i damage_max = 62;
+				i damage_min = 50;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_075;
+			  model = m_w_bow_028;
+			i modifier_max = 18;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 39;
+				i damage_min = 32;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_076;
+			  model = m_w_bow_008;
+			i modifier_max = 29;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 48;
+				i damage_min = 40;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_078;
+			  model = m_w_bow_033;
+			i modifier_max = 102;
+			i modifier_min = 10;
+			[attack]
+			{
+				i damage_max = 112;
+				i damage_min = 92;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_077;
+			  model = m_w_bow_008;
+			i modifier_max = 66;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 76;
+				i damage_min = 62;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_c_m_4_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_m_4_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_021;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		i damage_max = 22;
+		i damage_min = 16;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  screen_name = "Battle Bow";
+	}
+	[gui]
+	{
+		  equip_requirements = strength:15, dexterity:18;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_016;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 4;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_024;
+			  model = m_w_bow_028;
+			i modifier_max = 8;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 27;
+				i damage_min = 20;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_height = 3;
+			  inventory_icon = b_gui_ig_i_w_bow_043;
+			  inventory_width = 1;
+			  model = m_w_bow_032;
+			i modifier_max = 79;
+			i modifier_min = 8;
+			[attack]
+			{
+				i damage_max = 90;
+				i damage_min = 67;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_034;
+			  model = m_w_bow_031;
+			i modifier_max = 40;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 58;
+				i damage_min = 43;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_height = 4;
+			  inventory_icon = b_gui_ig_i_w_bow_019;
+			  inventory_width = 1;
+			  model = m_w_bow_024;
+			i modifier_max = 15;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 34;
+				i damage_min = 25;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_029;
+			  model = m_w_bow_031;
+			i modifier_max = 25;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 45;
+				i damage_min = 33;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_050;
+			  model = m_w_bow_034;
+			i modifier_max = 96;
+			i modifier_min = 10;
+			[attack]
+			{
+				i damage_max = 110;
+				i damage_min = 81;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_039;
+			  model = m_w_bow_031;
+			i modifier_max = 60;
+			i modifier_min = 6;
+			[attack]
+			{
+				i damage_max = 73;
+				i damage_min = 54;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_c_m_4_fun]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_m_4_fun";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_021;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		  damage_max = 11;
+		  damage_min = 5;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Haggard Battle Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_009;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_c_m_4_low]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_m_4_low";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_021;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		  damage_max = 12;
+		  damage_min = 7;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Worn Battle Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_004;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_c_m_r_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_m_r_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_021;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		i damage_max = 19;
+		i damage_min = 14;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  screen_name = "Backed Bow";
+	}
+	[gui]
+	{
+		  equip_requirements = strength:12, dexterity:18;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_015;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 2;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_023;
+			  model = m_w_bow_028;
+			i modifier_max = 4;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 24;
+				i damage_min = 18;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_042;
+			  model = m_w_bow_034;
+			i modifier_max = 48;
+			i modifier_min = 6;
+			[attack]
+			{
+				i damage_max = 69;
+				i damage_min = 51;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_033;
+			  model = m_w_bow_031;
+			i modifier_max = 22;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 46;
+				i damage_min = 34;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_069;
+			  model = m_w_bow_014;
+			i modifier_max = 8;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 29;
+				i damage_min = 21;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_071;
+			  model = m_w_bow_033;
+			i modifier_max = 72;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 83;
+				i damage_min = 62;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_070;
+			  model = m_w_bow_025;
+			i modifier_max = 32;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 56;
+				i damage_min = 42;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_c_m_r_fun]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_m_r_fun";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_023;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		  damage_max = 10;
+		  damage_min = 6;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Haggard Backed Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_008;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_c_m_r_low]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_m_r_low";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_020;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		  damage_max = 9;
+		  damage_min = 5;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Worn Backed Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_003;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_c_s_4_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_c_s_4_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_030;
+	}
+	[attack]
+	{
+		  attack_range = 10;
+		i damage_max = 17;
+		i damage_min = 12;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  screen_name = "Short Backed Bow";
+	}
+	[gui]
+	{
+		  equip_requirements = strength:12;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_bow_079;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bw_g_c_s_l_c_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_l_c_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_025;
+	}
+	[attack]
+	{
+		  attack_range = 16;
+		i damage_max = 25;
+		i damage_min = 18;
+		  reload_delay = 0.6;
+	}
+	[common]
+	{
+		  screen_name = "Long Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_014;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 2;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_022;
+			  model = m_w_bow_028;
+			i modifier_max = 5;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 29;
+				i damage_min = 22;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_041;
+			  model = m_w_bow_033;
+			i modifier_max = 53;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 76;
+				i damage_min = 56;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_061;
+			  model = m_w_bow_012;
+			i modifier_max = 25;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 52;
+				i damage_min = 38;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_060;
+			  model = m_w_bow_008;
+			i modifier_max = 9;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 35;
+				i damage_min = 26;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_046;
+			  model = m_w_bow_033;
+			i modifier_max = 79;
+			i modifier_min = 8;
+			[attack]
+			{
+				i damage_max = 90;
+				i damage_min = 67;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_s_l_c_fun]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_l_c_fun";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_012;
+	}
+	[attack]
+	{
+		  attack_range = 14;
+		  damage_max = 14;
+		  damage_min = 8;
+		  reload_delay = 0.6;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Battered Long Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_007;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_s_l_c_low]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_l_c_low";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_012;
+	}
+	[attack]
+	{
+		  attack_range = 14;
+		  damage_max = 11;
+		  damage_min = 7;
+		  reload_delay = 0.6;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Frayed Long Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_002;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_s_m_c_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_m_c_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_011;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		i damage_max = 9;
+		i damage_min = 6;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  screen_name = "Bow";
+	}
+	[gui]
+	{
+		  equip_requirements = strength:12;
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_013;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_058;
+			  model = m_w_bow_012;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 12;
+				i damage_min = 8;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_040;
+			  model = m_w_bow_033;
+			i modifier_max = 16;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 47;
+				i damage_min = 31;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_059;
+			  model = m_w_bow_008;
+			i modifier_max = 7;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 29;
+				i damage_min = 20;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_height = 4;
+			  inventory_icon = b_gui_ig_i_w_bow_057;
+			  inventory_width = 1;
+			  model = m_w_bow_011;
+			i modifier_max = 3;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 17;
+				i damage_min = 12;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_045;
+			  model = m_w_bow_034;
+			i modifier_max = 21;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 56;
+				i damage_min = 38;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_s_m_c_fun]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_m_c_fun";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_022;
+	}
+	[attack]
+	{
+		  attack_range = 11;
+		i damage_max = 8;
+		i damage_min = 5;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Battered Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_006;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_s_m_c_low]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_m_c_low";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_011;
+	}
+	[attack]
+	{
+		  attack_range = 11;
+		i damage_max = 6;
+		i damage_min = 4;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Shabby Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_001;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_c_s_m_r_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_m_r_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_002;
+	}
+	[attack]
+	{
+		  attack_range = 12;
+		i damage_max = 12;
+		i damage_min = 9;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  screen_name = "Recurve Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_065;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_066;
+			  model = m_w_bow_014;
+			i modifier_max = 3;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 18;
+				i damage_min = 13;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_068;
+			  model = m_w_bow_027;
+			i modifier_max = 42;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 61;
+				i damage_min = 45;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_067;
+			  model = m_w_bow_006;
+			i modifier_max = 19;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 39;
+				i damage_min = 29;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_s_s_c_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_s_c_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_026;
+	}
+	[attack]
+	{
+		  attack_range = 10;
+		i damage_max = 4;
+		i damage_min = 2;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  screen_name = "Short Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_bow_012;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_020;
+			  model = m_w_bow_029;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 8;
+				i damage_min = 5;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_030;
+			  model = m_w_bow_030;
+			i modifier_max = 6;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 24;
+				i damage_min = 15;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_height = 3;
+			  inventory_icon = b_gui_ig_i_w_bow_056;
+			  inventory_width = 1;
+			  model = m_w_bow_010;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 10;
+				i damage_min = 6;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_025;
+			  model = m_w_bow_029;
+			i modifier_max = 3;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 17;
+				i damage_min = 10;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_044;
+			  model = m_w_bow_015;
+			i modifier_max = 19;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 52;
+				i damage_min = 31;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_035;
+			  model = m_w_bow_030;
+			i modifier_max = 9;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 32;
+				i damage_min = 19;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_c_s_s_r_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_c_s_s_r_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_013;
+	}
+	[attack]
+	{
+		  attack_range = 10;
+		i damage_max = 6;
+		i damage_min = 4;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  screen_name = "Short Recurve";
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_bow_062;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_063;
+			  model = m_w_bow_015;
+			i modifier_max = 15;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 44;
+				i damage_min = 29;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_bow_064;
+			  model = m_w_bow_013;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 14;
+				i damage_min = 9;
+			}
+		}
+	}
+}
+[t:template,n:bw_g_d_s_l_c_avg]
+{
+	  category_name = "weapon";
+	  doc = "Long Bow";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_017;
+	}
+	[attack]
+	{
+		  attack_range = 15;
+		  damage_max = 11;
+		  damage_min = 4;
+		  reload_delay = 0.6;
+	}
+	[common]
+	{
+		  screen_name = "Peasant Long Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_052;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_d_s_s_c_avg]
+{
+	  category_name = "weapon";
+	  doc = "Peasant Short Bow";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_001;
+	}
+	[attack]
+	{
+		  attack_range = 10;
+		  damage_max = 2;
+		  damage_min = 1;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  screen_name = "Peasant Short Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_bow_051;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_o_c_m_4_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_o_c_m_4_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_024;
+	}
+	[attack]
+	{
+		  attack_range = 13;
+		  damage_max = 26;
+		  damage_min = 16;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  screen_name = "Battle Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_019;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			  modifier_max = 11;
+			  modifier_min = 2;
+		}
+	}
+}
+[t:template,n:bw_g_o_c_m_4_fun]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_o_c_m_4_fun";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  gold_value = 10;
+		  model = m_w_bow_025;
+	}
+	[attack]
+	{
+		  attack_range = 11;
+		  damage_max = 14;
+		  damage_min = 8;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Weakened Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_011;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_o_c_m_4_low]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_o_c_m_4_low";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_021;
+	}
+	[attack]
+	{
+		  attack_range = 11;
+		  damage_max = 12;
+		  damage_min = 6;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Corroded Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_005;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_o_c_s_4_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_o_c_s_4_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_027;
+	}
+	[attack]
+	{
+		  attack_range = 11;
+		  damage_max = 19;
+		  damage_min = 11;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  screen_name = "Short Backed Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_bow_018;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			  modifier_max = 3;
+			  modifier_min = 1;
+		}
+	}
+}
+[t:template,n:bw_g_o_c_s_4_fun]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_o_c_s_4_fun";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_023;
+	}
+	[attack]
+	{
+		  attack_range = 11;
+		  damage_max = 14;
+		  damage_min = 3;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Weathered Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_bow_010;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_g_o_s_m_r_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_g_o_s_m_r_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_024;
+	}
+	[attack]
+	{
+		  attack_range = 11;
+		  damage_max = 18;
+		  damage_min = 10;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  screen_name = "Recurve Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_017;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			  modifier_max = 4;
+			  modifier_min = 1;
+		}
+	}
+}
+[t:template,n:bw_un_ice_c_m_s_r_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_un_ice_c_m_s_r_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  gold_value = 1300;
+		  model = m_w_bow_009;
+	}
+	[attack]
+	{
+		  ammo_template = arrow_ice;
+		  attack_range = 11;
+		  damage_max = 19;
+		  damage_min = 11;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+        is_pcontent_allowed = false;
+		  screen_name = "Ice Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_bow_087;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_un_seck_avg]
+{
+	  category_name = "weapon";
+	  doc = "bw_un_seck_avg";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_035;
+	}
+	[attack]
+	{
+		  attack_range = 14;
+		  damage_max = 28;
+		  damage_min = 19;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+        is_pcontent_allowed = false;
+		  screen_name = "Seck Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_053;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_un_seck_fin]
+{
+	  category_name = "weapon";
+	  doc = "bw_un_seck_fin";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_036;
+	}
+	[attack]
+	{
+		  attack_range = 15;
+		  damage_max = 35;
+		  damage_min = 25;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+        is_pcontent_allowed = false;
+		  screen_name = "Seck Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_054;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:bw_un_seck_str]
+{
+	  category_name = "weapon";
+	  doc = "bw_un_seck_str";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_036;
+	}
+	[attack]
+	{
+		  attack_range = 15;
+		  damage_max = 35;
+		  damage_min = 25;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+        is_pcontent_allowed = false;
+		  screen_name = "Seck Bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_055;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:temp_bw_un_exp]
+{
+	  category_name = "weapon";
+	  doc = "Bow that shoots exploding arrows";
+	  specializes = base_bow;
+	[aspect]
+	{
+		  model = m_w_bow_019;
+	}
+	[attack]
+	{
+		  ammo_template = arrow_exp_temp;
+		  area_damage_radius = 2.5;
+		  attack_range = 48;
+		  damage_max = 35;
+		  damage_min = 25;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+        is_pcontent_allowed = false;
+		  screen_name = "Black powder bow";
+	}
+	[gui]
+	{
+		  inventory_height = 4;
+		  inventory_icon = b_gui_ig_i_w_bow_036;
+		  inventory_width = 1;
+	}
+	[physics]
+	{
+		  velocity = 20;
+	}
+}
+[t:template,n:rock_krug]
+{
+	doc = "rock_krug";
+	specializes = base_bow;
+	[aspect]
+	{
+		model=m_w_misc_017;
+		is_selectable = false;
+	}
+	[attack]
+	{
+		ammo_template = rock_krug_ammo;
+		damage_max = 7;
+		damage_min = 5;
+	}
+	[common]
+	{
+		is_pcontent_allowed = FALSE;
+		screen_name = "Rock";
+	}
+	[gui]
+	{
+		is_droppable = false;
+	}
+	[physics]
+	{
+		velocity=10;
+	}
+}

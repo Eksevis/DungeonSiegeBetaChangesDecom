@@ -1,0 +1,80 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_talk_merchant_blacksmith.skrit
+
+	Author(s)	: 	Bartosz Kijanka, Chad Queen
+
+	Purpose		: 	Just stand there and talk at anyone we're told to.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Goid	m_Target$;
+
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+	m_Body$		= job$.Go.Body;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$	= job$.GoalObject;
+
+	SetState Talk$;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	blab blab away... pretend you're Lee
+state Talk$
+{
+	transition
+	{
+		-> Exiting$:	OnWorldMessage( WE_REQ_TALK_END );
+	}
+
+	event OnEnterState$
+	{		
+		m_Go$.GetConversation.ActivateDialogue();
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	finish blabbing
+state Exiting$
+{
+	event OnEnterState$
+	{
+		// $$$ close up any dialogs here...
+
+		// Send a PL_FACE reguest without a target so that they no longer
+		// continue to face the character they were talking to 					  
+		MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FACE );	
+
+		m_Job$.MarkForDeletion( true );
+	}
+}

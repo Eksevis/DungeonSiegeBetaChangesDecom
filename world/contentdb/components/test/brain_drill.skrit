@@ -1,0 +1,67 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  brain_drill.skrit
+// Author(s):  James Loe and Chooch and Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "State machine for the drill in the dwarven mines.";
+property string _required_component$ = "placement";
+
+// exported properties
+property float  speed_bias$     = 1.0;
+
+owner                                = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Startup$
+{
+	transition -> Default$ : OnGoHandleMessage( WE_ENTERED_WORLD );
+}
+
+
+state Default$
+{
+	transition -> Open$: OnGoHandleMessage( WE_REQ_USE );
+	event OnEnterState$
+	{
+		AnimReq aReq$	= MakeAnimReq( CHORE_DEFAULT );
+		owner.Go.Body.RCAnimate( aReq$ );
+	}
+}
+
+state Open$
+{
+	transition -> Close$: OnGoHandleMessage( WE_REQ_DEACTIVATE );
+	//transition -> Close$: OnGoHandleMessage( WE_REQ_USE );
+	
+	event OnEnterState$
+	{
+		// Request animation
+		AnimReq aReq$	= MakeAnimReq( CHORE_OPEN );
+		owner.Go.Body.RCAnimate( aReq$ );
+    }
+}
+
+state Close$
+{
+	event OnEnterState$
+	{
+		// Request animation
+		AnimReq aReq$	= MakeAnimReq( CHORE_CLOSE );
+		owner.Go.Body.RCAnimate( aReq$ );
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////

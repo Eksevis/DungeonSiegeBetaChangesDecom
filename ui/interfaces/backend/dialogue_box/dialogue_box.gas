@@ -1,0 +1,288 @@
+[dialogue_box]
+{
+	  intended_resolution_height = 480;
+	  intended_resolution_width = 640;
+	b interface = true;
+	[t:button,n:button_accept]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 25;
+		  group = potential_member;
+		  is_top_anchor = true;
+		  rect = 205,145,297,161;
+		  top_anchor = 145;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(dialogue_accept_member);
+			  onvisible = alphaanimation(1.0,0.0,1.0);
+		}
+		[t:text,n:text_accept]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 26;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 232,146,297,161;
+			  text = "Accept";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_close]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 14;
+		  is_top_anchor = true;
+		  rect = 486,144,578,160;
+		  top_anchor = 144;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(exit_dialogue);
+		}
+		[t:text,n:text_close]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 15;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 517,145,578,160;
+			  text = "Close";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_decline]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 26;
+		  group = potential_member;
+		  is_top_anchor = true;
+		  rect = 308,145,400,161;
+		  top_anchor = 145;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(dialogue_decline_member);
+			  onvisible = alphaanimation(1.0,0.0,1.0);
+		}
+		[t:text,n:text_decline]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 27;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 332,146,400,161;
+			  text = "Decline";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_replay]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = replay;
+		i draw_order = 22;
+		  is_top_anchor = true;
+		  rect = 513,119,529,135;
+		  texture = b_gui_cmn_button_replay_up;
+		  top_anchor = 119;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(reset_dialogue);
+		}
+	}
+	[t:button,n:button_shop]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 27;
+		  group = shop;
+		  is_top_anchor = true;
+		  rect = 205,145,297,161;
+		  top_anchor = 145;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(dialogue_shop);
+		}
+		[t:text,n:text_shop]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 28;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 237,146,297,161;
+			  text = "Shop";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_buy_packmule]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 27;
+		  group = buy_packmule;
+		  is_top_anchor = true;
+		  rect = 205,145,325,161;
+		  top_anchor = 145;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(dialogue_buy_packmule);
+		}
+		[t:text,n:text_buy_packmule]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 28;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 237,146,325,161;
+			  text = "Buy Pack Mule";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+
+	[t:text,n:text_pack_cost]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 27;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+		  rect = 332,146,400,161;
+		  text = "Cost: 0";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  group = buy_packmule;
+	}
+
+
+	[t:button,n:button_stop]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_stop;
+		i draw_order = 20;
+		  is_top_anchor = true;
+		  rect = 529,119,545,135;
+		  texture = b_gui_cmn_button_stop_up;
+		  top_anchor = 119;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(stop_dialogue);
+		}
+	}
+	[t:text_box,n:dialogue_box]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = ;
+		i draw_order = 14;
+		b fixed_location = true;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		b has_slider = true;		
+		  is_top_anchor = true;
+		  justify = left;
+		i max_height = 240;
+		i max_width = 320;
+		  rect = 204,22,561,135;
+		f scroll_rate = 20.000000;
+		  top_anchor = 22;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onexit = notify(exit_dialogue);
+		}
+	}
+	[t:dialog_box,n:dialogue_main_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 9;
+		  is_top_anchor = true;
+		  rect = 187,5,595,178;
+		  top_anchor = 5;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:dialogue_text_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 13;
+		  is_top_anchor = true;
+		  rect = 201,19,564,137;
+		  top_anchor = 19;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:radio_button,n:radio_button_soundoff]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = soundon;
+		i draw_order = 23;
+		  is_top_anchor = true;
+		b popup = true;
+		  radio_group = ;
+		  radio_group = dialogue_mute;
+		  rect = 545,119,561,135;
+		  texture = b_gui_cmn_button_soundon_up;
+		  top_anchor = 119;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  oncheck = notify(mute_dialogue);
+			  onuncheck = notify(unmute_dialogue);
+		}
+	}
+}

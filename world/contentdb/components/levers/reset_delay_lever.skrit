@@ -1,0 +1,93 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  reset_delay_lever.skrit
+// Author(s):  Chooch
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        	= true;
+property string _doc$                	= "Lever which auto-switches off at end of reset time.";
+property string _required_component$ 	= "placement";
+
+// exported properties
+property float  	 reset_time$		= 1.5			doc = "Time it takes to reset the lever.";
+
+owner = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+
+startup state WaitForSetup$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_ENTERED_WORLD )
+		{
+			// Request animation
+			AnimReq aReq$		= MakeAnimReq( CHORE_CLOSE );
+ 			aReq$.ReqFlags		= 1;		// ANIMFLAG_STARTATEND
+			owner.Go.Body.RCAnimate( aReq$ );
+
+			SetState Wait$;
+		}
+	}
+}
+
+State Wait$
+{
+	transition -> Pos2$: OnGoHandleMessage( WE_REQ_USE );
+
+	event OnEnterState$
+	{
+		//Make Selectable/Usable
+		Owner.Go.Aspect.RCSetIsSelectable( true );
+		Owner.Go.Aspect.RCSetIsUsable( true );
+	}
+}
+
+State Pos2$
+{
+   	transition -> Pos1$: OnGoHandleMessage( WE_REQ_USE );
+
+	event OnEnterState$
+	{
+		// Request animation
+		AnimReq aReq$		= MakeAnimReq( CHORE_OPEN );
+		owner.Go.Body.RCAnimate( aReq$ );
+
+		//Play Sound
+		owner.Go.PlayMaterialSound( "lever_start", "generic", true);
+
+		//Make Non-Selectable/Non-Usable
+		Owner.Go.Aspect.RCSetIsSelectable( false );
+		Owner.Go.Aspect.RCSetIsUsable( false );
+
+		//Wait for timer
+		PostWorldMessage( WE_REQ_USE, owner.Go.Goid, reset_time$ );
+	}
+}
+
+State Pos1$
+{
+   	transition -> Wait$: OnGoHandleMessage( WE_ANIM_DONE );
+
+	event OnEnterState$
+	{
+		//Request animation
+		AnimReq aReq$		= MakeAnimReq( CHORE_CLOSE );
+		owner.Go.Body.RCAnimate( aReq$ );
+
+		//Play Sound
+		owner.Go.PlayMaterialSound( "lever_end", "generic", true);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

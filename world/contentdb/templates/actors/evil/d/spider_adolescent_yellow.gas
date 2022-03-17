@@ -1,0 +1,115 @@
+[t:template,n:spider_adolescent_yellow]
+{
+	category_name = "evil_d";
+	doc = "spider_sm_yllw";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  4, 0;
+			intelligence =  1, 0;
+			dexterity =  6, 0;
+			melee =  3, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 26;
+		life = 2;
+		max_life = 2;
+		mana = 2;
+		max_mana = 2;
+		model = m_c_edm_as_pos_1;
+		scale_base = 0.5;
+		[textures] { 0=b_c_edm_as-yel; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 1;
+		damage_min = 1;
+	}
+	[body]
+	{
+		avg_move_velocity = 4.430000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_as_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = die_random;
+				[anim_files]
+				{
+					00 = di;
+					01 = di-02;
+					02 = di-03;
+				}
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				speed_bias = 2;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Yellow Spider"; }
+	[defend] { defense=5; }
+	[mind]
+	{
+		melee_engage_range = 14.0;
+		personal_space_range = 0.1;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+	}
+	[physics]
+	{
+		break_effect = spider_guts_yellow;
+		break_sound = ;
+		explode_when_killed = true;
+		explosion_magnitude = 1.0;
+		[break_particulate]
+		{
+			frag_glb_adolescent_spider_yel_01 = 1;
+			frag_glb_adolescent_spider_yel_02 = 1;
+			frag_glb_adolescent_spider_yel_03 = 1;
+			frag_glb_adolescent_spider_yel_04 = 1;
+			frag_glb_adolescent_spider_yel_05 = 2;
+		}
+	}
+}

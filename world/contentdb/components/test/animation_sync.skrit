@@ -1,0 +1,109 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  animation_sync.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$			= true;
+property string _doc$					= "made to sync animations between objects";
+property string _required_component$	= "placement";
+
+// exported properties
+property string 			child_template_name$		= "Caged_phrak"			doc ="Template Name of Actor to Spawn.";
+property eActorAlignment	alignment_spawn$ 			= aa_neutral			doc ="Alignment of Monster when Spawned.";
+property eActorAlignment 	alignment_activated$ 		= aa_evil				doc ="Alignment of Monster when Activated.";
+property float			 	delay$				 		= 4.0					doc ="Random delay before spawning phrak.";
+property bool				animate_cage$				= true					doc ="does the cage animate?";
+
+owner									= GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Startup$
+{
+	transition -> Cage$ : OnTimer( 1 );
+	
+	trigger OnGoHandleMessage$( WE_ENTERED_WORLD )
+	{
+		if (godb.IsEditMode())
+		{
+			SetState Finish$;
+		} else {
+			float random_delay$ = Math.RandomFloat( delay$ );
+			this.CreateTimer( 1, random_delay$ );
+		}
+	}
+}
+state Cage$
+{	
+	Goid newGoid$;
+
+	event OnEnterState$
+	{
+		// make a new child
+		GoCloneReq cloneReq$ = MakeGoCloneReq( owner.Goid, child_template_name$ );
+		cloneReq$.StartingPos = owner.Go.Placement.Position;
+        cloneReq$.SetStartingOrient = owner.Go.Placement.Orientation;
+		cloneReq$.SnapToTerrain = true;
+		newGoid$ = GoDb.SCloneGo( cloneReq$ );
+
+    	// set initial (spawned) alignment
+		newGoid$.go.actor.ssetalignment( alignment_spawn$ );
+    	newGoid$.Go.Aspect.SSetIsSelectable( false );
+    	
+    	GoDb.StartWatching( owner.Goid, newGoid$);
+			
+    	if ( newgoid$.isvalid )
+    	{
+    		PostWorldMessage( WE_REQ_ACTIVATE, newGoid$, 1 );
+    	}
+	}
+	trigger OnGoHandleCcMessage$( WE_ANIM_DONE )
+	{ // if our phrak finishes his fidget start animating at the same time
+		//play anim
+		if(animate_cage$)
+		{
+			AnimReq aReq$ = MakeAnimReq( CHORE_MISC );
+			owner.Go.Body.RCAnimate( aReq$ );
+		}
+	}
+	trigger OnGoHandleCcMessage$( WE_KILLED )
+	{ // our phrak died so we should explode
+		Report.Report("jedi","Phrak died First.\n");
+    	if( !Physics.SExplodeGo( owner.goid, 1, MakeVector(0,1,0) ) ) 
+		{
+			GoDb.SMarkForDeletion( owner.goid );
+		}
+	}
+	trigger OnGoHandleMessage$( WE_EXPLODED )
+	{
+		// set alignment to evil!! Scary isn't it?
+		
+		//Reset Mind
+		newGoid$.Go.Mind.SDoJob( MakeJobReq( JAT_STOP, JQ_ACTION, QP_CLEAR, JO_REFLEX ));
+		newGoid$.Go.Mind.ResetSensors();
+		// set activated alignment
+		newGoid$.go.actor.ssetalignment( alignment_activated$ );
+		newGoid$.Go.Aspect.SSetIsSelectable( true );
+		if ( newgoid$.isvalid )
+    	{
+			SendWorldMessage( WE_REQ_DEACTIVATE, newGoid$);
+		}
+	}
+}
+
+state Finish$
+{
+}
+
+
+//////////////////////////////////////////////////////////////////////////////

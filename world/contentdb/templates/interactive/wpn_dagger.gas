@@ -1,0 +1,175 @@
+[t:template,n:base_dagger]
+{
+	  doc = "Dagger";
+	  specializes = weapon_melee;
+	[aspect]
+	{
+		  material = steeledge;
+		[voice]
+		{
+			[put_down]
+			{
+				  * = s_e_gui_put_down_sword;
+			}
+		}
+	}
+	[attack]
+	{
+		  attack_class = ac_sword;
+		  is_melee = true;
+		  reload_delay = 0;
+		  skill_class = melee;
+	}
+	[body]
+	{
+		[bone_translator]
+		{
+			  handle = grip;
+			  middle = ap_trace02;
+			  tip = ap_trace01;
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_dg_st;
+		  equip_slot = es_weapon_hand;
+	}
+}
+[t:template,n:dg_g_c_1h_avg]
+{
+	  category_name = "weapon";
+	  doc = "dg_g_c_1h_avg";
+	  specializes = base_dagger;
+	[aspect]
+	{
+		  model = m_w_dag_001;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 9;
+		i damage_min = 2;
+	}
+	[common]
+	{
+		  screen_name = "Dagger";
+	}
+	[gui]
+	{
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_w_dgr_003;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[c_fin]
+		{
+			  inventory_height = 2;
+			  inventory_icon = b_gui_ig_i_w_dgr_004;
+			  inventory_width = 1;
+			  model = m_w_dag_001;
+			i modifier_max = 2;
+			i modifier_min = 1;
+		}
+		[c_mag]
+		{
+			  inventory_height = 2;
+			  inventory_icon = b_gui_ig_i_w_dgr_006;
+			  inventory_width = 1;
+			  model = m_w_dag_001;
+			i modifier_max = 7;
+			i modifier_min = 2;
+		}
+		[c_str]
+		{
+			  inventory_height = 2;
+			  inventory_icon = b_gui_ig_i_w_dgr_005;
+			  inventory_width = 1;
+			  model = m_w_dag_001;
+			i modifier_max = 3;
+			i modifier_min = 1;
+		}
+	}
+}
+[t:template,n:dg_g_c_1h_fun]
+{
+	  category_name = "weapon";
+	  doc = "dg_g_c_1h_fun";
+	  specializes = base_dagger;
+	[aspect]
+	{
+		  model = m_w_dag_001;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 8;
+		i damage_min = 1;
+	}
+	[common]
+	{
+          allow_modifiers = false;
+		  screen_name = "Blunt Dagger";
+	}
+	[gui]
+	{
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_w_dgr_001;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:dg_g_c_1h_low]
+{
+	  category_name = "weapon";
+	  doc = "dg_g_c_1h_low";
+	  specializes = base_dagger;
+	[aspect]
+	{
+		  model = m_w_dag_002;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 4;
+		i damage_min = 1;
+	}
+	[common]
+	{
+          allow_modifiers = false;
+		  screen_name = "Rusty Dagger";
+	}
+	[gui]
+	{
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_w_dgr_002;
+		  inventory_width = 1;
+	}
+}
+
+[t:template,n:dg_g_d_1h_fun]
+{
+	  category_name = "weapon";
+	  doc = "dg_g_d_1h_fun";
+	  specializes = base_dagger;
+	[aspect]
+	{
+		  model = m_w_dag_003;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 2;
+		i damage_min = 1;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Knife";
+	}
+	[gui]
+	{
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_w_dgr_007;
+		  inventory_width = 1;
+	}
+}

@@ -1,0 +1,228 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_attack_face_away.skrit
+
+	Author(s)	: Bartosz Kijanka, biddle, Eric
+
+	Purpose		: This should attack while facing away from the target.
+	
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Go		m_Weapon$;
+
+float	m_RangeToTarget$;
+Goid	m_Target$;
+int 	m_Effect_ID$;
+
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+	m_Body$		= job$.Go.Body;
+	m_Weapon$	= job$.GoalModifier.Go;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	if( m_Weapon$ == NULL )
+	{
+		m_Weapon$ = m_Go$;
+	}
+
+	m_Target$ = job$.GoalObject;
+
+	// Account distance that the weapon can extend the attacker's space
+	m_RangeToTarget$ = m_Mind$.WeaponRange + m_Go$.mind.PersonalSpaceRange;
+
+	// Account for target's space
+	if m_Target$.go.HasMind()
+	{
+		 m_RangeToTarget$ += m_Target$.go.mind.PersonalSpaceRange;
+	}
+	else
+	{
+		 m_RangeToTarget$ += m_Target$.go.aspect.BoundingSphereRadius;
+	}
+
+	// $$$ Mike: can we get by without tweaking by some constant amount here? -bk
+
+	m_RangeToTarget$ *= 0.9;	// Shrink the engage range just slightly
+							// too many paths are failing 
+
+	m_Effect_ID$ = 0;
+
+	SetState( ApproachTarget$ );
+}
+
+
+////////////////////////////////////////
+//	TryAnim
+
+bool TryAnim$( int FourCC$ )
+{
+	int Anim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,FourCC$);
+		
+	if (Anim$ >= 0)
+	{
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, 
+													m_Go$.Goid, 
+													PL_PLAYANIM, 
+													CHORE_MISC, 
+													Anim$, 
+													0 );
+		return true;	
+	}
+	return false;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	global message handler
+event OnWorldMessage$( eWorldEvent e$, WorldMessage msg$ )
+{
+	if( ( e$ == WE_REQ_JOB_FINISH ) ||
+		( e$ == WE_ENGAGED_INVALID ) ||
+		( e$ == WE_ENGAGED_KILLED ) ||
+		( e$ == WE_ENGAGED_HIT_KILLED ) )
+	{
+		SetState CleaningUpAndExiting$;
+	}
+	else if( e$ == WE_ANIM_WEAPON_SWUNG )
+	{
+		if ( msg$.Data1 == 0)
+		{
+			// Get the PROPER sfx from the weapon template
+			string effect_script$ = "weapon_tracer";
+
+			// Start the visual effect
+			m_Effect_ID$ = SiegeFx.RunScript( effect_script$, m_Weapon$.goid, m_Go$.Goid, "", m_Weapon$.Goid, e$ );
+		}
+		else if (m_Effect_ID$)
+		{
+			SiegeFx.FinishScript( m_Effect_ID$ );
+			m_Effect_ID$ = 0;
+		}
+	}
+	else if ( e$ == WE_DESTRUCTED )
+	{
+		SetState Exiting$;
+	}
+}
+
+
+state ApproachTarget$
+{
+	// We are NOT at the goal and NOT facing the target
+	// The PL_ATTACK_MELEE will start to swing as soon as the object is in range
+
+	transition
+	{
+		-> ApproachTarget$:					OnWorldMessage( WE_JOB_TIMER_DONE );
+		-> CleaningUpAndExiting$:			OnWorldMessage( WE_MCP_INVALIDATED );
+		-> CleaningUpAndExiting$:			OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Mind$.IsInWeaponRange( m_Target$.Go, m_Weapon$ ) )
+		{
+			eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, 
+													m_Go$.Goid, 
+													PL_FACE, 
+													m_Target$, 
+													REQFLAG_FACEREVERSE );
+			if( TryAnim$('atak') )
+			{
+				SetState Attacking$;
+			}
+		}
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		return;
+	}
+}
+
+state Attacking$
+{
+	transition
+	{
+		-> CleaningUpAndExiting$:			OnWorldMessage( WE_MCP_INVALIDATED );
+		-> CleaningUpAndExiting$:			OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> DamagingAndFollowingThrough$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> Error_FireNotFound$:				OnWorldMessage( WE_ANIM_DONE );
+	}
+}
+
+state DamagingAndFollowingThrough$
+{
+	transition
+	{
+		-> CleaningUpAndExiting$:			OnWorldMessage( WE_MCP_INVALIDATED );
+		-> DamagingAndFollowingThrough$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> ApproachTarget$:				   	OnWorldMessage( WE_ANIM_DONE );
+		-> CleaningUpAndExiting$:			OnWorldMessage( WE_ENGAGED_HIT_KILLED );
+	}
+
+	event OnEnterState$
+	{
+		m_Mind$.RequestProcessHitEngaged();
+	}
+}
+
+
+state Error_FireNotFound$
+{
+	transition
+	{
+		-> CleaningUpAndExiting$:			OnWorldMessage( WE_MCP_INVALIDATED );
+		-> ApproachTarget$:					OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnEnterState$
+	{
+		report.genericf("NO FIRE FOUND!\n");
+		m_Mind$.RequestProcessHitEngaged();
+		m_Job$.SetTimer( m_Weapon$.Attack.ReloadDelay );
+	}
+
+}
+
+
+state CleaningUpAndExiting$
+{
+	transition
+	{
+		-> Exiting$:						OnWorldMessage( WE_ANIM_DONE );
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}

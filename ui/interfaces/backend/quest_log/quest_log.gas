@@ -1,0 +1,197 @@
+[quest_log]
+{
+	  centered = quest_dialog_box_bg;
+	  intended_resolution_height = 480;
+	  intended_resolution_width = 640;
+	  interface = true;
+	[t:dialog_box,n:quest_log_text_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 34;
+		  rect = 186,40,450,71;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:button,n:quest_button_exit]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 13;
+		  rect = 328,409,449,425;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(quest_exit);
+		}
+		[t:text,n:quest_text_exit]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 367,410,428,425;
+			  text = "Exit";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+			  draw_order = 14;
+		}
+	}
+	[t:button,n:quest_button_play_sample]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 12;
+		  rect = 186,409,307,425;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(quest_play_sample);
+		}
+		[t:text,n:quest_text_play_sample]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 16;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 216,410,307,425;
+			  text = "Play Dialogue";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:dialog_box,n:quest_dialog_box_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 1;
+		  rect = 158,30,486,439;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:quest_dialog_box_list_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 3;
+		  rect = 186,90,450,403;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:listbox,n:quest_listbox_quests]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_control = true;
+		  common_template = ;
+		i draw_order = 18;
+		  element_type = text_multiline;		  
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  rect = 193,97,443,396;
+		x text_color = 0xffffffff;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  oncreated = setelementheight(31);
+		}
+
+		[t:selection_box,n:selection_box] 
+		{
+			alpha = 0.5;
+			texture = b_gui_cmn_selection;
+		}
+	}
+	[t:tab,n:quest_tab_active]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 7;
+		  radio_group = quest_tabs;
+		  rect = 187,74,317,90;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  oncheck = notify(quest_tab_active) & shift_y(5);
+			  oncreated = setstate(1);
+			  onunchecked = shift_y(-5);
+		}
+		[t:text,n:quest_text_active]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 32;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 234,80,317,95;
+			  text = "Active";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:quest_tab_completed]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 8;
+		  radio_group = quest_tabs;
+		  rect = 318,74,448,90;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  oncheck = notify(quest_tab_completed) & shift_y(5);
+			  onunchecked = shift_y(-5);
+		}
+		[t:text,n:quest_text_completed]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 15;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 352,75,448,90;
+			  text = "Completed";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:text,n:text_quest_log]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 37;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_18p_lucinda-bright;
+		  justify = center;
+		  rect = 197,41,438,70;
+		  text = "Quest Log";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+}

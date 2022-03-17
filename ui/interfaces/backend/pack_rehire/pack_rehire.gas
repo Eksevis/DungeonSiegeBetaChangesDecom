@@ -1,0 +1,117 @@
+[pack_rehire]
+{
+	  intended_resolution_height = 480;
+	  intended_resolution_width = 640;
+	  interface = true;
+	  modal = true;
+	  centered = pack_dialog_box;
+
+	[t:button,n:pack_button_no]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 3;
+		  rect = 337,269,413,285;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(pack_rehire_no);
+		}
+		[t:text,n:pack_text_no]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 6;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 368,270,413,285;
+			  text = "No";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:button,n:pack_button_yes]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 2;
+		  rect = 240,269,312,285;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(pack_rehire_yes);
+		}
+		[t:text,n:pack_text_yes]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 5;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 265,270,312,285;
+			  text = "Yes";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:dialog_box,n:pack_dialog_box]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 1;
+		  rect = 95,163,552,309;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:text,n:pack_text_message]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 4;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+		  rect = 107,223,537,250;
+		  text = "Would you like to add this character back into the party?";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:rejoin_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 9;
+		  rect = 241,178,410,207;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:text,n:rejoin_text]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 10;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+		  rect = 243,181,407,204;
+		  text = "Rejoin Party?";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+}

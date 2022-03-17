@@ -1,0 +1,1217 @@
+[t:template,n:base_body_armor_plate]
+{
+	doc = "Body armor base template";
+	specializes = armor;
+	[aspect]
+	{
+		material = steel;
+		[voice]
+		{
+			[put_down] { *=s_e_gui_put_down_armor_plate; }
+		}
+	}
+	[gui] { equip_slot=es_chest; }
+}
+[t:template,n:bd_ba_f_g_c_avg]
+{
+	doc = "Banded Armor";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Banded Armor"; }
+	[defend]
+	{
+		armor_style = 001;
+		armor_type = a5;
+		defense = 55;
+	}
+	[gui]
+	{
+		equip_requirements = strength:24;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_001;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+		[o_fin]
+		{
+			armor_style = 015;
+			armor_type = a5;
+			defense = 86;
+			inventory_icon = b_gui_ig_i_a_pos_a5_015;
+			modifier_max = 13;
+			modifier_min = 4;
+		}
+	}
+}
+[t:template,n:bd_ba_f_g_c_fun]
+{
+	doc = "Stiff Banded Armor";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Stiff Banded Armor";
+	}
+	[defend]
+	{
+		armor_style = 004;
+		armor_type = a5;
+		defense = 50;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_004;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_ba_f_g_o_mag]
+{
+	doc = "Banded Armor";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Banded Armor"; }
+	[defend]
+	{
+		armor_style = 002;
+		armor_type = a6;
+		defense = 182;
+	}
+	[gui]
+	{
+		equip_requirements = strength:24;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a6_002;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 36;
+			modifier_min = 9;
+		}
+	}
+}
+[t:template,n:bd_ba_f_g_o_str]
+{
+	doc = "Solid Banded Armor";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Solid Banded Armor"; }
+	[defend]
+	{
+		armor_style = 009;
+		armor_type = a5;
+		defense = 128;
+	}
+	[gui]
+	{
+		equip_requirements = strength:24;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_009;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 22;
+			modifier_min = 6;
+		}
+	}
+}
+[t:template,n:bd_ba_m_g_c_str]
+{
+	doc = "Fine Banded";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Fine Banded"; }
+	[defend]
+	{
+		armor_style = 020;
+		armor_type = a2;
+		defense = 59;
+	}
+	[gui]
+	{
+		equip_requirements = strength:13;
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a2_020;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 53;
+			modifier_min = 13;
+		}
+	}
+}
+[t:template,n:bd_ba_r_g_o_fin]
+{
+	doc = "Banded Armor";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Banded Armor"; }
+	[defend]
+	{
+		armor_style = 016;
+		armor_type = a2;
+		defense = 49;
+	}
+	[gui]
+	{
+		equip_requirements = strength:18;
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a2_016;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 13;
+			modifier_min = 5;
+		}
+	}
+}
+[t:template,n:bd_bp_f_g_c_avg]
+{
+	doc = "Battle Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Battle Plate"; }
+	[defend]
+	{
+		armor_style = 007;
+		armor_type = a6;
+		defense = 102;
+	}
+	[gui]
+	{
+		equip_requirements = strength:33;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a6_007;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 10;
+			modifier_min = 5;
+		}
+		[o_mag]
+		{
+			armor_style = 008;
+			armor_type = a6;
+			defense = 248;
+			inventory_icon = b_gui_ig_i_a_pos_a6_008;
+			modifier_max = 124;
+			modifier_min = 12;
+		}
+	}
+}
+[t:template,n:bd_bp_f_g_c_fin]
+{
+	doc = "Battle Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Battle Plate"; }
+	[defend]
+	{
+		armor_style = 010;
+		armor_type = a5;
+		defense = 112;
+	}
+	[gui]
+	{
+		equip_requirements = strength:33;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_010;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 14;
+			modifier_min = 6;
+		}
+	}
+}
+[t:template,n:bd_bp_f_g_c_fun]
+{
+	doc = "Basic Battle Plate";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Basic Battle Plate";
+	}
+	[defend]
+	{
+		armor_style = 004;
+		armor_type = a6;
+		defense = 94;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a6_004;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_bp_f_g_c_str]
+{
+	doc = "Battle Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Battle Plate"; }
+	[defend]
+	{
+		armor_style = 001;
+		armor_type = a6;
+		defense = 170;
+	}
+	[gui]
+	{
+		equip_requirements = strength:33;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a6_001;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 47;
+			modifier_min = 9;
+		}
+	}
+}
+[t:template,n:bd_bp_f_g_o_str]
+{
+	doc = "Thor";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Thor"; }
+	[defend]
+	{
+		armor_style = 010;
+		armor_type = a5;
+		defense = 198;
+	}
+	[gui]
+	{
+		equip_requirements = strength:33;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_010;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 74;
+			modifier_min = 10;
+		}
+	}
+}
+[t:template,n:bd_bp_f_g_o_str_ref]
+{
+	doc = "Reflective Armor-- TEMP";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Reflective Armor-- TEMP";
+	}
+	[defend]
+	{
+		armor_style = 014;
+		armor_type = a5;
+		defense = 90;
+	}
+	[gui]
+	{
+		equip_requirements = strength:33;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_010;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_br_f_g_c_avg]
+{
+	doc = "Heavy Brigandine";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Heavy Brigandine"; }
+	[defend]
+	{
+		armor_style = 004;
+		armor_type = a3;
+		defense = 28;
+	}
+	[gui]
+	{
+		equip_requirements = strength:15;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_004;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+		[o_fin]
+		{
+			armor_style = 022;
+			armor_type = a3;
+			defense = 48;
+			inventory_icon = b_gui_ig_i_a_pos_a3_022;
+			modifier_max = 7;
+			modifier_min = 2;
+		}
+	}
+}
+[t:template,n:bd_br_f_g_c_str]
+{
+	doc = "Layered Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Layered Plate"; }
+	[defend]
+	{
+		armor_style = 011;
+		armor_type = a3;
+		defense = 69;
+	}
+	[gui]
+	{
+		equip_requirements = strength:15;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_011;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 10;
+			modifier_min = 3;
+		}
+	}
+}
+[t:template,n:bd_br_m_g_c_avg]
+{
+	doc = "Thin Brigandine";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Thin Brigandine"; }
+	[defend]
+	{
+		armor_style = 010;
+		armor_type = a2;
+		defense = 16;
+	}
+	[gui]
+	{
+		equip_requirements = strength:11;
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a2_010;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 8;
+			modifier_min = 3;
+		}
+		[o_fin]
+		{
+			armor_style = 026;
+			armor_type = a2;
+			defense = 61;
+			inventory_icon = b_gui_ig_i_a_pos_a2_026;
+			modifier_max = 9;
+			modifier_min = 3;
+		}
+	}
+}
+[t:template,n:bd_br_m_g_c_low]
+{
+	doc = "Flimsy Brigandine";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Flimsy Brigandine";
+	}
+	[defend]
+	{
+		armor_style = 011;
+		armor_type = a2;
+		defense = 12;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a2_011;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_br_m_g_c_mag]
+{
+	doc = "Light Brigandine";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Light Brigandine"; }
+	[defend]
+	{
+		armor_style = 004;
+		armor_type = a2;
+		defense = 52;
+	}
+	[gui]
+	{
+		equip_requirements = strength:11;
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a2_004;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 26;
+			modifier_min = 12;
+		}
+	}
+}
+[t:template,n:bd_br_r_g_c_avg]
+{
+	doc = "Brigandine Armor";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Brigandine Armor"; }
+	[defend]
+	{
+		armor_style = 023;
+		armor_type = a3;
+		defense = 21;
+	}
+	[gui]
+	{
+		equip_requirements = strength:12;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_023;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 7;
+			modifier_min = 2;
+		}
+		[o_mag]
+		{
+			armor_style = 024;
+			armor_type = a3;
+			defense = 95;
+			inventory_icon = b_gui_ig_i_a_pos_a3_024;
+			modifier_max = 29;
+			modifier_min = 5;
+		}
+	}
+}
+[t:template,n:bd_br_r_g_c_fin]
+{
+	doc = "Brigandine Armor";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Brigandine Armor"; }
+	[defend]
+	{
+		armor_style = 005;
+		armor_type = a3;
+		defense = 27;
+	}
+	[gui]
+	{
+		equip_requirements = strength:12;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_005;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 10;
+			modifier_min = 2;
+		}
+	}
+}
+[t:template,n:bd_fp_f_g_c_avg]
+{
+	doc = "Full Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Full Plate"; }
+	[defend]
+	{
+		armor_style = 017;
+		armor_type = a5;
+		defense = 88;
+	}
+	[gui]
+	{
+		equip_requirements = strength:30;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_017;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 9;
+			modifier_min = 4;
+		}
+	}
+}
+[t:template,n:bd_fp_f_g_c_fun]
+{
+	doc = "Bulky Full Plate";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Bulky Full Plate";
+	}
+	[defend]
+	{
+		armor_style = 008;
+		armor_type = a5;
+		defense = 70;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_008;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_fp_f_g_c_str]
+{
+	doc = "Full Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Full Plate"; }
+	[defend]
+	{
+		armor_style = 005;
+		armor_type = a6;
+		defense = 156;
+	}
+	[gui]
+	{
+		equip_requirements = strength:30;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a6_005;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 43;
+			modifier_min = 8;
+		}
+	}
+}
+[t:template,n:bd_fp_f_g_o_fin]
+{
+	doc = "Full Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Full Plate"; }
+	[defend]
+	{
+		armor_style = 005;
+		armor_type = a5;
+		defense = 134;
+	}
+	[gui]
+	{
+		equip_requirements = strength:30;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_005;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 30;
+			modifier_min = 7;
+		}
+	}
+}
+[t:template,n:bd_fp_f_g_o_mag]
+{
+	doc = "Full Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Full Plate"; }
+	[defend]
+	{
+		armor_style = 012;
+		armor_type = a5;
+		defense = 244;
+	}
+	[gui]
+	{
+		equip_requirements = strength:30;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_012;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 122;
+			modifier_min = 12;
+		}
+	}
+}
+[t:template,n:bd_fp_f_g_o_str]
+{
+	doc = "Full Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Full Plate"; }
+	[defend]
+	{
+		armor_style = 006;
+		armor_type = a6;
+		defense = 184;
+	}
+	[gui]
+	{
+		equip_requirements = strength:30;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a6_006;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 69;
+			modifier_min = 9;
+		}
+	}
+}
+[t:template,n:bd_fp_m_g_o_mag]
+{
+	doc = "Mage Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Mage Plate"; }
+	[defend]
+	{
+		armor_style = 011;
+		armor_type = a5;
+		defense = 80;
+	}
+	[gui]
+	{
+		equip_requirements = strength:16;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_011;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 80;
+			modifier_min = 16;
+		}
+	}
+}
+[t:template,n:bd_fp_r_g_c_avg]
+{
+	doc = "Quarter Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Quarter Plate"; }
+	[defend]
+	{
+		armor_style = 013;
+		armor_type = a5;
+		defense = 81;
+	}
+	[gui]
+	{
+		equip_requirements = strength:24;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_013;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 15;
+			modifier_min = 6;
+		}
+	}
+}
+[t:template,n:bd_pl_f_g_c_avg]
+{
+	doc = "Heavy Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Heavy Plate"; }
+	[defend]
+	{
+		armor_style = 002;
+		armor_type = a5;
+		defense = 73;
+	}
+	[gui]
+	{
+		equip_requirements = strength:27;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_002;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 7;
+			modifier_min = 4;
+		}
+		[c_fin]
+		{
+			armor_style = 016;
+			armor_type = a5;
+			defense = 82;
+			inventory_icon = b_gui_ig_i_a_pos_a5_016;
+			modifier_max = 10;
+			modifier_min = 4;
+		}
+	}
+}
+[t:template,n:bd_pl_m_g_c_str]
+{
+	doc = "Mage Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Mage Plate"; }
+	[defend]
+	{
+		armor_style = 024;
+		armor_type = a1;
+		defense = 71;
+	}
+	[gui]
+	{
+		equip_requirements = strength:15;
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a1_024;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 63;
+			modifier_min = 16;
+		}
+	}
+}
+[t:template,n:bd_pl_r_g_c_fin]
+{
+	doc = "Ranger Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Ranger Plate"; }
+	[defend]
+	{
+		armor_style = 013;
+		armor_type = a3;
+		defense = 71;
+	}
+	[gui]
+	{
+		equip_requirements = strength:21;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_013;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 15;
+			modifier_min = 5;
+		}
+	}
+}
+[t:template,n:bd_pl_r_g_o_str]
+{
+	doc = "Nimble Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Nimble Plate"; }
+	[defend]
+	{
+		armor_style = 017;
+		armor_type = a3;
+		defense = 119;
+	}
+	[gui]
+	{
+		equip_requirements = strength:21;
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_017;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 34;
+			modifier_min = 9;
+		}
+	}
+}
+[t:template,n:bd_un_br_f_d_c_str]
+{
+	doc = "Cirene Scale";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Cirene Scale"; }
+	[defend]
+	{
+		armor_style = 021;
+		armor_type = a2;
+		defense = 40;
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_a_pos_a2_021;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_un_br_r_d_o_str]
+{
+	doc = "Plate Coat";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Plate Coat"; }
+	[defend]
+	{
+		armor_style = 009;
+		armor_type = a4;
+		defense = 100;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a4_009;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_un_fp_f_g_c_mag]
+{
+	doc = "Magical Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Magical Plate"; }
+	[defend]
+	{
+		armor_style = 006;
+		armor_type = a5;
+		defense = 150;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_006;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_un_fp_f_g_o_mag]
+{
+	doc = "Mystic Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Mystic Plate"; }
+	[defend]
+	{
+		armor_style = 005;
+		armor_type = a5;
+		defense = 200;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a5_005;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_un_pl_f_g_c_avg]
+{
+	doc = "Solid Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Solid Plate"; }
+	[defend]
+	{
+		armor_style = 016;
+		armor_type = a3;
+		defense = 40;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_016;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_un_pl_f_g_c_fin]
+{
+	doc = "Thick Plate";
+	specializes = base_body_armor_plate;
+	[common] { screen_name="Thick Plate"; }
+	[defend]
+	{
+		armor_style = 015;
+		armor_type = a3;
+		defense = 80;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_015;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_un_pl_f_g_c_fun]
+{
+	doc = "Standard Plate";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Standard Plate";
+	}
+	[defend]
+	{
+		armor_style = 014;
+		armor_type = a3;
+		defense = 28;
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_a_pos_a3_014;
+		inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+	}
+}
+[t:template,n:bd_un_br_f_d_bandit]
+{
+	doc = "Bandit Brigandine";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Bandit Brigandine";
+	}
+	[defend]
+	{
+		  armor_style = 033;
+		  armor_type = a3;
+		  defense = 50;
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_a_pos_a3_033;
+		  inventory_width = 2;
+	}
+}
+[t:template,n:bd_un_pl_f_crystal]
+{
+	doc = "Crystal Plate";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Crystal Plate";
+	}
+	[defend]
+	{
+		  armor_style = 009;
+		  armor_type = a6;
+		  defense = 50;
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_a_pos_a6_009;
+		  inventory_width = 2;
+	}
+}
+[t:template,n:bd_un_br_f_bone]
+{
+	doc = "Bone Plate";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Bone Plate";
+	}
+	[defend]
+	{
+		  armor_style = 010;
+		  armor_type = a6;
+		  defense = 50;
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_a_pos_a6_010;
+		  inventory_width = 2;
+	}
+}
+[t:template,n:bd_un_br_f_spider]
+{
+	doc = "Spider Brigandine";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Spider Brigandine";
+	}
+	[defend]
+	{
+		  armor_style = 053;
+		  armor_type = a1;
+		  defense = 50;
+	}
+	[gui]
+	{
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_a_pos_a1_053;
+		  inventory_width = 2;
+	}
+}
+[t:template,n:bd_un_br_f_copper]
+{
+	doc = "need_name_bd_un_br_f_copper";
+	specializes = base_body_armor_plate;
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "need_name_bd_un_br_f_copper";
+	}
+	[defend]
+	{
+		  armor_style = 031;
+		  armor_type = a3;
+		  defense = 50;
+	}
+	[gui]
+	{
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_a_pos_a3_031;
+		  inventory_width = 2;
+	}
+}

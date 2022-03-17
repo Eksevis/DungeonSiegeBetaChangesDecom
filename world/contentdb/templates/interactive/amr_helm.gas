@@ -1,0 +1,604 @@
+[t:template,n:base_helm]
+{
+	doc = "helm base template";
+	specializes = armor;
+	[aspect]
+	{
+		voice:put_down:* = s_e_gui_put_down_helmet;
+	}
+	[gui]
+	{
+		equip_slot = es_head;
+		inventory_height = 2;
+		inventory_width = 2;
+	}
+}
+[t:template,n:he_ca_le_avg]
+{
+	doc = "he_ca_le_avg";
+	specializes = base_helm;
+	[common] { screen_name="Leather Cap"; }
+	[defend]
+	{
+		armor_style = 006;
+		armor_type = type6;
+		defense = 1;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_006; }
+}
+[t:template,n:he_ca_pl_avg]
+{
+	doc = "he_ca_pl_avg";
+	specializes = base_helm;
+	[common] { screen_name="Steel Cap"; }
+	[defend]
+	{
+		armor_style = 004;
+		armor_type = type4;
+		defense = 2;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_004; }
+}
+[t:template,n:he_ca_pl_blue]
+{
+	doc = "he_ca_pl_blue";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_pl_blue"; }
+	[defend]
+	{
+		armor_style = 014;
+		armor_type = type14;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_014; }
+}
+[t:template,n:he_ca_pl_cap]
+{
+	doc = "he_ca_pl_cap";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_pl_cap"; }
+	[defend]
+	{
+		armor_style = 028;
+		armor_type = type28;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_028; }
+}
+[t:template,n:he_ca_pl_cap_brown]
+{
+	doc = "he_ca_pl_cap_brown";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_pl_cap_brown"; }
+	[defend]
+	{
+		armor_style = 045;
+		armor_type = type28;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_045; }
+}
+[t:template,n:he_ca_pl_dome]
+{
+	doc = "he_ca_pl_dome";
+	specializes = base_helm;
+	[common] { screen_name="Dome Cap"; }
+	[defend]
+	{
+		armor_style = 019;
+		armor_type = type19;
+		defense = 5;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_019; }
+}
+[t:template,n:he_ca_pl_fin]
+{
+	doc = "he_ca_pl_fin";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_pl_fin"; }
+	[defend]
+	{
+		armor_style = 013;
+		armor_type = type13;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_013; }
+}
+[t:template,n:he_ca_pl_mag]
+{
+	doc = "he_ca_pl_mag";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_pl_mag"; }
+	[defend]
+	{
+		armor_style = 009;
+		armor_type = type9;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_009; }
+}
+[t:template,n:he_ca_pl_ornage]
+{
+	doc = "he_ca_pl_ornage";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_pl_ornage"; }
+	[defend]
+	{
+		armor_style = 012;
+		armor_type = type12;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_012; }
+}
+[t:template,n:he_ca_ro_blue]
+{
+	doc = "he_ca_ro_blue";
+	specializes = base_helm;
+	[common] { screen_name="need_name_he_ca_ro_blue"; }
+	[defend]
+	{
+		armor_style = 035;
+		armor_type = type35;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_035; }
+}
+[t:template,n:he_ca_ro_cone]
+{
+	doc = "he_ca_ro_cone";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_ro_cone"; }
+	[defend]
+	{
+		armor_style = 010;
+		armor_type = type10;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_010; }
+}
+[t:template,n:he_ca_ro_gemblue]
+{
+	doc = "he_ca_ro_gemblue";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_ro_gemblue"; }
+	[defend]
+	{
+		armor_style = 037;
+		armor_type = type37;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_037; }
+}
+[t:template,n:he_ca_ro_green]
+{
+	doc = "he_ca_ro_green";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_ro_green"; }
+	[defend]
+	{
+		armor_style = 038;
+		armor_type = type38;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_038; }
+}
+[t:template,n:he_ca_ro_mongol]
+{
+	doc = "he_ca_ro_mongol";
+	specializes = base_helm;
+	[common] { screen_name="need_name_ca_ro_mongol"; }
+	[defend]
+	{
+		armor_style = 036;
+		armor_type = type36;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_036; }
+}
+[t:template,n:he_ca_ro_purple]
+{
+	doc = "he_ca_ro_purple";
+	specializes = base_helm;
+	[common]
+	{
+        is_pcontent_allowed = FALSE;
+		screen_name="Hat"; 
+	}
+	[defend]
+	{
+		armor_style = 008;
+		armor_type = type8;
+		defense = 1;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_008; }
+}
+[t:template,n:he_ca_sl_avg]
+{
+	doc = "he_ca_sl_avg";
+	specializes = base_helm;
+	[common] { screen_name="Studded Cap"; }
+	[defend]
+	{
+		armor_style = 011;
+		armor_type = type4;
+		defense = 2;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_011; }
+}
+[t:template,n:he_fu_bronze]
+{
+	doc = "he_fu_bronze";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_bronze"; }
+	[defend]
+	{
+		armor_style = 024;
+		armor_type = type24;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_024; }
+}
+[t:template,n:he_fu_pl_desert]
+{
+	doc = "he_fu_pl_desert";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_pl_desert"; }
+	[defend]
+	{
+		armor_style = 025;
+		armor_type = type25;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_025; }
+}
+[t:template,n:he_fu_pl_grate]
+{
+	doc = "he_fu_pl_grate";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_pl_grate"; }
+	[defend]
+	{
+		armor_style = 039;
+		armor_type = type39;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_039; }
+}
+[t:template,n:he_fu_pl_horn_avg]
+{
+	doc = "he_fu_pl_horn_avg";
+	specializes = base_helm;
+	[common] { screen_name="Horned Helm"; }
+	[defend]
+	{
+		armor_style = 005;
+		armor_type = type5;
+		defense = 13;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_005; }
+}
+[t:template,n:he_fu_pl_horn_fin]
+{
+	doc = "he_fu_pl_horn_fin";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_pl_horn_fin"; }
+	[defend]
+	{
+		armor_style = 040;
+		armor_type = type40;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_040; }
+}
+[t:template,n:he_fu_pl_horn_mag]
+{
+	doc = "he_fu_pl_horn_mag";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_pl_horn_mag"; }
+	[defend]
+	{
+		armor_style = 027;
+		armor_type = type27;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_027; }
+}
+[t:template,n:he_fu_pl_knight]
+{
+	doc = "he_fu_pl_knight";
+	specializes = base_helm;
+	[common] { screen_name="Great Helm"; }
+	[defend]
+	{
+		armor_style = 003;
+		armor_type = type3;
+		defense = 18;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_003; }
+}
+[t:template,n:he_fu_pl_knight_fin]
+{
+	doc = "he_fu_pl_knight_fin";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_pl_knight_fin"; }
+	[defend]
+	{
+		armor_style = 021;
+		armor_type = type21;
+		defense = 18;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_021; }
+}
+[t:template,n:he_fu_pl_knight_str]
+{
+	doc = "he_fu_pl_knight_str";
+	specializes = base_helm;
+	[common] { screen_name="War Helm"; }
+	[defend]
+	{
+		armor_style = 018;
+		armor_type = type18;
+		defense = 14;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_018; }
+}
+[t:template,n:he_fu_pl_smallwings]
+{
+	doc = "he_fu_pl_smallwings";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_pl_smallwings"; }
+	[defend]
+	{
+		armor_style = 033;
+		armor_type = type33;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_033; }
+}
+[t:template,n:he_fu_pl_spike]
+{
+	doc = "he_fu_pl_spike";
+	specializes = base_helm;
+	[common] { screen_name="need_name_fu_pl_spike"; }
+	[defend]
+	{
+		armor_style = 044;
+		armor_type = type24;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_044; }
+}
+[t:template,n:he_fu_pl_str]
+{
+	doc = "he_fu_pl_str";
+	specializes = base_helm;
+	[common] { screen_name="Heavy Helm"; }
+	[defend]
+	{
+		armor_style = 001;
+		armor_type = type1;
+		defense = 18;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_001; }
+}
+[t:template,n:he_op_bigwings]
+{
+	doc = "he_op_bigwings";
+	specializes = base_helm;
+	[common] { screen_name="need_name_op_bigwings"; }
+	[defend]
+	{
+		armor_style = 043;
+		armor_type = type43;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_043; }
+}
+[t:template,n:he_op_pl_avg]
+{
+	doc = "he_op_pl_avg";
+	specializes = base_helm;
+	[common] { screen_name="Sentry Helm"; }
+	[defend]
+	{
+		armor_style = 002;
+		armor_type = type2;
+		defense = 5;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_002; }
+}
+[t:template,n:he_op_pl_cone]
+{
+	doc = "he_op_pl_cone";
+	specializes = base_helm;
+	[common] { screen_name="need_name_op_pl_cone"; }
+	[defend]
+	{
+		armor_style = 030;
+		armor_type = type30;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_030; }
+}
+[t:template,n:he_op_pl_eyes]
+{
+	doc = "he_op_pl_eyes";
+	specializes = base_helm;
+	[common] { screen_name="Face Helm"; }
+	[defend]
+	{
+		armor_style = 020;
+		armor_type = type20;
+		defense = 6;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_020; }
+}
+[t:template,n:he_op_pl_roman]
+{
+	doc = "he_op_pl_roman";
+	specializes = base_helm;
+	[common] { screen_name="need_name_op_pl_roman"; }
+	[defend]
+	{
+		armor_style = 029;
+		armor_type = type29;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_029; }
+}
+[t:template,n:he_op_pl_santa]
+{
+	doc = "he_op_pl_santa";
+	specializes = base_helm;
+	[common] { screen_name="need_name_op_pl_santa"; }
+	[defend]
+	{
+		armor_style = 034;
+		armor_type = type34;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_034; }
+}
+[t:template,n:he_un_ca_branches]
+{
+	doc = "he_un_ca_branches";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_ca_branches"; }
+	[defend]
+	{
+		armor_style = 015;
+		armor_type = type15;
+		defense = 25;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_015; }
+}
+[t:template,n:he_un_ca_cowskull]
+{
+	doc = "he_un_ca_cowskull";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_ca_cowskull"; }
+	[defend]
+	{
+		armor_style = 017;
+		armor_type = type17;
+		defense = 18;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_017; }
+}
+[t:template,n:he_un_ca_flatcrown]
+{
+	doc = "he_un_ca_flatcrown";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_ca_flatcrown"; }
+	[defend]
+	{
+		armor_style = 016;
+		armor_type = type16;
+		defense = 35;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_016; }
+}
+[t:template,n:he_un_ca_indianajones]
+{
+	doc = "he_un_ca_indianajones";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_ca_indianajones"; }
+	[defend]
+	{
+		armor_style = 032;
+		armor_type = type32;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_032; }
+}
+[t:template,n:he_un_ca_moon]
+{
+	doc = "he_un_ca_moon";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_ca_moon"; }
+	[defend]
+	{
+		armor_style = 026;
+		armor_type = type26;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_026; }
+}
+[t:template,n:he_un_ca_tallcrown]
+{
+	doc = "he_un_ca_tallcrown";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_ca_tallcrown"; }
+	[defend]
+	{
+		armor_style = 031;
+		armor_type = type31;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_031; }
+}
+[t:template,n:he_un_fu_eyebrows]
+{
+	doc = "he_un_fu_eyebrows";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_fu_eyebrows"; }
+	[defend]
+	{
+		armor_style = 023;
+		armor_type = type23;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_023; }
+}
+[t:template,n:he_un_fu_pl_fish]
+{
+	doc = "he_un_fu_pl_fish";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_fu_pl_fish"; }
+	[defend]
+	{
+		armor_style = 042;
+		armor_type = type42;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_042; }
+}
+[t:template,n:he_un_fu_pl_skull]
+{
+	doc = "he_un_fu_pl_skull";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_fu_pl_skull"; }
+	[defend]
+	{
+		armor_style = 022;
+		armor_type = type22;
+		defense = 20;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_022; }
+}
+[t:template,n:he_un_vi_moto]
+{
+	doc = "he_un_vi_moto";
+	specializes = base_helm;
+	[common] { screen_name="need_name_un_vi_moto"; }
+	[defend]
+	{
+		armor_style = 041;
+		armor_type = type41;
+		defense = 15;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_041; }
+}
+[t:template,n:he_vi_pl_knight]
+{
+	doc = "he_vi_pl_knight";
+	specializes = base_helm;
+	[common] { screen_name="Knight Helm"; }
+	[defend]
+	{
+		armor_style = 007;
+		armor_type = type7;
+		defense = 20;
+	}
+	[gui] { inventory_icon=b_gui_ig_i_a_hlmt_007; }
+}

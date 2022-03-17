@@ -1,0 +1,84 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_heal.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string 			effect_script$		= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string 			effect_params$		= ""   	doc = "Parameters to send to SiegeFx script";
+
+property float  			heal_freq_min$		= 0.66	doc = "how often to heal";
+property float  			heal_freq_max$		= 1.0	doc = "how often to heal";
+
+property float  			mana_cost$			= 1		doc = "how much mana per heal";
+property float  			heal_amount$		= 3		doc = "how much health per heal";
+
+property float  			max_heal$			= 15	doc = "how much to heal total";
+
+owner = GoSkritComponent;
+
+Goid			caster$;
+Goid			target$;
+float			ammount_healed$;
+
+
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+			ammount_healed$ = 0;
+			SetState Loop$;
+		}
+	}
+}
+
+state Loop$
+{	
+	trigger OnTimer$( 1 )
+	{
+		SetState Loop$;
+	}	
+	
+	event OnEnterState$
+	{	
+		if(!((caster$.IsValid) && (target$.IsValid)))
+		{
+			SetState Finish$;
+		} else if( ( target$.Go.Aspect.CurrentLife < target$.Go.Aspect.MaxLife ) && ( caster$.Go.Aspect.CurrentMana >= mana_cost$ ) && (ammount_healed$ < max_heal$) ) {
+			// Start the visual effect
+			
+			if ( effect_script$ != "" )
+			{
+				SiegeFx.SRunScript( effect_script$, target$, caster$, effect_params$, owner.Goid, WE_REQ_CAST );
+			}
+			
+			ammount_healed$ += heal_amount$;
+			target$.Go.Aspect.RCSetCurrentLife(Math.MinFloat( target$.Go.Aspect.MaxLife, target$.Go.Aspect.CurrentLife + heal_amount$));
+		 	caster$.Go.Aspect.RCSetCurrentMana(caster$.Go.Aspect.CurrentMana - mana_cost$);
+		
+			float random_delay$ = Math.RandomFloat( heal_freq_min$, heal_freq_max$ );
+			this.CreateTimer( 1, random_delay$ );		
+		} else {
+			SetState Finish$;
+		}
+	}
+}
+
+state Finish$
+{
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+}

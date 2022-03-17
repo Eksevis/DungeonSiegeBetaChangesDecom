@@ -1,0 +1,401 @@
+//////////////////////////////////////////////////////////////////////////////
+// Documentation
+
+/*
+
+	EVENT RULES
+
+
+*** Material Events ***
+
+	A "material event" is a sound event that requires looking up a material
+	for the involved game object(s) in the sounddb. When looking up a
+	material, if it's not found in the sounddb, we fall back to "generic" on
+	source, then on destination.
+
+	Rules
+
+		To find source material, check in this order: ammo, weapon hand, actor.
+		So an archer could have a source of "arrow", a spellcaster could have
+		a source of "fireball", a fighter could have a source of "steel", and
+		a krug grunt could have a source of "flesh" (fists).
+
+		To find destination material, check in this order: shield, torso armor,
+		actor. Note that critical hits, because they bypass armor completely,
+		will always use the actor for the destination material.
+
+	attack_hit_glance:
+
+		Attacker succeeds in hitting defender, doing < 50% of possible damage.
+
+	attack_hit_solid:
+
+		Attacker succeeds in hitting defender, doing >= 50% of possible damage.
+		If this event does not exist, fall back to attack_hit_glance.
+
+	attack_hit_critical:
+
+		Attacker gets a critical hit on defender, breaking through armor and
+		scoring a kill. Destination material is always actor material. If this
+		event does not exist, fall back to attack_hit_solid.
+
+	attack_miss:
+
+		Attacker either completely misses defender or armor completely blocks
+		the attack. Play either a swoosh sound or a dull clang (randomly).
+
+*** Voice Events ***
+
+	A "voice event" is a sound event that is specific to a particular object,
+	and does not necessarily require a material type. When a voice event is
+	requested, we try to play a sound by querying in the following order:
+
+		1. Check object aspect:voice block for event. Note that this block
+		   inherits like any other internal block.
+
+		2. If the object's material is not generic, check the [sounddb] using
+		   the object's material as the source and generic as the dest type.
+
+		3. Check [global_voice] in this file.
+
+	The "voice" block is a set of object-specific voice-type sounds. Subblock
+	names are the name of the event, and then generic entries for the names of
+	the sounds to play for those events.
+
+	hit_glance:
+
+		Object just got hit by a glancing attack. If the hit was a final
+		death blow, play die instead.
+
+	hit_solid:
+
+		Object just got hit by a solid attack. Fall back to hit_glance if
+		this event does not exist. If the hit was a final death blow, play
+		die instead.
+
+	hit_critical:
+
+		Object just got critically hit and died. Use instead of "die". Fall back
+		to "die" if this event does not exist.
+
+	die:
+
+		Object was killed. "Avenge my death" or scream or whatever.
+
+	attack:
+
+		Actors make this when starting a melee attack (grunt or whatever).
+		If ranged, then the weapon makes this sound (bow will twang) plus
+		add in the sound of the ammo's attack (possibly a whooshing of fire
+		arrow) on top. If casting a spell, then use the spell's "attack
+		voice" instead.
+
+	select_char:
+
+		Sound played when a specific actor is selected.
+
+	order_attack:
+
+		Actor is directed to attack something.
+
+	order_move:
+
+		Issue move command from gui.
+
+	order_cant_move:
+
+		Can't move to that location (from gui).
+
+	order_stop:
+
+		Issue stop command from gui.
+
+	order_out_of_mana:
+
+		Not enough mana to cast spell.
+
+	used:
+
+		Item was used. Lever pulled, button pushed, simple elevator activated,
+		etc.
+
+	opened:
+
+		Item was opened, like chest, door, etc.
+
+	closed:
+
+		Item was closed.
+
+	break:
+
+		Object is exploded/broken. Wooden barrel smash sound, or flesh gib
+		splatter sound.
+
+	put_down:
+
+		Object is dropped on ground or into inventory from inventory.
+		Destination is always generic, source is from the object itself.
+
+	pick_up:
+
+		Object is picked up out of the gridbox in inventory. Destination is
+		always generic, source is from the object itself.
+
+	equip:
+
+		Object was equipped.
+
+	unequip:
+
+		Object was unequipped.
+
+	drink:
+
+		Object was drunk.
+*/
+
+[sounddb]
+{
+	/*	format:
+
+			$ note that multiple sounds are supported per event name. we'll
+			  just pick one at random.
+
+		[source_material]
+		{
+			[destination_material]
+			{
+				[event]
+				{
+					* = sound_name;
+					...
+				}
+
+				...
+			}
+
+			...
+		}
+
+		...
+
+		note that "generic" is used if the material name is empty in the aspect.
+
+		shorter format:
+
+		source_material:destination_material:event:* = sound_name;
+
+	*/
+
+//	SOURCE		DEST		EVENT					SOUND
+
+    ////////////////
+	//WORLD OBJECTS
+    ///////////////
+	//Levers
+	chain:      	generic     :lever_transition_start :* = s_e_lever_winch;
+	chain:      	generic     :lever_transition_end   :* = s_e_lever_winch;
+	steel:      	generic     :lever_start           	:* = s_e_lever_m_up;
+	steel:      	generic     :lever_end	         	:* = s_e_lever_m_down;
+	stone_statue:	generic		:lever_start			:* = s_e_env_statue_spin;
+	stone_statue:	generic		:lever_end				:* = s_e_env_statue_spin;
+	wood:			generic     :lever_start          	:* = s_e_defaultsound;
+	wood:      		generic     :lever_end	         	:* = s_e_defaultsound;
+	//Chests
+	steel:      	generic     :chest_open         	:* = s_e_chest_m_open;
+	steel:      	generic     :chest_close        	:* = s_e_chest_m_close;
+	wood: 			generic     :chest_open         	:* = s_e_defaultsound;
+	wood:      		generic     :chest_close        	:* = s_e_defaultsound;
+    //Doors and Grates
+    wood: 			generic     :door_open	         	:* = s_e_door_standard_open;
+	wood:      		generic     :door_close        		:* = s_e_door_standard_open;
+	stone: 			generic     :door_open	         	:* = s_e_env_door_stone_open;
+	stone:     		generic     :door_close        		:* = s_e_env_door_stone_close;
+    steel:      	generic     :grate_open        		:* = s_e_grate_open;
+    steel:      	generic     :grate_close       		:* = s_e_grate_close;
+	//Generators
+	foliage:		generic		:gen_start				:* = s_e_env_brush_rustle;
+	foliage:		generic		:gen_end				:* = s_e_env_brush_rustle;
+ 	steel:      	generic     :gen_start        		:* = s_e_grate_open;
+    steel:      	generic     :gen_end       			:* = s_e_grate_close;
+
+
+    //////////
+    //ATTACKS
+    //////////
+
+	// MISSES //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+    claw:		generic			:attack				:* = s_e_swing_01;
+	claw:		generic			:attack				:* = s_e_swing_02;
+	claw:		generic			:attack				:* = s_e_swing_03;
+	claw:		generic			:attack				:* = s_e_swing_04;
+
+	flesh:		generic			:attack				:* = s_e_swing_01;
+	flesh:		generic			:attack				:* = s_e_swing_02;
+	flesh:		generic			:attack				:* = s_e_swing_03;
+	flesh:		generic			:attack				:* = s_e_swing_04;
+
+	steel_blunt:generic			:attack				:* = s_e_swing_01;
+	steel_blunt:generic			:attack				:* = s_e_swing_02;
+	steel_blunt:generic			:attack				:* = s_e_swing_03;
+	steel_blunt:generic			:attack				:* = s_e_swing_04;
+
+	steel_edged:generic			:attack				:* = s_e_swing_01;
+	steel_edged:generic			:attack				:* = s_e_swing_02;
+	steel_edged:generic			:attack				:* = s_e_swing_03;
+	steel_edged:generic			:attack				:* = s_e_swing_04;
+
+	steel_sword:generic			:attack				:* = s_e_swing_01;
+	steel_sword:generic			:attack				:* = s_e_swing_02;
+	steel_sword:generic			:attack				:* = s_e_swing_03;
+	steel_sword:generic			:attack				:* = s_e_swing_04;
+
+	wood:		generic			:attack				:* = s_e_swing_01;
+	wood:		generic			:attack				:* = s_e_swing_02;
+	wood:		generic			:attack				:* = s_e_swing_03;
+	wood:		generic			:attack				:* = s_e_swing_04;
+	//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
+
+	// HITS //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
+	arrow:		claw			:attack_hit_glance	:* = s_e_hit_arrow_flesh;	// 2001-05-08b
+	arrow:		flesh			:attack_hit_glance	:* = s_e_hit_arrow_flesh;	// 2001-05-08b
+	arrow:		generic			:attack_hit_glance	:* = s_e_hit_arrow_generic;	// 2001-04-24b
+	arrow:		leather			:attack_hit_glance	:* = s_e_hit_arrow_leather; // 2001-05-08b
+	arrow:		steel			:attack_hit_glance	:* = s_e_hit_arrow_steel;	// 2001-03-06  arrow_armor.wav
+	arrow:		stone			:attack_hit_glance	:* = s_e_hit_arrow_stone; 	// 2001-02-25  hitsword_krugcomm.WAV (last 1/2 cut in SForge by MarshM)
+	arrow:		ice				:attack_hit_glance	:* = s_e_hit_arrow_stone;	// 2001-02-25  hitsword_krugcomm.WAV (last 1/2 cut in SForge by MarshM)
+	arrow:		wood			:attack_hit_glance	:* = s_e_hit_arrow_wood;	// 2001-02-24  sword_wood.wav
+
+	claw:		generic			:attack_hit_glance	:* = s_e_hit_claw_flesh;	// 2001-05-08b
+	claw:		claw			:attack_hit_glance	:* = s_e_hit_claw_flesh;	// 2001-05-08b
+	claw:		flesh			:attack_hit_glance	:* = s_e_hit_claw_flesh;	// 2001-05-08b
+	claw:		leather			:attack_hit_glance	:* = s_e_hit_claw_leather;	// 2001-05-08b
+	claw:		steel			:attack_hit_glance	:* = s_e_hit_claw_steel;	// 2001-05-08b
+	claw:		stone			:attack_hit_glance	:* = s_e_hit_claw_steel;	// 2001-05-08b
+	claw:		ice				:attack_hit_glance	:* = s_e_hit_claw_steel;	// 2001-05-08b
+
+	flesh:		generic			:attack_hit_glance	:* = s_e_hit_flesh_flesh;	// 2001-05-08b
+	flesh:		claw			:attack_hit_glance	:* = s_e_hit_flesh_flesh;	// 2001-05-08b
+	flesh:		flesh			:attack_hit_glance	:* = s_e_hit_flesh_flesh;	// 2001-05-08b
+	flesh:		leather			:attack_hit_glance	:* = s_e_hit_flesh_leather;	// 2001-05-08b
+	flesh:		steel			:attack_hit_glance	:* = s_e_hit_flesh_steel;	// 2001-05-08b
+	flesh:		stone			:attack_hit_glance	:* = s_e_hit_flesh_stone;	// 2001-05-08b s_e_hit_flesh_flesh2.wav
+	flesh:		ice				:attack_hit_glance	:* = s_e_hit_flesh_stone;	// 2001-05-08b s_e_hit_flesh_flesh2.wav
+
+	steelblunt:	generic			:attack_hit_glance	:* = s_e_hit_steelblunt_med2;	//2001-04-20
+	steelblunt:	claw			:attack_hit_glance	:* = s_e_hit_steelblunt_med2;	//2001-04-20
+	steelblunt:	flesh			:attack_hit_glance	:* = s_e_hit_steelblunt_med2;	//2001-04-20
+	steelblunt:	leather			:attack_hit_glance	:* = s_e_hit_steelblunt_med2;	//2001-04-20
+	steelblunt:	steel			:attack_hit_glance	:* = s_e_hit_steelblunt_steel;	//2001-05-08b
+	steelblunt:	stone			:attack_hit_glance	:* = s_e_hit_steelblunt_med1;	//2001-04-20
+	steelblunt:	ice				:attack_hit_glance	:* = s_e_hit_steelblunt_med1;	//2001-04-20
+
+	steeledge:	generic			:attack_hit_glance	:* = s_e_hit_steeledge_flesh2;	//2001-04-12
+	steeledge:	claw			:attack_hit_glance	:* = s_e_hit_steeledge_flesh1;	//2001-04-12
+	steeledge:	flesh			:attack_hit_glance	:* = s_e_hit_steeledge_flesh1_SED;	//2001-04-12 based, SED=0.5-1.75
+	steeledge:	leather			:attack_hit_glance	:* = s_e_hit_steeledge_flesh3;	//2001-04-12
+	steeledge:	steel			:attack_hit_glance	:* = s_e_hit_steeledge_steel;	//2001-05-08b
+	steeledge:	stone			:attack_hit_glance	:* = s_e_hit_steeledge_stone;	//2001-02-25 hitsteel_rockbeast.wav
+	steeledge:	ice				:attack_hit_glance	:* = s_e_hit_steeledge_stone;	//2001-02-25 hitsteel_rockbeast.wav
+
+	steelsword:	generic			:attack_hit_glance	:* = s_e_hit_steelsword_flesh3; //2001-04-13
+	steelsword:	claw			:attack_hit_glance	:* = s_e_hit_steelsword_flesh3; //2001-04-13
+	steelsword:	flesh			:attack_hit_glance	:* = s_e_hit_steelsword_flesh3; //2001-04-13
+	steelsword:	leather			:attack_hit_glance	:* = s_e_hit_steelsword_flesh1; //2001-04-12
+	steelsword:	steel			:attack_hit_glance	:* = s_e_hit_steelsword_steel;	//2001-02-25 hitarmor_hero.wav
+	steelsword:	stone			:attack_hit_glance	:* = s_e_hit_steelsword_stone;	//2000-02-24 sword_shield.wav
+	steelsword:	ice				:attack_hit_glance	:* = s_e_hit_steelsword_stone;	//2000-02-24 sword_shield.wav
+
+	wood:		generic			:attack_hit_glance	:* = s_e_hit_woodblunt_med2;	//2000-04-12
+	wood:		claw			:attack_hit_glance	:* = s_e_hit_woodblunt_med2;	//2000-04-12
+	wood:		flesh			:attack_hit_glance	:* = s_e_hit_woodblunt_med2_SED;//2000-04-12 based, SED=0.5-1.75
+	wood:		leather			:attack_hit_glance	:* = s_e_hit_woodblunt_med3;	//2000-04-12
+	wood:		steel			:attack_hit_glance	:* = s_e_hit_wood_steel;		//2000-05-08b
+	wood:		stone			:attack_hit_glance	:* = s_e_hit_wood_stone;		//2000-05-08b
+	wood:		ice				:attack_hit_glance	:* = s_e_hit_wood_stone;		//2000-05-08b
+
+	//$$$ remove the below when attack_hit_glance & _solid are consolidated into one event
+	// (repeat above but with :attack_hit_solid)
+
+
+
+//------------------------------------------------------------------------------
+}
+
+[global_voice]
+{
+	/*	format:
+
+			$ note that multiple sounds are supported per event name. we'll
+			  just pick one at random.
+
+		[event]
+		{
+			* = yaaaarrrrrr;
+			* = yaaaarrrrrr_2;
+			* = yo;
+			...
+		}
+
+		...
+	*/
+
+	break:					* = s_e_IH_break_wood_glance;
+	drink:					* = s_e_potion_drink;
+
+	order_move:				* = s_e_gui_order_move;
+	order_cant_move:		* = s_e_gui_order_cant_move_SED;
+	order_out_of_mana:		* = s_e_gui_out_of_mana;
+
+	// Global interface sounds
+	select_char:			* = s_e_IH_select_char;
+
+	pick_up:				* = s_e_gui_pick_up;
+
+	put_down:				* = s_e_gui_put_down_swish;
+
+	frontend_menu_close:	* = s_e_frontend_menu_close;
+	frontend_menu_enter:	* = s_e_frontend_menu_enter;
+	frontend_menu_open:		* = s_e_frontend_menu_open;
+	frontend_menu_roll:		* = s_e_frontend_menu_roll;
+	frontend_small_button:	* = s_e_frontend_small_button;
+	frontend_tiny_button:	* = s_e_frontend_tiny_button;
+	frontend_big_button:	* = s_e_frontend_big_button;
+
+	gui_inventory_open:		* = s_e_gui_inventory_sheet;
+	gui_inventory_close:	* = s_e_gui_inventory_sheet;
+	gui_spellbook_open:		* = s_e_gui_spell_book;
+	gui_spellbook_close:	* = s_e_gui_spell_book;
+
+	// Environmental Sounds
+
+	env_bats:				* = s_e_env_bats;
+	env_brook:				* = s_e_env_brook;
+	env_brush_rustle:		* = s_e_env_brush_rustle;
+	env_burning_large:		* = s_e_burning_large; // for big on-fire stuff like the barn
+	env_burning_small:		* = s_e_burning_small; // for torches and small campfires
+	env_hammer_anvil:		* = s_e_env_hammer_anvil;
+	env_lakeside:			* = s_e_env_lakeside;  // lapping waves sound
+	env_shrine_health:		* = s_e_env_shrine_health;
+	env_shrine_mana:		* = s_e_env_shrine_mana;
+	env_waterfall:			* = s_e_env_waterfall; // for larger waterfalls
+	env_waterwheel:			* = s_e_env_waterwheel;
+	env_wolf_howl:			* = s_e_env_wolf_howl;
+
+	// Ambient Sounds
+
+	amb_thunder:	* = s_e_ambient_thunder;
+	amb_wind_01:	* = s_e_ambient_wind_01;
+	amb_wind_01b:	* = s_e_ambient_wind_01b;
+	amb_wind_02:	* = s_e_ambient_wind_02;
+	amb_woods_01:	* = s_e_ambient_woods_01;
+
+	// Secret Sounds
+
+	secret_found_1:	* = s_e_env_secret_found1;
+	secret_found_2:	* = s_e_env_secret_found2;
+	secret_found_3:	* = s_e_env_secret_found3;
+	secret_nearby:	* = s_e_env_secret_nearby;
+}
+

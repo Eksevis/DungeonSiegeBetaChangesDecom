@@ -1,0 +1,107 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_attack_object_suicide_bomb.skrit
+
+	Author(s)	: 	Rick Saenz, Bartosz Kijanka
+
+	Purpose		: 	Walk over to target and explode.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+Job		m_Job$;
+GoMind	m_Mind$;
+Goid	m_Target$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "k_job_c_path-utils" 
+
+////////////////////////////////////////////////////////////////////////////////
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Target$	= job$.GoalObject;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	ResetPathFindingParameters$();
+
+	SetState( RequestAction$ );
+}
+
+
+state RequestAction$
+{
+	transition
+	{
+		-> Exploding$:		OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+  		-> Exiting$:		OnWorldMessage( WE_MCP_INVALIDATED );
+		-> Exiting$: 		OnWorldMessage( WE_ENGAGED_INVALID );	// target lost or unloaded
+		-> Exiting$:		OnWorldMessage( WE_ENGAGED_FLED );
+	}
+
+	event OnEnterState$
+	{
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id,
+													m_Go$.Goid,
+													PL_ATTACK_OBJECT_MELEE,
+													m_Target$,
+													m_LookAhead$, m_MaxApproachTime$,
+													1.0 );
+		if( RequestFailed(ret$) )
+		{
+			SetState( Exiting$ );
+		}
+		else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+		{
+			SetState( MovingCloser$ );
+		}
+		else if (ret$ == REQUEST_OK)
+		{
+		}
+		else // (ret$ == REQUEST_OK_IN_RANGE)
+		{
+		}
+
+	}
+}
+
+state Exploding$
+{
+	event OnEnterState$
+	{
+		Physics.ExplodeGoWithDamage( m_Go$.GetGoid, m_Go$.GetGoid, m_Go$.GetGoid );
+		SetState( Exiting$ );
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}

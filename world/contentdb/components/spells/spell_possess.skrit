@@ -1,0 +1,144 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_possess.skrit
+// Author(s):  Rick Saenz
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string effect_script$		= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string effect_params$		= ""   	doc = "Parameters to send to SiegeFx script";
+property string description$		= ""	doc = "Description of enchantment being applied";
+property string state_name$			= ""	doc = "Name of effect to use as a generic state and as a screen name.";
+
+owner = GoSkritComponent;
+Goid target$;
+Goid caster$;
+float spell_duration$;
+
+eActorAlignment OriginalAlignment$;
+
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+
+			spell_duration$ = owner.Go.Magic.EvaluateEffectDuration(target$, caster$);
+			
+			// Filter out bogus targets
+			if( !target$.go.hasactor || !caster$.go.hasactor ) {
+				report.genericf( "Possess being cast on invalid target\n" );
+				SetState( Abort$ );
+
+			} else {
+
+				// Abort if the target actor has already been possessed or the caster is already possessing someone
+				if( target$.Go.Actor.HasGenericState( state_name$ ) || GoDb.HasEnchantment( caster$, "Possess mana drain" ) ) {
+					SetState( Abort$ );
+
+				} else {
+
+					// Get caster alignment
+					eActorAlignment caster_alignment$ = caster$.go.actor.getalignment;
+
+					// Save the old alignment so we can restore it later after spell wears off
+					OriginalAlignment$ = target$.go.actor.getalignment;
+
+					if( caster_alignment$ != OriginalAlignment$ ) {
+						// Set the alignment to the casters alignment
+						target$.go.actor.ssetalignment( caster$.go.actor.getalignment );
+					}
+
+					// Start the visual
+					int script_id$ = SiegeFx.SRunScript( effect_script$, target$, caster$, effect_params$, owner.Goid, e$ );
+
+					// Make the possessed actor stop doing whatever he happens to be doing
+					// target$.Go.Mind.Clear( JQ_ACTION );
+
+					target$.Go.Mind.SDoJob( MakeJobReq( JAT_STOP, JQ_ACTION, QP_CLEAR, JO_REFLEX ));
+					target$.Go.Mind.SDoJob( MakeJobReq( JAT_GUARD, JQ_ACTION, QP_CLEAR, JO_REFLEX, caster$ ) );
+					target$.Go.Mind.ResetSensors();
+						
+
+					// Apply the enchantments
+					owner.go.magic.DoAlterationsByName( "caster_mana_drain", caster$, target$ );
+					//owner.go.magic.DoAlterationsByName( "target_possession", target$, caster$ );
+
+					// Register the effect script with the mana drain so it stops when the mana is depleted
+					GoDb.SetAbortScriptID( caster$, "caster_mana_drain", script_id$ );
+
+					// Set what WorldMessage to send out when enchantment has finished
+					GoDb.SetEnchantmentDoneMessage( caster$, "caster_mana_drain", owner.Goid, WE_GO_TIMER_DONE );
+					
+					// Add the effected state so this can only happen once
+					target$.Go.Actor.AddGenericState( state_name$, state_name$, description$, spell_duration$, caster$ );
+
+					// Make the creature join the party
+					caster$.go.parent.AddChild( target$.go );
+				}
+			}
+		}
+	}
+	transition -> RestoreState$ : OnGoHandleMessage( WE_GO_TIMER_DONE );
+}
+
+
+
+state RestoreState$
+{
+	event OnEnterState$
+	{
+		// If the go is still alive then restore his state
+		if( target$.IsValid && caster$.IsValid) {
+
+			// Attempt to restore the game object based on his alignment
+			if( target$.go.actor.alignment != OriginalAlignment$ ) {
+
+				// Remove the actor from the party
+				caster$.go.parent.RemoveChild( target$.go );
+
+				// Restore the actors alignment
+				target$.go.actor.ssetalignment( OriginalAlignment$ );
+
+				// Make the possessed actor stop doing whatever he happens to be doing
+				target$.Go.Mind.Clear( JQ_ACTION );
+				
+				// remove the state so this can be affected again
+				target$.Go.Actor.RemoveGenericState( state_name$ );	
+			}
+		}
+		SetState( Finished$ );
+	}
+}
+
+
+state Abort$
+{
+	event OnEnterState$
+	{
+		if (caster$.IsValid)
+		{
+			// Refund the players mana
+			Rules.ChangeMana( caster$, owner.go.getmagic.manacost );
+
+			SetState( Finished$ );
+		}
+	}
+}
+
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Delete this skrit
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+}

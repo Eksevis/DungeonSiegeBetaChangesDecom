@@ -1,0 +1,118 @@
+[t:template,n:swamp_stinger]
+{
+	category_name = "evil_d";
+	doc = "swamp_stinger";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength = 	8, 0;
+			intelligence = 	4, 0;
+			dexterity = 	13, 0;
+			melee =  		2,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 82;
+		life = 14;
+		max_life = 14;
+		mana = 8;
+		max_mana = 8;
+		model = m_c_edm_st_pos_1;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 1;
+		damage_min = 1;
+	}
+	[body]
+	{
+		avg_move_velocity = 3.930000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_st_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=fl; }
+			}
+		}
+	}
+	[common]
+	{
+		screen_name="Swamp Stinger";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("swamp_stinger_butt_propulsion");
+				condition* = receive_world_message("we_constructed");
+			}
+			[*]
+			{
+				action* = call_sfx_script("swamp_stinger_butt_puffs");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[defend] { defense=15; }
+	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				chance = 0.2;
+				il_main = #*/9-12;
+			}
+		}
+	}
+	[mind]
+	{
+		melee_engage_range = 10;
+		personal_space_range = 0.5;
+		ranged_engage_range = 10.0;
+		sight_range = 10.0;
+	}
+}

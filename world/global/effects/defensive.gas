@@ -1,0 +1,2514 @@
+//
+//	Defensive spell scripts
+//
+//	Criteria:
+//
+//	1 - Is called by the use of scroll
+//	2 - Does not do damage
+//
+
+//////////////////////
+// Level 1
+
+[effect_script*]
+{
+	name	=healing;
+
+	script	="
+			call healing_base <b_sfx_sblueflare_02> <.6,.6,.6>
+			call healing_base <b_sfx_moon_01> <.3,.1,.3>
+			
+			sfx create fire
+				-texture(b_sfx_sparkle01)color0(.7,.7,1)radius(.375)offset(0,1,0)count(30)flamesize(.2)velocity(0,-16,0)accel(0,10,0)alphafade(.75)dur(.85)
+					#TARGET
+			sfx start #POP
+
+			sfx create fire
+				-texture(b_sfx_sparkle01)color0(1,.7,1)radius(.375)offset(0,-1,0)count(30)flamesize(.2)velocity(0,16,0)accel(0,-10,0)alphafade(.75)dur(.85)
+					#TARGET
+			sfx start #POP
+
+			waitfor script #POP #DEFAULT_TIMEOUT
+			waitfor script #POP #DEFAULT_TIMEOUT
+			
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+[effect_script*]
+{
+	name	=healing_base;
+
+	script	="
+			set $texture [0]
+			set $color [1]
+
+			sfx create cylinder
+				-color0($color)texture($texture)spin(-3)hp0(0,2,1)hp1(0,2,1)rp0(.5,1.5,1.25)rp1(.25,.25,0)abs()dur(1.85)offset(0,-.65,0)
+					#TARGET
+			sfx start #POP
+
+			sfx create cylinder
+				-color0($color)texture($texture)spin(3)hp0(2,0,-1)hp1(2,0,-1)rp0(.5,1.5,1.25)rp1(.25,.25,0)abs()dur(1.85)offset(0,-.65,0)
+					#TARGET
+			sfx start #POP
+
+			pause .35
+			sound play s_e_potion_drink.wav
+
+			sfx create cylinder
+				-color0($color)texture($texture)spin(-3)rp0(1.85,.5,-3)hp0(0,2,6)hp1(0,0,0)tin(.50)tout(.3)dur(.8)abs()offset(0,-.65,0)
+					#TARGET
+			sfx create cylinder
+				-color0($color)texture($texture)spin(3)rp0(1.85,.5,-3)hp0(0,2,6)hp1(0,0,0)tin(.50)tout(.3)dur(.8)abs()offset(0,-.65,0)
+					#TARGET
+			sfx create cylinder
+				-color0($color)texture($texture)spin(-3)rp0(1.85,.5,-3)hp0(0,2,6)hp1(0,0,0)tin(.50)tout(.3)dur(.8)abs()offset(0,-.65,0)
+					#TARGET
+			sfx create cylinder
+				-color0($color)texture($texture)spin(3)rp0(1.85,.5,-3)hp0(0,2,6)hp1(0,0,0)tin(.50)tout(.3)dur(.8)abs()offset(0,-.65,0)
+					#TARGET
+			sfx create cylinder
+				-color0($color)texture($texture)spin(-3)rp0(1.85,.5,-3)hp0(0,2,6)hp1(0,0,0)tin(.50)tout(.3)dur(.8)abs()offset(0,-.65,0)
+					#TARGET
+			sfx create cylinder
+				-color0($color)texture($texture)spin(3)rp0(1.85,.5,-3)hp0(0,2,6)hp1(0,0,0)tin(.50)tout(.3)dur(.8)abs()offset(0,-.65,0)
+					#TARGET
+
+			sfx start #POP pause .125
+			sfx start #POP pause .125
+			sfx start #POP pause .125
+			sfx start #POP pause .125
+			sfx start #POP pause .125
+			sfx start #POP
+			";
+}
+
+[effect_script*]
+{
+	name	=infuse_life;
+
+	script	="
+				set $color1 1,.3,.3
+				
+				frandrange 0.35 0.45	set $trail_size	#POP
+				
+				call infuse_life_balls
+				
+				waitfor script #PEEK #DEFAULT_TIMEOUT
+		
+				sfx create charge -color0($color1)ts(3)dur(.4)tout(.4)radius(1)scale(1)centersize(.5) #TARGET
+				sfx start #POP
+			
+				worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+[effect_script*]
+{
+	name	=infuse_life_balls;
+
+	script	="
+				set $color1 1,.3,.3
+				
+				frandrange 0.35 0.45	set $trail_size	#POP
+				
+				sfx create curve -curvature(.8)model(1)scale($trail_size)ts(1.125)color0($color1) #SOURCE
+				sfx target #PEEK target
+				sfx start #POP
+				
+				sfx create curve -curvature(.8)model(1)scale($trail_size)ts(1.125)color0($color1) #SOURCE
+				sfx target #PEEK target
+				sfx start #POP
+				
+				sfx create curve -curvature(.8)model(1)scale($trail_size)ts(1.125)color0($color1) #SOURCE
+				sfx target #PEEK target
+				sfx start #POP
+			";
+}
+
+
+
+
+[effect_script*] // - ET
+{
+	name	=mana_chant;
+
+	script	="	/////////////////////
+			// shoot out a splat fo blood
+			sfx create explosion -color0(1,.2,.2)dur(4)radius(.4)splat()ivel(0,-.2,0)fade_range(0,1,0) #TARGET
+			sfx start #POP
+
+			// gather in the mana
+			sfx create charge -color0(.2,.2,1)radius(2)tout(.5)dur(3)count(30)centersize(.5) #TARGET
+			sfx start #POP
+			
+			sfx create charge -scale(.25)color0(.2,.2,1)radius(2)count(10) #TARGET
+			sfx attach_point #PEEK @body_anterior target
+			sfx start #POP
+			
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+[effect_script*] // -ET
+{
+	name	=magic_lantern;
+
+	script	="
+			frandrange 0 .9
+			frandrange 0 .9
+			frandrange 0 .9
+			
+			set $color #POP,#POP,#POP
+			
+			///////////////
+			// create a happy orbiter with a fun path around the target of the spell
+			sfx create orbiter -color0($color)radius(3)itheta(2)iphi(3)scale(.2)tin(.3)tout(1)free()smooth()history(1) #TARGET
+			set $orb #POP
+
+			/////////////////
+			// Create a lightsource to attach to the orbiter
+			sfx create lightsource -color0($color)tin(.1)tout(.1)radius(20)iradius(15)color1($color) #TARGET
+			set $light #POP
+
+			sfx create fire -color0($color)color1(0,0,0)scale(1) #TARGET
+			set $fire #POP
+
+			// remove the target for the lightsource so we can attach it to the orb.
+			sfx rat $light
+			sfx rat $fire
+
+			// attach the lightsource to the orby
+			sfx target $light $orb
+			sfx attach $orb $light
+			sfx target $fire $orb
+			sfx attach $orb $fire
+
+			// start the effects
+			sfx start $orb
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+";
+}
+
+
+
+[effect_script*] // -ET
+{
+	name	=iron_fist;
+
+	script	="
+			////////////////////////////////
+			// Create glowing orbs for each hand
+			sfx create flurry -color0(1,.5,.5)dur(10)radius(1)scale(.3) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx start #POP
+
+			sfx create flurry -color0(1,.5,.5)dur(10)radius(1)scale(.3) #TARGET
+			sfx attach_point #PEEK @shield_bone target
+			sfx start #POP
+
+			sfx create charge -color0(.5,.5,1)dur(10)radius(1)scale(.3) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx start #POP
+
+			sfx create charge -color0(.5,.5,1)dur(10)radius(1)scale(.3) #TARGET
+			sfx attach_point #PEEK @shield_bone target
+			sfx start #POP
+			
+			pause 9.5
+			
+			sfx create charge -count(8)color0(.5,.5,1)radius(1)scale(.2) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx start #POP
+
+			sfx create charge -count(8)color0(.5,.5,1)radius(1)scale(.2) #TARGET
+			sfx attach_point #PEEK @shield_bone target
+			sfx start #POP
+			
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+
+			";
+}
+
+//////////////////////
+// Level 2
+
+[effect_script*] // -ET
+{
+	name	=magic_armor;
+
+	script	="
+			///////////////////////////////////////////////////////////////////////////
+			//// create an orbiter which spins in a parametric path around the char
+			//sfx create orbiter -free()color0(.2,.2,1)dur(10)radius(5)itheta(4)iphi(5)scale(.2)tin(.3)tout(1) #TARGET
+			//set $orb #POP
+			//sfx start $orb
+            //
+			/////////////////////////////////////////////////////////////////////
+			//// create the linetracer whose trail builds a cage around the char
+			//sfx create linetracer -lock()tout(1)color0(0,0,.5)color1(.25,.25,.5)tin(.3)dur(11) #TARGET
+			//set $trace #POP
+            //
+			//// remove all targets from the trace
+			//sfx rat $trace
+            //
+			//// the linetracer effect requires two targets to draw a line between, we set both to be the orbiter.
+			//sfx target $trace $orb
+			//sfx target $trace $orb
+            //
+			//// offset both of the targets for the line tracer so there is a line to draw the trace between.
+			//// as this line moves through space it will leave the tracer behind it.
+			//sfx offset_bone $trace 0  .03 0 target
+			//sfx offset_bone $trace 0 -.03 0 source
+            //
+			//// the lock parameter on the trace requires a third target to use for orientation and position information.
+			//// Using this the trace will translate with the third target (in this case the caster)
+			//sfx target $trace target
+			//
+			//// start the trace
+			//sfx start $trace
+			
+			set $color .2,.2,.4
+			set $height .25
+			set $width	.1
+			set $detail 5
+			set $texture b_sfx_moon_01
+			//set $texture b_sfx_moon_01_tsd-01
+			set $spin 10
+			
+			set $delay .3
+			set $dur 30
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.09,.09,0)rp1(.12,.12,0)hp0(.3,.3,0)hp1(-.1,-.1,0)tin(.50)tout(.3)bone_orient()rotate(0,0,0)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_L_Foot target
+			sfx start #POP
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.09,.09,0)rp1(.12,.12,0)hp0(.3,.3,0)hp1(-.1,-.1,0)tin(.50)tout(.3)bone_orient()rotate(0,0,0)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_R_Foot target
+			sfx start #POP
+			
+			pause $delay
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.13,.13,0)rp1(.13,.13,0)hp0(-.4,-.4,0)hp1(.1,.1,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_L_Calf target
+			sfx start #POP
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.13,.13,0)rp1(.13,.13,0)hp0(-.4,-.4,0)hp1(.1,.1,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_R_Calf target
+			sfx start #POP
+			
+			pause $delay
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.15,.15,0)hp0(-.5,-.5,0)hp1(0,0,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_L_Thigh target
+			sfx start #POP
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.15,.15,0)hp0(-.5,-.5,0)hp1(0,0,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_R_Thigh target
+			sfx start #POP
+			
+			pause $delay
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.25,.25,0)rp1(.18,.18,0)hp0(.35,.35,0)hp1(-.1,-.1,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_Spine target
+			sfx start #POP
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.18,.18,0)rp1(.22,.22,0)hp0(.2,.2,0)hp1(-.2,-.2,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_Spine2 target
+			sfx start #POP
+				
+			pause $delay
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.1,.1,0)hp0(-.3,-.3,0)hp1(0,0,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_L_Clavicle target
+			sfx start #POP
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.1,.1,0)hp0(-.3,-.3,0)hp1(0,0,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_R_Clavicle target
+			sfx start #POP
+			
+			pause $delay
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.1,.1,0)hp0(-.2,-.2,0)hp1(.05,.05,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_L_UpperArm target
+			sfx start #POP
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.1,.1,0)hp0(-.2,-.2,0)hp1(.05,.05,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_R_UpperArm target
+			sfx start #POP
+			
+			pause $delay
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.1,.1,0)hp0(-.4,-.4,0)hp1(0,0,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_L_Forearm target
+			sfx start #POP
+			
+			sfx create cylinder
+				-spin($spin)texture($texture)color0($color)rp0(.1,.1,0)rp1(.1,.1,0)hp0(-.4,-.4,0)hp1(0,0,0)tin(.50)tout(.3)bone_orient()rotate(0,0,90)segments($detail)
+					#TARGET
+			sfx attach_point #PEEK Bip01_R_Forearm target
+			sfx start #POP
+			
+			
+			
+			
+			
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+[effect_script*] // -ET
+{
+	name	=regeneration;
+
+	script	="
+			set $delay .5
+			set $ts .2
+			
+			sfx create sparkles  -dur(6)offset(0,.5,0)radius(.8)texture(b_sfx_sparkle01)color0(.3,1,.2)count(10)yvel(-1)psize(.5) #TARGET
+			sfx start #POP
+			
+			sfx create sparkles  -dur(9)offset(0,-.5,0)radius(.8)texture(b_sfx_sparkle01)color0(.3,1,.2)count(10)yvel(1)psize(.5) #TARGET
+			sfx start #POP
+			
+			sfx create sparkles  -offset(0,.5,0)radius(.8)texture(b_sfx_sparkle01)color0(.3,1,.2)count(10)yvel(-1)psize(.5) #TARGET
+			sfx start #POP
+			
+			sfx create sparkles  -offset(0,-.5,0)radius(.8)texture(b_sfx_sparkle01)color0(.3,1,.2)count(10)yvel(1)psize(.5) #TARGET
+			sfx start #POP
+			
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+
+
+[effect_script*] // -ET
+{
+	name	=slow_enemy;
+
+	script	="
+			// $$$ add spinning star textures when they are put in -ET
+
+			set $scale .4
+
+			////////////////////////////////////////////////////////////
+			// create an explosion at the hand of the caster, just we get some visuals caster side for casting the spell
+			sfx create explosion -dur(2)color0(.7,0,.7)color1(.3,0,.3)fade_range(0,1,0)count(15)radius(0)omni_dir() #SOURCE
+			sfx attach_point #PEEK @weapon_bone target
+			sfx start #POP
+			
+			////////////////////////////////////
+			// create six cylinders which have stars on them, three above and three below.
+			sfx create cylinder -scale($scale)texture(b_sfx_bluestars_01)alpha(1)hp0(3,0,-3.5)hp1(0,0,0)rp0(1,1,3)rp1(1,3,3.5)tin(.2)tout(1.5)dur(1)color0(1,0,.5)spin(2)segments(20) #TARGET
+			sfx start #POP
+			sfx create cylinder -scale($scale)texture(b_sfx_bluestars_01)alpha(1)hp0(-3,0,3.5)hp1(0,0,0)rp0(1,1,3)rp1(1,3,3.5)tin(.2)tout(1.5)dur(1)color0(1,0,.5)spin(-2)segments(20) #TARGET
+			sfx start #POP
+			
+			
+			sfx create cylinder -scale($scale)texture(b_sfx_bluestars_01)alpha(1)hp0(2,0,-3.5)hp1(0,0,0)rp0(2,2,3)rp1(2,4,3.5)tin(.2)tout(1.5)dur(1)color0(.5,0,.5)spin(2)segments(20) #TARGET
+			sfx start #POP
+			sfx create cylinder -scale($scale)texture(b_sfx_bluestars_01)alpha(1)hp0(-2,0,3.5)hp1(0,0,0)rp0(2,2,3)rp1(2,4,3.5)tin(.2)tout(1.5)dur(1)color0(.5,0,.5)spin(-2)segments(20) #TARGET
+			sfx start #POP
+
+			sfx create cylinder -scale($scale)texture(b_sfx_bluestars_01)alpha(1)hp0(1,0,-3.5)hp1(0,0,0)rp0(3,3,3)rp1(3,5,3.5)tin(.2)tout(1.5)dur(1)color0(.5,0,1)spin(2)segments(20) #TARGET
+			sfx start #POP
+			sfx create cylinder -scale($scale)texture(b_sfx_bluestars_01)alpha(1)hp0(-1,0,3.5)hp1(0,0,0)rp0(3,3,3)rp1(3,5,3.5)tin(.2)tout(1.5)dur(1)color0(.5,0,1)spin(-2)segments(20) #TARGET
+			sfx start #POP
+
+
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+[effect_script*] // -ET
+{
+	name	=hold_creature_base;
+
+	script	="
+			// $$$ change these when new texture is available.
+
+			set $dur 10
+
+			//////////////////////////////////////////////////////
+			// Create the cylinder which looks like a metal bar shooting out of the ground.
+			sfx create cylinder -sup()dark()texture(b_sfx_metal_iron_01)alpha(1)hp0(0,4,10)hp1(0,0,0)rp0(.1,.1,3)rp1(.1,.1,3)tin(0)tout(1)dur($dur)color0(.4,.4,.4)spin(0)segments(8)[0] #TARGET
+			sfx freeze_targets #PEEK
+			sfx snap_to_ground #PEEK
+			sfx start #POP
+
+			////////////////////////////////////////////////////////
+			// create the explosion which is supposed to look like rocks where the cylinder comes out of the ground.
+			sfx create explosion -count(5)dark()grey_text()texture(b_sfx_rock_single_01)scale_range(.2,.4,0)fade_range(0,1,0)color0(.15,.15,.13)[0] #TARGET
+			sfx snap_to_ground #PEEK
+			sfx start #POP
+			
+			sound play s_e_FBsword_shield
+			
+		";
+}
+
+
+[effect_script*] // -ET
+{
+	name	=hold_creature;
+
+	script	="	/////////////////////////////////////////////////////////////////////////
+			// call the script to make bars apear in a circle one after another.
+			
+			sfx create orbiter -delay(5)tin(1)scale(.6)offset(0,1.5,0)texture(b_sfx_sparkle01)color0(1,.1,.4)radius(0) #TARGET
+			set $orb #POP
+			sfx start $orb
+			
+			
+			set $time_out 15
+			pause .5
+			
+			call hold_creature_base <offset(2,0,0)>
+			pause .1
+			call hold_creature_base <offset(1.848,0,.765)>
+			pause .1
+			call hold_creature_base <offset(1.414,0,1.414)>
+			pause .1
+			call hold_creature_base <offset(.765,0,1.848)>
+			pause .1
+			call hold_creature_base <offset(0,0,2)>
+			pause .1
+			call hold_creature_base <offset(-.765,0,1.848)>
+			pause .1
+			call hold_creature_base <offset(-1.414,0,1.414)>
+			pause .1
+			call hold_creature_base <offset(-1.848,0,.765)>
+			pause .1
+			call hold_creature_base <offset(-2,0,0)>
+			pause .1
+			call hold_creature_base <offset(-1.848,0,-.765)>
+			pause .1
+			call hold_creature_base <offset(-1.414,0,-1.414)>
+			pause .1
+			call hold_creature_base <offset(-.765,0,-1.848)>
+			pause .1
+			call hold_creature_base <offset(0,0,-2)>
+			pause .1
+			call hold_creature_base <offset(.765,0,-1.848)>
+			pause .1
+			call hold_creature_base <offset(1.414,0,-1.414)>
+			pause .1
+			call hold_creature_base <offset(1.848,0,-.765)>
+			pause .1
+			
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			waitfor script #POP $time_out
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+//////////////////////
+// Level 3
+
+[effect_script*]
+{
+	name	=resurrect;
+
+	script	="
+			sfx create orbiter
+			-radius(0)offset(0,19.25,0)color0(.7,.7,1)dur(5)vdisplace(-.875)scale(3)
+				#TARGET
+			sfx start #POP
+
+			sfx create cylinder
+			-hp0(18,-3,-35)hp1(20,8,-1)rp1(0,0,0)rp0(0,3,.2)dur(4.5)texture(b_sfx_lightray_01)spin(2)color0(1,1,1)
+				#TARGET
+			sfx start #POP
+			sfx create cylinder
+			-hp0(18,-3,-35)hp1(20,8,-1)rp1(0,0,0)rp0(0,3,.2)dur(4.5)texture(b_sfx_lightray_02)spin(-1)color0(1,1,.7)
+				#TARGET
+			sfx start #POP
+
+			sfx create lightsource
+			-color0(1,1,1)dur(5)tin(3.5)tout(.5)radius(8)
+				#TARGET
+			sfx start #POP
+			
+			
+			sfx create spe -color0(.3,.3,.2)texture(b_sfx_star_01)radius(.6)scale(.2)count(40)dur(5)index0(0,-1.57,1.57)index1(0,-1.57,1.57)speed0(5,1,5)speed1(5,1,5)space0(.0628,.01256,.0628)space1(.0628,.01256,.0628) #TARGET
+			sfx start #POP
+
+			pause .5
+
+			//sfx create orbiter
+			//-invisible()offset(0,-1,0)scale(.4)radius(0)dur(4)
+			//	#TARGET
+			//set $rise_point #POP
+
+			sfx create fire
+			-color0(1,1,.8)color1(0,0,0)accel(0,-8,0)velocity(0,15,0)alphafade(.15)dur(3.5)scale(2)wind_immune()
+				#TARGET
+			sfx snap_to_ground #PEEK
+			sfx start #POP
+			
+			sfx create explosion
+				-srate(0.03)texture(b_sfx_sparkle01)dur(3)color0(.75,.6,.3)color1(.2,.2,0)rvel(2,.66,2)count(16)
+						#TARGET
+			sfx start #POP
+			
+			//sfx rat #PEEK
+			//sfx target #PEEK $rise_point
+			//sfx attach $rise_point #PEEK
+
+			//sfx start $rise_point
+
+			pause 1.75
+
+			worldmsg WE_SPELL_SYNC_MID #INVALID_GOID #OWNER_GOID #TARGET_GOID
+
+			";
+}
+
+[effect_script*] // -ET
+{
+	name	=speed;
+
+	script	="
+			/////////////////////////////////////////////////////
+			// create the orbiter to show we have the speed spell active.
+			//sfx create orbiter -texture(b_sfx_winged_shoe)color0(1,1,1)iphi(2)itheta(2)radius(3)scale(.2)dur(30) #TARGET
+			//set $orb #POP
+			//sfx start $orb
+			
+			
+			/////////////////////////////////////////////////////
+			// create the orbiters in a star formation.
+			sfx create orbiter -color0(.3,.3,1)phi(0)iphi(3)itheta(0)offset(0,1.5,0)scale(.35)dur(3.14)vdisplace(-.7)radiusi(.3)tout(1)free() #TARGET
+			set $ball1 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(1.257)iphi(3)itheta(0)offset(0,1.5,0)scale(.35)dur(3.14)vdisplace(-.7)radiusi(.3)tout(1)free() #TARGET
+			set $ball2 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(2.513)iphi(3)itheta(0)offset(0,1.5,0)scale(.35)dur(3.14)vdisplace(-.7)radiusi(.3)tout(1)free() #TARGET
+			set $ball3 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(3.77)iphi(3)itheta(0)offset(0,1.5,0)scale(.35)dur(3.14)vdisplace(-.7)radiusi(.3)tout(1)free() #TARGET
+			set $ball4 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(5.026)iphi(3)itheta(0)offset(0,1.5,0)scale(.35)dur(3.14)vdisplace(-.7)radiusi(.3)tout(1)free() #TARGET
+			set $ball5 #POP
+			
+			sfx attach $ball1 $ball2
+			sfx attach $ball1 $ball3
+			sfx attach $ball1 $ball4
+			sfx attach $ball1 $ball5
+
+			sfx start $ball1
+			
+			/////////////////////////////////////////////////////////////////////////////
+			// create linetraces and remove their targets to string between the orbiters. 
+			sfx create linetracer -dur(2.9)delay(.2)color0(.2,0,1)color1(.2,0,1)fade_rate(3)tout(.3)lock() #TARGET
+			set $line1 #POP
+			sfx rat $line1
+
+			sfx create linetracer -dur(2.7)delay(.4)color0(.4,0,.8)color1(.4,0,.8)fade_rate(3)tout(.3)lock() #TARGET
+			set $line2 #POP
+			sfx rat $line2
+
+			sfx create linetracer -dur(2.5)delay(.6)color0(.6,0,.6)color1(.6,0,.6)fade_rate(3)tout(.3)lock() #TARGET
+			set $line3 #POP
+			sfx rat $line3
+
+			sfx create linetracer -dur(2.3)delay(.8)color0(.8,0,.4)color1(.8,0,.4)fade_rate(3)tout(.3)lock() #TARGET
+			set $line4 #POP
+			sfx rat $line4
+
+			sfx create linetracer -dur(2.1)delay(1)color0(1,0,.2)color1(1,0,.2)fade_rate(3)tout(.3)lock() #TARGET
+			set $line5 #POP
+			sfx rat $line5
+			
+			
+			/////////////////////////////////////////////////////////////
+			// make star patern with the line tracers.
+			sfx target $line1 $ball1
+			sfx target $line1 $ball3
+			sfx target $line1 target
+
+			sfx target $line2 $ball3
+			sfx target $line2 $ball5
+			sfx target $line2 target
+			
+			sfx target $line3 $ball5
+			sfx target $line3 $ball2
+			sfx target $line3 target
+			
+			sfx target $line4 $ball2
+			sfx target $line4 $ball4
+			sfx target $line4 target
+			
+			sfx target $line5 $ball4
+			sfx target $line5 $ball1
+			sfx target $line5 target
+			
+			sfx start $line1
+			sfx start $line2
+			sfx start $line3
+			sfx start $line4
+			sfx start $line5
+
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+
+			";
+}
+
+//[effect_script*] // -ET
+//{
+//	name	=flame_blades_base; // $$$ needs new art. 
+//
+//	script	="
+//	
+//			set $speed .785
+//			set $speed2 -1.57
+//			set $scale 2.5
+//			set $duration 15
+//			set $spin_min 8
+//			set $spin_max 10
+//			
+//			///////////////////////////////////////////////////////////
+//			// create an orbiter to base this section of the effect on.
+//			sfx create orbiter -smooth()history(3)free()scale(.5)dur($duration)invisible()iphi($speed)radius(3)[0] #TARGET
+//			set $orbbase #POP
+//			
+//			
+//			//////////////////////////////////////////////////////////
+//			// this is the large center disk.
+//			// sfx create cylinder -color0(1,.5,.2)scale(1.5)dur(10)texture(b_sfx_wisps_01)alpha(1)hp1(0,.1,3)hp0(0,0,0)rp0(0,.7,3)rp1(0,0,3)tin(0)tout(1)spin(2)segments(16) #TARGET
+//			// set $bladebase #POP
+//			// sfx rat $bladebase
+//			// sfx target $bladebase $orbbase
+//			
+//			
+//			
+//			//////////////////////////////////////////////////////////////////////
+//			// create orbiters based on the main on to base the smaller blades on.
+//			
+//			sfx create orbiter -smooth()history(3)free()scale(.5)dur($duration)invisible()iphi(-$speed2)radius(1.5)phi(3.14) #TARGET
+//			set $orb3 #POP
+//			sfx rat $orb3
+//			sfx target $orb3 $orbbase
+//			
+//			sfx create orbiter -smooth()history(3)free()scale(.5)dur($duration)invisible()iphi($speed2)radius(1.5)phi(0) #TARGET
+//			set $orb4 #POP
+//			sfx rat $orb4
+//			sfx target $orb4 $orbbase
+//			
+//			sfx create fire -ignite()tout(1)color0(1,.5,.2)dur($duration)count(15)velocity(0,8,0)accel(0,8,0)alphafade(1)flamesize(3)max_radius(4)min_displace(.1)max_displace(1) #TARGET
+//			set $fire #POP
+//			sfx rat $fire
+//			sfx target $fire $orb4
+//			
+//			sfx create fire -ignite()tout(1)color0(1,.5,.2)dur($duration)count(15)velocity(0,8,0)accel(0,8,0)alphafade(1)flamesize(3)max_radius(4)min_displace(.1)max_displace(1) #TARGET
+//			set $fire2 #POP
+//			sfx rat $fire2
+//			sfx target $fire2 $orb3
+//			
+//			////////////////////////////////////////////////////////
+//			// blades to stick on the orbiters.
+//			frandrange $spin_min $spin_max
+//			sfx create cylinder -offset(0,-.3,0)color0(1,.5,.2)scale($scale)dur($duration)texture(b_sfx_wisps_01)alpha(.2)hp1(0,.1,3)hp0(0,0,0)rp0(0,.3,3)rp1(.1,.1,3)tin(0)tout(1)spin(#POP)segments(16) #TARGET
+//			set $blade3 #POP
+//			sfx rat $blade3
+//			sfx target $blade3 $orb3
+//			
+//			frandrange $spin_min $spin_max
+//			sfx create cylinder -offset(0,-.3,0)color0(1,.5,.2)scale($scale)dur($duration)texture(b_sfx_wisps_01)alpha(.2)hp1(0,.1,3)hp0(0,0,0)rp0(0,.3,3)rp1(.1,.1,3)tin(0)tout(1)spin(#POP)segments(16) #TARGET
+//			set $blade4 #POP
+//			sfx rat $blade4
+//			sfx target $blade4 $orb4
+//			
+//			////////////////////////////////////////
+//			// start everything up.
+//			sfx start $orbbase
+//			//sfx start $bladebase
+//			sfx start $orb3
+//			sfx start $blade3
+//			sfx start $orb4
+//			sfx start $blade4
+//			sfx start $fire
+//			sfx start $fire2
+//			
+//		";
+//}
+//
+//[effect_script*] // -ET
+//{
+//	name	=flame_blades;
+//
+//	script	="	///////////////////////////////////////////////////////////
+//			// call the child function with parameters to make four sets 
+//			// of blades around the char each 90 degrees apart.
+//			call flame_blades_base <phi(0)>
+//			
+//			call flame_blades_base <phi(1.57)>
+//		
+//			call flame_blades_base <phi(3.14)>
+//			
+//			call flame_blades_base <phi(4.71)>
+//			
+//			waitfor script #POP #DEFAULT_TIMEOUT
+//			waitfor script #POP #DEFAULT_TIMEOUT
+//			waitfor script #POP #DEFAULT_TIMEOUT
+//			waitfor script #POP #DEFAULT_TIMEOUT
+//			worldmsg WE_SPELL_SYNC_END #OWNER_GOID #OWNER_GOID #TARGET_GOID		
+//			";
+//}
+
+[effect_script*] // -ET
+{
+	name	=flame_shield_base;
+
+	script	="	
+			set $speed1 -1.57
+			set $speed2 1.57
+			set $scale 1
+			set $radius 1.7
+			
+			frandrange $speed1 $speed2
+			frandrange $speed1 $speed2
+			sfx create orbiter -smooth()history(1)itheta(#POP)scale(.5)invisible()iphi(#POP)radius($radius)phi(0)[1] #TARGET
+			set $orb #POP
+			
+			sfx create fire -scale($scale)tout(1)color0(1,.5,.2)count(40)velocity(0,0,0)accel(0,0,0)alphafade(.5)flamesize(.2)max_radius(.3)min_displace(.1)max_displace(1)[0][1] #TARGET
+			set $fire #POP
+			sfx rat $fire
+			sfx target $fire $orb
+			
+			sfx start $orb
+			sfx start $fire
+		";
+}
+
+[effect_script*] // -ET
+{
+	name	=flame_shield;
+
+	script	="	///////////////////////////////////////////////////////////
+				// call the child function with parameters to make five flames 
+				
+				call flame_shield_base <[0]> <[1]>
+				call flame_shield_base <[0]> <[1]>
+				call flame_shield_base <[0]> <[1]>
+				call flame_shield_base <[0]> <[1]>
+				call flame_shield_base <[0]> <[1]>
+				
+				waitfor script #POP #DEFAULT_TIMEOUT
+				waitfor script #POP #DEFAULT_TIMEOUT
+				waitfor script #POP #DEFAULT_TIMEOUT
+				waitfor script #POP #DEFAULT_TIMEOUT
+				waitfor script #POP #DEFAULT_TIMEOUT
+				worldmsg WE_SPELL_SYNC_END #OWNER_GOID #OWNER_GOID #TARGET_GOID		
+			";
+}
+
+[effect_script*] // -ET
+{
+	name	=mana_shield;
+
+	script ="
+			set $texture b_sfx_diamondring01
+
+			set $width .8
+			set $detail 8
+			set $duration 10
+
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(1,0,0)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,100,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur(6)color0(1,0,0)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,115,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.9,0,.1)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,130,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur(8)color0(.8,0,.2)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,145,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.7,0,.3)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,160,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur(10)color0(.6,0,.4)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,175,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.5,0,.5)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,190,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur(12)color0(.4,0,.6)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,205,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.3,0,.7)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,220,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur(14)color0(.2,0,.8)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,235,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.1,0,.9)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,250,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur(16)color0(0,0,1)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,265,0) #TARGET
+			sfx start #POP
+			sfx create cylinder -texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(0,0,1)spin(-2)segments($detail)bone_orient()irotate(0,0,180)rotate(0,280,0) #TARGET
+			sfx start #POP
+
+		";
+}
+
+//////////////////////
+// Level 4
+
+[effect_script*] // -ET 
+{
+	name	=transmute; 
+
+	script ="
+			godb unregister #TARGET_GOID
+			
+			set $texture b_sfx_sparkle01
+			set $width .4
+			set $detail 16
+			set $duration 3
+			
+			set $radius1 .4
+			set $speed 4
+			set $fade .35
+			set $size .5
+			
+			set $offset 0,.5,0
+			
+			sfx create fire -scale($size)count(50)radius($radius1)tin(.1)tout(5)dur($duration)color0(0,0,0)color1(1,1,1)alphafade($fade)flamesize($size)max_radius(0)velocity(0,$speed,0)accel(0,$speed,0)min_displace(0)max_displace(0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                             
+	
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(1,0,0)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,0,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                             
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(1,.5,0)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,30,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(1,1,0)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,60,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                             
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(.5,1,0)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,90,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(0,1,0)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,120,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(0,1,.5)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,150,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(0,1,1)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,180,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(0,.5,1)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,210,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                             
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(0,0,1)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,240,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(.5,0,1)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,270,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(1,0,1)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,300,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                              
+			sfx create cylinder -offset($offset)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)dur($duration)color0(1,0,.5)spin(-2)segments($detail)bone_orient()irotate(60,60,180)rotate(0,330,0) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                                                                     
+			
+			//pause $duration
+			
+			worldmsg WE_SPELL_SYNC_MID #OWNER_GOID #OWNER_GOID #TARGET_GOID	
+			
+			sfx create explosion
+			-omni_dir()count(50)fade_range(.3,.35,0)rand_scale()ivel(0,6,0)scale_range(.3,1,0)no_noise()vmin(1)vmax(10)color0(0,0,0)color1(1,1,1)
+				#TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP                                                                                                                                                                     
+			
+			
+			pause $duration
+			
+			worldmsg WE_SPELL_SYNC_END #OWNER_GOID #OWNER_GOID #TARGET_GOID	
+			
+			
+		";
+}
+
+[effect_script*] // -ET 
+{
+	name	=freak; 
+
+	script ="
+			sfx create fireb -color0(.3,.3,.3)dur(2)velocity(0,0,40)accel(0,0,0)cvel()start_rate(1000)end_rate(1000)ts(.6)alphafade(.2)lower_r0(6)lower_r1(6)upper_r0(6)upper_r1(50)count(50)flamesize(3) #SOURCE
+			sfx attach_point #PEEK @weapon_bone target
+			sfx start #POP
+			
+			sfx create fireb -texture(b_sfx_sparkle01)color0(1,.3,.1)dur(2)velocity(0,0,40)accel(0,0,0)start_rate(1000)end_rate(1000)ts(.6)alphafade(.2)lower_r0(3)lower_r1(3)upper_r0(3)upper_r1(35)count(50)flamesize(2) #SOURCE
+			sfx attach_point #PEEK @weapon_bone target
+			sfx start #POP
+			
+			
+			
+			pause 2                                                  
+			                                                                                                                                                                       
+			worldmsg WE_SPELL_SYNC_END #OWNER_GOID #OWNER_GOID #TARGET_GOID		
+			
+		";
+}
+
+[effect_script*] // -ET 
+{
+	name	=eagle_eye; 
+
+	script ="
+			set $texture b_sfx_ring_01
+			set $height1 -1
+			set $height2 1
+			set $detail 20
+			set $duration1 5
+			set $duration2 30
+			set $radius1 0
+			set $radius2 .5
+			set $speed 2
+			set $scale1 1
+			set $scale2 .4
+	
+			sfx create cylinder -scale($scale1)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration1)color0(.8,1,.8)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(0,0,90) #TARGET
+			sfx start #POP                                                                                                                
+			sfx create cylinder -scale($scale1)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration1)color0(.6,1,.6)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(60,0,90) #TARGET
+			sfx start #POP                                                                                                                 
+			sfx create cylinder -scale($scale1)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration1)color0(.4,1,.4)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(120,0,90) #TARGET
+			sfx start #POP                                                                                                        
+			sfx create cylinder -scale($scale1)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration1)color0(.3,1,.3)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(180,0,90) #TARGET
+			sfx start #POP                                                                                                         
+			sfx create cylinder -scale($scale1)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration1)color0(.5,1,.5)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(240,0,90) #TARGET
+			sfx start #POP                                                                                                         
+			sfx create cylinder -scale($scale1)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration1)color0(.7,1,.7)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(300,0,90) #TARGET
+			sfx start #POP  
+	
+			sfx create cylinder -scale($scale2)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration2)color0(.8,1,.8)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(0,0,90) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx offset_bone #PEEK 0 0 1 target
+			sfx start #POP                                                                                                                
+			sfx create cylinder -scale($scale2)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration2)color0(.6,1,.6)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(60,0,90) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx offset_bone #PEEK 0 0 1 target
+			sfx start #POP                                                                                                                 
+			sfx create cylinder -scale($scale2)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration2)color0(.4,1,.4)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(120,0,90) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx offset_bone #PEEK 0 0 1 target
+			sfx start #POP                                                                                                        
+			sfx create cylinder -scale($scale2)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration2)color0(.3,1,.3)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(180,0,90) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx offset_bone #PEEK 0 0 1 target
+			sfx start #POP                                                                                                         
+			sfx create cylinder -scale($scale2)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration2)color0(.5,1,.5)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(240,0,90) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx offset_bone #PEEK 0 0 1 target
+			sfx start #POP                                                                                                         
+			sfx create cylinder -scale($scale2)ts($speed)texture($texture)alpha(1)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur($duration2)color0(.7,1,.7)spin(-2)segments($detail)bone_orient()irotate(0,180,180)rotate(300,0,90) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx offset_bone #PEEK 0 0 1 target
+			sfx start #POP                                                                                                                              
+			                                                                                                                                                                       
+			worldmsg WE_SPELL_SYNC_END #OWNER_GOID #OWNER_GOID #TARGET_GOID		
+			
+		";
+}
+
+//////////////////////
+// Level 5
+
+[effect_script*] // -ET 
+{
+	name	=shadow_walk; 
+
+	script ="
+			set $height 2
+			
+			set $radius .4
+			set $speed 4
+			
+			set $fade .35
+			
+			set $size 0
+			
+			sfx create fire -count(80)radius($radius)tin(.1)tout(5)color0(.3,0,1)color1(0,0,0)alphafade($fade)flamesize($size)max_radius(2)velocity(0,$speed,0)accel(0,-$speed,0)min_displace(-$height)max_displace($height) #TARGET
+			sfx start #POP
+			
+			sfx create fire -dark()grey_text()count(80)radius($radius)tin(.1)tout(5)color0(.2,0,.5)color1(0,0,0)alphafade($fade)flamesize($size)max_radius(2)velocity(0,-$speed,0)accel(0,$speed,0)min_displace(-$height)max_displace($height) #TARGET
+			sfx start #POP
+			
+			
+		";
+}
+
+[effect_script*]  // $$$$$$$$$$$ Not done yet -ET
+{
+	name	=entangle_test;
+
+	script	="
+			sfx create orbiter -iphi(0)radius(0)dur(30)invisible() #TARGET
+			set $orb #POP
+			sfx snap_to_ground $orb
+			sfx start $orb
+			
+			sfx create sray -dur(10)tin(.3)tout(.3)lmin(2)lmax(3)color1(.3,.3,.3) #TARGET
+			set $flash #POP
+			sfx rat $flash
+			sfx target $flash $orb
+			sfx start $flash
+			
+			sfx create fire -dark()grey_tex()delay(.5)tin(.3)tout(.3)dur(10)color0(.3,.3,.3)color1(0,0,0)count(20)alphafade(.5)flamesize(15)max_radius(16)velocity(0,3,0)accel(0,0,0) #TARGET
+			set $smoke #POP
+			sfx rat $smoke
+			sfx target $smoke $orb
+			sfx start $smoke
+			
+			sfx create fire -delay(.5)tin(.3)tout(.3)color0(.9,.9,.9)color1(0,0,0)dur(10)count(10)velocity(0,2,0)accel(0,0,0)alphafade(.3)flamesize(.3)max_radius(15) #TARGET
+			set $mist #POP
+			sfx rat $mist
+			sfx target $mist $orb
+			sfx start $mist
+			
+			sfx create fire -delay(.5)tin(.3)tout(.3)color0(.9,.9,.9)color1(0,0,0)dur(10)count(10)velocity(0,3,0)accel(0,0,0)alphafade(1)flamesize(5)max_radius(3) #TARGET
+			set $mist2 #POP
+			sfx rat $mist2
+			sfx target $mist2 $orb
+			sfx start $mist2
+			
+			frandrange 0 7	frandrange 0 7	frandrange 1 1.5 frandrange -5 5 frandrange -5 5
+			sfx create orbiter -dur(6)color0(0.1,0.1,0.1)offset(0,1,0)invisible()iphi(#POP)itheta(#POP)radius(#POP)phi(#POP)theta(#POP) #TARGET
+			set $tentp1 #POP
+			sfx rat $tentp1
+			sfx target $tentp1 $orb
+			
+			frandrange 0 7	frandrange 0 7	frandrange 1 1.5 frandrange -5 5 frandrange -5 5
+			sfx create orbiter -dur(6)color0(0.1,0.1,0.1)offset(0,1,0)invisible()iphi(#POP)itheta(#POP)radius(#POP)phi(#POP)theta(#POP) #TARGET
+			set $tentp2 #POP
+			sfx rat $tentp2
+			sfx target $tentp2 $orb
+			
+			frandrange 0 7	frandrange 0 7	frandrange 1 1.5 frandrange -5 5 frandrange -5 5
+			sfx create orbiter -dur(6)color0(0.1,0.1,0.1)offset(0,1,0)invisible()iphi(#POP)itheta(#POP)radius(#POP)phi(#POP)theta(#POP) #TARGET
+			set $tentp3 #POP
+			sfx rat $tentp3
+			sfx target $tentp3 $orb
+			
+			frandrange 0 7	frandrange 0 7	frandrange 1 1.5 frandrange -5 5 frandrange -5 5
+			sfx create orbiter -dur(6)color0(0.1,0.1,0.1)offset(0,1,0)invisible()iphi(#POP)itheta(#POP)radius(#POP)phi(#POP)theta(#POP) #TARGET
+			set $tentp4 #POP
+			sfx rat $tentp4
+			sfx target $tentp4 $orb
+			
+			sfx create curve -dur(4)color0(.2,.5,.1)curvature(2)spacing(1)velocity(5)tlength(40) #TARGET
+			set $tent1 #POP
+			sfx rat $tent1
+			sfx target $tent1 $orb
+			sfx target $tent1 $tentp1
+			
+			sfx create curve -dur(4)color0(.2,.5,.1)curvature(2)spacing(1)velocity(5)tlength(40) #TARGET
+			set $tent2 #POP
+			sfx rat $tent2
+			sfx target $tent2 $orb
+			sfx target $tent2 $tentp2
+			
+			sfx create curve -dur(4)color0(.2,.5,.1)curvature(2)spacing(1)velocity(5)tlength(40) #TARGET
+			set $tent3 #POP
+			sfx rat $tent3
+			sfx target $tent3 $orb
+			sfx target $tent3 $tentp3
+			
+			sfx create curve -dur(4)color0(.2,.5,.1)curvature(2)spacing(1)velocity(5)tlength(40) #TARGET
+			set $tent4 #POP
+			sfx rat $tent4
+			sfx target $tent4 $orb
+			sfx target $tent4 $tentp4
+			
+			frandrange -.5 .5 frandrange -.5 .5
+			frandrange -.5 .5 frandrange -.5 .5
+			frandrange -.5 .5 frandrange -.5 .5
+			frandrange -.5 .5 frandrange -.5 .5
+			
+			sfx offset_bone $tent1 #POP 0 #POP target
+			sfx offset_bone $tent2 #POP 0 #POP target
+			sfx offset_bone $tent3 #POP 0 #POP target
+			sfx offset_bone $tent4 #POP 0 #POP target
+			
+			pause 1
+			sfx start $tentp1
+			sfx start $tent1
+			pause .5
+			sfx start $tentp2
+			sfx start $tent2
+			pause .5
+			sfx start $tentp3
+			sfx start $tent3
+			pause .5
+			sfx start $tentp4
+			sfx start $tent4
+			worldmsg WE_SPELL_SYNC_END #OWNER_GOID #OWNER_GOID #TARGET_GOID		
+			
+	";
+}
+
+//////////////////////
+// Level 6
+
+[effect_script*]  // $$$$$$$$$$$$ not done yet -ET
+{
+	name	=healing_wind_base;
+
+	script	="	
+			
+			sfx create curve -texture(b_sfx_sparkle01)dur(8)color0(.2,.5,1)curvature(1)spacing(3)velocity(10)tlength(2) #TARGET
+			set $wind #POP
+			sfx rat $wind
+			sfx target $wind target
+			sfx target $wind target
+			
+			frandrange 8 12	frandrange -2 2
+			frandrange -8 -12 frandrange -2 2
+			
+			sfx offset_bone $wind #POP 0 #POP target
+			sfx offset_bone $wind #POP 0 #POP source
+			sfx freeze_targets $wind
+			
+			pause [0]
+			
+			sfx start $wind
+		";
+}
+
+[effect_script*]  // $$$$$$$$$$$$ not done yet, try a textured cylider or two around the target. -ET 
+{
+	name	=healing_wind;
+
+	script	="	
+			sfx create sparkles -texture(b_sfx_sparkle01)delay(3)dur(3)color0(.2,.5,1)count(30)radius(3) #TARGET
+			sfx freeze_targets #PEEK
+			sfx start #POP
+			
+			call healing_wind_base <0.2>
+			
+			call healing_wind_base <.4>
+		
+			call healing_wind_base <.6>
+			
+			call healing_wind_base <.8>
+			                              
+			call healing_wind_base <1>
+			                              
+			call healing_wind_base <1.2>
+		
+			call healing_wind_base <1.4>
+			                              
+			call healing_wind_base <1.6>
+			                              
+			call healing_wind_base <1.8>
+			
+			call healing_wind_base <2>
+			                              
+			call healing_wind_base <2.2>
+			                              
+			call healing_wind_base <2.4>
+			
+			
+			waitfor script #POP #DEFAULT_TIMEOUT
+			waitfor script #POP #DEFAULT_TIMEOUT	
+			waitfor script #POP #DEFAULT_TIMEOUT
+			waitfor script #POP #DEFAULT_TIMEOUT	
+			waitfor script #POP #DEFAULT_TIMEOUT
+			waitfor script #POP #DEFAULT_TIMEOUT	
+			waitfor script #POP #DEFAULT_TIMEOUT
+			waitfor script #POP #DEFAULT_TIMEOUT	
+			waitfor script #POP #DEFAULT_TIMEOUT
+			waitfor script #POP #DEFAULT_TIMEOUT	
+			waitfor script #POP #DEFAULT_TIMEOUT
+			waitfor script #POP #DEFAULT_TIMEOUT	
+			
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			
+		";
+}
+
+[effect_script*] // -ET 
+{
+	name	=ambivalence; 
+
+	script =" 
+			set $texture b_sfx_moon_01
+			
+			set $width 1
+			set $detail 14
+			
+			sfx create cylinder -dur(5)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(1,.8,.8)spin(6)segments($detail)bone_orient()irotate(10,0,0)rotate(0,0,90) #TARGET
+			sfx start #POP                                                                                                                       
+			sfx create cylinder -dur(6)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.8,.65,.65)spin(4)segments($detail)bone_orient()irotate(20,0,0)rotate(0,0,90) #TARGET
+			sfx start #POP                                                                                                                        
+			sfx create cylinder -dur(7)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.45,.45,.55)spin(-4)segments($detail)bone_orient()irotate(30,0,0)rotate(0,0,90) #TARGET
+			sfx start #POP                                                                                                                       
+			sfx create cylinder -dur(8)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.2,.2,.3)spin(-6)segments($detail)bone_orient()irotate(40,0,0)rotate(0,0,90) #TARGET
+			sfx start #POP
+			
+			sfx create orbiter -offset(0,1.5,0)radius(0)invisible() #TARGET
+			set $orb #POP
+			sfx start $orb
+			
+			set $detail 6
+			
+			pause 7
+			
+			sfx create cylinder -scale(.2)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(1,.8,.8)spin(6)segments($detail)bone_orient()irotate(10,0,0)rotate(0,0,90) #TARGET
+			sfx rat #PEEK
+			sfx target #PEEK $orb
+			sfx start #POP                                                                                                                       
+			sfx create cylinder -scale(.2)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.8,.65,.65)spin(4)segments($detail)bone_orient()irotate(20,0,0)rotate(0,0,90) #TARGET
+			sfx rat #PEEK
+			sfx target #PEEK $orb
+			sfx start #POP                                                                                                                        
+			sfx create cylinder -scale(.2)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.45,.45,.55)spin(-4)segments($detail)bone_orient()irotate(30,0,0)rotate(0,0,90) #TARGET
+			sfx rat #PEEK
+			sfx target #PEEK $orb
+			sfx start #POP                                                                                                                       
+			sfx create cylinder -scale(.2)texture($texture)alpha(.3)hp0(-$width,-$width,0)hp1($width,$width,1)rp0(1,1,0)rp1(1,1,0)tin(.2)tout(1.5)color0(.2,.2,.3)spin(-6)segments($detail)bone_orient()irotate(40,0,0)rotate(0,0,90) #TARGET
+			sfx rat #PEEK
+			sfx target #PEEK $orb
+			sfx start #POP
+			                                                                                                                     
+			                                                                                                                                                         
+		";
+}
+
+//////////////////////
+// Level 7
+
+[effect_script*]
+{
+	name	=dup_ball;
+
+	script	="
+
+			sfx create curve -model(1)scale(2)ts(.5)step(.1)color0(1,.4,.5) #SOURCE
+			set $energy #POP
+			sfx target $energy target
+
+			sfx attach_point $energy @weapon_bone target
+
+			sfx start $energy
+			";
+}
+
+[effect_script*]
+{
+	name	=duplicate_launch;
+
+	script	="
+
+			call dup_ball
+			waitfor script #PEEK #DEFAULT_TIMEOUT
+			
+			pause 0.2
+
+			worldmsg WE_SPELL_SYNC_MID #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+[effect_script*]
+{
+	name	=duplicate_create;
+
+	script	="
+
+			set $speed 3
+			set $thick 1
+
+			sfx create cylinder
+				-offset(0,-.8,0)rp0(0,.5,1)rp1(0,.5,1)texture(b_sfx_cyl_03)color0(1,.40,.61)spin(-10)dur(1.5)tin(1.5)delay(.2)[0] #TARGET
+			sfx create cylinder
+				-offset(0,-.8,0)rp0(0,.5,1)rp1(0,.5,1)texture(b_sfx_cyl_03)color0(1,.40,.61)spin(-10)dur(1.5)tin(1.5)delay(.4)[0] #TARGET
+			sfx create cylinder
+				-offset(0,-.8,0)rp0(0,.5,1)rp1(0,.5,1)texture(b_sfx_cyl_03)color0(1,.40,.61)spin(-10)dur(1.5)tin(1.5)delay(.6)[0] #TARGET
+			sfx start #POP
+			sfx start #POP
+			sfx start #POP
+
+			sfx create cylinder
+				-offset(0,-.8,0)hp0(-$thick,2,$speed)hp1(0,2,$speed)texture(b_sfx_cyl_03)color0(.5,.25,.61)spin(10)dur(1.5)[0] #TARGET
+
+			set $master #POP
+
+			sfx create cylinder
+				-offset(0,-.8,0)hp0(-$thick,2,$speed)hp1(0,2,$speed)texture(b_sfx_cyl_03)color0(.6,.30,.61)spin(-10)dur(1.5)delay(.2)[0] #TARGET
+			sfx create cylinder
+				-offset(0,-.8,0)hp0(-$thick,2,$speed)hp1(0,2,$speed)texture(b_sfx_cyl_03)color0(.7,.35,.61)spin(10)dur(1.5)delay(.4)[0] #TARGET
+			sfx create cylinder
+				-offset(0,-.8,0)hp0(-$thick,2,$speed)hp1(0,2,$speed)texture(b_sfx_cyl_03)color0(.8,.40,.61)spin(-10)dur(1.25)delay(.6)[0] #TARGET
+
+			sfx attach $master #POP
+			sfx attach $master #POP
+			sfx attach $master #POP
+
+			sfx start $master
+			
+			";
+}
+
+[effect_script*]
+{
+	name	=duplicate_destroy;
+
+	script	="
+			set $speed 2
+			set $thick 1
+
+			sfx create cylinder
+				-offset(0,-.7,0)rp1(1,0,-1)rp0(1,0,-1)texture(b_sfx_cyl_03)color0(1,.40,.61)spin(-10)dur(1.5)tin(1.5)delay(.6)scale[0] #TARGET
+			sfx create cylinder
+				-offset(0,-.6,0)rp1(1,0,-1)rp0(1,0,-1)texture(b_sfx_cyl_03)color0(1,.40,.61)spin(-10)dur(1.5)tin(1.5)delay(.4)scale[0] #TARGET
+			sfx create cylinder
+				-offset(0,-.5,0)rp1(1,0,-1)rp0(1,0,-1)texture(b_sfx_cyl_03)color0(1,.40,.61)spin(-10)dur(1.5)tin(1.5)delay(.2)scale[0] #TARGET
+			sfx start #POP
+			sfx start #POP
+			sfx start #POP
+
+			sfx create cylinder
+				-hp1(1,-$thick,-$speed)hp0(2,0,-$speed)texture(b_sfx_cyl_03)color0(.5,.25,.61)spin(10)dur(1.5)scale[0] #TARGET
+
+			set $master #POP
+
+			sfx create cylinder
+				-hp1(1,-$thick,-$speed)hp0(2,0,-$speed)texture(b_sfx_cyl_03)color0(.6,.30,.61)spin(-10)dur(1.5)delay(.2)scale[0] #TARGET
+			sfx create cylinder
+				-hp1(1,-$thick,-$speed)hp0(2,0,-$speed)texture(b_sfx_cyl_03)color0(.7,.35,.61)spin(10)dur(1.5)delay(.4)scale[0] #TARGET
+			sfx create cylinder
+				-hp1(1,-$thick,-$speed)hp0(2,0,-$speed)texture(b_sfx_cyl_03)color0(.8,.40,.61)spin(-10)dur(1.25)delay(.6)scale[0] #TARGET
+
+			sfx attach $master #POP
+			sfx attach $master #POP
+			sfx attach $master #POP
+
+			sfx start $master
+			";
+}
+
+[effect_script*] // -ET 
+{
+	name	=confusion; 
+
+	script =" 
+			
+			set $texture b_sfx_diamondring01_tsd
+			set $texture2 b_sfx_diamondring01
+			
+			set $center .3
+			
+			set $height .3
+			
+			set $offset 0,1.5,0
+			
+			sfx create orbiter -scale(.5)offset($offset)texture($texture)color0(.2,.2,1)radius(0) #TARGET
+			set $orb #POP
+			sfx start $orb
+			
+			sfx create cylinder -scale(.5)texture($texture2)alpha(.6)hp0($height,$height,0)hp1(-$height,-$height,0)rp0($center,$center,0)rp1($center,$center,0)color0(.2,1,.2)spin(1)segments(4)bone_orient()rotate(0,0,90)irotate(30,60,90) #TARGET
+			sfx rat #PEEK
+			sfx target #PEEK $orb
+			sfx start #POP
+		
+			sfx create cylinder -scale(.5)texture($texture2)alpha(.6)hp0($height,$height,0)hp1(-$height,-$height,0)rp0($center,$center,0)rp1($center,$center,0)color0(.2,1,1)spin(-2)segments(5)bone_orient()rotate(0,0,90)irotate(120,60,90) #TARGET
+			sfx rat #PEEK
+			sfx target #PEEK $orb
+			sfx start #POP                                                                                  
+		";
+}
+
+//////////////////////
+// Level 8
+
+[effect_script*] // -ET 
+{
+	name	=inspiration; 
+
+	script ="
+			set $color1 .5,.5,1
+			set $color2 0,0,0
+			set $offset 0,.06,0
+			
+			sfx create spe -offset($offset)texture(b_sfx_moon_01)color0(.1,.1,1)radius(.2)scale(.1)count(20)index0(0,-1.57,1.57)index1(0,-1.57,1.57)speed0(5,1,5)speed1(5,1,5)space0(.0628,.01256,.0628)space1(.0628,.01256,.0628) #TARGET
+			sfx attach_point #PEEK @body_anterior target
+			sfx start #POP
+		    
+			sfx create sray -tout(.5)offset($offset)scale(.5)radius(.4)lmin(.3)lmax(.4)color0($color1)color1($color2)count(20) #TARGET
+			sfx attach_point #PEEK @body_anterior target
+			sfx start #POP
+			
+			sfx create fire -fctrl(0,0,0)offset(0,.2,0)max_radius(0)radius(.12)min_displace(0)max_displace(0)scale(.3)flamesize(.5)count(30)color0($color1)color1($color2)cvel()velocity(0,2,0)accel(0,0,0)instant()alphafade(1) #TARGET
+			sfx attach_point #PEEK @body_anterior target
+			sfx start #POP                                                                                    
+		";
+}
+
+[effect_script*] // -ET 
+{
+	name	=divine_intervention; 
+
+	script ="
+			set $color1 .4,.4,.25
+			set $color2 0,0,0
+			
+			sfx create sray -dur(8)tout(.5)offset(0,.15,0)scale(.8)radius(1)lmin(.5)lmax(.75)color0($color1)color1($color2) #TARGET
+			sfx start #POP
+		
+			sfx create fire -scale(.66)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK @weapon_bone target
+			sfx start #POP
+			
+			sfx create fire -scale(.66)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK @shield_bone target
+			sfx start #POP
+			
+			sfx create fire -scale(.66)dur(20)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK @body_mid target
+			sfx start #POP
+			
+			sfx create fire -scale(.66)dur(20)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK @body_posterior target
+			sfx start #POP
+			
+			sfx create fire -scale(.66)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK @body_anterior target
+			sfx start #POP
+			                                                                                                                                                         
+			sfx create fire -scale(.66)dur(14)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK Bip01_R_Calf target
+			sfx start #POP
+			                                                                                                                                                         
+			sfx create fire -scale(.66)dur(14)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK Bip01_L_Calf target
+			sfx start #POP
+			                                                                                                                                                         
+			sfx create fire -scale(.66)dur(30)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK  Bip01_R_Foot target
+			sfx start #POP
+			                                                                                                                                                         
+			sfx create fire -scale(.66)dur(30)flamesize(.6)count(20)color0($color1)color1($color2)velocity(0,10,0)accel(0,0,0)alphafade(1) #TARGET
+			sfx attach_point #PEEK  Bip01_L_Foot target
+			sfx start #POP
+		";
+}
+
+
+
+//////////////////////
+// Level 9
+
+[effect_script*] // -ET 
+{
+	name	=invulnerability; 
+
+	script ="
+			set $texture b_sfx_star_01
+			set $height1 -1
+			set $height2 1
+			set $detail 20
+			set $radius1 .5
+			set $radius2 2
+			set $speed 2
+			set $scale .4
+			set $spin 0
+	        
+	       	set $color0 1,0,0
+	        set $color1 1,.5,0
+	        set $color2 1,1,0
+	        set $color3 .5,1,0
+	        set $color4 0,1,0
+	        set $color5 0,1,.5
+	        set $color6 0,1,1
+	       	set $color7 0,.5,1
+	        set $color8 0,0,1
+	        set $color9 .5,0,1
+	        set $color10 1,0,1
+	        set $color11 1,0,.5   
+	        
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color0)spin($spin)segments($detail)bone_orient()irotate(330,0,0)rotate(0,0,0) #TARGET
+			sfx start #POP                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)dur(4)color0($color1)spin($spin)segments($detail)bone_orient()irotate(300,0,0)rotate(30,0,0) #TARGET
+			sfx start #POP                                                                                                                                                 
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color2)spin($spin)segments($detail)bone_orient()irotate(270,0,0)rotate(60,0,0) #TARGET
+			sfx start #POP                                                                                                                                  
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(8)color0($color3)spin($spin)segments($detail)bone_orient()irotate(240,0,0)rotate(90,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)color0($color4)spin($spin)segments($detail)bone_orient()irotate(210,0,0)rotate(120,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(12)color0($color5)spin($spin)segments($detail)bone_orient()irotate(180,0,0)rotate(150,0,0) #TARGET
+			sfx start #POP                                                                                                                                   
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color6)spin($spin)segments($detail)bone_orient()irotate(150,0,0)rotate(180,0,0) #TARGET
+			sfx start #POP                                                                                                                                 
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)dur(16)color0($color7)spin($spin)segments($detail)bone_orient()irotate(120,0,0)rotate(210,0,0) #TARGET
+			sfx start #POP                                                                                                                                                               
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color8)spin($spin)segments($detail)bone_orient()irotate(90,0,0)rotate(240,0,0) #TARGET
+			sfx start #POP                                                                                                                                   
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(20)color0($color9)spin($spin)segments($detail)bone_orient()irotate(60,0,0)rotate(270,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)color0($color10)spin($spin)segments($detail)bone_orient()irotate(30,0,0)rotate(300,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(24)color0($color11)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(330,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                     
+			
+		";
+}
+
+//////////////////////
+// Level 10
+
+[effect_script*] // -ET 
+{
+	name	=spirit_armor; 
+
+	script ="
+			set $texture b_sfx_moon_01
+			set $height1 -1
+			set $height2 1
+			set $detail 20
+			set $radius1 .4
+			set $radius2 .9
+			set $speed 2
+			set $scale .4
+			set $spin -2
+	        	
+	        //set $color0 1,0,0
+	        //set $color1 1,.5,0
+	        //set $color2 1,1,0
+	        //set $color3 .5,1,0
+	        //set $color4 0,1,0
+	        //set $color5 0,1,.5
+	        //set $color6 0,1,1
+	       	//set $color7 0,.5,1
+	        //set $color8 0,0,1
+	        //set $color9 .5,0,1
+	        //set $color10 1,0,1
+	        //set $color11 1,0,.5   
+	        
+	        
+	        // yellow purple
+	        //set $color0 1,0,1
+	        //set $color1 1,.1,.8
+	        //set $color2 1,.3,.6
+	        //set $color3 1,.5,.4
+	        //set $color4 1,.7,.2
+	        //set $color5 1,.9,.1
+	        //set $color6 1,1,0
+	       	//set $color7 1,.8,.1
+	        //set $color8 1,.6,.3
+	        //set $color9 1,.4,.5
+	        //set $color10 1,.2,.7
+	        //set $color11 1,.1,.9   
+			
+			// red
+			//set $color0 1,1,1
+	        //set $color1 1,.8,.8
+	        //set $color2 1,.6,.6
+	        //set $color3 1,.4,.4
+	        //set $color4 1,.2,.2
+	        //set $color5 1,.1,.1
+	        //set $color6 1,0,0
+	       	//set $color7 1,.1,.1
+	        //set $color8 1,.3,.3
+	        //set $color9 1,.5,.5
+	        //set $color10 1,.7,.7
+	        //set $color11 1,.9,.9   
+	        
+	        // blue
+	        //set $color0 1,1,1
+	        //set $color1 .8,.8,1
+	        //set $color2 .6,.6,1
+	        //set $color3 .4,.4,1
+	        //set $color4 .2,.2,1
+	        //set $color5 .1,.1,1
+	        //set $color6 0,0,1
+	       	//set $color7 .1,.1,1
+	        //set $color8 .3,.3,1
+	        //set $color9 .5,.5,1
+	        //set $color10 .7,.7,1
+	        //set $color11 .9,.9,1  
+	        
+	        
+	        // blue purple orange
+	        //set $color0 1,.5,0
+	        //set $color1 .8,.4,.1
+	        //set $color2 .6,.3,.2
+	        //set $color3 .4,.2,.4
+	        //set $color4 .2,.1,.6
+	        //set $color5 .1,.05,.8
+	        //set $color6 0,0,1
+	       	//set $color7 .1,.05,.9
+	        //set $color8 .3,.15,.7
+	        //set $color9 .5,.25,.5
+	        //set $color10 .7,.35,.3
+	        //set $color11 .9,.45,.1  
+	        
+	        // blue purple orange mixed1
+	        //set $color0 1,.5,0
+	        //set $color1 .6,.3,.2
+	        //set $color2 .8,.4,.1
+	        //set $color3 .4,.2,.4
+	        //set $color4 .1,.05,.8
+	        //set $color5 .2,.1,.6
+	        //set $color6 0,0,1
+	       	//set $color7 .3,.15,.7
+	        //set $color8 .1,.05,.9
+	        //set $color9 .5,.25,.5
+	        //set $color10 .9,.45,.1  
+	        //set $color11 .7,.35,.3
+	        
+	        // blue purple orange mixed2
+	        //set $color0 1,.5,0
+	        //set $color6 .8,.4,.1
+	        //set $color1 .6,.3,.2
+	        //set $color7 .4,.2,.4
+	        //set $color2 .2,.1,.6
+	        //set $color8 .1,.05,.8
+	        //set $color3 0,0,1
+	       	//set $color9 .1,.05,.9
+	        //set $color4 .3,.15,.7
+	        //set $color10 .5,.25,.5
+	        //set $color5 .7,.35,.3
+	        //set $color11 .9,.45,.1
+	        
+	        // PGB
+	        set $color0 1,.75,1
+	        set $color1 .75,1,.75
+	        set $color2 .75,.75,1
+	        set $color3 1,.25,1
+	        set $color4 .25,1,.25
+	        set $color5 .25,.25,1
+	        set $color6 1,0,1
+	       	set $color7 0,1,0
+	        set $color8 0,0,1
+	        set $color9 1,.5,1
+	        set $color10 .5,1,.5
+	        set $color11 .5,.5,1   
+	          
+	        
+	        
+	        
+			
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(3)color0($color0)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(0,0,0) #TARGET
+			sfx start #POP                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)dur(15)color0($color1)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(30,0,0) #TARGET
+			sfx start #POP                                                                                                                                                 
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color2)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(60,0,0) #TARGET
+			sfx start #POP                                                                                                                                  
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(4)color0($color3)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(90,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)dur(16)color0($color4)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(120,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color5)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(150,0,0) #TARGET
+			sfx start #POP                                                                                                                                   
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(5)color0($color6)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(180,0,0) #TARGET
+			sfx start #POP                                                                                                                                 
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)dur(17)color0($color7)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(210,0,0) #TARGET
+			sfx start #POP                                                                                                                                                               
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color8)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(240,0,0) #TARGET
+			sfx start #POP                                                                                                                                   
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)dur(6)color0($color9)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(270,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius1,0)tin(.2)tout(1.5)dur(18)color0($color10)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(300,0,0) #TARGET
+			sfx start #POP                                                                                                                                                                
+			sfx create cylinder -texture($texture)alpha(.3)hp0($height1,$height1,0)hp1($height2,$height2,1)rp0($radius1,$radius1,0)rp1($radius2,$radius2,0)tin(.2)tout(1.5)color0($color11)spin($spin)segments($detail)bone_orient()irotate(0,0,0)rotate(330,0,0) #TARGET
+			sfx start #POP
+		";
+}
+
+
+
+//////////////////////
+// Other
+
+[effect_script*]
+{
+	name	=player_ring;
+
+	script	="
+
+//PLAYER ORB
+           sfx create orbiter -dur(5)instant()tin(1)tout(1)color0(.7,.7,.9)scale(1.3)offset(0,-.6,0)delay(.1) #SOURCE
+           set $home_orb #POP
+
+ //PLAYER RING EFFECT
+            sfx create fire -color0(1,1,1)count(20)flamesize(.5)alphafade(1)velocity(0,0,0)accel(0,0,0)delay(.1) #TARGET
+            set $home_fire #POP
+            sfx create orbiter -dur(5)tin(1)tout(1)color0(.1,.1,.1)scale(1.3)offset(0,-.4,0)delay(.1)invisible() #SOURCE
+            set $ring_orb #POP
+
+            sfx create orbiter -dur(6.4)tin(3)tout(3)color0(.1,.1,.1)scale(1.3)offset(0,-.4,0)delay(.1) #SOURCE
+            sfx start #POP
+
+			sfx create linetracer -fade_rate(.4)color0(0,0,10)delay(.2) #TARGET
+			set $ring_tracer #POP
+			sfx create cylinder -hp0(1,0,-4)hp1(10,0,20)rp1(1.3,0,0)rp0(6,0,0)dur(6)segments(100)texture(b_sfx_cyl_03)spin(1)color0(0,0,10)delay(.2)tin(3)tout(3)offset(0,-0.6,0) #SOURCE
+            sfx start #POP
+			sfx create flurry -grow_params(100,0,0)count(100)iamp()amplitude(-10)dur(4)iphi(0)itheta(0)iamp(0)delay(3.2) #SOURCE
+            sfx start #POP
+			sfx create flurry -grow_params(0,-.3,)count(100)iamp()amplitude(-10)dur(4)iphi(0)itheta(0)iamp(0)delay(3.2) #SOURCE
+            sfx start #POP
+            sfx create lightsource -color0(0,0,10)radius(5)tin(.4)dur(5.5) #SOURCE
+            sfx start #POP
+            sfx create lightsource -color0(10,10,10)radius(1)tin(.4)dur(1)delay(4.8) #SOURCE
+            sfx start #POP
+
+
+
+            //BINDINGS
+
+
+            sfx rat $home_fire
+            sfx target $home_fire $home_orb
+            sfx attach $home_orb $home_fire
+
+            sfx rat $ring_tracer
+            sfx target $ring_tracer $home_orb
+            sfx target $ring_tracer $ring_orb
+            sfx attach $home_orb $ring_tracer
+            sfx attach $home_orb $ring_orb
+
+
+
+
+            //INITIALIZATION
+			sfx start $home_orb
+
+
+
+            sfx start $ring_orb
+			sfx start $ring_tracer
+
+
+
+			";
+}
+
+
+
+[effect_script*]
+{
+	name	=mana_trail;
+
+	script	="
+			frandrange .35 .75		set $trail_length #POP
+			frandrange 0.35 0.45	set $trail_size	#POP
+
+			frandrange 0.15 0.35
+			frandrange 0.15 0.35
+
+			sfx create curve -curvature(.8)model(0)scale($trail_size)color0(#POP,#POP,1)ts(1.125) #SOURCE
+			sfx target #PEEK target
+			sfx attach_point #PEEK @body_anterior target
+			sfx attach_point #PEEK @body_anterior source
+			sfx offset_bone #PEEK 0 .165 0 target
+			sfx offset_bone #PEEK 0 .165 0 source
+			sfx start #POP
+			";
+}
+
+
+[effect_script*]
+{
+	name	=leech_life_blob;
+
+	script	="
+			frandrange .35 .75		set $trail_length #POP
+			frandrange 0.35 0.45	set $trail_size	#POP
+
+			sfx create curve -curvature(.8)model(0)scale($trail_size)color0(.9,.1,.1)ts(1.125) #SOURCE
+			sfx target #PEEK target
+			sfx offset_bone #PEEK 0 .3125 0 target
+			sfx offset_bone #PEEK 0 .3125 0 source
+			sfx start #POP
+			";
+}
+
+
+
+
+[effect_script*]
+{
+	name	=mana_trasferorama;
+
+	script	="
+
+//			sfx create orbiter -scale(1.3)color0(0,10,0)color1(0,1,0)phi(1)iphi(10)theta(1)itheta(10)radius(.5)dur(5)tin(1)tout(1)offset(0,-.5,0) #SOURCE
+//			sfx start #POP
+
+
+            //PLAYER ORB
+           sfx create orbiter -dur(5)instant()tin(1)tout(1)color0(.7,.7,.9)scale(1.3)offset(0,-.6,0)delay(.1) #SOURCE
+           set $home_orb #POP
+
+ 			sfx create orbiter -scale(1)color0(0,10,0)phi()iphi(10)theta()itheta(10)radius(1)dur(5)tin(1)tout(5)offset(0,-.5,0)invisible()delay(.1) #SOURCE
+            set $home_orb2 #POP
+
+
+            //MONSTER EFFECTS
+            sfx create orbiter -dur(5)instant()tin(1)tout(1)color0(.7,.7,.9)scale(1)offset(0,-.4,0)delay(.1) #TARGET
+            set $monster_orb #POP
+            sfx create orbiter -dur(5)instant()tin(1)tout(1)color0(0,0,0)scale(1)offset(0,-.2,0)delay(.1) #TARGET
+            set $monster_orb2 #POP
+
+            sfx create fire -color0(1,1,1)count(20)flamesize(.5)alphafade(1)velocity(0,0,0)accel(0,0,0)delay(.1) #TARGET
+            set $monster_fire #POP
+			sfx create linetracer -fade_rate(.2)color0(0,0,10)color1(10,10,10)delay(.3) #TARGET
+			set $monster_tracer #POP
+			sfx create linetracer -fade_rate(.2)color0(0,0,10)delay(.3) #TARGET
+			set $monster_tracer2 #POP
+
+
+			sfx create flurry -grow_params(3,-100,0)count(100)iamp()amplitude(-10)dur(4)iphi(0)itheta(0)iamp(0)delay(3.2)tout(7) #TARGET
+            sfx start #POP
+			sfx create flurry -grow_params(0,-100,0)count(100)iamp()amplitude(-10)dur(4)iphi(0)itheta(0)iamp(0)delay(3.2)tout(7) #TARGET
+            sfx start #POP
+            sfx create lightsource -color0(0,0,10)radius(1)tin(.4)dur(5.5) #TARGET
+            sfx start #POP
+            sfx create lightsource -color0(10,10,10)radius(.6)tin(.4)dur(1)delay(3.15) #TARGET
+            sfx start #POP
+
+
+            //SKY ORB
+			sfx create orbiter -scale(1.3)phi(10)radius()dur(5)tin(1)tout(1)offset(0,10,0)delay(.1)color0(0,0,15) #TARGET
+            set $target_orb #POP
+
+
+            //SKY ORB TRACE EFFECTS
+			sfx create linetracer -fade_rate(.4)color0(10,10,10)color1(0,0,10)delay(.2) #TARGET
+			set $orb_tracer #POP
+
+
+            //PLAYER RING EFFECT
+            sfx create fire -color0(1,1,1)count(20)flamesize(.5)alphafade(1)velocity(0,0,0)accel(0,0,0)delay(.1) #TARGET
+            set $home_fire #POP
+            sfx create orbiter -dur(5)tin(1)tout(1)color0(.1,.1,.1)scale(1.3)offset(0,-.4,0)delay(.1)invisible() #SOURCE
+            set $ring_orb #POP
+
+            sfx create orbiter -dur(6.4)tin(3)tout(3)color0(.1,.1,.1)scale(1.3)offset(0,-.4,0)delay(.1) #SOURCE
+            sfx start #POP
+
+			sfx create linetracer -fade_rate(.4)color0(0,0,10)delay(.2) #TARGET
+			set $ring_tracer #POP
+			sfx create cylinder -hp0(1,0,-4)hp1(10,0,20)rp1(1.3,0,0)rp0(6,0,0)dur(6)segments(100)texture(b_sfx_cyl_03)spin(1)color0(0,0,10)delay(.2)tin(3)tout(3)offset(0,-0.6,0) #SOURCE
+            sfx start #POP
+			sfx create flurry -grow_params(100,0,0)count(100)iamp()amplitude(-10)dur(4)iphi(0)itheta(0)iamp(0)delay(3.2) #SOURCE
+            sfx start #POP
+			sfx create flurry -grow_params(0,-.3,)count(100)iamp()amplitude(-10)dur(4)iphi(0)itheta(0)iamp(0)delay(3.2) #SOURCE
+            sfx start #POP
+            sfx create lightsource -color0(0,0,10)radius(5)tin(.4)dur(5.5) #SOURCE
+            sfx start #POP
+            sfx create lightsource -color0(10,10,10)radius(1)tin(.4)dur(1)delay(4.8) #SOURCE
+            sfx start #POP
+
+
+
+            //BINDINGS
+            sfx rat $orb_tracer
+            sfx target $orb_tracer $target_orb
+            sfx target $orb_tracer $home_orb
+            sfx attach $home_orb $orb_tracer
+            sfx attach $home_orb $orb_home
+
+            sfx rat $orb_tracer2
+            sfx target $orb_tracer2 $target_orb2
+            sfx target $orb_tracer2 $home_orb2
+            sfx attach $home_orb2 $orb_tracer2
+            sfx attach $home_orb2 $orb_home2
+
+            sfx rat $home_fire
+            sfx target $home_fire $home_orb
+            sfx attach $home_orb $home_fire
+
+            sfx rat $ring_tracer
+            sfx target $ring_tracer $home_orb
+            sfx target $ring_tracer $ring_orb
+            sfx attach $home_orb $ring_tracer
+            sfx attach $home_orb $ring_orb
+
+            sfx rat $monster_fire
+            sfx rat $monster_tracer
+            sfx rat $monster_tracer2
+            sfx target $monster_fire $monster_orb
+            sfx target $monster_tracer $monster_orb
+			sfx target $monster_tracer $target_orb
+			sfx target $monster_tracer2 $monster_orb2
+            sfx target $monster_tracer2 $monster_orb
+            sfx attach $monster_orb $monster_fire
+            sfx attach $monster_orb $monster_tracer
+            sfx attach $monster_orb2 $monster_tracer2
+            sfx attach $monster_orb  $monster_tracer2
+            sfx attach $target_orb  $monster_tracer
+
+
+            //INITIALIZATION
+			sfx start $home_orb
+			sfx start $target_orb
+            sfx start $orb_tracer
+
+			sfx start $home_orb2
+			sfx start $target_orb2
+            sfx start $home_fire
+
+            sfx start $ring_orb
+			sfx start $ring_tracer
+
+            sfx start $monster_orb
+            sfx start $monster_orb2
+            sfx start $monster_fire
+            sfx start $monster_tracer
+            sfx start $monster_tracer2
+
+			";
+}
+
+
+
+[effect_script*]
+{
+	name	=shield;
+
+	script	="
+			sfx create sphere -dur(8)subd(2)irotate(.5,-.5,.3) #TARGET
+			sfx create sphere -dur(8)subd(2)irotate(-.12,.12,-.2)color0(0,.24,.0) #TARGET
+			sfx create sphere -dur(8)subd(2)irotate(.34,.6,-.32)color0(0,0,.34) #TARGET
+			sfx start #POP
+			sfx start #POP
+			sfx start #POP
+
+			";
+}
+
+[effect_script*]
+{
+	name	=mana_transfer;
+
+	script	="
+			sfx create flurry
+			-grow_params(0,5,10)dur(1)iphi(0)itheta(0)iamp(0)
+				#SOURCE
+
+			sfx start #POP
+
+			pause .35
+
+			sfx create flurry
+			-grow_params(10,-5,0)dur(4)iphi(0)itheta(0)iamp(0)
+				#TARGET
+
+			sfx start #PEEK
+
+			pause 1.3
+			sfx destroy #POP
+			";
+}
+
+
+[effect_script*]
+{
+	name	=bless;
+
+	script	="
+			sfx create sparkles -dur(1.75)color0(.5,.5,.8)count(32) #TARGET
+			sfx start #POP
+
+			";
+}
+
+[effect_script*]
+{
+	name	=orb_of_light2;
+
+	script	="
+			sfx create orbiter -dur(15)tin(1)tout(1)color0(.7,.7,.9)scale(.35)offset(0,.5,0) #TARGET
+			set $ball #POP
+
+			sfx create fire -flamesize(2.0)dur(11.5)ts(0.2)scale(1.25)color0(.0,.1,.5)velocity(0,0,0)accel(0,0,0) #TARGET
+			set $ballfire #POP
+
+			sfx create fire -flamesize(0.1)dur(11.5)ts(0.2)scale(1.25)color0(.7,.7,.9)velocity(0,0,0)accel(0,0,0) #TARGET
+			set $ballfire2 #POP
+
+			sfx create fire -flamesize(0.01)dur(11.5)ts(0.2)scale(1.25)color0(.9,.3,.9)velocity(0,0,0)accel(0,0,0) #TARGET
+			set $ballfire3 #POP
+
+			sfx create lightsource -dur(15)tin(1)tout(1)radius(4)color0(.3,.3,1) #TARGET
+			set $light #POP
+
+			sfx rat $light
+			sfx rat $ballfire
+			sfx rat $ballfire2
+			sfx rat $ballfire3
+
+			sfx target $light $ball
+			sfx target $ballfire $ball
+			sfx target $ballfire2 $ball
+			sfx target $ballfire3 $ball
+
+			sfx start $ball
+			sfx start $light
+			sfx start $ballfire
+			sfx start $ballfire2
+			sfx start $ballfire3
+
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+
+			";
+}
+
+
+
+
+
+
+
+[effect_script*]
+{
+	name	=armor_boost;
+
+	script	="
+
+			sfx create spe
+			-dur(1.25)tin(.5)tout(.5)color0(.3,.3,.6)scale(1.25)count(1)radius(0)offset(0,0,0)
+				#TARGET
+
+			sfx create orbiter
+			-color0(.3,.3,.6)radius(0)scale(1.25)dur(1)tin(.5)tout(.5)offset(0,.66,0)
+				#TARGET
+			sfx create orbiter
+			-color0(.3,.3,.6)radius(0)scale(1.25)dur(1)tin(.5)tout(.5)offset(0,.33,0)
+				#TARGET
+			sfx create orbiter
+			-color0(.3,.3,.6)radius(0)scale(1.25)dur(1)tin(.5)tout(.5)
+				#TARGET
+			sfx create orbiter
+			-color0(.3,.3,.6)radius(0)scale(1.25)dur(1)tin(.5)tout(.5)offset(0,-.33,0)
+				#TARGET
+			sfx create orbiter
+			-color0(.3,.3,.6)radius(0)scale(1.25)dur(1)tin(.5)tout(.5)offset(0,-.66,0)
+				#TARGET
+
+			sfx start #POP
+			sfx start #POP
+			sfx start #POP
+			sfx start #POP
+			sfx start #POP
+			sfx start #POP
+
+
+			sfx create lightsource -color0(.3,.3,1)dur(1)tin(.5)tout(.5)radius(4) #TARGET
+			sfx start #POP
+
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+			";
+}
+
+[effect_script*]
+{
+	name	=mana_shrine;
+
+    script	="
+			sfx create cylinder
+			-alpha(.2)hp0(1,0,-4)hp1(10,0,20)rp1(1.3,0,0)rp0(6,0,0)dur(6)segments(32)texture(b_sfx_lightray_04)spin(1)color0(0,0,.6)delay(.2)tin(6)tout(4) #TARGET
+			sfx start #POP
+            sfx create lightsource -color0(0,0,10)radius(15)tin(.4)dur(5.5) #TARGET
+            sfx start #POP
+            sfx create lightsource -color0(0.01,0.01,0.01)radius(1)tin(1)dur(6)delay(.2) #TARGET
+            sfx start #POP
+            
+            sfx create fire
+			-offset(0,0,0)dur(5)tout(2)flamesize(2)instant()count(50)color0(0,0,.6)color1(0,0,0)velocity(0,1,0)accel(0,0,0)alphafade(.4)min_displace(.1)max_displace(.1)radius(1.3)max_radius(1)
+			#TARGET
+			set $fire #POP
+			sfx start $fire
+			
+			sfx create orbiter -offset(0,.2,0)color0(0,0,.6)dur(6.5)radius(1.3)radiusi(-.2)theta(0)iphi(2)itheta(0) #TARGET
+			set $orb #POP
+			sfx start $orb
+			
+			sfx create orbiter -offset(0,.2,0)color0(0,0,.6)dur(6.5)radius(0)radiusi(.2)theta(0)iphi(-2)itheta(0) #TARGET
+			set $orb2 #POP
+			sfx start $orb2
+			
+            sfx create linetracer -tout(1)color0(0,0,.6)color1(0,0,.3)tin(.3)dur(6.5) #TARGET
+			set $trace #POP
+
+			sfx rat $trace
+			sfx target $trace $orb
+			sfx target $trace $orb
+			
+			sfx offset_bone $trace 0  .03 0 target
+			sfx offset_bone $trace 0 -.03 0 source
+			sfx start $trace
+            
+            sfx create linetracer -tout(1)color0(0,0,.6)color1(0,0,.3)tin(.3)dur(6.5) #TARGET
+			set $trace2 #POP
+
+			sfx rat $trace2
+			sfx target $trace2 $orb2
+			sfx target $trace2 $orb2
+			
+			sfx offset_bone $trace2 0 0 .03 target
+			sfx offset_bone $trace2 0 0 -.03 source
+			sfx start $trace2
+            
+            sfx create sray -count(32)dur(5.5)tout(.5)radius(1.3)lmin(1)lmax(2.5)color0(0,0,.6)color1(0,0,.3)wemax(.3) #TARGET
+			sfx snap_to_ground #PEEK
+			sfx start #POP
+			";
+}
+
+[effect_script*]
+{
+	name	=life_shrine;
+
+    script	="
+			sfx create cylinder
+			-alpha(.5)hp0(1,0,-4)hp1(10,0,20)rp1(1.3,0,0)rp0(6,0,0)dur(6)segments(32)texture(b_sfx_lightray_04)spin(1)color0(.5,0,0)delay(.2)tin(6)tout(4) #TARGET
+			sfx start #POP
+            sfx create lightsource -color0(10,0,0)radius(15)tin(.4)dur(5.5) #TARGET
+            sfx start #POP
+            sfx create lightsource -color0(0.01,0.01,0.01)radius(1)tin(1)dur(6)delay(.2) #TARGET
+            sfx start #POP
+            
+            sfx create fire
+			-offset(0,0,0)dur(5)tout(2)flamesize(2)instant()count(50)color0(.5,0,0)color1(0,0,0)velocity(0,1,0)accel(0,0,0)alphafade(.4)min_displace(.1)max_displace(.1)radius(1.3)max_radius(1)
+			#TARGET
+			set $fire #POP
+			sfx start $fire
+			
+			sfx create orbiter -offset(0,.2,0)color0(.5,0,0)dur(6.5)radius(1.3)radiusi(-.2)theta(0)iphi(2)itheta(0) #TARGET
+			set $orb #POP
+			sfx start $orb
+			
+			sfx create orbiter -offset(0,.2,0)color0(.5,0,0)dur(6.5)radius(0)radiusi(.2)theta(0)iphi(-2)itheta(0) #TARGET
+			set $orb2 #POP
+			sfx start $orb2
+			
+            sfx create linetracer -tout(1)color0(.5,0,0)color1(.3,0,0)tin(.3)dur(6.5) #TARGET
+			set $trace #POP
+
+			sfx rat $trace
+			sfx target $trace $orb
+			sfx target $trace $orb
+			
+			sfx offset_bone $trace 0  .03 0 target
+			sfx offset_bone $trace 0 -.03 0 source
+			sfx start $trace
+            
+            sfx create linetracer -tout(1)color0(.5,0,0)color1(.3,0,0)tin(.3)dur(6.5) #TARGET
+			set $trace2 #POP
+
+			sfx rat $trace2
+			sfx target $trace2 $orb2
+			sfx target $trace2 $orb2
+			
+			sfx offset_bone $trace2 0 0 .03 target
+			sfx offset_bone $trace2 0 0 -.03 source
+			sfx start $trace2
+            
+            sfx create sray -count(32)dur(5.5)tout(.5)radius(1.3)lmin(1)lmax(2.5)color0(.5,0,0)color1(.3,0,0)wemax(.3) #TARGET
+			sfx snap_to_ground #PEEK
+			sfx start #POP
+			";
+}
+
+[effect_script*] // -ET
+{
+	name	=cold_resist;   // made an effect that needs a spell (:
+
+	script	="
+
+			//sfx create lightsource -iradius(2)radius(7)tin(1)tout(.5)dur(2.2)color0(.75,.75,1)color1(.75,.75,.75) #TARGET
+			//sfx start #POP
+
+			sfx create orbiter -color0(.3,.3,1)phi(0)itheta(3)scale(.35)dur(3.14)radiusi(.3)tout(1)free() #TARGET
+			set $ball1 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(1.257)itheta(3)scale(.35)dur(3.14)radiusi(.3)tout(1)free() #TARGET
+			set $ball2 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(2.513)itheta(3)scale(.35)dur(3.14)radiusi(.3)tout(1)free() #TARGET
+			set $ball3 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(3.77)itheta(3)scale(.35)dur(3.14)radiusi(.3)tout(1)free() #TARGET
+			set $ball4 #POP
+			sfx create orbiter -color0(.3,.3,1)phi(5.026)itheta(3)scale(.35)dur(3.14)radiusi(.3)tout(1)free() #TARGET
+			set $ball5 #POP
+			
+			sfx attach $ball1 $ball2
+			sfx attach $ball1 $ball3
+			sfx attach $ball1 $ball4
+			sfx attach $ball1 $ball5
+
+			sfx start $ball1
+			
+			sfx create fire -line()dur(2.5)delay(.2)color0(.3,.3,1)fade_rate(1)count(50) #TARGET
+			set $line1 #POP
+			sfx rat $line1
+
+			sfx create fire -line()dur(2.5)delay(.2)color0(.3,.3,1)fade_rate(1)count(50) #TARGET
+			set $line2 #POP
+			sfx rat $line2
+
+			sfx create fire -line()dur(2.5)delay(.2)color0(.3,.3,1)fade_rate(1)count(50) #TARGET
+			set $line3 #POP
+			sfx rat $line3
+
+
+			sfx create fire -line()dur(2.5)delay(.2)color0(.3,.3,1)fade_rate(1)count(50) #TARGET
+			set $line4 #POP
+			sfx rat $line4
+
+			sfx create fire -line()dur(2.5)delay(.2)color0(.3,.3,1)fade_rate(1)count(50) #TARGET
+			set $line5 #POP
+			sfx rat $line5
+			
+			sfx target $line1 $ball1
+			sfx target $line1 $ball3
+			
+			sfx target $line2 $ball3
+			sfx target $line2 $ball5
+			
+			
+			sfx target $line3 $ball5
+			sfx target $line3 $ball2
+			
+			sfx target $line4 $ball2
+			sfx target $line4 $ball4
+			
+			sfx target $line5 $ball4
+			sfx target $line5 $ball1
+			
+			sfx start $line1
+			sfx start $line2
+			sfx start $line3
+			sfx start $line4
+			sfx start $line5
+
+
+			//sound play s_e_exp05.wav
+			sound play s_e_explode.wav
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+
+			";
+}
+
+[effect_script*] // - ET
+{
+	name	=fire_resist;   // made an effect that needs a spell (:
+
+	script	="
+
+			//sfx create lightsource -iradius(2)radius(7)tin(1)tout(.5)dur(2.2)color0(.75,.75,1)color1(.75,.75,.75) #TARGET
+			//sfx start #POP
+
+			sfx create orbiter -color0(1,.3,.1)phi(0)iphi(2)itheta(2)scale(.35)dur(3.14)radiusi(.2)tout(1)free() #TARGET
+			set $ball1 #POP
+			sfx create orbiter -color0(1,.3,.1)phi(1.257)iphi(2)itheta(2)scale(.35)dur(3.14)radiusi(.2)tout(1)free() #TARGET
+			set $ball2 #POP
+			sfx create orbiter -color0(1,.3,.1)phi(2.513)iphi(2)itheta(2)scale(.35)dur(3.14)radiusi(.2)tout(1)free() #TARGET
+			set $ball3 #POP
+			sfx create orbiter -color0(1,.3,.1)phi(3.77)iphi(2)itheta(2)scale(.35)dur(3.14)radiusi(.2)tout(1)free() #TARGET
+			set $ball4 #POP
+			sfx create orbiter -color0(1,.3,.1)phi(5.026)iphi(2)itheta(2)scale(.35)dur(3.14)radiusi(.2)tout(1)free() #TARGET
+			set $ball5 #POP
+			
+			sfx attach $ball1 $ball2
+			sfx attach $ball1 $ball3
+			sfx attach $ball1 $ball4
+			sfx attach $ball1 $ball5
+
+			sfx start $ball1
+			
+			sfx create fire -dur(2.5)delay(.2)color0(1,.3,.1)fade_rate(1) #TARGET
+			set $line1 #POP
+			sfx rat $line1
+
+			sfx create fire -dur(2.5)delay(.2)color0(1,.3,.1)fade_rate(1) #TARGET
+			set $line2 #POP
+			sfx rat $line2
+
+			sfx create fire -dur(2.5)delay(.2)color0(1,.3,.1)fade_rate(1) #TARGET
+			set $line3 #POP
+			sfx rat $line3
+
+
+			sfx create fire -dur(2.5)delay(.2)color0(1,.3,.1)fade_rate(1) #TARGET
+			set $line4 #POP
+			sfx rat $line4
+
+			sfx create fire -dur(2.5)delay(.2)color0(1,.3,.1)fade_rate(1) #TARGET
+			set $line5 #POP
+			sfx rat $line5
+			
+			sfx target $line1 $ball1
+			sfx target $line1 $ball3
+			sfx target $line1 target
+
+			
+			sfx target $line2 $ball3
+			sfx target $line2 $ball5
+			sfx target $line2 target
+			
+			
+			sfx target $line3 $ball5
+			sfx target $line3 $ball2
+			sfx target $line3 target
+			
+			
+			sfx target $line4 $ball2
+			sfx target $line4 $ball4
+			sfx target $line4 target
+			
+			
+			sfx target $line5 $ball4
+			sfx target $line5 $ball1
+			sfx target $line5 target
+			
+			sfx start $line1
+			sfx start $line2
+			sfx start $line3
+			sfx start $line4
+			sfx start $line5
+
+
+			//sound play s_e_exp05.wav
+			sound play s_e_explode.wav
+			worldmsg WE_SPELL_SYNC_END #INVALID_GOID #OWNER_GOID #TARGET_GOID
+
+			";
+}
+
+
+
+
+[effect_script*]  // $$$$$$$$$$$ Not done yet -ET
+{
+	name	=star_chart_test;
+
+	script	="
+			sfx create orbiter -iphi(0)radius(0)dur(30) #TARGET
+			set $orb #POP
+			sfx snap_to_ground $orb
+			sfx start $orb
+			
+			sfx create spe -texture(b_sfx_sparkle01)radius(5)scale(.5)count(10)dur(8)index0(0,0,1.57)index1(0,0,1.57)speed0(1,0,1)speed1(1,0,1)space0(.0157,0,.0157)space1(.0157,0,.0157) #TARGET
+			sfx start #POP
+			
+			sfx create orbiter -iphi(1.57)phi(3.14)radius(5)dur(20) #TARGET
+			set $orb2 #POP
+			sfx rat $orb2
+			sfx start $orb2
+			
+			sfx create fire -texture(b_sfx_sparkle01)offset(0,.5,0)dur(15)color0(.2,.2,1)count(10)scale(1.5)max_displace(0) #TARGET
+			set $fire #POP
+			sfx rat $fire
+			
+			sfx target $fire $orb2
+			//sfx start $fire
+			
+			
+			
+			//call star_chart_line_flame <6 0 0> <4.242 0 4.242>
+			//pause .5
+			call star_chart_line_flame <phi(0)> <phi(.785)>
+			pause .5
+			call star_chart_line_flame <phi(.785)> <phi(1.57)>
+			pause .5
+			call star_chart_line_flame <phi(1.57)> <phi(2.356)>
+			pause .5 
+			call star_chart_line_flame <phi(2.356)> <phi(3.141)>
+			pause .5 
+			call star_chart_line_flame <phi(3.141)> <phi(3.926)>
+			pause .5 
+			call star_chart_line_flame <phi(3.926)> <phi(4.712)>
+			pause .5 
+			call star_chart_line_flame <phi(4.712)> <phi(5.498)>
+			pause .5 
+			call star_chart_line_flame <phi(5.498)> <phi(0)>
+			
+			
+			waitfor script #POP 5
+			waitfor script #POP 5
+			waitfor script #POP 5
+			waitfor script #POP 5
+			waitfor script #POP 5
+			waitfor script #POP 5
+			waitfor script #POP 5
+			waitfor script #POP 5
+			";
+}
+
+[effect_script*]  // $$$$$$$$$$$$ not done yet -ET
+{
+	name	=star_chart_line_flame;
+
+	script	="
+			
+			
+			sfx create orbiter -iphi(0)radius(5)invisible()dur(15)[0] #TARGET
+			set $orb #POP
+			sfx snap_to_ground $orb
+			sfx start $orb
+			
+			sfx create orbiter -iphi(0)radius(5)invisible()dur(15)[1] #TARGET
+			set $orb2 #POP
+			sfx snap_to_ground $orb2
+			
+			
+			sfx create fire -texture(b_sfx_sparkle01)offset(0,.5,0)dur(15)color0(.2,.2,1)line()count(10)scale(1.5)velocity(0,1,0)accel(0,0,0)max_displace(0) #TARGET
+			set $fire #POP
+			sfx rat $fire
+			sfx target $fire $orb
+			sfx target $fire $orb2
+			
+			
+			sfx start $orb
+			sfx start $orb2
+			
+			/sfx offset_bone $fire 6 0 0 source
+			/sfx offset_bone $fire 4.242 0 4.242 target
+			
+			sfx start $fire
+
+
+			
+		";
+}
+
+

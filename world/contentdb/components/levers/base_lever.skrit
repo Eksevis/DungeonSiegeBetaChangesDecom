@@ -1,0 +1,104 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  base_lever.skrit
+// Author(s):  Chooch
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "Basic Open/Closed Chest";
+property string _required_component$ = "placement";
+
+// exported properties
+property float  speed_bias$          	= 1.0;
+property bool   initially_up$	      	= true;
+property bool   sound_start$            = true;
+property bool   sound_end$              = true;
+property bool   sound_transition_start$ = false;
+property bool   sound_transition_end$   = false;
+
+
+owner                                = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+#option -explicit_states
+
+startup state WaitForSetup$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+
+        if( e$ == WE_ENTERED_WORLD )
+		{
+			if( initially_up$ == false )
+			{
+				// Request animation
+				AnimReq aReq$		= MakeAnimReq( CHORE_OPEN );
+				aReq$.ReqFlags		= 1;		// ANIMFLAG_STARTATEND
+				owner.Go.Body.RCAnimate( aReq$ );
+
+				SetState Open$;
+			}
+			else
+			{
+				// Request animation
+				AnimReq aReq$		= MakeAnimReq( CHORE_CLOSE );
+				owner.Go.Body.RCAnimate( aReq$ );
+
+				SetState Closed$;
+			}
+		}
+	}
+}
+transition
+{
+	Closed$ -> Opening$: OnGoHandleMessage( WE_REQ_USE ) =
+	{
+		// Request animation
+		AnimReq aReq$		= MakeAnimReq( CHORE_OPEN );
+		owner.Go.Body.RCAnimate( aReq$ );
+        
+		if ( sound_start$ == true )
+        {
+		owner.Go.PlayMaterialSound( "lever_start", "generic", true);
+        }
+	}
+
+	Opening$ -> Open$: OnGoHandleMessage( WE_ANIM_DONE ) =
+	{
+		if ( sound_transition_start$ == true )
+        {
+		owner.Go.PlayMaterialSound( "lever_transition_start", "generic", true);
+        }
+	}
+
+	Open$ -> Closing$: OnGoHandleMessage( WE_REQ_USE ) =
+	{
+		// Request animation
+		AnimReq aReq$		= MakeAnimReq( CHORE_CLOSE );
+		owner.Go.Body.RCAnimate( aReq$ );
+		if ( sound_end$ == true )
+        {
+		owner.Go.PlayMaterialSound( "lever_end", "generic", true);
+        }
+	}
+
+	Closing$ -> Closed$: OnGoHandleMessage( WE_ANIM_DONE ) =
+	{
+		if ( sound_transition_end$ == true )
+        {
+		owner.Go.PlayMaterialSound( "lever_transition_end", "generic", true);
+        }
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

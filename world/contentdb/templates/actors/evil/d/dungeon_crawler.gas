@@ -1,0 +1,175 @@
+[t:template,n:base_dungeon_crawler]
+{
+	category_name = "evil_d";
+	doc = "dungeon crawler";
+	specializes = actor_evil;
+	[aspect]
+	{
+		model = m_c_edm_dc_pos_1;
+		[voice]
+		{
+			[die]
+			{
+				* = s_e_die_dead_SED;
+			}
+			[hit_critical]
+			{
+				* = s_e_hit_dead_SED;
+			}
+			[hit_glance]
+			{
+				* = s_e_hit_dead_SED;
+			}
+			[hit_solid]
+			{
+				* = s_e_hit_dead_SED;
+			}
+		}
+	}
+	[body]
+	{
+		avg_move_velocity = 0.370000;
+		[bone_translator]
+		{
+			body_anterior = bip01_neck;
+			body_mid = bip01_spine1;
+			body_posterior = bip01_r_thigh;
+			kill_bone = bip01_head;
+			shield_bone = bip01_l_hand;
+			weapon_bone = bip01_r_hand;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_dc_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[mind]
+	{
+		melee_engage_range = 14.0;
+		personal_space_range = 0.7;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+		inner_comfort_zone_range = .1;
+		outer_comfort_zone_range = 3;
+		com_range = 8.0;
+	}
+}
+[t:template,n:dungeon_crawler]
+{
+	category_name = "evil_d";
+	doc = "dungeon crawler";
+	specializes = base_dungeon_crawler;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  12, 0;
+			intelligence =  3, 0;
+			dexterity =  3, 0;
+			melee =  3, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 74;
+		life = 12;
+		max_life = 12;
+		mana = 6;
+        max_mana = 6;
+    }
+    [attack]
+	{
+		attack_range = 0.5;
+		damage_max = 14;
+		damage_min = 10;
+	}
+	[common] { screen_name="Dungeon Crawler"; }
+	[defend] { defense=18; }
+   	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				chance = 0.2;
+				il_main = #*/3-6;
+                il_main = #*/2-5;
+			}
+		}
+	}
+}
+[t:template,n:tortured_corpse]
+{
+	category_name = "evil_d";
+	doc = "tortured_corpse";
+	specializes = base_dungeon_crawler;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  12, 0;
+			intelligence =  3, 0;
+			dexterity =  3, 0;
+			melee =  2, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 54;
+		life = 34;
+		max_life = 34;
+		mana = 6;
+        max_mana = 6;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 13;
+		damage_min = 10;
+	}
+	[common] { screen_name="Tortured Corpse"; }
+	[defend] { defense=8; }
+   	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				chance = 0.2;
+				il_main = #weapon/5-7;
+                il_main = #armor/12-18;
+			}
+		}
+	}
+}
+

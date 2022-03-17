@@ -1,0 +1,70 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_fire.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//
+// Wraping fire damage into the attack component for a spell.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+property string	effect_script$		= ""	doc = "Effect script to call for effect";
+
+property float	particle_fit$		= -1.0	doc = "set this between 0 and 1 and fire damage will be passed as a parameter ot the FX script";
+property bool	ignite$				= true	doc = "fire can catch things on fire in adition to doing damage";
+
+
+owner 	= GoSkritComponent;
+
+Goid 		target$;
+Goid 		caster$;
+float		duration$;
+
+startup state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{	
+		if( e$ == WE_REQ_CAST )
+		{
+			target$ 			= MakeGoid( msg$.GetData1() );
+			caster$ 			= msg$.GetSendFrom();
+			
+			duration$ = owner.Go.Magic.EvaluateEffectDuration(target$, caster$);
+			
+			string params$ = "";
+			
+			if( particle_fit$ > 0.0 )
+			{
+				if( ignite$ )
+				{
+					StringTool.Append( params$, "[ignite()" );
+				} else {
+					StringTool.Append( params$, "[damage()" );
+				}
+				
+				StringTool.AppendF( params$, "fdamage(%g,%g,%g)][dur(%g)][%g]", owner.Go.Attack.DamageMin, owner.Go.Attack.DamageMax, particle_fit$ , duration$, duration$ );
+			}
+			
+			Siegefx.SRunScript(effect_script$,target$,caster$,params$,owner.Goid, e$ );
+			
+			SetState Finish$;
+		}
+	
+	}
+}
+state Finish$
+{
+	trigger OnGoHandleMessage$( WE_SPELL_SYNC_END )
+	{
+		// Since this skrit is the component of a spell and all spells are cloned before being executed
+		// then it is safe to destroy ourself after finishing execution
+		float delete_time$ = duration$ + 5.0;
+		
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, delete_time$ );	
+	}
+}
+

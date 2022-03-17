@@ -1,0 +1,78 @@
+[intro_ds]
+{
+	interface = true;
+	original_height = 480;
+	original_width = 640;
+	[t:window,n:ds_panel_1]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		rect = 0,0,256,256;
+		texture = b_gui_nis_ds_01;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		group = ds_intro;
+	}
+	[t:window,n:ds_panel_2]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		rect = 256,0,512,256;
+		texture = b_gui_nis_ds_02;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		group = ds_intro;
+	}
+	[t:window,n:ds_panel_3]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 3;
+		rect = 512,0,640,256;
+		texture = b_gui_nis_ds_03;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		group = ds_intro;
+	}
+	[t:window,n:ds_panel_4]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 4;
+		rect = 0,256,256,512;
+		texture = b_gui_nis_ds_04;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		group = ds_intro;
+	}
+	[t:window,n:ds_panel_5]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 5;
+		rect = 256,256,512,512;
+		texture = b_gui_nis_ds_05;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		group = ds_intro;
+	}
+	[t:window,n:ds_panel_6]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 6;
+		rect = 511,256,639,512;
+		texture = b_gui_nis_ds_06;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		group = ds_intro;
+	}
+}

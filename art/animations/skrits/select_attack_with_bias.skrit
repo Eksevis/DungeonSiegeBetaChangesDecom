@@ -1,0 +1,100 @@
+// Animation Skrit: select_attack_with_bias
+//
+// History:
+//		VERSION 1.0:  derived from select attack, speed bias IS applied	
+//
+//												
+
+property int MAJORVERSION$ = 1;
+property int MINORVERSION$ = 0;
+
+owner = Aspect;
+
+/////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+RestartChore$ (  int newanim$ ) { 
+
+	int numanims$ = owner.GetCurrentActiveChore().NumSubAnimsForActiveStance();
+
+	if (numanims$ <= newanim$) {
+		newanim$ = 0;
+	}
+
+	owner.GetCurrentActiveChore().ResetTimeWarp();
+
+	int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+	owner.GetCurrentActiveChore().AddAnimToBlendGroup(newanim$,1);
+	owner.GetCurrentActiveChore().CloseBlendGroup();
+	owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+
+	owner.UpdateTimeline(0);
+
+	int numofevents$ = owner.GetNumberOfEventsInActiveChore(ANIMEVENT_FIRE_WEAPON);
+	if (numofevents$ == 0) 
+	{
+		string prsfile$ = owner.GetCurrentActiveChore().GetBlendedPRSDebugName(0);
+	 	report.errorf( "Missing FIRE event!\nCharacter [%s]\nAnimation %d: [%s]\n\nPlease check the appropriate PRS/MAX file\n" ,owner.GetDebugName() ,newanim$, prsfile$);
+	}
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+
+startup state AttackOnce$ 
+{
+
+	event OnStartChore$ ( int subanim$, int /*flags$*/ )
+	{
+		RestartChore$ ( subanim$ );
+	}
+
+	event OnUpdate$( float delta_t$, float speed_bias$ )
+	{
+
+ 	 	int events$ = owner.UpdateTimeline( delta_t$ * speed_bias$ );
+
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_1)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  1, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_2)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  2, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_3)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  3, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_4)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  4, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_ATTACH_AMMO)) {
+			PostWorldMessage( WE_ANIM_ATTACH_AMMO, owner.goid, 0, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_BEGIN_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 0, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_END_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 1, 0 );
+		}
+ 		if (AnimEventBitTest(events$,ANIMEVENT_FIRE_WEAPON)) {
+			PostWorldMessage( WE_ANIM_WEAPON_FIRE, owner.goid, owner.CurrentReqBlock, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_FINISH)) {
+			PostWorldMessage( WE_ANIM_DONE, owner.goid, owner.CurrentReqBlock, 0 );
+			SetState (HoldAtEnd$);
+		}
+
+	}
+}
+
+state HoldAtEnd$ 
+{
+	event OnStartChore$ ( int subanim$, int /*flags$*/ )
+	{
+		RestartChore$ ( subanim$ );
+		SetState AttackOnce$;
+	}
+
+}

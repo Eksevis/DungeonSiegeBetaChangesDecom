@@ -1,0 +1,99 @@
+[gold_transfer_invalid]
+{
+	  intended_resolution_height = 480;
+	  intended_resolution_width = 640;
+	  interface = true;
+	  modal = true;
+	  centered = invalid_gold_dialog_bg;
+
+	[t:dialog_box,n:invalid_gold_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		  consumable = true;
+		i draw_order = 2;
+		  group = invalid_transfer;
+		  rect = 159,162,491,288;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  topmost = true;
+	}
+	[t:text,n:invalid_gold_message]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 9;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+		  rect = 172,216,478,237;
+		  text = "You do not have any gold to pick up.";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  topmost = true;
+	}
+	[t:button,n:invalid_gold_okay_button]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 5;
+		  group = invalid_transfer;
+		  rect = 265,248,366,264;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  topmost = true;
+		[t:text,n:invalid_gold_text_okay]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 6;			  
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  group = invalid_transfer;
+			  justify = center;
+			  rect = 299,249,366,264;
+			  text = "Close";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+			  topmost = true;
+		}
+		[messages]
+		{
+			  onbuttonpress = notify(hide_invalid_transfer);
+		}
+	}
+	[t:text,n:invalid_gold_text]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 13;		
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  group = invalid_transfer;
+		  justify = center;
+		  rect = 245,188,402,204;
+		  text = "Pick Up Gold";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  topmost = true;
+	}
+	[t:dialog_box,n:invalid_gold_text_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 8;
+		  rect = 235,184,412,208;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  topmost = true;
+	}
+}

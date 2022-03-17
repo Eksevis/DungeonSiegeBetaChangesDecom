@@ -1,0 +1,114 @@
+
+[t:interface,n:generic_cursors] {
+	interface_type = cursor;
+
+	[t:cursor,n:cursor_pointer] {
+
+		[messages] {
+			oncreated = setrect(0,0,64,64) &
+						loadtexture(b_gui_c_pointer) &
+						sethotspot(20,11);
+		}
+
+	}
+
+	[t:cursor,n:cursor_talk] {
+
+		[messages] {
+			oncreated = setrect(0,0,32,32) &
+						setvisible(false) &
+						loadtexture(b_gui_c_talk) &
+						sethotspot(9,5);
+		}
+
+	}
+
+	[t:cursor,n:cursor_initiate] {
+
+		[messages] {
+			oncreated = setrect(0,0,32,32) &
+						setvisible(false) &
+						loadtexture(b_gui_c_notalk) &
+						sethotspot(9,5);
+		}
+
+	}
+
+
+	[t:cursor,n:cursor_grab] {
+		rect = 0,0,32,32;
+
+		[messages] {
+			activatecursor = setvisible(true) &
+						loadanimatedtexture(b_gui_c_grab1);
+			oncreated = setvisible(false) &
+						sethotspot(9,5);
+		}
+
+	}
+
+
+	[t:cursor,n:cursor_attack] {
+		rect = 0,0,64,64;
+
+		[messages] {
+			activatecursor = setvisible(true) &
+						loadanimatedtexture(b_gui_c_attack3);
+			oncreated = setvisible(false) &
+						sethotspot(14,8);
+		}
+
+	}
+
+
+	[t:cursor,n:cursor_smash] {
+		rect = 0,0,32,32;
+
+		[messages] {
+			activatecursor = setvisible(true) &
+						loadanimatedtexture(b_gui_c_smash1);
+			oncreated = setvisible(false) &
+						sethotspot(9,5);
+		}
+
+	}
+
+	[t:cursor,n:cursor_buy] {
+		rect = 0,0,32,32;
+
+		[messages] {
+			activatecursor = setvisible(true) &
+						loadanimatedtexture(b_gui_c_buy);
+			oncreated = setvisible(false) &
+						sethotspot(18,12);
+		}
+	}
+
+	
+	[t:cursor,n:cursor_sell] {
+		rect = 0,0,32,32;
+
+		[messages] {
+			activatecursor = setvisible(true) &
+						loadanimatedtexture(b_gui_c_sell);
+			oncreated = setvisible(false) &
+						sethotspot(12,23);
+		}
+	}
+
+	[t:cursor,n:cursor_cast] {
+		rect = 0,0,32,32;
+
+		[messages] {
+			activatecursor = setvisible(true) &
+						loadanimatedtexture(b_gui_c_magic1);
+			oncreated = setvisible(false) &
+						sethotspot(19,14);
+		}
+	}
+
+	[t:cursor,n:cursor_template] {
+	}
+
+}
+

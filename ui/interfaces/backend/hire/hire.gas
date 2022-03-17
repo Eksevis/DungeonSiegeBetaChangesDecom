@@ -1,0 +1,149 @@
+[hire]
+{
+	  intended_resolution_height = 480;
+	  intended_resolution_width = 640;
+	  interface = true;
+	[t:button,n:button_buy]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 6;
+		  rect = 307,409,399,425;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(hire_buy);
+		}
+		[t:text,n:text_buy]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 15;			  
+			i font_color = 0;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 341,410,384,425;
+			  text = "Buy";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_hire_cancel]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 10;
+		  rect = 410,409,502,425;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(hire_cancel);
+		}
+		[t:text,n:text_cancel]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 15;			  
+			i font_color = 0;			
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 423,410,474,425;
+			  text = "Cancel";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:dialog_box,n:dialog_box_main_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 1;
+		  rect = 178,5,630,439;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:dialog_box_portrait_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 2;
+		  rect = 234,24,269,59;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:hire_list_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 21;
+		  rect = 196,85,613,402;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:hire_owner_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 20;
+		  rect = 285,24,569,59;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		[t:text,n:text_hire_name]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 21;			  
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_16p_lucinda-bright;
+			  justify = center;
+			  rect = 341,410,384,425;
+			  text = "Hire";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+	}
+	[t:itemslot,n:itemslot_hire_portrait]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 7;
+		  rect = 236,26,268,58;
+		  slot_type = itemslot;
+		  slot_type = picture;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:listreport,n:listreport_hires]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = ;
+		i draw_order = 25;
+		  element_type = text;		  
+		x font_color = 0xffffffff;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  rect = 196,64,613,400;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onldoubleclick = notify(hire_buy);
+		}
+	}
+}

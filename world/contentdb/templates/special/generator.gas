@@ -1,0 +1,417 @@
+//////////////////////////////////////////////////////////////////////////////
+
+[t:template,n:generator_generic]
+{
+	specializes = generator;
+	doc = "generator_basic";
+    extra_doc = "Basic Generator Object Used to Spawn Objects.";
+
+	category_name       = "generator";
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.0, 1, 0.0;
+		use_diffuse_color	=	true;
+	}
+
+   	[generator_basic] { }
+
+}
+//All exploding door gens specialize this.
+[t:template,n:generator_door_breakable]
+{
+	specializes		= base_breakable_wood;
+	doc				= "generator wooden breakable door";
+    category_name   = "generator";
+
+    aspect:model	= m_i_grs_door-farmhouse;
+
+    [physics]
+	{
+		[break_particulate]
+		{
+			frag_glb_wood_01	= 3;
+			frag_glb_wood_02	= 2;
+			frag_glb_wood_03	= 2;
+			frag_glb_wood_04	= 4;
+		}
+	}
+
+    [generator_object_exploding] {}
+
+    [generic_objblock]	{}
+
+}
+//////////////////////////////////////////////////////////////////////////////
+
+[t:template,n:generator_cobweb]
+{
+	specializes = base_breakable_wood;
+	doc = "cobweb_generator_lg";
+    category_name = "generator";
+
+	aspect:model 				= m_i_csl_cobweb-07;
+	physics:break_effect		= sarcophagus_dust;
+
+	[aspect]
+    {
+   		life_state		= LS_ALIVE_CONSCIOUS;
+    	does_block_path 	= false;
+        is_collidable 		= false;
+		life			= 3;
+		max_life		= 3;
+	}
+
+    [physics]
+	{
+		[break_particulate]
+		{
+			cobweb_csl_01	= 1;
+			cobweb_csl_02	= 1;
+        }
+	}
+
+
+    [gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.0, 1, 0.0;
+		use_diffuse_color	=	true;
+	}
+
+    [generator_breakable]
+	{
+		spawn_sfx = grate_dust;
+	}
+
+}
+[t:template,n:generator_door_breakable_peasant]
+{
+	specializes		= generator_door_breakable;
+	doc				= "generator breakable door peasant";
+    category_name   = "generator";
+
+    aspect:model		= m_i_glb_door-barn-01;
+    aspect:textures:0	= b_i_grs_door-02;
+
+    physics:break_sound = s_e_IH_break_wood_solid;
+}
+[t:template,n:generator_stalagmite]
+{
+	specializes = base_breakable_wood;
+	doc = "generator_stalagmite";
+    category_name = "generator";
+
+	aspect:model 				= m_i_cav_stalagmite-03;
+	physics:break_effect		= sarcophagus_dust;
+
+	[aspect]
+    {
+		life_state		= LS_ALIVE_CONSCIOUS;
+    	does_block_path 	= false;
+        is_collidable 		= false;
+		life			= 10;
+		max_life		= 10;
+	}
+
+    [physics]
+	{
+		[break_particulate]
+		{
+			frag_glb_stone_03	= 2;
+			frag_glb_stone_04	= 8;
+        }
+	}
+
+
+    [gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.0, 1, 0.0;
+		use_diffuse_color	=	true;
+	}
+
+    [generator_breakable] {}
+
+}
+
+
+[t:template,n:generator_alignment_changer]
+{
+	specializes = generator;
+	doc = "generator_alignment_changer";
+    extra_doc = "Dumb Guy Skrit.";
+
+	category_name       = "generator";
+
+    [gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.0, 1, 0.0;
+		use_diffuse_color	=	true;
+	}
+
+   	[generator_dumb_guy] {}
+
+}
+[t:template,n:generator_wall_breakable_01]
+{
+	specializes		= base_breakable_wood;
+	doc				= "generator wooden breakable wall";
+    category_name   = "generator";
+
+    aspect:model	= m_i_cav_boarded-cave;
+
+	[physics]
+	{
+		[break_particulate]
+		{
+			frag_glb_wood_01 = 2;
+			frag_glb_wood_02 = 2;
+			frag_glb_wood_03 = 2;
+			frag_glb_wood_04 = 2;
+		}
+	}
+
+    [generator_object_exploding]
+	{
+		child_template_name = rock_beast;
+        //spawn_actor = true;
+	}
+
+}
+[t:template,n:generator_bush_01]
+{
+	category_name = "generator";
+	doc = "generator_bush";
+	specializes = Generator;
+	[aspect]
+	{
+		is_collidable = 	FALSE;
+		is_selectable = 	FALSE;
+		is_usable = 		FALSE;
+		model = 			m_i_glb_bush-10;
+        material = 			foliage;
+	    does_block_camera =	true;
+	    [textures] { 0=b_i_grs_bush-rhod; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = 0;
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+                [anim_files]
+				{
+					spwn = a_i_glb_bush-10-shake;
+					rest = a_i_glb_bush-10-still;
+				}
+			}
+
+		}
+	}
+
+	[generator_advanced_a2]
+	{
+        spawn_period = 0;
+        sound_start = true;
+        sound_end = flase;
+	}
+
+	[gizmo]
+	{
+		diffuse_color		=	0.0, 1, 0.0;
+		model = m_i_glb_object-waypoint;
+		use_diffuse_color = TRUE;
+	}
+}
+
+[t:template,n:generator_bush_02]
+{
+	category_name = "generator";
+	doc = "generator_bush_ice";
+	specializes = Generator;
+	[aspect]
+	{
+		is_collidable = 	FALSE;
+		is_selectable = 	FALSE;
+		is_usable = 		FALSE;
+		model = 			m_i_glb_bush-10;
+        material = 			foliage;
+	    does_block_camera =	true;
+	    [textures] { 0=b_i_ice_bush-rhod; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = 0;
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+                [anim_files]
+				{
+					spwn = a_i_glb_bush-10-shake;
+					rest = a_i_glb_bush-10-still;
+				}
+			}
+
+		}
+	}
+    [generator_advanced_a2]
+	{
+        spawn_period = 0;
+        sound_start = true;
+        sound_end = flase;
+	}
+
+	[gizmo]
+	{
+		diffuse_color		=	0.0, 1, 0.0;
+		model = m_i_glb_object-waypoint;
+		use_diffuse_color = TRUE;
+	}
+
+
+[t:template,n:spawnpoint]
+{
+    specializes = generator;
+	doc			= "Spawn point";
+    extra_doc	= "Spawn point for Use with Advanced Generators";
+
+	category_name       = "generator";
+
+	[placement]	{	}
+
+	[common] 	{   }
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.0, 1, 0.0;
+		use_diffuse_color	=	true;
+	}
+}
+
+[t:template,n:generator_grate_csl_01]
+{
+	specializes		= Generator;
+	doc				= "generator_grate_floor";
+    category_name   = "generator";
+
+    aspect:model	= m_i_csl_grate-01;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_csl;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= grate-01-open;
+			}
+		}
+	}
+
+    [generator_advanced_a1] {}
+
+    [gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0, 0, 1.0;
+		use_diffuse_color	=	true;
+	}
+
+}
+
+[t:template,n:generator_grate_csl_02]
+{
+	specializes		= "Generator";
+	doc				= "generator_grate_wall";
+    category_name   = "generator";
+
+	[aspect]
+	{
+	    model         = m_i_csl_grate-02;
+	    material      = steel;
+	    is_collidable = false;
+	    is_selectable = false;
+	    is_usable     = false;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = 0;
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+                [anim_files]
+				{
+					spwn = a_i_csl_grate-02-open;
+					rest = a_i_csl_grate-02-close;
+				}
+			}
+		}
+
+	}
+
+    [generator_advanced_a2] {}
+
+    [gizmo]
+	{
+		model				=	m_i_glb_waypoint-10;
+		texture				=	;
+		diffuse_color		=	0, 0, 1.0;
+		use_diffuse_color	=	true;
+	}
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Item generators.
+
+[t:template,n:base_random_object]
+{
+	specializes 	= point;
+	doc				= "random object creator";
+   	category_name	= "special";
+
+	[gizmo]
+	{
+		diffuse_color=0.000000,0.000000,0.700000;
+		model = m_i_glb_object-gogen;
+	}
+
+	[generator_object_pcontent]
+	{
+		create_msg		= WE_CONSTRUCTED;
+
+		msg_type		= WE_REQ_ACTIVATE;
+		trigger_msg		= WE_REQ_USE;
+
+		get_child_cc	= false;
+	}
+}
+
+[t:template,n:random_object]
+{
+	specializes 	= base_random_object;
+	doc				= "random object creator";
+   	category_name	= "special";
+}

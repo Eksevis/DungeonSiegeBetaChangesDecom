@@ -1,0 +1,101 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_talk_norick.skrit
+
+	Author(s)	: 	Marsh Macy
+
+	Purpose		: 	Norick speaks his last words.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Talk$;
+}
+
+////////////////////////////////////////
+//	Helper Functions.
+
+////////////////////////////////////////
+//	TryAnim
+
+bool TryAnim$( int FourCC$ )
+{
+	int Anim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,FourCC$);
+		
+	if (Anim$ >= 0)
+	{
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_PLAYANIM, CHORE_MISC, Anim$, 0 );
+		return true;	
+	}
+	return false;
+}
+
+////////////////////////////////////////
+//	Main State Machine
+
+state Talk$
+{
+	transition
+	{
+		-> Exiting$:	OnWorldMessage( WE_REQ_TALK_END );
+	}
+
+	event OnEnterState$
+	{
+		// $$$ read/write variables from the Game Auditor here, and bring up the appropriate dialogs...
+		MCPManager.Flush(m_Go$.Goid);
+		
+		m_Go$.GetConversation.SelectConversation( "conversation_norick" );
+
+		m_Go$.GetConversation.ActivateDialogue();
+		
+		TryAnim$('dead');
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		// $$$ close up any dialogs here...
+		m_Go$.Aspect.SSetLifeState( LS_DEAD_NORMAL );
+		MCPManager.Flush(m_Go$.Goid);
+		m_Mind$.Clear();
+		PostWorldMessage( WE_KILLED, Goid.InvalidGoid, m_Go$.Goid, 0 );
+		m_Job$.MarkForDeletion( true );
+	}
+}
+
+

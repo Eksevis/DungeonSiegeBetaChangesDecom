@@ -1,0 +1,51 @@
+// Animation Skrit: rotatex
+//
+// History:
+//		VERSION 1.0:	Initial implementation
+//		VERSION 2.0:	Converted to WorldMessages 
+//						Added SFX event tests
+//						Uses owner, rather than ASPECT arg
+//
+
+property int MAJORVERSION$ = 2;
+property int MINORVERSION$ = 0;
+
+owner = Aspect;
+
+
+// These properties are the defaults for the waterwheel
+property float rpm$	= -8.0   doc = "Revolutions Per Minute"; 
+property int   bone$ = 0     doc = "Index of bone that we rotate";
+float angle$;
+
+event OnConstruct$				 
+{
+}
+event OnDestroy$
+{
+}
+
+startup state SSTO$ 
+{
+
+	event OnEnterState$
+	{
+ 	}
+
+	event OnStartChore$ ( int /*subanim$*/, int /*flags$*/ )
+	{
+		angle$=0;
+	}
+
+	event OnUpdate$( float delta_t$, float /*speed_bias$*/ )
+	{
+		// PI/30 == CLOCKWISE Radians/Second at 1 RPM
+		angle$ += delta_t$ * rpm$ * (3.14159/30.0);
+		if ( angle$ > 6.283185 )
+		{
+			angle$ -= 6.283185;
+		}
+	  	owner.RotateIndexedBoneX(bone$, angle$ ) ;
+	}
+
+}

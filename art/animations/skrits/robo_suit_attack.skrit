@@ -1,0 +1,417 @@
+// Animation Skrit: robo_suit_attack
+//
+// History:
+//		VERSION 1.0:	Initial implementation
+//
+// Custon skrit made just for the robo_suit
+//
+//property int MAJORVERSION$ = 5;
+//property int MINORVERSION$ = 0;
+//
+//owner = Aspect;
+//
+//int m_QuickFightingFidget$;	
+//		
+//int m_Middle$;
+//int m_Higher$;
+//int m_Lower$;
+//float m_PrevRatio$;
+//float m_CurrRatio$;
+//bool m_NeedThreeAnims$;
+//int m_FadeIn$;
+//int m_FadeOut$;
+//int m_BG$;
+//
+//float m_ActualTime$;
+//float m_ScaledTime$;
+//float m_FadeInTime$;
+//float m_FadeOutTime$;
+//
+//float m_ScaledDelta$;
+//float m_TimeScale$;
+//float m_AttackDuration$;
+////float m_FidgetDuration$;
+////float m_FidgetTimeScale$;
+//float m_RequestedAttackDuration$;
+//
+///////////////////////////////////////////////////////////////////////////////
+//// Utilities
+//
+////UpdateDuration$(float delta_time$)
+////{
+////	m_ActualTime$ += delta_time$;
+////	m_ScaledDelta$ = delta_time$ * m_TimeScale$;
+////	m_ScaledTime$ += m_ScaledDelta$;
+////}
+////
+////CalculateDurations$ () 
+////{
+////	float fidgettime$ = 0;
+////	if (m_AttackDuration$ < (m_RequestedAttackDuration$-m_FadeInTime$))
+//// 	{
+////		 // Take some time to transition to this anim
+////		 // and make sure that the animation we use is cyclic
+////		fidgettime$ = (m_RequestedAttackDuration$-m_FadeInTime$)-m_AttackDuration$;
+////
+////		m_FadeOutTime$ = Math.MinFloat(.2,fidgettime$*0.5);
+////
+////		int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+////		owner.GetCurrentActiveChore().AddAnimToBlendGroup(m_QuickFightingFidget$,1,true);
+////		owner.GetCurrentActiveChore().CloseBlendGroupWithTransition(m_FadeOutTime$,true);
+////		//owner.GetCurrentActiveChore().CloseBlendGroup();
+////		owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+////
+////		m_TimeScale$ = m_AttackDuration$/m_RequestedAttackDuration$;
+////	
+////	}
+////	else
+////	{
+////		m_TimeScale$ = m_AttackDuration$/m_RequestedAttackDuration$;
+////		m_FadeOutTime$ = 0;
+////	}
+////
+////	float twdur$ = owner.GetCurrentActiveChore().DurationOfCurrentTimeWarp();
+////	float twtime$ = owner.GetCurrentActiveChore().TimeOfCurrentTimeWarp();
+////	report.genericf("ATTACK: %20s req:%5.3f: att %5.3f tw: %5.2f twct: %5.2f in: %5.2f out: %5.2f fdg: %5.2f tscl: %5.2f \n", owner.GetDebugName(),m_RequestedAttackDuration$,m_AttackDuration$,twdur$,twtime$,m_FadeInTime$,m_FadeOutTime$,fidgettime$,m_TimeScale$);
+////
+////	m_ActualTime$ = 0;
+////	m_ScaledTime$ = 0;
+////}
+////
+////Restart$ (  int meleeanim$, int flags$ ) 
+////{ 
+////
+////	// subtract the fidget animation from the total 
+////	int numanims$ = owner.GetCurrentActiveChore().NumSubAnimsForActiveStance();
+////
+////	if (numanims$ <= meleeanim$ || (meleeanim$ == m_QuickFightingFidget$ ))
+////	{
+////		meleeanim$ = 0;
+////	}
+////
+////	m_AttackDuration$ = owner.GetCurrentActiveChore().SubAnimDurationForActiveStance(meleeanim$);
+////
+////	m_RequestedAttackDuration$ = DecodeProjectileLoopDuration (flags$);
+////	if ( m_RequestedAttackDuration$ < 0 )
+////	{
+////		m_RequestedAttackDuration$ = m_AttackDuration$;
+////	}
+////
+////	int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+////	owner.GetCurrentActiveChore().AddAnimToBlendGroup(meleeanim$,1);
+////
+////	m_FadeInTime$ = Math.MinFloat(0.25,m_AttackDuration$*0.25);
+////
+////	owner.GetCurrentActiveChore().CloseBlendGroup; // Take some time to merge in this anim
+////
+////	owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+////
+////	//CalculateDurations$();
+////
+////	owner.UpdateTimeline(0);
+////
+////}
+////
+//
+//RestartChore$ ( int subanim$, int flags$ )
+//{
+//	m_ActualTime$ = 0;
+//	//m_RequestedAttackDuration$ = DecodeProjectileLoopDuration (flags$);
+//		
+//	int numanims$ = owner.GetCurrentActiveChore().NumSubAnimsForActiveStance();
+//
+//	if (subanim$ >= numanims$) {
+//		subanim$ = 0;
+//	}
+//    
+//    m_AttackDuration$ = owner.GetCurrentActiveChore().SubAnimDurationForActiveStance(subanim$);
+//	
+//	owner.GetCurrentActiveChore().ResetTimeWarp();
+//      
+//    int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+//	owner.GetCurrentActiveChore().AddAnimToBlendGroup(subanim$,1);
+//	owner.GetCurrentActiveChore().CloseBlendGroup();
+//	owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+//	
+//	owner.UpdateTimeline(0);
+//
+//}
+//
+///////////////////////////////////////////////////////////////////////////////
+//// States
+//
+////----------------------------
+//
+//startup state AttackOnce$ 
+//{
+//
+//	event OnStartChore$ ( int subanim$, int flags$ )
+//	{
+//
+//		RestartChore$ ( subanim$, flags$ );
+//	}
+//
+//	event OnUpdate$( float delta_t$, float /* speed_bias$ */)
+//	{
+//
+//		//UpdateDuration$(delta_t$);
+//
+// 	 	int events$ = owner.UpdateTimeline(  delta_t$ );
+//		m_ActualTime$ += delta_t$;
+//		
+//		report.genericf("TIME: %5.3f  LENGTH: %5.3f\n", m_ActualTime$,m_AttackDuration$);
+//
+//		
+//		if (AnimEventBitTest(events$,ANIMEVENT_SFX_1)) {
+//			PostWorldMessage( WE_ANIM_SFX, owner.goid,  1, 0 );
+//		}
+//		if (AnimEventBitTest(events$,ANIMEVENT_SFX_2)) {
+//			PostWorldMessage( WE_ANIM_SFX, owner.goid,  2, 0 );
+//		}
+//		if (AnimEventBitTest(events$,ANIMEVENT_SFX_3)) {
+//			PostWorldMessage( WE_ANIM_SFX, owner.goid,  3, 0 );
+//		}
+//		if (AnimEventBitTest(events$,ANIMEVENT_SFX_4)) {
+//			PostWorldMessage( WE_ANIM_SFX, owner.goid,  4, 0 );
+//		}
+//		if (AnimEventBitTest(events$,ANIMEVENT_ATTACH_AMMO)) {
+//			PostWorldMessage( WE_ANIM_ATTACH_AMMO, owner.goid, 0, 0 );
+//		}
+//		if (AnimEventBitTest(events$,ANIMEVENT_BEGIN_SWING)) {
+//			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 0, 0 );
+//		}
+//		if (AnimEventBitTest(events$,ANIMEVENT_END_SWING)) {
+//			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 1, 0 );
+//		}
+// 		if (AnimEventBitTest(events$,ANIMEVENT_FIRE_WEAPON)) {
+//			PostWorldMessage( WE_ANIM_WEAPON_FIRE, owner.goid, owner.CurrentReqBlock, 0 );
+//		}
+//		if (m_ActualTime$ > m_AttackDuration$)
+//		{
+//			PostWorldMessage( WE_ANIM_DONE, owner.goid, owner.CurrentReqBlock, 0 );
+//			SetState (HoldAtEnd$);
+//		}
+//	}
+//}
+//
+//state HoldAtEnd$ 
+//{
+//	event OnStartChore$ ( int subanim$, int flags$ )
+//	{
+//		RestartChore$ ( subanim$, flags$ );
+//		SetState AttackOnce$;
+//	}
+//}
+
+property int MAJORVERSION$ = 5;
+property int MINORVERSION$ = 0;
+
+owner = Aspect;
+
+int m_QuickFightingFidget$;	
+		
+float m_CurrRatio$;
+
+int m_FadeOut$;
+
+
+float m_ActualTime$;
+float m_ScaledTime$;
+float m_FadeInTime$;
+float m_FadeOutTime$;
+
+float m_ScaledDelta$;
+float m_TimeScale$;
+float m_AttackDuration$;
+//float m_FidgetDuration$;
+//float m_FidgetTimeScale$;
+float m_RequestedAttackDuration$;
+
+/////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+UpdateDuration$(float delta_time$)
+{
+	m_ActualTime$ += delta_time$;
+	m_ScaledDelta$ = delta_time$ * m_TimeScale$;
+	m_ScaledTime$ += m_ScaledDelta$;
+}
+
+CalculateDurations$ () 
+{
+	float fidgettime$ = 0;
+	if (m_AttackDuration$ < (m_RequestedAttackDuration$-m_FadeInTime$))
+ 	{
+		 // Take some time to transition to this anim
+		 // and make sure that the animation we use is cyclic
+		fidgettime$ = (m_RequestedAttackDuration$-m_FadeInTime$)-m_AttackDuration$;
+
+		m_FadeOutTime$ = Math.MinFloat(0.2,fidgettime$*0.5);
+
+		int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+		owner.GetCurrentActiveChore().AddAnimToBlendGroup(m_QuickFightingFidget$,1,true);
+		owner.GetCurrentActiveChore().CloseBlendGroupWithTransition(m_FadeOutTime$,true);
+		owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+
+		m_TimeScale$ = 1;
+	
+	}
+	else
+	{
+		m_TimeScale$ = m_AttackDuration$/m_RequestedAttackDuration$;
+		m_FadeOutTime$ = 0;
+	}
+
+	float twdur$ = owner.GetCurrentActiveChore().DurationOfCurrentTimeWarp();
+	float twtime$ = owner.GetCurrentActiveChore().TimeOfCurrentTimeWarp();
+	report.genericf("ATTACK: %20s req:%5.3f: att %5.3f tw: %5.2f twct: %5.2f in: %5.2f out: %5.2f fdg: %5.2f tscl: %5.2f \n", owner.GetDebugName(),m_RequestedAttackDuration$,m_AttackDuration$,twdur$,twtime$,m_FadeInTime$,m_FadeOutTime$,fidgettime$,m_TimeScale$);
+
+	m_ActualTime$ = 0;
+	m_ScaledTime$ = 0;
+}
+
+RestartMelee$ (  int meleeanim$, int flags$ ) 
+{ 
+
+	// subtract the fidget animation from the total 
+	int numanims$ = owner.GetCurrentActiveChore().NumSubAnimsForActiveStance();
+
+	if (numanims$ <= meleeanim$ || (meleeanim$ == m_QuickFightingFidget$ ))
+	{
+		meleeanim$ = 0;
+	}
+
+	m_AttackDuration$ = owner.GetCurrentActiveChore().SubAnimDurationForActiveStance(meleeanim$);
+
+	m_RequestedAttackDuration$ = DecodeAttackLoopDuration (flags$);
+	if ( m_RequestedAttackDuration$ < 0 )
+	{
+		m_RequestedAttackDuration$ = m_AttackDuration$;
+	}
+
+	int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+	owner.GetCurrentActiveChore().AddAnimToBlendGroup(meleeanim$,1);
+
+	m_FadeInTime$ = Math.MinFloat(0.25,m_AttackDuration$*0.25);
+
+	owner.GetCurrentActiveChore().CloseBlendGroupWithTransition(m_FadeInTime$,false); // Take some time to merge in this anim
+
+	owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+
+	CalculateDurations$();
+
+	owner.UpdateTimeline(0);
+
+//	int numofevents$ = owner.GetNumberOfEventsInActiveChore(ANIMEVENT_FIRE_WEAPON);
+//	if (numofevents$ == 0) 
+//	{
+//		string prsfile$ = owner.GetCurrentActiveChore().GetBlendedPRSDebugName(0);
+//	 	report.errorf( "Missing FIRE event!\nCharacter [%s]\nAnimation %d: [%s]\n\nPlease check the appropriate PRS/MAX file\n" ,owner.GetDebugName() ,meleeanim$, prsfile$);
+//	}
+
+}
+
+RestartChore$ ( int subanim$, int flags$ )
+ {
+
+ 	m_RequestedAttackDuration$ = 0;
+
+	m_CurrRatio$ = 0;
+	m_FadeOut$ = -1;
+	RestartMelee$(subanim$,flags$);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+
+startup state AttackOnce$ 
+{
+
+	event OnStartChore$ ( int subanim$, int flags$ )
+	{
+
+		// Both CHORE_ATTACK and CHORE_MAGIC use this skrit 
+		eAnimChore ch$ = owner.GetCurrentChore();
+
+		m_QuickFightingFidget$ = owner.GetSubAnimForChoreFourCC(ch$,'qffg');
+
+		RestartChore$ ( subanim$, flags$ );
+	}
+
+	event OnUpdate$( float delta_t$, float /* speed_bias$ */)
+	{
+
+		UpdateDuration$(delta_t$);
+
+ 	 	int events$ = owner.UpdateTimeline(  m_ScaledDelta$ );
+
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_1)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  1, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_2)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  2, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_3)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  3, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_4)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  4, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_ATTACH_AMMO)) {
+			PostWorldMessage( WE_ANIM_ATTACH_AMMO, owner.goid, 0, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_BEGIN_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 0, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_END_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 1, 0 );
+		}
+ 		if (AnimEventBitTest(events$,ANIMEVENT_FIRE_WEAPON)) {
+			PostWorldMessage( WE_ANIM_WEAPON_FIRE, owner.goid, owner.CurrentReqBlock, 0 );
+		}
+		if (m_RequestedAttackDuration$ > 0)
+		{
+			if (m_RequestedAttackDuration$ <= m_ActualTime$)
+			{
+				PostWorldMessage( WE_ANIM_DONE, owner.goid, owner.CurrentReqBlock, 0 );
+				SetState (LoopAtEnd$);
+			}
+		}
+		else
+		{
+			if (AnimEventBitTest(events$,ANIMEVENT_FINISH)) {
+				PostWorldMessage( WE_ANIM_DONE, owner.goid, owner.CurrentReqBlock, 0 );
+				SetState (HoldAtEnd$);
+			}
+ 		}
+	}
+}
+
+state HoldAtEnd$ 
+{
+	event OnStartChore$ ( int subanim$, int flags$ )
+	{
+		RestartChore$ ( subanim$, flags$ );
+		SetState AttackOnce$;
+	}
+}
+
+state LoopAtEnd$
+{
+	event OnStartChore$ ( int subanim$, int flags$ )
+	{
+		RestartChore$ ( subanim$, flags$ );
+		SetState AttackOnce$;
+	}
+
+	event OnUpdate$( float delta_t$, float /* speed_bias$ */)
+	{
+
+		UpdateDuration$(delta_t$);
+
+ 	 	owner.UpdateTimeline(  m_ScaledDelta$ );
+	}
+}

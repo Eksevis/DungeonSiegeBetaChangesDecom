@@ -1,0 +1,70 @@
+// Animation Skrit: transition_to_Loop
+//
+//		VERSION 2.0:	Converted to WorldMessages 
+//						Added SFX event tests
+//						Uses owner, rather than ASPECT arg
+//
+// Notes: This skrit assumes we have the following
+// animations to work with:
+//
+//		00 = transition-to-loop-animation
+//		01 = looping-animation
+//
+//												
+
+property int MAJORVERSION$ = 2;
+property int MINORVERSION$ = 0;
+
+owner = Aspect;
+
+/////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+startup state Transition$
+{
+	event OnStartChore$ ( int subanim$, int /*flags$*/ )
+	{
+		owner.GetCurrentActiveChore().ResetTimeWarp();
+
+		int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+		owner.GetCurrentActiveChore().AddAnimToBlendGroup(0,1);
+		owner.GetCurrentActiveChore().CloseBlendGroup();
+		owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+
+		owner.UpdateTimeline(0);
+	}
+
+	event OnUpdate$( float delta_t$, float /* speed_bias$ */)
+	{
+
+ 	 	int events$ = owner.UpdateTimeline(delta_t$);
+
+		if (AnimEventBitTest(events$,ANIMEVENT_FINISH)) {
+
+			owner.GetCurrentActiveChore().ResetTimeWarp();
+
+			int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+		   	owner.GetCurrentActiveChore().AddAnimToBlendGroup(1,1);
+			owner.GetCurrentActiveChore().CloseBlendGroup();
+			owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+
+			owner.UpdateTimeline(0);
+
+			SetState LoopForever$;
+		}
+	}
+}
+
+state LoopForever$
+{
+	event OnUpdate$( float delta_t$, float /* speed_bias$ */)
+	{
+ 	 	owner.UpdateTimeline(delta_t$);
+
+	}
+
+}

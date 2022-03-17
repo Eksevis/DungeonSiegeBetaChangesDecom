@@ -1,0 +1,207 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  elevator_3s_1c_1n.skrit
+// Author(s):  James Loe
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool		_server_only$			= true;
+property string		_doc$					= "3-state, 1-connection, 1-node elevator";
+property string		_required_component$	= "placement";
+
+// exported properties
+property SiegeId	elevator_node$			= 0					doc = "Node used for transition";
+property int		elevator_door_level1$	= 0					doc = "Door used for connection with connect_node at level 1";
+property int		elevator_door_level2$	= 0					doc = "Door used for connection with connect_node at level 2";
+property int		elevator_door_level3$	= 0					doc = "Door used for connection with connect_node at level 3";
+																
+property SiegeId	connect_node$			= 0					doc = "Node used for stable connection";				
+property int		connect_door_level1$	= 0					doc = "Door used for connection with elevator_node at level 1";
+property int		connect_door_level2$	= 0					doc = "Door used for connection with elevator_node at level 2";
+property int		connect_door_level3$	= 0					doc = "Door used for connection with elevator_node at level 3";
+
+property float		duration_level1_to_2$	= 0					doc = "Length (in seconds) of transition from level 1 to level 2";
+property float		duration_level2_to_3$	= 0					doc = "Length (in seconds) of transition from level 2 to level 3";
+property float		duration_level3_to_1$	= 0					doc = "Length (in seconds) of transition from level 3 to level 1";
+
+property bool		level1_waitfortrigger$	= true				doc = "Wait for activated message before continuing to level 2";
+property bool		level2_waitfortrigger$	= true				doc = "Wait for activated message before continuing to level 3";
+property bool		level3_waitfortrigger$	= true				doc = "Wait for acitvated message before continuing to level 1";
+
+property bool		level1_connectpaths$	= true				doc = "Connect pathing information on level 1";
+property bool		level2_connectpaths$	= true				doc = "Connect pathing information on level 2";
+property bool		level3_connectpaths$	= true				doc = "Connect pathing information on level 3";
+
+property eAxisHint	level1_trans2_hint$		= AH_NONE			doc = "Transition from level 1 to level 2 rotation hint (AH_NONE,AH_XAXIS_POSITIVE,AH_XAXIS_NEGATIVE,AH_YAXIS_POSITIVE,AH_YAXIS_NEGATIVE,AH_ZAXIS_POSITIVE,AH_ZAXIS_NEGATIVE)";
+property eAxisHint	level2_trans3_hint$		= AH_NONE			doc = "Transition from level 2 to level 3 rotation hint";
+property eAxisHint	level3_trans1_hint$		= AH_NONE			doc = "Transition from level 3 to level 1 rotation hint";
+
+property bool		pingpong_state$			= false				doc = "Sets state progression order to 1-2-3-2-1 instead of 1-2-3-1"; 
+
+// For circular state elevators, tracks direction
+bool				bForward$				= true;
+
+bool                bPermanentDeactivate$   = false;
+owner                                       = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+trigger OnGoHandleMessage$( WE_REQ_DEACTIVATE )
+{
+	bPermanentDeactivate$	= true;
+	SetState Deactivated$;
+}
+
+state Deactivated$
+{
+}
+
+startup state L1_Wait$
+{
+	transition
+	{
+		-> L1_Moving$: OnGoHandleMessage( WE_REQ_USE );
+		-> L1_Moving$: OnGoHandleMessage( WE_REQ_ACTIVATE );
+	}
+
+	event OnEnterState$
+	{
+		if( level1_waitfortrigger$ == false )
+		{
+			SetState L1_Moving$;
+		}
+
+		// Always moving forward out of level 1
+		bForward$	= true;
+	}
+
+	event OnExitState$
+	{
+		if( !bPermanentDeactivate$ )
+		{
+			WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_level2$,
+												 connect_node$, connect_door_level2$,
+												 duration_level1_to_2$, level1_trans2_hint$, owner.Go.Goid, level2_connectpaths$ );
+		}
+	}
+}
+
+state L1_Moving$
+{
+	transition -> L2_Wait$: OnGoHandleMessage( WE_TERRAIN_TRANSITION_DONE );
+}
+
+state L2_Wait$
+{
+	transition
+	{
+		-> L2_Moving$: OnGoHandleMessage( WE_REQ_USE );
+		-> L2_Moving$: OnGoHandleMessage( WE_REQ_ACTIVATE );
+	}
+
+	event OnEnterState$
+	{
+		if( level2_waitfortrigger$ == false )
+		{
+			SetState L2_Moving$;
+		}
+	}
+
+	event OnExitState$
+	{
+		if( !bPermanentDeactivate$ )
+		{
+			if( pingpong_state$ && !bForward$ )
+			{
+				WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_level1$,
+													 connect_node$, connect_door_level1$,
+													 duration_level1_to_2$, level1_trans2_hint$, owner.Go.Goid, level1_connectpaths$ );
+			}
+			else
+			{
+				WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_level3$,
+													 connect_node$, connect_door_level3$,
+													 duration_level2_to_3$, level2_trans3_hint$, owner.Go.Goid, level3_connectpaths$ );
+			}
+		}
+	}
+}
+
+state L2_Moving$
+{
+	trigger OnGoHandleMessage$( WE_TERRAIN_TRANSITION_DONE )
+	{
+		if( pingpong_state$ && !bForward$ )
+		{
+			SetState L1_Wait$;
+		}
+		else
+		{
+			SetState L3_Wait$;
+		}
+	}
+}
+
+state L3_Wait$
+{
+	transition
+	{
+		-> L3_Moving$: OnGoHandleMessage( WE_REQ_USE );
+		-> L3_Moving$: OnGoHandleMessage( WE_REQ_ACTIVATE );
+	}
+
+	event OnEnterState$
+	{
+		if( level3_waitfortrigger$ == false )
+		{
+			SetState L3_Moving$;
+		}
+	}
+
+	event OnExitState$
+	{
+		if( !bPermanentDeactivate$ )
+		{
+			if( pingpong_state$ )
+			{
+				// Moving backward out of level 3
+				bForward$	= false;
+
+				WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_level2$,
+													 connect_node$, connect_door_level2$,
+													 duration_level2_to_3$, level2_trans3_hint$, owner.Go.Goid, level2_connectpaths$ );
+			}
+			else
+			{
+				WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_level1$,
+													 connect_node$, connect_door_level1$,
+													 duration_level3_to_1$, level3_trans1_hint$, owner.Go.Goid, level1_connectpaths$ );
+			}
+		}
+	}
+}
+
+state L3_Moving$
+{
+	trigger OnGoHandleMessage$( WE_TERRAIN_TRANSITION_DONE )
+	{
+		if( pingpong_state$ )
+		{
+			SetState L2_Wait$;
+		}
+		else
+		{
+			SetState L1_Wait$;
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

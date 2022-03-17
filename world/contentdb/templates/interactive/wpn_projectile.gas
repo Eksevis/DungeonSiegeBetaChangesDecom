@@ -1,0 +1,585 @@
+[t:template,n:base_projectile]
+{
+	  doc = "Projectile weapons sans bows";
+	  specializes = weapon_ranged;
+	[attack]
+	{
+		  ammo_attach_bone = ap_ammo;
+		  ammo_attaches_to_weapon = true;
+		  attack_class = ac_minigun;
+		  attack_range = 9.0;
+		  damage_max = 4;
+		  damage_min = 2;
+		  is_projectile = true;
+		  is_two_handed = true;
+		  reload_delay = 1.0;
+		  skill_class = ranged;
+		  use_aiming_error = true;
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_bow_hum-hunter;
+		  equip_slot = es_weapon_hand;
+	}
+	[physics]
+	{
+		  velocity = 14.0;
+	}
+}
+[t:template,n:bw_g_c_crossbow]
+{
+	  doc = "Crossbow";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  model = m_w_csb_001;
+		[voice]
+		{
+			[put_down]
+			{
+				  * = s_e_gui_put_down_bow;
+			}
+		}
+	}
+	[attack]
+	{
+		  ammo_template = bolt;
+		  attack_range = 16;
+		  damage_max = 23;
+		  damage_min = 20;
+		  reload_delay = 0.5;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Crossbow";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_ms_sh;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_csb_001;
+		  inventory_width = 2;
+	}
+	[physics]
+	{
+		  velocity = 75;
+	}
+}
+[t:template,n:cw_g_c_l_p_avg]
+{
+	  doc = "Long Crossbow";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  model = m_w_csb_005;
+		[voice]
+		{
+			[put_down]
+			{
+				  * = s_e_gui_put_down_bow;
+			}
+		}
+	}
+	[attack]
+	{
+		  ammo_template = bolt;
+		  attack_range = 18;
+		i damage_max = 40;
+		i damage_min = 29;
+		  reload_delay = 0.5;
+	}
+	[common]
+	{
+		  screen_name = "Long Crossbow";
+	}
+	[gui]
+	{
+        equip_requirements = strength:18,dexterity:21;
+		  active_icon = b_gui_ig_i_ic_ms_sh;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_csb_009;
+		  inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_010;
+			  model = m_w_csb_006;
+			i modifier_max = 14;
+			i modifier_min = 4;
+			  texture = b_w_csb_010;
+			[attack]
+			{
+				i damage_max = 45;
+				i damage_min = 33;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_012;
+			  model = m_w_csb_008;
+			i modifier_max = 96;
+			i modifier_min = 10;
+			  texture = b_w_csb_012;
+			[attack]
+			{
+				i damage_max = 110;
+				i damage_min = 81;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_011;
+			  model = m_w_csb_007;
+			i modifier_max = 54;
+			i modifier_min = 7;
+			  texture = b_w_csb_011;
+			[attack]
+			{
+				i damage_max = 77;
+				i damage_min = 57;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_013;
+			  model = m_w_csb_05;
+			i modifier_max = 22;
+			i modifier_min = 4;
+			  texture = b_w_csb_013;
+			[attack]
+			{
+				i damage_max = 52;
+				i damage_min = 38;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_014;
+			  model = m_w_csb_006;
+			i modifier_max = 36;
+			i modifier_min = 6;
+			  texture = b_w_csb_014;
+			[attack]
+			{
+				i damage_max = 63;
+				i damage_min = 47;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_016;
+			  model = m_w_csb_008;
+			i modifier_max = 113;
+			i modifier_min = 11;
+			  texture = b_w_csb_016;
+			[attack]
+			{
+				i damage_max = 130;
+				i damage_min = 96;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_015;
+			  model = m_w_csb_007;
+			i modifier_max = 76;
+			i modifier_min = 8;
+			  texture = b_w_csb_015;
+			[attack]
+			{
+				i damage_max = 93;
+				i damage_min = 68;
+			}
+		}
+	}
+	[physics]
+	{
+		  velocity = 75;
+	}
+}
+[t:template,n:cw_g_c_m_p_avg]
+{
+	  doc = "Medium Crossbow";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  model = m_w_csb_001;
+		[voice]
+		{
+			[put_down]
+			{
+				  * = s_e_gui_put_down_bow;
+			}
+		}
+	}
+	[attack]
+	{
+		  ammo_template = bolt;
+		  attack_range = 15;
+		i damage_max = 24;
+		i damage_min = 18;
+		  reload_delay = 0.3;
+	}
+	[common]
+	{
+		  screen_name = "Medium Crossbow";
+	}
+	[gui]
+	{
+        equip_requirements = strength:12,dexterity:15;
+		  active_icon = b_gui_ig_i_ic_ms_sh;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_csb_001;
+		  inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_002;
+			  model = m_w_csb_002;
+			i modifier_max = 5;
+			i modifier_min = 3;
+			  texture = b_w_csb_002;
+			[attack]
+			{
+				i damage_max = 29;
+				i damage_min = 21;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_004;
+			  model = m_w_csb_004;
+			i modifier_max = 52;
+			i modifier_min = 7;
+			  texture = b_w_csb_004;
+			[attack]
+			{
+				i damage_max = 75;
+				i damage_min = 56;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_003;
+			  model = m_w_csb_003;
+			i modifier_max = 24;
+			i modifier_min = 4;
+			  texture = b_w_csb_003;
+			[attack]
+			{
+				i damage_max = 51;
+				i damage_min = 37;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_005;
+			  model = m_w_csb_001;
+			i modifier_max = 9;
+			i modifier_min = 3;
+			  texture = b_w_csb_005;
+			[attack]
+			{
+				i damage_max = 34;
+				i damage_min = 25;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_006;
+			  model = m_w_csb_002;
+			i modifier_max = 15;
+			i modifier_min = 4;
+			  texture = b_w_csb_006;
+			[attack]
+			{
+				i damage_max = 43;
+				i damage_min = 32;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_008;
+			  model = m_w_csb_004;
+			i modifier_max = 77;
+			i modifier_min = 8;
+			  texture = b_w_csb_008;
+			[attack]
+			{
+				i damage_max = 89;
+				i damage_min = 66;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_csb_007;
+			  model = m_w_csb_003;
+			i modifier_max = 35;
+			i modifier_min = 5;
+			  texture = b_w_csb_007;
+			[attack]
+			{
+				i damage_max = 62;
+				i damage_min = 46;
+			}
+		}
+	}
+	[physics]
+	{
+		  velocity = 75;
+	}
+}
+[t:template,n:gore_gun]
+{
+	  doc = "Gore Gun! ";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  gold_value = 10000;
+		  model = m_w_misc_minigun_dragon;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 10;
+		  aiming_error_range_y = 4.5;
+		  ammo_template = frag_shot;
+		  attack_range = 50;
+		  damage_max = 1;
+		  damage_min = 1;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Gore Gun";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_msc_mini-gun;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_w_msc_009;
+		  inventory_width = 3;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+}
+[t:template,n:grenade]
+{
+	  doc = "Tasty Pineapple";
+	  specializes = weapon_ranged;
+	[aspect]
+	{
+		  is_selectable = false;
+		  life = 15;
+		  max_life = 15;
+		  model = m_w_misc_grenade;
+	}
+	[attack]
+	{
+		  attack_class = ac_arrow;
+		  is_projectile = true;
+		  skill_class = ranged;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Pineapple";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fuse_fire");
+				  condition* = receive_world_message("we_weapon_launched");
+			}
+			[*]
+			{
+				  action* = call_sfx_script("grenade_sparks");
+				  condition* = receive_world_message("we_glanced");
+			}
+		}
+	}
+	[physics]
+	{
+		  angular_velocity_x = 4;
+		  angular_velocity_y = 4;
+		  angular_velocity_z = 4;
+		  break_effect = grenade_explosion;
+		  elasticity = 0.7;
+		  explode_if_hit_go = true;
+		  explode_if_hit_terrain = false;
+		  explode_when_expired = true;
+		  explosion_magnitude = 3.5;
+		  fire_resistance = 1;
+		  randomize_velocity = true;
+		  sim_duration = 4;
+	}
+}
+[t:template,n:minigun_dragon]
+{
+	  doc = "Minigun";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  gold_value = 2000;
+		  model = m_w_misc_minigun_dragon;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 2.5;
+		  aiming_error_range_y = 2.5;
+		  ammo_appears_jit = true;
+		  ammo_template = bolt;
+		  attack_range = 35;
+		  damage_max = 30;
+		  damage_min = 18;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Dragon Minigun";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_msc_mini-gun;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_msc_009;
+		  inventory_width = 2;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+}
+[t:template,n:minigun_flamethrower]
+{
+	  doc = "Flame Thrower";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  gold_value = 2000;
+		  mana = 50;
+		  max_mana = 200;
+		  model = m_w_misc_flamethrower;
+	}
+	[attack]
+	{
+		  attack_range = 35;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Flame Thrower";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_msc_mini-gun;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_msc_014;
+		  inventory_width = 2;
+	}
+	[minigun_magic]
+	{
+		  damage_max_fire = 3;
+		  damage_min_fire = 3;
+		  mana_per_shot = 2;
+		  total_effects = 1;
+		  use_mana = true;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+}
+[t:template,n:minigun_grenade_launcher]
+{
+	  doc = "Grenade Launcher";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  gold_value = 2000;
+		  model = m_w_misc_grenadelauncher;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 2.5;
+		  aiming_error_range_y = 2.5;
+		  ammo_template = grenade;
+		  area_damage_radius = 3.5;
+		  attack_range = 10;
+		  damage_max = 30;
+		  damage_min = 18;
+		  reload_delay = 1;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Grenade Launcher";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_msc_mini-gun;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_msc_015;
+		  inventory_width = 2;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+}
+[t:template,n:minigun_lightning]
+{
+	  doc = "Lightening Gun";
+	  specializes = base_projectile;
+	[aspect]
+	{
+		  gold_value = 2000;
+		  model = m_w_misc_lightning_gun;
+	}
+	[attack]
+	{
+		  attack_range = 35;
+		  damage_max = 30;
+		  damage_min = 18;
+		  reload_delay = 0;
+	}
+	[common]
+	{
+		  is_pcontent_allowed = false;
+		  screen_name = "Lightning Gun";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_msc_mini-gun;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_msc_016;
+		  inventory_width = 2;
+	}
+	[minigun_magic]
+	{
+		  red = .5;
+		  green = .5;
+		  blue = 1;
+		    
+		  effect_name = "minigun_lightning";
+		  
+		  repeat_rate = .33;
+		  shot_life = 1;
+		  total_effects = 10;
+		  
+		  do_fire_damage = false;
+		  do_hit_damage = true;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+}

@@ -1,0 +1,135 @@
+[t:template,n:rector]
+{
+	category_name = "evil_d";
+	doc = "rector";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  11, 0;
+			intelligence =  7, 0;
+			dexterity =  2, 0;
+            combat_magic =  4,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 80;
+		life = 15;
+        max_life = 15;
+        mana = 14;
+        max_mana = 14;
+		model = m_c_edm_rt_pos_1;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 8;
+		damage_min = 4;
+	}
+	[body]
+	{
+		avg_move_velocity = 1.0;
+		[bone_translator]
+		{
+			body_anterior = Bone01;
+			body_mid = Bone01;
+			body_posterior = Bone01;
+			kill_bone = Bone01;
+			shield_bone = Bone01;
+			weapon_bone = Bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_rt_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common]
+	{
+		screen_name="Rector";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("rector_eye_glow");
+				condition* = receive_world_message("we_constructed");
+			}
+		}
+	}
+    [defend] { defense=8; }
+    [inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_rector_burn; }
+	}
+   	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				chance = 0.05;
+				il_main = #ring/3-7;
+			}
+		}
+	}
+
+	[mind]
+	{
+		actor_auto_uses_active_spells = true;
+		melee_engage_range = 15;
+		personal_space_range = 0.7;
+		ranged_engage_range = 15.0;
+		sight_range = 15.0;
+	}
+	[physics]
+	{
+		explode_when_killed = true;
+		explosion_magnitude = 1.0;
+		[break_particulate]
+		{
+			frag_glb_rector_01 = 1;
+			frag_glb_rector_02 = 1;
+			frag_glb_rector_03 = 1;
+			frag_glb_rector_04 = 1;
+			frag_glb_rector_05 = 1;
+		}
+	}
+}

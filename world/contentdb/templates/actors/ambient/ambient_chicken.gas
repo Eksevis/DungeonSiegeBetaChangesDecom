@@ -1,0 +1,281 @@
+[t:template,n:base_chicken]
+{
+	doc = "Base template for all ambient chickens.";
+	specializes = actor_ambient;
+	[actor]
+	{
+		race=other;
+		drops_spellbook = false;
+	}
+	[aspect]
+	{
+		does_block_path = false;
+		model = m_c_na_ckn_pos_1;
+	}
+	[body]
+	{
+		avg_move_velocity = 3.000000;
+		[bone_translator]
+		{
+			body_anterior = bone03;
+			body_mid = bone02;
+			body_posterior = bone06;
+			kill_bone = bone02;
+			shield_bone = bone02;
+			weapon_bone = bone03;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_ckn_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=mg; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+					02 = dsf-03;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				speed_bias = 0.68;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[common] { screen_name="Chicken"; }
+	[mind]
+	{
+		on_enemy_spotted_alert_friends 				= false;
+		on_enemy_spotted_attack 					= false;
+		on_enemy_entered_ocz_attack 				= false;
+		on_enemy_entered_icz_attack 				= false;
+		on_enemy_entered_ocz_flee 					= true;
+		on_friend_entered_ocz_flee 					= true;
+		on_enemy_entered_weapon_engage_range_attack = false;
+		inner_comfort_zone_range 					= 0.1;
+		melee_engage_range 							= 0.1;
+		outer_comfort_zone_range 					= 5.0;
+		personal_space_range 						= 0.4;
+		sight_range 								= 6.0;
+		flee_count									= 1000;
+	}
+}
+[t:template,n:chicken_grey]
+{
+	category_name = "ambients";
+	doc = "chicken_grey";
+	specializes = base_chicken;
+	[aspect]
+	{
+		[textures] { 0=b_c_na_ckn_grey; }
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_grey");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[physics]
+	{
+		break_effect = feathers_grey;
+		explode_when_killed = true;
+	}
+}
+[t:template,n:chicken_red]
+{
+	category_name = "ambients";
+	doc = "chicken_red";
+	specializes = base_chicken;
+	[aspect]
+	{
+		[textures] { 0=b_c_na_ckn_red; }
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_red");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[physics]
+	{
+		break_effect = feathers_red;
+		explode_when_killed = true;
+	}
+}
+[t:template,n:chicken_white]
+{
+	category_name = "ambients";
+	doc = "chicken_white";
+	specializes = base_chicken;
+	[aspect]
+	{
+		[textures] { 0=b_c_na_ckn_white; }
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_white");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[physics]
+	{
+		break_effect = feathers_white;
+		explode_when_killed = true;
+	}
+}
+
+[t:template,n:mana_chicken]
+{
+	doc = "Tasty Mana Fried Chicken. take two.";
+	category_name = "ambients";
+	specializes = base_chicken;
+	[actor]
+	{
+		[skills]
+		{
+			intelligence =  0, 0, 50;
+			nature_magic =  0, 0, 50;
+		}
+		drops_spellbook = false;
+	}
+	[aspect]
+	{
+		life = 1;
+		max_life = 1;
+		mana = 0;
+		max_mana = 200;
+		mana_recovery_period = 1.0;
+		mana_recovery_unit   = 2.0;
+		[textures] { 0=b_c_na_ckn_white; }
+		is_selectable	= true;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_white");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[mind]
+	{
+		jat_guard = world\ai\jobs\actors\good\job_helper_follow.skrit;
+		jat_brain = jat_none;
+		actor_auto_xfers_mana = true;
+		on_friend_entered_ocz_flee = false;
+		sight_range = 12.0;
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_mana_channel; }
+	}
+	[physics]
+	{
+		break_effect = feathers_white;
+		explode_when_killed = true;
+	}
+}
+
+[t:template,n:heal_chicken]
+{
+	doc = "Tasty Mana Fried Chicken. take two.";
+	category_name = "ambients";
+	specializes = base_chicken;
+	[actor]
+	{
+		[skills]
+		{
+			intelligence =  0, 0, 50;
+			nature_magic =  0, 0, 50;
+		}
+		drops_spellbook = false;
+	}
+	[aspect]
+	{
+		life = 1;
+		max_life = 1;
+		mana = 0;
+		max_mana = 200;
+		mana_recovery_period = 1.0;
+		mana_recovery_unit   = 2.0;
+		[textures] { 0=b_c_na_ckn_red; }
+		is_selectable	= true;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_red");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[mind]
+	{
+		jat_guard = world\ai\jobs\actors\good\job_helper_follow.skrit;
+		jat_brain = jat_none;
+		actor_auto_heals_others_life = true;
+		on_friend_entered_ocz_flee = false;
+		sight_range = 12.0;
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_infuse_life; }
+	}
+	[physics]
+	{
+		break_effect = feathers_red;
+		explode_when_killed = true;
+	}
+}

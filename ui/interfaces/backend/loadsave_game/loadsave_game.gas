@@ -1,0 +1,226 @@
+[loadsave_game]
+{
+	b interface = true;
+	modal = true;
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+	centered = loadsave_dialog_box_main;
+
+	[t:button,n:button_save_cancel]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 9;
+		  rect = 375,388,467,404;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		
+		[t:text,n:save_text_cancel]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 17;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 346,388,418,404;
+			  text = "Cancel";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+
+		[messages] { onbuttonpress=notify(loadsave_game_cancel); }
+	}
+	[t:button,n:button_save_delete]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 9;
+		  rect = 273,388,365,404;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		
+		[t:text,n:save_text_delete]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 17;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 346,388,418,404;
+			  text = "Delete";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+
+		[messages] { onbuttonpress=notify(loadsave_game_delete); }
+	}
+	[t:button,n:button_save_okay]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = button_4;
+		i draw_order = 8;
+		  rect = 171,388,263,404;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		[t:text,n:save_text_ok]
+		{
+			f alpha = 1.000000;
+			b common_control = false;
+			  common_template = ;
+			i draw_order = 16;
+			i font_color = -1;
+			i font_size = 0;
+			  font_type = b_gui_fnt_14p_lucinda-bright;
+			  justify = center;
+			  rect = 222,388,296,404;
+			  text = "Save";
+			  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			  wrap_mode = clamp;
+		}
+
+		[messages] { onbuttonpress=notify(loadsave_game_ok) & playsound(s_e_interface_close.wav); }		
+	}
+	[t:dialog_box,n:description_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 4;
+		  rect = 258,109,467,181;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:text_box,n:loadsave_game_name_text]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 12;
+		b fixed_location = false;
+		b has_slider = false;
+		  rect = 260,110,465,178;
+		f scroll_rate = 0.000000;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+	}
+	[t:dialog_box,n:loadsave_dialog_box_main]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 1;
+		  rect = 150,56,492,430;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:edit_box,n:loadsave_game_name_edit_box]
+	{
+		f alpha = 1.000000;
+		b clear_select = false;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 20;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		i max_string_size = 30;
+		b permanent_focus = true;
+		  rect = 174,355,463,375;
+		  text = ;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  excluded_chars = "<>:/\|?*"
+		[prompt]
+		{
+			  texture = b_gui_fe_m_single_prompt;
+			i width = 1;
+		}	
+		[messages] { oneditselect=notify(loadsave_game_ok) & playsound(s_e_interface_close.wav); }	
+	}
+	[t:dialog_box,n:edit_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 10;
+		  rect = 171,353,467,377;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:dialog_box,n:list_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 5;
+		  rect = 171,187,467,349;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:listbox,n:loadsave_game_listbox]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = ;
+		i draw_order = 15;
+		  rect = 173,189,465,347;
+		x text_color = 0xffffffff;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  [messages] { oncreated=setelementheight(16); onselect=notify(loadsave_select_game); onldoubleclick=notify(loadsave_game_ok); }
+
+		[t:selection_box,n:selection_box] 
+		{
+			alpha = 0.5;
+			texture = b_gui_cmn_selection;
+		}
+	}
+	[t:dialog_box,n:preview_dialog_bg]
+	{
+		f alpha = 1.000000;
+		b common_control = true;
+		  common_template = cpbox;
+		i draw_order = 2;
+		  rect = 171,109,243,181;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+	[t:window,n:preview_window]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 13;
+		  rect = 175,113,239,177;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}	
+	[t:text,n:loadsave_game_title]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 7;
+		i font_color = -1;
+		i font_size = 0;
+		  font_type = b_gui_fnt_18p_lucinda-bright;
+		  justify = center;
+		  rect = 246,72,388,101;
+		  text = "Save Game";
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+	}
+}

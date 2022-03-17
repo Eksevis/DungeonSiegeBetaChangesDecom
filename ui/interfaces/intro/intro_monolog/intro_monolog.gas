@@ -1,0 +1,22 @@
+[intro_monolog]
+{
+	interface = true;
+	centered = text_box_monolog;
+	[t:text_box,n:text_box_monolog]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		fixed_location = true;
+		has_slider = false;		
+		rect = 131,104,513,381;
+		scroll_rate = 5.6000000;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		text = "Long ago, our ancestors retreated from a world of madness.  The empire they had sworn to defend had fallen, torn asunder by the power hungry legions who once defended her crumbling borders.  From this chaos they fled and forged a new kingdom in a land they called Ehb.\n\nFor three hundred years they enjoyed the bounty of a land rich with the promise of great things, and above all else, a life of peace.  The one thing our ancestors sought more than anything else.\n\nBut it was peace, purchased at a terrible, terrible price.";
+		font_type = b_gui_fnt_18p_lucinda-bright;
+		scroll_through = true;
+		nostop = true;
+	}
+}

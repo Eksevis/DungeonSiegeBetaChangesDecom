@@ -1,0 +1,414 @@
+[store]
+{
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+	interface = true;
+	/*
+	[t:radio_button,n:button_buy]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x00000012;
+		//is_right_anchor = true;
+		popup = true;
+		radio_group = "buy_sell";
+		rect = 380,421,450,437;
+		//right_anchor = 271;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(button_buy);
+		}
+		[t:text,n:text_buy]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x00000013;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 403,422,450,437;
+			text = "BUY";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	*/
+	[t:button,n:button_cancel]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x0000000E;
+		//is_right_anchor = true;
+		rect = 545,421,625,437;
+		//right_anchor = 106;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(hide_store_inventory);
+		}
+		[t:text,n:text_cancel]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 561,422,625,437;
+			text = "CANCEL";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	/*
+	[t:radio_button,n:button_sell]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x00000014;
+		//is_right_anchor = true;
+		popup = true;
+		radio_group = "buy_sell";
+		rect = 457,421,527,437;
+		//right_anchor = 194;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(button_sell);
+		}
+		[t:text,n:text_sell]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x00000015;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 478,422,527,437;
+			text = "SELL";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	*/
+	[t:dialog_box,n:dialog_box_grid_frame]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = cpbox;
+	  x draw_order = 0x00000003;
+		//is_right_anchor = true;
+		rect = 369,85,636,415;
+		//right_anchor = 282;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:dialog_box_portrait_bg]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = cpbox;
+	  x draw_order = 0x00000005;
+		//is_right_anchor = true;
+		rect = 415,15,451,51;
+		//right_anchor = 236;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:dialog_box_store_frame]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = cpbox;
+		consumable = true;
+	  x draw_order = 0x00000001;
+		//is_right_anchor = true;
+		rect = 366,3,639,452;
+		//right_anchor = 291;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:dialog_box_store_name]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = cpbox;
+	  x draw_order = 0x00000006;
+		//is_right_anchor = true;
+		rect = 453,15,587,49;
+		//right_anchor = 198;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:text_store_name]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0xCDCDCDCD;
+			font_type = b_gui_fnt_16p_lucinda-bright;
+			justify = center;
+			rect = 480,24,587,49;
+			text = "DEFAULT";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:gridbox,n:gridbox_store]
+	{
+	  f alpha = 1.000000;
+	  f box_height = 32.000000;
+	  f box_width = 32.000000;
+	  x columns = 0x00000008;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x00000005;
+		grid_type = inventory;
+		//is_right_anchor = true;
+		rect = 374,91,630,411;
+		//right_anchor = 277;
+	  x rows = 0x0000000A;
+		texture = b_gui_ig_mnu_ip_grid;
+		uvcoords = 0.000000,10.000000,8.000000,0.000000;
+		wrap_mode = tiled;
+	}
+	[t:itemslot,n:itemslot_store_owner]
+	{
+		accept_input = false;
+	  f alpha = 1.000000;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x00000010;
+		//is_right_anchor = true;
+		rect = 417,17,449,49;
+		//right_anchor = 234;
+		slot_type = picture;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:tab,n:tab_armor]
+	{
+	  f alpha = 1.000000;
+		column = 0;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x00000006;
+		//is_right_anchor = true;
+		radio_group = store;
+		rect = 373,66,453,82;
+		//right_anchor = 278;
+		row = 0;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(store_tab_change) & shift_y(5);
+			oncreated = setstate(1);
+			onunchecked = shift_y(-5);
+		}
+		[t:text,n:text_front_row_1]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 391,76,453,91;
+			text = "ARMOR";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_magic]
+	{
+	  f alpha = 1.000000;
+		column = 0;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x00000009;
+		//is_right_anchor = true;
+		radio_group = store;
+		rect = 393,56,473,71;
+		//right_anchor = 258;
+		row = 1;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(store_tab_change) & shift_y(5);
+			onunchecked = shift_y(-5);
+		}
+		[t:text,n:text_back_row_1]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 413,57,473,71;
+			text = "MAGIC";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_misc]
+	{
+	  f alpha = 1.000000;
+		column = 2;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x0000000B;
+		//is_right_anchor = true;
+		radio_group = store;
+		rect = 551,56,631,71;
+		//right_anchor = 100;
+		row = 1;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(store_tab_change) & shift_y(5);
+			onunchecked = shift_y(-5);
+		}
+		[t:text,n:text_back_row_3]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 577,57,631,71;
+			text = "MISC";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_potion]
+	{
+	  f alpha = 1.000000;
+		column = 1;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x0000000A;
+		//is_right_anchor = true;
+		radio_group = store;
+		rect = 472,56,552,71;
+		//right_anchor = 179;
+		row = 1;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(store_tab_change) & shift_y(5);
+			onunchecked = shift_y(-5);
+		}
+		[t:text,n:text_back_row_2]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 486,57,552,71;
+			text = "POTIONS";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_shields]
+	{
+	  f alpha = 1.000000;
+		column = 2;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x00000008;
+		//is_right_anchor = true;
+		radio_group = store;
+		rect = 534,70,614,86;
+		//right_anchor = 117;
+		row = 0;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(store_tab_change) & shift_y(5);
+			onunchecked = shift_y(-5);
+		}
+		[t:text,n:text_front_row_3]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 549,71,614,86;
+			text = "SHIELDS";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_weapon]
+	{
+	  f alpha = 1.000000;
+		column = 1;
+	  b common_control = true;
+		common_template = button_4;
+	  x draw_order = 0x00000007;
+		//is_right_anchor = true;
+		radio_group = store;
+		rect = 453,70,533,86;
+		//right_anchor = 198;
+		row = 0;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(store_tab_change) & shift_y(5);
+			onunchecked = shift_y(-5);
+		}
+		[t:text,n:text_front_row_2]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  x draw_order = 0x0000000F;
+		  x font_color = 0xFFFFFFFF;
+		  x font_size = 0x0000000E;
+			font_type = b_gui_fnt_14p_lucinda-bright;
+			justify = center;
+			rect = 464,71,533,86;
+			text = "WEAPONS";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+}

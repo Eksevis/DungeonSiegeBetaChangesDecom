@@ -1,0 +1,144 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_launch.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string	effect_script$			= ""	doc = "Effect script to call for effect";
+property string script_params$			= ""   	doc = "Parameters to send to SiegeFx script";
+property int 	number$					= 5   	doc = "how many to launch";
+property float	launch_freq_min$		= .1	doc = "Minimum amount of time to wait before spawning another projectile";
+property float	launch_freq_max$		= .1	doc = "Maxmimum amount of time to wait before spawning another projectile";
+property bool	delay_between_shots$	= true	doc = "use lauch frequency to delay between shots.";
+
+property bool	randomize_offsets$		= false	doc = "offset by a random amount between +- directional offsets.";
+property bool	use_offsets$			= false	doc = "offset by a random amount between +- directional offsets.";
+
+property float	x_offset$				= 0.0	doc = "launch offset in x direction";
+property float	y_offset$				= 0.0	doc = "launch offset in y direction";
+property float	z_offset$				= 0.0	doc = "launch offset in z direction";
+
+
+owner 	= GoSkritComponent;
+
+Goid 		m_Target$;
+Goid 		m_Caster$;
+Goid		m_Weapon$;
+Goid		m_Ammo$;
+
+startup state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{	
+		if( e$ == WE_REQ_CAST )
+		{
+			m_Target$ 			= MakeGoid( msg$.GetData1() );
+			m_Caster$ 			= msg$.GetSendFrom();
+			m_Weapon$			= owner.go.goid;
+				
+			SetState Launch$;
+		}
+	}
+}			
+
+
+state Launch$
+{	
+	trigger OnTimer$( 1 )
+	{
+		SetState Launch$;
+	}
+			
+	event OnEnterState$
+	{
+		if( (number$ > 0) && ((m_Caster$.IsValid) && (m_Target$.IsValid)))
+		{
+			m_Ammo$ = m_Weapon$.Go.Attack.SPrepareAmmo;
+				
+			SiegePos initial_pos$ = m_Weapon$.Go.Attack.ComputeFiringPos( m_Ammo$ );
+			
+			if (use_offsets$)
+			{
+				if (randomize_offsets$)
+				{
+					initial_pos$.Pos.X = initial_pos$.Pos.X + x_offset$*Math.RandomFloat( -1, 1 );
+					initial_pos$.Pos.Y = initial_pos$.Pos.Y + y_offset$*Math.RandomFloat( -1, 1 );;
+					initial_pos$.Pos.Z = initial_pos$.Pos.Z + z_offset$*Math.RandomFloat( -1, 1 );;
+				} else {
+					initial_pos$.Pos.X = initial_pos$.Pos.X + x_offset$;
+					initial_pos$.Pos.Y = initial_pos$.Pos.Y + y_offset$;
+					initial_pos$.Pos.Z = initial_pos$.Pos.Z + z_offset$;
+				}
+			}
+			
+			int firing_pos$ = SiegeFx.AddVariable( initial_pos$, m_Ammo$ );
+			
+			if ( m_Target$.Go.HasAspect )
+			{
+				int target_pos$ = SiegeFx.AddVariable( m_Weapon$.Go.Attack.ComputeTargetPos( m_Target$ ), m_Ammo$ );
+				
+				float velocity$ = m_Weapon$.Go.Physics.GetVelocity;
+
+				if( m_Weapon$.Go.Attack.IsInProjectileRange( m_Ammo$, velocity$, SiegeFx.GetVariable( target_pos$, m_Ammo$ ) ) )
+				{
+					m_Weapon$.Go.Attack.ComputeAimingError;
+					float x_error$ = m_Weapon$.Go.Attack.GetAimingErrorX;
+					float y_error$ = m_Weapon$.Go.Attack.GetAimingErrorY;
+								
+					float aiming_angle$ = m_Weapon$.Go.Attack.ComputeAimingAngle( m_Ammo$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), SiegeFx.GetVariable( target_pos$, m_Ammo$ ), velocity$ );
+					m_Weapon$.Go.Attack.SLaunchAmmo( m_Ammo$, velocity$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), SiegeFx.GetVariable( target_pos$, m_Ammo$ ), x_error$, y_error$, goid.invalidgoid );
+					m_Weapon$.Go.Attack.AlertRangedAttack( m_Target$ );
+				}
+				else
+				{
+					report.generic("Out of range for spell_launch.skrit");
+					m_Weapon$.Go.Attack.SUnprepareAmmo;
+				}			
+			} else {
+				m_Weapon$.Go.Attack.ComputeAimingError;
+				float x_error$ = m_Weapon$.Go.Attack.GetAimingErrorX;
+				float y_error$ = m_Weapon$.Go.Attack.GetAimingErrorY;
+		
+				float velocity$ = m_Weapon$.Go.Physics.GetVelocity;
+		
+				float aiming_angle$ = m_Weapon$.Go.Attack.ComputeAimingAngle( m_Ammo$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), m_Target$.go.placement.position, velocity$ );
+		
+				m_Weapon$.Go.Attack.SLaunchAmmo( m_Ammo$, velocity$, SiegeFx.GetVariable( firing_pos$, m_Ammo$ ), m_Target$.go.placement.position, x_error$, y_error$, Goid.InvalidGoid );
+			}
+			number$ -= 1;
+			
+			if ( effect_script$ != "" )
+			{
+				SiegeFx.SRunScript( effect_script$, m_Target$, m_Caster$, script_params$, owner.Goid, WE_REQ_CAST );
+			}
+			if (delay_between_shots$)
+			{
+				float random_delay$ = Math.RandomFloat( launch_freq_min$, launch_freq_max$ );
+				this.CreateTimer( 1, random_delay$ );
+			} else {
+				SetState Launch$;
+			}
+		} else {
+			SetState Finished$;
+		}
+	}
+}
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+
+		// Since this skrit is the component of a spell and all spells are cloned before being executed
+		// then it is safe to destroy ourself after finishing execution
+
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 10 );			
+	}
+}

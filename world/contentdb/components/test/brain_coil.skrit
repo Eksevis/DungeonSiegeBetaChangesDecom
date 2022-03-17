@@ -1,0 +1,76 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  brain_drill.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "State machine for the tesla coil.";
+property string _required_component$ = "placement";
+
+// exported properties
+property float  speed_bias$     = 1.0;
+property float	check_freq$		= 1.0	doc = "how often to check for enemies or friends.";
+
+owner                                = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Startup$
+{
+	transition -> Default$ : OnGoHandleMessage( WE_ENTERED_WORLD );
+}
+
+
+state Default$
+{
+	event OnEnterState$
+	{
+		AnimReq aReq$	= MakeAnimReq( CHORE_DEFAULT );
+		owner.Go.Body.RCAnimate( aReq$ );
+		
+		SetState Zap$;
+	}
+}
+
+state Zap$
+{
+	transition -> Finished$: OnGoHandleMessage( WE_KILLED );
+	
+	trigger OnTimer$( 1 )
+	{
+		GoMind m_Mind$ = owner.go.mind;
+		
+		m_Mind$.TempGopColl1.Clear;
+		m_Mind$.TempGopColl2.Clear;
+		
+		m_Mind$.GetEnemiesInSphere( m_Mind$.SightRange, m_Mind$.TempGopColl1);
+		
+	    if ( m_Mind$.TempGopColl1.Size() > 0 )
+	    {
+			Go spell$ = owner.go.Inventory.GetSelectedSpell();
+			spell$.Magic.SCast( m_Mind$.TempGopColl1.Get( 0 ) );
+	    }
+		SetState Zap$;
+	}
+	
+	event OnEnterState$
+	{
+		this.CreateTimer(1, check_freq$);
+    }
+}
+
+state Finished$
+{
+}
+
+//////////////////////////////////////////////////////////////////////////////

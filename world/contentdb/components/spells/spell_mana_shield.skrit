@@ -1,0 +1,121 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_reactive_armor.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+// This skrit waits reads the duration and sets up a state timer so only one of these spells
+// can be cast at a time. The when the duration is over the state is removed and the spell
+// is deleted. When the character is attacked this spell will shoot back at the attacker.
+
+
+property string effect_script$		= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string effect_params$		= ""   	doc = "Parameters to send to SiegeFx script";
+property string description$		= ""	doc = "Description of enchantment being applied";
+property string state_name$			= ""	doc = "Name of effect to use as a generic state and as a screen name.";
+
+
+owner = GoSkritComponent;
+
+Goid 	target$;
+Goid 	caster$;
+float 	spell_duration$;
+int		active_effect$ = 0;
+float	previous_life$ = 0.0; 
+
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+
+			spell_duration$ = owner.Go.Magic.EvaluateEffectDuration(target$, caster$);
+
+			// Check to see if the enchantment has already been cast on this go
+			if( target$.Go.Actor.HasGenericState( state_name$ ) ) {
+				SetState( Abort$ );
+			} else {
+				// Start the visual
+				if(effect_script$ != "")
+				{
+					active_effect$ = SiegeFx.SRunScript( effect_script$, target$, caster$, effect_params$, owner.Goid, e$ );
+				}
+				// Add the effected state so this can only happen once
+				target$.Go.Actor.AddGenericState( state_name$, state_name$, description$, spell_duration$, caster$ );
+				
+				this.CreateTimer( 1, spell_duration$ );
+				
+				GoDb.StartWatching( owner.Goid, target$);
+				previous_life$ = target$.Go.Aspect.CurrentLife;
+			}
+		}
+	}
+	
+	event OnGoHandleCcMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_DAMAGED ) {
+
+			if( target$.IsValid() )
+			{
+				float amount$ = previous_life$ - target$.Go.Aspect.CurrentLife;
+				previous_life$ = target$.Go.Aspect.CurrentLife;
+				if ((amount$ > 0.0)  && ( target$.Go.Aspect.LifeState == LS_ALIVE_CONSCIOUS ) )
+				{
+					amount$ = Math.MinFloat( amount$, target$.Go.Aspect.CurrentMana);
+					Rules.ChangeLife( caster$, target$, amount$ );
+					amount$ *= -0.9;
+					Rules.ChangeMana( target$, amount$ );
+				}
+			}	
+		}
+	}
+	transition -> RestoreState$ :  OnTimer( 1 );
+}
+
+state RestoreState$
+{
+	event OnEnterState$
+	{
+		// If the go is still alive then restore his state
+		if( target$.IsValid ) {
+			// remove the state so this can be affected again
+			target$.Go.Actor.RemoveGenericState( state_name$ );	
+			
+			if (active_effect$ != 0)
+			{
+				SiegeFx.StopScript( active_effect$ );
+			}
+		}
+		SetState( Finished$ );
+	}
+}
+
+
+state Abort$
+{
+	event OnEnterState$
+	{
+		// Refund the players mana
+		Rules.ChangeMana( caster$, owner.go.getmagic.manacost );
+
+		SetState( Finished$ );
+	}
+}
+
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Delete this skrit
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 10 );
+	}
+}

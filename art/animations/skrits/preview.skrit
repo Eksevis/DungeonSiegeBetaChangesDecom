@@ -1,0 +1,66 @@
+// Animation Skrit: preview
+// History:
+//		VERSION 1.0:	Initial implementation
+//
+// Notes: This chore assumes we have the following
+// animations to work with: (from the template GAS file)
+//
+//		00 = dff;
+//		01 = dff-2;
+//
+
+property int MAJORVERSION$ = 1;
+property int MINORVERSION$ = 0;
+
+/////////////////////////////////////////////////////////////////////////////
+// Per Skrit Object storage
+
+			   
+/////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+RestartChore$ ( aspect asp$ ) { 
+
+
+	int newanim$ = 0;
+
+	asp$.GetCurrentActiveChore().ResetTimeWarp();
+
+	int bg$ = asp$.GetCurrentActiveChore().OpenBlendGroup();
+	asp$.GetCurrentActiveChore().AddAnimToBlendGroup(newanim$,1);
+	asp$.GetCurrentActiveChore().CloseBlendGroup();
+	asp$.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+
+	asp$.UpdateTimeline(0);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+
+startup state LoopForever$ 
+{
+
+	event OnStartChore$ ( aspect asp$, float ease$, float /*speed_bias$*/ )
+	{
+
+		RestartChore$ ( asp$ );
+
+	}
+
+	event OnUpdate$(aspect asp$, float delta_t$)
+	{
+
+ 	 	int events$ = asp$.UpdateTimeline(delta_t$);
+
+		if (AnimEventBitTest(events$,ANIMEVENT_FINISH)) {
+			RestartChore$ ( asp$ );
+ 			asp$.AnimationCallback('rset');
+		}
+
+
+	}
+
+}

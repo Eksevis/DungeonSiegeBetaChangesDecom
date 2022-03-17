@@ -1,0 +1,71 @@
+//////////////////////////////////////////////////////////////////////////
+
+// Simple 2-stage 1-connection 1-node platform
+[t:template,n:elevator_2s_1c_1n]
+{
+	specializes = elevator;
+	doc = [elevator_2s_1c_1n];
+    category_name       = "elevator";
+
+	[elevator_2s_1c_1n]  {  }
+}
+
+// 2-stage 1-connection 2-node platform
+[t:template,n:elevator_2s_1c_2n]
+{
+	specializes = elevator;
+	doc = [elevator_2s_1c_2n];
+    category_name       = "elevator";
+
+	[elevator_2s_1c_2n]  {  }
+}
+
+// 2-stage 2-connection 1-node platform
+[t:template,n:elevator_2s_2c_1n]
+{
+	specializes = elevator;
+	doc = [elevator_2s_2c_1n];
+    category_name       = "elevator";
+
+	[elevator_2s_2c_1n]  {  }
+}
+
+// 2-stage 2-connection 2-node platform
+[t:template,n:elevator_2s_2c_2n]
+{
+	specializes = elevator;
+	doc = [elevator_2s_2c_2n];
+    category_name       = "elevator";
+
+	[elevator_2s_2c_2n]  {  }
+}
+
+// 3-stage 1-connection 1-node platform
+[t:template,n:elevator_3s_1c_1n]
+{
+	specializes = elevator;
+	doc = [elevator_3s_1c_1n];
+    category_name       = "elevator";
+
+	[elevator_3s_1c_1n]  {  }
+}
+
+// 3-stage 2-connection 1-node platform
+[t:template,n:elevator_3s_2c_1n]
+{
+	specializes = elevator;
+	doc = [elevator_3s_2c_1n];
+    category_name       = "elevator";
+
+	[elevator_3s_2c_1n]  {  }
+}
+
+// Specialty hidden stairwell
+[t:template,n:elevator_hidden_stairwell]
+{
+	specializes = elevator;
+	doc = [elevator_hidden_stairwell];
+    category_name       = "elevator";
+
+	[elevator_hidden_stairwell]  {  }
+}

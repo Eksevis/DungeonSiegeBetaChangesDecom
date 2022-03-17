@@ -1,0 +1,252 @@
+[t:template,n:base_breakable_wood]
+{
+	doc = "Base template for breakable wood objects.";
+	specializes = prop;
+	[aspect]
+	{
+		is_usable = false;
+		life_state = ls_alive_conscious;
+		is_collidable = TRUE;
+		life = 1;
+		material = wood;
+		max_life = 1;
+		voice:die:	* = s_e_env_break_container_wood;
+	}
+	[physics]
+	{
+		//break_sound = s_e_IH_break_wood_solid;
+		[break_particulate]
+		{
+			frag_glb_wood_01 = 2;
+			frag_glb_wood_02 = 2;
+			frag_glb_wood_03 = 2;
+			frag_glb_wood_04 = 2;
+		}
+	}
+}
+[t:template,n:base_breakable_stone]
+{
+	doc = "Base template for breakable wood objects.";
+	specializes = prop;
+	[aspect]
+	{
+		is_usable		= false;
+		life_state		= ls_alive_conscious;
+		is_collidable	= TRUE;
+		max_life		= 10;
+		life			= 10;
+		material		= stone;
+	}
+ 	[physics]
+	{
+		fire_resistance		= 1.0;
+
+		[break_particulate]
+		{
+		frag_glb_stone_01	= 2;
+		frag_glb_stone_02	= 3;
+		frag_glb_stone_03	= 4;
+		frag_glb_stone_04	= 4;
+		frag_glb_stone_05	= 5;
+		frag_glb_stone_06	= 6;
+		}
+	}
+}
+[t:template,n:boardwalk_swp_breakable_01]
+{
+	category_name = "node";
+	doc = "swp_boardwalk_breakable";
+	specializes = base_breakable_wood;
+	[aspect]
+	{
+		model = m_i_swp_boardwalk-break-01;
+	}
+	[physics]
+	{
+		explosion_magnitude = 4.5;
+		[break_particulate]
+		{
+			frag_glb_boardwalk_01 = 4;
+			frag_glb_boardwalk_02 = 4;
+			frag_glb_boardwalk_03 = 5;
+			frag_glb_boardwalk_04 = 6;
+            frag_glb_boardwalk_05 = 7;
+            frag_glb_boardwalk_06 = 10;
+		}
+	}
+
+	[generator_object_exploding] {}
+
+}
+[t:template,n:wall_cav_boarded]
+{
+	category_name = "node";
+	doc = "cav_boarded_wall_breakable";
+	specializes = base_breakable_wood;
+	[aspect]
+	{
+		does_block_path = TRUE;
+		life = 1500;
+		max_life = 1500;
+		model = m_i_cav_boarded-cave;
+	}
+	[physics]
+	{
+		// explosion_magnitude = 1.5;
+		[break_particulate]
+		{
+			frag_glb_stone_01	= 10;
+			frag_glb_stone_02	= 10;
+			frag_glb_stone_03	= 10;
+			frag_glb_stone_04	= 10;
+			frag_glb_stone_05	= 10;
+			frag_glb_stone_06	= 10;
+		}
+	}
+}
+[t:template,n:door_grs_farmhouse_breakable]
+{
+	specializes		= base_breakable_wood;
+	doc				= "farmhouse_breakable";
+    category_name   = "doors";
+
+    [aspect]
+	{
+		model	= m_i_grs_door-farmhouse;
+	}
+	[physics]
+	{
+		//break_sound = s_e_break_wood;
+		explosion_magnitude = 1.75;
+		[break_particulate]
+		{
+			frag_glb_wood_01 = 1;
+			frag_glb_wood_02 = 2;
+			frag_glb_wood_03 = 1;
+			frag_glb_wood_04 = 2;
+			frag_glb_wood_05 = 3;
+			frag_glb_wood_06 = 3;
+		}
+	}
+}
+[t:template,n:door_swp_breakable]
+{
+		specializes		= base_breakable_wood;
+		doc				= "door_swamp_breakable";
+        	category_name   	= "doors";
+
+    [aspect]
+	{
+		model	= m_i_swp_breakable-door;
+	}
+	[physics]
+	{
+		//break_sound = s_e_break_wood;
+		explosion_magnitude = 1.75;
+		[break_particulate]
+		{
+			frag_glb_swamp_door_01 = 2;
+			frag_glb_swamp_door_02 = 1;
+			frag_glb_swamp_door_03 = 1;
+			frag_glb_swamp_door_04 = 1;
+		}
+	}
+
+	[generator_object_exploding] {}
+}
+[t:template,n:rock_grs_breakable_01]
+{
+	category_name = "rocks";
+	doc = "grs_rock_lg_breakable";
+	specializes = base_breakable_stone;
+	[aspect] { model=m_i_glb_rock-03; }
+
+	[generator_object_exploding] {}
+}
+
+[t:template,n:wall_glb_roundstone_breakable]
+{
+	category_name = "doors";
+	doc = "wall_roundstone_breakable";
+	specializes = base_breakable_stone;
+
+	[aspect]
+	{
+		does_block_path = TRUE;
+		is_collidable = TRUE;
+		life = 10;
+		max_life = 10;
+		model = m_i_glb_wall-breakable;
+		[textures] {0 = b_t_dgn04_dgn_wal-04x04-a; }
+	}
+	[physics]
+	{
+		break_sound = s_e_explode_rockbeast;
+		// explosion_magnitude = 1.5;
+		[break_particulate]
+		{
+			frag_glb_roundstone_01	= 3;
+			frag_glb_roundstone_02	= 3;
+			frag_glb_roundstone_03	= 3;
+			frag_glb_roundstone_04	= 3;
+			frag_glb_roundstone_05	= 3;
+		}
+	}
+}
+
+[t:template,n:window_glb_chapel]
+{
+	specializes 		= base_breakable_wood;
+	doc 				= "chapel_window";
+    category_name       = "node";
+
+	[aspect]
+	{
+		does_block_path = TRUE;
+		is_collidable = TRUE;
+		model = m_i_glb_window-chapel;
+		material = ;
+		voice:die:	* = ;
+	}
+	[physics]
+	{
+		// explosion_magnitude = 1.0;
+		break_sound = ;
+		[break_particulate]
+		{
+			frag_glb_window_chapel_01	= 2;
+			frag_glb_window_chapel_02	= 2;
+			frag_glb_window_chapel_03	= 2;
+			frag_glb_window_chapel_04	= 2;
+			frag_glb_window_chapel_05	= 2;
+			frag_glb_window_chapel_06	= 4;
+		}
+	}
+}
+
+[t:template,n:door_glb_cage_breakable]
+{
+	specializes		= base_breakable_stone;
+	doc				= "door_glb_cage_breakable";
+    category_name   = "misc";
+
+    [aspect]
+	{
+		does_block_path = TRUE;
+		is_collidable = TRUE;
+		model	= m_i_glb_door-cage-breakable;
+		[textures] { 0 = b_i_glb_door-cage-01;}
+	}
+	[physics]
+	{
+		break_sound = ;
+		explosion_magnitude = 1.0;
+		[break_particulate]
+		{
+			frag_glb_cage_door_01 = 1;
+			frag_glb_cage_door_02 = 1;
+			frag_glb_cage_door_03 = 1;
+		}
+	}
+	[generator_object_exploding] {}
+}

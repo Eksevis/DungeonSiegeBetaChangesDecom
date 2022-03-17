@@ -1,0 +1,575 @@
+///// DOMESTIC NON-BLOCKING //////////////////////////////////
+/* blank template cut&paste action
+[t:template,n:]
+{
+	specializes 		= non_interactive_nonblocking_nonblocking;
+	doc 				= "";
+
+	aspect:model 		= ;
+}
+*/
+
+///////////// CAV ///////////////////////////////////////////////
+
+[t:template,n:sarcophagus_cav_lid_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "sarcophagus_stone_ornate_lid";
+    category_name       = "container";
+
+	aspect:model 		= m_i_cav_sarcophagus-lid-01;
+}
+
+[t:template,n:rail_cav]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "train_rail";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_cav_rail;
+}
+
+///////////// CSL ///////////////////////////////////////////////
+
+[t:template,n:bench_csl_broken_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bench_broken_wood";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bench-broken-01;
+}
+
+[t:template,n:bench_csl_broken_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bench_broken_stone";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bench-broken-02;
+}
+
+[t:template,n:brick_csl_04]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bricks_webbed_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_brick-04;
+}
+
+[t:template,n:brick_csl_05]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bricks_webbed_med";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_brick-05;
+}
+
+[t:template,n:brick_csl_06]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bricks_webbed_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_brick-06;
+}
+
+[t:template,n:books_csl_burnt_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "books_burnt_horizontal";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_books-burnt-01;
+}
+
+[t:template,n:books_csl_burnt_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "books_burnt_vertical";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_books-burnt-02;
+}
+
+[t:template,n:bowl_csl]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bowl_pottery_plain";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_bowl;
+}
+
+[t:template,n:chalice_csl]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "chalice_gld_slvr";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_chalice;
+}
+
+[t:template,n:dishes_csl_broken_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "plates_broken_white";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_dishes-broken-01;
+}
+
+[t:template,n:dishes_csl_broken_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "plates_broken_tan";
+    category_name       = "indoor";
+
+    aspect:	model		= m_i_csl_dishes-broken-01;
+	aspect:	textures:0	= b_i_csl_dishes-broken-02;
+}
+
+[t:template,n:goblet_csl]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "goblet_silver";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_goblet;
+}
+
+[t:template,n:hay_csl_bed]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bed_hay";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_hay-bed;
+}
+
+[t:template,n:hay_csl_floor]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "hay_pile_old";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_csl_hay-floor;
+}
+
+
+[t:template,n:plate_csl]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "plate_ornate";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_plate;
+}
+
+[t:template,n:rug_csl_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_long_rose_blk";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_rug-01;
+}
+
+[t:template,n:rug_csl_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_round_muave_grn";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_rug-round-01;
+}
+
+[t:template,n:rug_csl_03]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_round_prpl_yllw";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_rug-round-02;
+}
+
+[t:template,n:rug_csl_04]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_runner_rose_blk";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_rug-runner-01;
+}
+
+[t:template,n:rug_csl_05]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_runner_oriental_orng";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_rug-runner-02;
+}
+
+[t:template,n:rug_csl_06]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_runner_peach_blu";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_rug-runner-03;
+}
+
+[t:template,n:rug_csl_07]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_runner_orng_ltblu";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_rug-runner-04;
+}
+
+[t:template,n:sack_csl]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "sack_burlap";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_sack;
+}
+
+[t:template,n:statue_csl_broken_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "statue_eagle_broken";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_statue-broken-02;
+}
+
+[t:template,n:jug_csl_broken_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "jug_broken_thin";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_jug-broken-01;
+}
+
+[t:template,n:jug_csl_broken_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "jug_broken_wide";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_jug-broken-02;
+}
+
+[t:template,n:chair_csl_broken_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "chair_broken_plain";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_chair-broken-01;
+    aspect:textures:0	= b_i_csl_chair-broken-02;
+}
+
+[t:template,n:table_csl_broken_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "table_round_broken";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_csl_table-broken-01;
+}
+
+///////////// DES ///////////////////////////////////////////////
+[t:template,n:rug_des_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_des_square";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_rug-01;
+}
+
+[t:template,n:rug_des_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_des_round_prp_yllw";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_rug-02;
+}
+
+[t:template,n:rug_des_03]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_des_round_blu_grn";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_rug-03;
+}
+
+[t:template,n:rug_des_04]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_des_round_blu_red";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_rug-04;
+}
+
+[t:template,n:rug_des_05]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_des_round_long";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_rug-05;
+}
+[t:template,n:stool_des_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "stool_log_splayed";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_des_stool-01;
+}
+
+///////////// GLB ///////////////////////////////////////////////
+
+[t:template,n:basket_glb_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "basket_handle";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_basket-01;
+}
+
+
+[t:template,n:bed_glb_fort_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bed_straw and furs";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bed-fort-03;
+}
+
+[t:template,n:books_glb_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "books_lg";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_books-01;
+}
+
+[t:template,n:books_glb_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "books_sm";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_books-02;
+}
+
+[t:template,n:bed_glb_sleeping_bag]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bed_sleeping bag";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_bed-05;
+	aspect:textures:0 	= b_i_glb_bed-05;
+}
+
+[t:template,n:bread_glb]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bread";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_bread;
+}
+
+[t:template,n:bucket_grs_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "bucket";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_bucket;
+}
+
+[t:template,n:crystal_glb_ball]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "crystal_glb_ball";
+    category_name       = "misc";
+
+	aspect:model 		= m_i_glb_crystal-ball;
+	aspect:textures:0	= b_i_glb_crystal-ball;
+}
+
+[t:template,n:cup_glb]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "cup_pottery";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_cup;
+}
+[t:template,n:hay_pile_grs_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "hay pile";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_grs_hay-pile;
+}
+
+[t:template,n:jars_glb]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "jars_colored";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_jars;
+}
+
+[t:template,n:rug_glb_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_long_plum";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rug-01;
+}
+
+[t:template,n:rug_glb_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_round_blue";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rug-02;
+}
+
+[t:template,n:rug_glb_03]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_runner_peach";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rug-03;
+}
+
+[t:template,n:rug_glb_04]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "rug_tattered";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_rug-04;
+}
+
+[t:template,n:table_glb_crystal_ball]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "table_glb_crystal_ball";
+    category_name       = "misc";
+
+	aspect:model 		= m_i_glb_crystal-ball-table;
+	aspect:textures:0	= b_i_glb_crystal-ball-table;
+}
+
+[t:template,n:clothesline_glb]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "clothesline";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_clothesline;
+}
+
+[t:template,n:mug_glb]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "mug_pewter";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_mug;
+}
+
+[t:template,n:plate_glb]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "plate_ceramic";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_plate;
+}
+
+[t:template,n:stool_glb_01]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "stool_birch";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_stool-01;
+}
+[t:template,n:stool_glb_02]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "stool_walnut";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_stool-02;
+}
+[t:template,n:stool_glb_03]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "stool_cherry";
+    category_name       = "indoor";
+
+	aspect:model 		= m_i_glb_stool;
+}
+
+///////////// GRS ///////////////////////////////////////////////
+[t:template,n:board_grs_1m]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "board_1m";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_board-1m;
+}
+
+[t:template,n:board_grs_2m]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "board_2m";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_board-2m;
+}
+
+[t:template,n:board_grs_3m]
+{
+	specializes 		= non_interactive_nonblocking;
+	doc 				= "board_3m";
+    category_name       = "outdoor";
+
+	aspect:model 		= m_i_glb_board-3m;
+}
+
+
+
+
+

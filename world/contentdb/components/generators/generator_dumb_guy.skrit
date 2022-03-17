@@ -1,0 +1,145 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  generator_dumb_guy.skrit
+// Author(s):  Chooch (Modified from Gen Basic)
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "Make a dumb guy into a smart guy generator.";
+property string _required_component$ = "placement";
+
+// exported properties
+property string 			child_template_name$		= "Krug_Grunt"			doc ="Template Name of Actor to Spawn.";
+property eActorAlignment	alignment_spawn$ 			= aa_neutral			doc ="Alignment of Monster when Spawned.";
+property eLifeState         life_state_spawn$           = ls_ignore				doc ="Life State of Monster when Spawned.";
+property eActorAlignment 	alignment_activated$ 		= aa_evil				doc ="Alignment of Monster when Activated.";
+property eLifeState         life_state_activated$       = ls_alive_conscious    doc ="Life State of Monster when Activated.";
+property scid				initial_command_activated$							doc = "Scid of command to give actor when activated.";
+property scid				send_to_scid_activated$								doc = "Scid to send message to when activated.";
+property eWorldEvent		send_message_activated$		= WE_REQ_ACTIVATE		doc = "Message to send when activated.";
+
+property eActorAlignment    alignment_deactivated$      = aa_evil               doc ="Extra Alignment Change on Deactivate.";
+property eLifeState         life_state_deactivated$     = ls_alive_conscious    doc ="Life State of Monster when Activated.";
+property scid				initial_command_deactivated$						doc = "Scid of command to give actor when deactivated.";
+property scid				send_to_scid_deactivated$							doc = "Scid to send message to when deactivated.";
+property eWorldEvent		send_message_deactivated$	= WE_REQ_ACTIVATE		doc = "Message to send when deactivated.";
+
+property bool             	change_alignment$           = true                  doc ="When True Alignment will be effected on spawn/activate.";
+property bool             	change_life_state$          = true                  doc ="When True Life_State will be effected on spawn/activate.";
+property bool             	change_selection$          	= true                  doc ="When True Selection States will be effected on spawn/activate.";
+property bool             	change_visibility$         	= false                 doc ="When True Actor will spawn invisible and become visible on activate.";
+
+
+
+
+owner = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+// local states
+
+startup state Waiting$
+{
+	Goid newGoid$;
+
+	trigger OnGoHandleMessage$( WE_ENTERED_WORLD )
+	{
+		// make a new child
+		GoCloneReq cloneReq$ = MakeGoCloneReq( owner.Goid, child_template_name$ );
+		cloneReq$.StartingPos = owner.Go.Placement.Position;
+        cloneReq$.SetStartingOrient = owner.Go.Placement.Orientation;
+		cloneReq$.SnapToTerrain = true;
+		newGoid$ = GoDb.SCloneGo( cloneReq$ );
+
+        if (change_alignment$)
+        {
+			// set initial (spawned) alignment
+			newGoid$.go.actor.ssetalignment( alignment_spawn$ );
+        }
+        if (change_life_state$)
+        {
+        	newGoid$.Go.Aspect.SSetLifeState = life_state_spawn$;
+        }
+		if (change_selection$)
+        {
+			newGoid$.Go.Aspect.SSetIsSelectable( false );
+        }
+        if (change_visibility$)
+        {
+			newGoid$.Go.Aspect.SSetIsVisible( false );
+        }
+	}
+
+	trigger OnGoHandleMessage$( WE_REQ_ACTIVATE )
+	{
+        if (change_alignment$)
+        {
+            //Reset Mind
+			newGoid$.Go.Mind.ResetSensors();
+			// set activated alignment
+			newGoid$.go.actor.ssetalignment( alignment_activated$ );
+        }
+		if (change_life_state$)
+        {
+        	newGoid$.Go.Aspect.SSetLifeState = life_state_activated$;
+        }
+		if (change_selection$)
+        {
+			newGoid$.Go.Aspect.SSetIsSelectable( true );
+	    }
+	    if (change_visibility$)
+        {
+			newGoid$.Go.Aspect.SSetIsVisible( true );
+        }
+	    if ( initial_command_activated$.getgoid.isvalid() )
+	    {
+			newGoid$.Go.Mind.SetInitialCommand( initial_command_activated$ );
+		}
+		
+		if ( send_to_scid_activated$.getgoid.isvalid() )
+	    {
+			SendWorldMessage( send_message_activated$, send_to_scid_activated$.getgoid );
+		}
+	}
+
+	trigger OnGoHandleMessage$( WE_REQ_DEACTIVATE )
+	{
+        if (change_alignment$)
+        {
+            //Reset Mind
+			newGoid$.Go.Mind.ResetSensors();
+        	// set activated alignment
+			newGoid$.go.actor.ssetalignment( alignment_deactivated$ );
+        }
+		if (change_life_state$)
+        {
+        	newGoid$.Go.Aspect.SSetLifeState = life_state_deactivated$;
+        }
+		if (change_selection$)
+        {
+			newGoid$.Go.Aspect.SSetIsSelectable( true );
+	    }
+	    if ( initial_command_deactivated$.getgoid.isvalid() )
+	    {
+			newGoid$.Go.Mind.SetInitialCommand( initial_command_deactivated$ );
+		}
+		
+		if ( send_to_scid_deactivated$.getgoid.isvalid() )
+	    {
+			SendWorldMessage( send_message_deactivated$, send_to_scid_deactivated$.getgoid );
+		}
+	}
+
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////

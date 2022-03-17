@@ -1,0 +1,45 @@
+[options_menu]
+{
+	interface = true;
+	modal = true;
+	centered = background;
+//	intended_resolution_height = 480;
+//	intended_resolution_width = 640;
+
+	[t:dialog_box,n:background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 1;
+		rect = 105,22,535,390;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:options_bg]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 70;
+		rect = 117,80,524,345;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:options_title]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 10;
+		font_color = -1;
+		font_size = 22;
+		font_type = b_gui_fnt_22p_lucinda-bright;
+		justify = center;
+		rect = 200,38,440,52;
+		text = "Options Menu";
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+}

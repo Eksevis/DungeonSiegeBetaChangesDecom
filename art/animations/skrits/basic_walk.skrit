@@ -1,0 +1,71 @@
+// Animation Skrit: Basic_walk
+//		VERSION 2.0:	Converted to WorldMessages 
+//						Added SFX event tests
+//						Uses owner, rather than ASPECT arg
+//
+//												
+
+property int MAJORVERSION$ = 2;
+property int MINORVERSION$ = 0;
+
+owner = Aspect;
+
+/////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+
+startup state LoopForever$ 
+{
+	event OnStartChore$ ( int /*subanim$*/, int /*flags$*/ )
+	{
+
+		int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+		owner.GetCurrentActiveChore().AddAnimToBlendGroup(0,1);
+		owner.GetCurrentActiveChore().CloseBlendGroup();
+		owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+	}
+
+	event OnUpdate$( float delta_t$, float /* speed_bias$ */)
+	{
+ 	 	int events$ = owner.UpdateTimeline(delta_t$);
+/*
+		float follower_v$ = owner.goid.go.follower.CurrentVelocity;
+		if (follower_v$ <= 0.01)
+		{
+			report.errorf("[BASIC_WALK] The follower velocity for [%s] is [%f]\n",owner.DebugName,follower_v$);
+		}
+*/
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_1)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  1, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_2)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  2, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_3)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  3, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_4)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  4, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_BEGIN_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 0, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_END_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 1, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_LEFT_FOOT_DOWN)) {
+			PostWorldMessage( WE_ANIM_OTHER, owner.goid, 'lfdn', 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_RIGHT_FOOT_DOWN)) {
+			PostWorldMessage( WE_ANIM_OTHER, owner.goid, 'rfdn', 0 );
+		}
+ 		if (AnimEventBitTest(events$,ANIMEVENT_FIRE_WEAPON)) {
+			PostWorldMessage( WE_ANIM_WEAPON_FIRE, owner.goid, owner.CurrentReqBlock, 0 );
+		}
+	}
+
+}

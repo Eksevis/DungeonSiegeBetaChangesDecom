@@ -1,0 +1,220 @@
+[t:template,n:spider_frostnid]
+{
+	category_name = "evil_d";
+	doc = "spider_frostnid";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  12, 0;
+			intelligence =  4, 0;
+			dexterity =  15, 0;
+            melee =  3,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 104;
+		life = 20;
+        max_life = 20;
+        mana = 8;
+		max_mana = 8;
+		model = m_c_edm_fn_pos_1;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 18;
+		damage_min = 10;
+	}
+	[body]
+	{
+		avg_move_velocity = 1.610000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_fn_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Frostnid"; }
+    [defend] { defense=20; }
+	[mind]
+	{
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10.0;
+	}
+	[physics]
+	{
+		break_effect = ;
+		break_sound = ;
+		explode_when_killed = true;
+		explosion_magnitude = 1.0;
+		[break_particulate]
+		{
+			frag_glb_spider_frostnid_01 = 1;
+			frag_glb_spider_frostnid_02 = 1;
+			frag_glb_spider_frostnid_03 = 2;
+			frag_glb_spider_frostnid_04 = 3;
+			frag_glb_spider_frostnid_05 = 3;
+			frag_glb_ice_04 = 2;
+			frag_glb_ice_08 = 3;
+		}
+	}
+}
+[t:template,n:spider_frostnid_ranged]
+{
+	category_name = "evil_d";
+	doc = "spider_frostnid";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  12, 0;
+			intelligence =  4, 0;
+			dexterity =  15, 0;
+            melee =  3,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 104;
+		life = 20;
+        max_life = 20;
+        mana = 8;
+		max_mana = 8;
+		model = m_c_edm_fn_pos_1;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 18;
+		damage_min = 10;
+	}
+	[body]
+	{
+		avg_move_velocity = 1.610000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_fn_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_frostnid_freeze; }
+	}
+	[common] { screen_name="Frostnid"; }
+    [defend] { defense=20; }
+	[mind]
+	{
+		actor_auto_uses_active_spells = true;
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10.0;
+	}
+	[physics]
+	{
+		break_effect = ;
+		break_sound = ;
+		explode_when_killed = true;
+		explosion_magnitude = 1.0;
+		[break_particulate]
+		{
+			frag_glb_spider_frostnid_01 = 1;
+			frag_glb_spider_frostnid_02 = 1;
+			frag_glb_spider_frostnid_03 = 2;
+			frag_glb_spider_frostnid_04 = 3;
+			frag_glb_spider_frostnid_05 = 3;
+			frag_glb_ice_04 = 2;
+			frag_glb_ice_08 = 3;
+		}
+	}
+}

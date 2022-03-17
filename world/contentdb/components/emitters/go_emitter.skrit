@@ -1,0 +1,77 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  go_emitter.skrit
+// Author(s):  Rick Saenz
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property bool		start_on_creation$	= false					doc = "Start Emitter when it enters the world";
+
+property string		model$				= "frag_glb_bone_06"	doc = "Template name of game object to emit";
+property float		duration$			= -1					doc = "How long to spend spawning objects";
+property float		interval$			= .15					doc = "How many seconds to wait before spawning another";
+property int		count$				= 10000					doc = "Total number to spawn";
+property float		timeout$			= 10.0					doc = "Duration in seconds spawned object will exist";
+
+property float		start_radius_min$	= 0.0					doc = "Inner start spawn radius - (spawn frustum)";
+property float		start_radius_max$	= 0.0					doc = "Outer start spawn radius - (spawn frustum)";
+property float		end_radius_min$		= 1.0					doc = "Inner end spawn radius - (spawn frustum)";
+property float		end_radius_max$		= 1.5					doc = "Outer end spawn radius - (spawn frustum)";
+
+property float		lvx$				= 0						doc = "Linear velocity - x component";
+property float		lvy$				= 0						doc = "Linear velocity - y component";
+property float		lvz$				= 8 					doc = "Linear velocity - z component";
+
+property float		lvx_var$			= 0						doc = "Linear velocity variance - x component";
+property float		lvy_var$			= 0						doc = "Linear velocity variance - y component";
+property float		lvz_var$			= 5						doc = "Linear velocity variance - z component";
+									
+property float		avx$				= 0						doc = "Angular velocity - x component";
+property float		avy$				= 0						doc = "Angular velocity - y component";
+property float		avz$				= 4						doc = "Angular velocity - z component";
+							
+property float		avx_var$			= 0						doc = "Angular velocity variance - x component";
+property float		avy_var$			= 0						doc = "Angular velocity variance - y component";
+property float		avz_var$			= 5						doc = "Angular velocity variance - z component";
+
+
+owner = GoSkritComponent;
+
+int	active_script_id$ = 0;
+
+
+
+startup state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( (e$ == WE_REQ_ACTIVATE) || (( e$ == WE_ENTERED_WORLD ) && (start_on_creation$ == true)) ) 
+		{
+			// Make sure the old spawn effect is finished before starting to spawn more
+			if( active_script_id$ != 0 )
+			{
+				SiegeFx.FinishScript( active_script_id$ );
+			}
+
+			string params$ = MakeStringF( "[-model(%s)dur(%g)spawn_int(%g)count(%d)timeout(%g)sr_min(%g)sr_max(%g)er_min(%g)er_max(%g)lvel(%g,%g,%g)lvel_var(%g,%g,%g)avel(%g,%g,%g)avel_var(%g,%g,%g)]",
+												model$, duration$, interval$, count$, timeout$, start_radius_min$, start_radius_max$,
+												end_radius_min$, end_radius_max$, lvx$, lvy$, lvz$, lvx_var$, lvy_var$, lvz_var$, 
+												avx$, avy$, avz$, avx_var$, avy_var$, avz_var$ );
+
+			// Run the generic_spawn script
+			active_script_id$ =	SiegeFx.RunScript( "go_emitter", owner.Goid, owner.Goid, params$, owner.Goid, WE_REQ_ACTIVATE );
+		}
+		else if( e$ == WE_REQ_DEACTIVATE )
+		{
+			// Let the effect know that it should finish what it is doing and not spawn anything else
+			SiegeFx.FinishScript( active_script_id$ );
+
+			// Clear the script id
+			active_script_id$ = 0;
+		}
+	}
+}

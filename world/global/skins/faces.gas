@@ -1,0 +1,186 @@
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_001;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_002;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_003;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_004;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_005;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_006;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_007;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_008;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_009;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_010;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_011;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_012;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_013;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_014;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_015;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_016;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_017;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_018;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_019;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_020;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_021;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_022;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_023;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_024;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_025;
+}
+[faces*]
+{
+	group = farmboy;
+
+	texture = b_c_gah_fb_skin_026;
+}
+[faces*]
+{
+	group = farmgirl;
+
+	texture = b_c_gah_fg_skin_001;
+}
+[faces*]
+{
+	group = farmgirl;
+
+	texture = b_c_gah_fg_skin_002;
+}
+[faces*]
+{
+	group = farmgirl;
+
+	texture = b_c_gah_fg_skin_003;
+}
+[faces*]
+{
+	group = farmgirl;
+
+	texture = b_c_gah_fg_skin_004;
+}
+[faces*]
+{
+	group = farmgirl;
+
+	texture = b_c_gah_fg_skin_005;
+}

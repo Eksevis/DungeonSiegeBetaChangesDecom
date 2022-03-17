@@ -1,0 +1,54 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_die_norick.skrit
+
+	Author(s)	: 	Eric Tams
+
+	Purpose		: 	Die un-gracefully.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Collapsing$;
+}
+
+
+state Collapsing$
+{
+	event OnEnterState$
+	{
+		MCPManager.Flush(m_Go$.Goid);
+		m_Mind$.Clear();
+		m_Job$.MarkForDeletion( true );
+	}
+}

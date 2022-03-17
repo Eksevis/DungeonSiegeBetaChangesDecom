@@ -1,0 +1,74 @@
+[compass_hotpoints]
+{
+	interface = true;
+
+	[t:window,n:compass_drag_window]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 0;
+		rect = 0,0,108,108;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;		
+		[messages]
+		{
+			ondrag = Notify(drag_compass);
+		}
+		is_right_anchor = true;
+		right_anchor = 108;
+
+		pass_through = true;
+
+		rollover_help = compass_drag_window;
+	}
+
+	[t:button,n:button_compass_hide]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		x draw_order = 0x00000004;
+		  rect = 604,12,627,37;
+		  texture = b_gui_ig_mnu_compass_spinner-up;
+		  uvcoords = 0.125000,0.125000,0.843750,0.906250;
+		  wrap_mode = clamp;
+		[messages]
+		{
+			  onbuttonpress = notify(compass_hide);
+			  onlbuttondown = loadtexture(b_gui_ig_mnu_compass_spinner-dwn);
+			  onlbuttonup = loadtexture(b_gui_ig_mnu_compass_spinner-up);
+			  onrolloff = loadtexture(b_gui_ig_mnu_compass_spinner-up);
+			  onrollover = loadtexture(b_gui_ig_mnu_compass_spinner-hov);
+		}
+		is_right_anchor = true;
+		right_anchor = 37;
+
+		rollover_help = compass_hide;
+	}
+	[t:button,n:button_compass_show]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		x draw_order = 0x00000006;
+		  rect = 587,12,627,53;
+		  texture = b_gui_ig_mnu_compass_spinner_small;
+		  uvcoords = 0.343750,0.328125,0.656250,0.656250;
+		  wrap_mode = clamp;
+		  visible = false;
+		is_right_anchor = true;
+		right_anchor = 53;
+
+		[messages]
+		{
+			  onbuttonpress = notify(compass_show);
+			  onlbuttondown = loadtexture(b_gui_ig_mnu_compass_spinner_small-dwn);
+			  onlbuttonup = loadtexture(b_gui_ig_mnu_compass_spinner_small);
+			  onrolloff = loadtexture(b_gui_ig_mnu_compass_spinner_small);
+			  onrollover = loadtexture(b_gui_ig_mnu_compass_spinner_small-hov);
+		}
+
+		rollover_help = compass_show;
+	}
+}

@@ -1,0 +1,29 @@
+[timeofday]
+{
+	RealMinutesPerWorldHour	= 1.6;
+
+	00h00m:color = 0xFFA4700F;
+	01h00m:color = 0xFFA4700F;
+	02h00m:color = 0xFFE0A54B;
+	03h00m:color = 0xFFE0A54B;
+	04h00m:color = 0xFFE0C24B;
+	05h00m:color = 0xFFE0C24B;
+	06h00m:color = 0xFFF5F19A;
+	07h00m:color = 0xFFF5F19A;
+	08h00m:color = 0xFFF8FBD7;
+	09h00m:color = 0xFFF8FBD7;
+	10h00m:color = 0xFFF8FBD7;
+	11h00m:color = 0xFFF8FBD7;
+	12h00m:color = 0xFFF8FBD7;
+	13h00m:color = 0xFFF5F19A;
+	14h00m:color = 0xFFF5F19A;
+	15h00m:color = 0xFFE0C24B;
+	16h00m:color = 0xFFE0C24B;
+	17h00m:color = 0xFFE0A54B;
+	18h00m:color = 0xFFA4700F;
+	19h00m:color = 0xFF9E4DCA;
+	20h00m:color = 0xFF000040;
+	21h00m:color = 0xFF000020;
+	22h00m:color = 0xFF000000;
+	23h00m:color = 0xFF000010;
+}

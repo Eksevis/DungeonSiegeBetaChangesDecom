@@ -1,0 +1,80 @@
+// Animation Skrit: select_walk
+//
+// History:
+//		VERSION 1.0:	Initial implementation
+//
+// Notes:
+//		This walk pays attention to the speedbias parameter
+//
+
+property int MAJORVERSION$ = 1;
+property int MINORVERSION$ = 0;
+
+owner = Aspect;
+
+/////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+
+startup state LoopForever$ 
+{
+	event OnStartChore$ ( int subanim$, int /*flags$*/ )
+	{
+		
+		owner.GetCurrentActiveChore().ResetTimeWarp();
+
+		int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+		owner.GetCurrentActiveChore().AddAnimToBlendGroup(subanim$,1);
+		owner.GetCurrentActiveChore().CloseBlendGroup();
+		owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+	}
+
+	event OnUpdate$( float delta_t$, float /*speedbias$*/)
+	{
+
+		// Velocity is stored in the Aspect, yet RenderScale is stored in the GoAspect!
+		float animated_v$ = owner.CurrentVelocity * owner.goid.go.aspect.RenderScale;
+		float follower_v$ = owner.goid.go.follower.CurrentVelocity;
+/*
+		if (follower_v$ <= 0.01)
+		{
+			Report.errorf("[SELECT_WALK] The follower velocity for [%s] is [%f]\n",owner.DebugName,follower_v$);
+		}
+*/
+		if ((animated_v$>0.01) && (follower_v$>0.01))
+		{
+			delta_t$ = delta_t$ * follower_v$/animated_v$;
+		}
+ 	 	int events$ = owner.UpdateTimeline(delta_t$);
+
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_1)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  1, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_2)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  2, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_3)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  3, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_4)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid,  4, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_BEGIN_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 0, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_END_SWING)) {
+			PostWorldMessage( WE_ANIM_WEAPON_SWUNG, owner.goid, 1, 0 );
+		}
+ 		if (AnimEventBitTest(events$,ANIMEVENT_FIRE_WEAPON)) {
+			PostWorldMessage( WE_ANIM_WEAPON_FIRE, owner.goid, owner.CurrentReqBlock, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_FINISH)) {
+			PostWorldMessage( WE_ANIM_LOOPED, owner.goid, owner.CurrentReqBlock, 0 );
+		}
+	}
+
+}

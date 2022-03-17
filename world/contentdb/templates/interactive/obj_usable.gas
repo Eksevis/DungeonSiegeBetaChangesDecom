@@ -1,0 +1,687 @@
+///////////////////////////////////////////////////////////////
+//  Usable, interacive object templates
+//
+
+[t:template,n:base_usable]
+{
+	specializes				=	interactive;
+	doc						=	"Base template for misc usable objects.";
+
+	[aspect]
+	{
+		bounding_volume_scale		= .200000;
+		is_usable               	= true;
+		use_range               	= 1.2;
+		draw_selection_indicator	= false;
+	}
+}
+
+///////////////////////////////////////////////////////////////
+//  Usable leaf templates
+
+
+//// Levers///////////////
+[t:template,n:chains_csl_lever]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_chain_winch";
+    category_name       = "levers";
+	aspect:model 		= m_i_csl_chains-lever;
+    aspect:material     = chain;
+
+    //This object needs to get animated.
+
+    [aspect]
+	{
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+}
+
+[t:template,n:lever_cav_stone_01]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_stone";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_cav_lever-stone-01;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_cav;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-stone-01-down;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-stone-01-up;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:lever_on_off_01]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_on_off";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_cav_lever-stone-01;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_cav;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-stone-01-down;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-stone-01-up;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:lever_reset_delay_01]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_reset_delay";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_cav_lever-stone-01;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_cav;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-stone-01-down;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-stone-01-up;
+			}
+		}
+	}
+
+    [common]
+    {
+        //THIS IS AN INSTANCE_TRIGGER FOR PRE-PACKAGING.   -J
+		[instance_triggers]
+		{
+			[*]
+			{
+				action* = send_world_message("we_req_use",0,0.000000,"default","");
+				condition* = receive_world_message("we_req_use");
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+    }
+
+	[reset_delay_lever]  {}
+}
+
+[t:template,n:lever_gob_01]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_metal_ornate";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_gob_lever-01;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-01-pull;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= lever-01-push;
+			}
+		}
+	}
+
+    [base_lever]  {}
+}
+
+
+[t:template,n:lever_glb_01]
+{
+	specializes 		= base_usable;
+	doc 				= "button_skull";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_glb_switch-01;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-01-close;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-01-open;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:lever_glb_02]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_head";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_glb_switch-02;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-02-close;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:lever_glb_03]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_skull";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_glb_switch-03;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-03-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-03-close;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:lever_glb_04]
+{
+	specializes 		= base_usable;
+	doc 				= "crank_metal";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_glb_switch-04;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-04-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-04-close;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:lever_glb_05]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_metal";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_glb_switch-05;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-05-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-05-close;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:lever_glb_06]
+{
+	specializes 		= base_usable;
+	doc 				= "button_metal";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_glb_switch-06;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+		scale_multiplier			= 2;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-06-close;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-06-open;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+
+[t:template,n:lever_glb_07]
+{
+	specializes 		= base_usable;
+	doc 				= "lever_dwarfstick";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 		= m_i_glb_switch-07;
+		material    = steel;
+		does_block_path				= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-07-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= switch-07-close;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:valve_gob_02]
+{
+	specializes 		= base_usable;
+	doc 				= "valve_lg";
+    	category_name       = "levers";
+    	aspect:material     = steel;
+
+	[aspect]
+	{
+		model 					= m_i_gob_valve-02;
+		material    				= steel;
+		does_block_path			= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit				= transition;
+				anim_files: 00		= valve-02-open;
+			}
+			[chore_close]
+			{
+				skrit				= transition;
+				anim_files: 00		= valve-02-close;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:valve_gob_03]
+{
+	specializes 		= base_usable;
+	doc 				= "valve_gobinv";
+    category_name       = "levers";
+    aspect:material     = steel;
+
+	[aspect]
+	{
+		model 					= m_i_gob_valve-03;
+		material    				= steel;
+		does_block_path			= true;
+		is_collidable				= true;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit				= transition;
+				anim_files: 00		= valve-03-close;
+			}
+			[chore_close]
+			{
+				skrit				= transition;
+				anim_files: 00		= valve-03-open;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.0000;
+	}
+}
+
+[t:template,n:statue_cav_spin_01]
+{
+	specializes 		= base_usable;
+	doc 				= "statue_spin";
+    category_name       = "levers";
+
+	[aspect]
+	{
+		model 				= m_i_cav_statue-spin-01;
+		material    		= stone_statue;
+		does_block_path		= true;
+		[textures] 			{0 = b_i_cav_statue-01;}
+		bounding_volume_scale		= 1.00000;
+	}
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_cav;
+
+			[chore_open]
+			{
+				skrit				= transition;
+				anim_files: 00		= statue-spin-01;
+			}
+			[chore_close]
+			{
+				skrit				= transition;
+				anim_files: 00		= statue-spin-01;
+			}
+		}
+	}
+
+    [on_off_lever]
+	{
+		reset_time = 1.5000;
+	}
+	[generic_objblock] {}
+}
+
+[t:template,n:lever_swp_tree_horn]
+{
+	specializes 		= base_usable;
+	doc 				= "swp_tree_horn";
+    	category_name       = "levers";
+    	aspect:material     	= wood;
+
+	[aspect]
+	{
+		model 					= m_i_swp_tree-horn;
+		material    				= wood;
+		does_block_path			= true;
+		is_collidable				= true;
+	}
+		// Does this object have anims or sounds? -CarlosN 04.20.01
+}
+
+[t:template,n:fountain_csl_mana]
+{
+	specializes 		= base_usable;
+	doc 				= "fountain_mana";
+    	category_name       = "interactive";
+    	aspect:material     	= 	;
+
+	[aspect]
+	{
+		model 					= m_i_csl_ftn-blue;
+		material    				= 	;
+		does_block_path			= true;
+		is_collidable				= true;
+		[textures]
+		{
+			0 = b_i_csl_fountain;
+			1 = b_i_csl_ftn-liquid-blue;
+		}
+	}
+	[fountain]
+	{
+		heal_life = false;
+		effect_script = mana_fountain_charge;
+
+		repeat_script = mana_fountain;
+	}
+}
+
+[t:template,n:fountain_csl_health]
+{
+	specializes 		= base_usable;
+	doc 				= "fountain_health";
+    	category_name       = "interactive";
+    	aspect:material     	= 	;
+
+	[aspect]
+	{
+		model 					= m_i_csl_ftn-red;
+		material    				= 	;
+		does_block_path			= true;
+		is_collidable				= true;
+		[textures]
+		{
+			0 = b_i_csl_fountain;
+			1 = b_i_csl_ftn-liquid-red;
+		}
+	}
+	[fountain]
+	{
+		effect_script = health_fountain_charge;
+	}
+}
+
+////////////////////////////////////////////////////////////////
+

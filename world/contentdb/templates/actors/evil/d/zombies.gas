@@ -1,0 +1,329 @@
+[t:template,n:base_zombie]
+{
+	doc = "zombie template";
+	specializes = actor_evil;
+	[aspect]
+	{
+		model=m_c_edm_zo_pos_1;
+		draw_shadow = false;
+		[voice]
+		{
+			[die]
+			{
+				* = s_e_die_dead_SED;
+			}
+			[hit_critical]
+			{
+				* = s_e_hit_dead_SED;
+			}
+			[hit_glance]
+			{
+				* = s_e_hit_dead_SED;
+			}
+			[hit_solid]
+			{
+				* = s_e_hit_dead_SED;
+			}
+		}
+	}
+	[body]
+	{
+		avg_move_velocity = 1.000000;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine2;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_pelvis;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_ecm_sk_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					slep = ds-02;
+					wake = rv;
+				}
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dff;
+					01 = dff-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files]
+				{
+					00 = wl;
+					01 = wl-02;
+					02 = wl-03;
+				}
+			}
+		}
+	}
+	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				chance = 0.2;
+				il_main = #*/10-13;
+			}
+		}
+	}
+
+	[mind]
+	{
+		actor_auto_fidgets = false;
+		on_enemy_spotted_alert_friends = true;
+   		on_job_reached_travel_distance_abort_attack = true;
+		sight_origin_height	= 1;
+		melee_engage_range = 9;
+		personal_space_range = 0.7;
+		ranged_engage_range = 9.0;
+		sight_range = 9.0;
+
+		com_channels = dyn_party, zombie;
+		com_range = 5.0;
+
+	}
+}
+[t:template,n:zombie_01]
+{
+	category_name = "evil_d";
+	doc = "zombie";
+	specializes = base_zombie;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	12,0;
+			intelligence =  	3,0;
+			dexterity =  	7,0;
+			melee =  		9,0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 92;
+		life = 17;
+		max_life = 17;
+		mana = 6;
+		max_mana = 6;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 17;
+		damage_min = 11;
+	}
+	[common] { screen_name="Zombie"; }
+	[defend] { defense=18; }
+}
+[t:template,n:zombie_02]
+{
+	category_name = "evil_d";
+	doc = "zombie_decayed";
+	specializes = base_zombie;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	12,0;
+			intelligence =  	3,0;
+			dexterity =  	7,0;
+			melee =  		9,0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 92;
+		life = 17;
+		max_life = 17;
+		mana = 6;
+		max_mana = 6;
+		[textures] { 0=b_c_edm_zo-02; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 17;
+		damage_min = 11;
+	}
+	[common] { screen_name="Zombie"; }
+	[defend] { defense=18; }
+}
+[t:template,n:zombie_03]
+{
+	category_name = "evil_d";
+	doc = "zombie_pudgy";
+	specializes = base_zombie;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	11,0;
+			intelligence =  	4,0;
+			dexterity =  	8,0;
+			melee =  		11,0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 102;
+		life = 20;
+		max_life = 20;
+		mana = 8;
+		max_mana = 8;
+		model = m_c_edm_zo_pos_2;
+		[textures] { 0=b_c_edm_zo-03; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 19;
+		damage_min = 13;
+	}
+	[common] { screen_name="Zombie"; }
+	[defend] { defense=17; }
+}
+
+[t:template,n:walking_corpse]
+{
+	category_name = "evil_d";
+	doc = "zombie_decayed";
+	specializes = base_zombie;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	9,0;
+			intelligence =  	3,0;
+			dexterity =  	4,0;
+			melee =  		3,0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 42;
+		life = 12;
+		max_life = 12;
+		mana = 6;
+		max_mana = 6;
+		[textures] { 0=b_c_edm_zo-02; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 6;
+		damage_min = 3;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_ecm_sk_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dff;
+					01 = dff-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files]
+				{
+					00 = wl;
+					01 = wl-02;
+					02 = wl-03;
+				}
+			}
+		}
+	}
+	[common] { screen_name="Walking Corpse"; }
+	[defend] { defense=13; }
+   	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				chance = 0.2;
+				il_main = #weapon/4-6;
+                il_main = #armor/10-15;
+			}
+		}
+	}
+   	[mind]
+	{
+		on_enemy_spotted_alert_friends = true;
+	}
+
+
+}

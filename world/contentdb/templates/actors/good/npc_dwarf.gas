@@ -1,0 +1,204 @@
+[t:template,n:base_dwarf]
+{
+	doc = "Dwarf base template";
+	specializes = actor_good;
+	[aspect] { model=m_c_gan_df_pos_a1; }
+	[body]
+	{
+		armor_version = gan_df;
+		avg_move_velocity = 4.500000;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine1;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_spine1;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[weapon_scales]
+		{
+			as_single_melee		= 0.9, 0.9, 0.9;
+			as_two_handed_melee	= 0.9, 0.9, 0.8;
+			as_two_handed_sword	= 1.0, 1.0, 0.8;
+			as_staff			= 1.0, 1.0, 0.8;
+			as_bow_and_arrow	= 0.8, 0.8, 0.8;
+			as_minigun			= 0.8, 0.8, 0.8;
+			as_shield_only		= 0.8, 1.0, 0.8;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_gan_df_fs;
+			[chore_attack]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7,8;
+				skrit = select_attack;
+				[anim_files]
+				{
+					0mid = at;
+					high = at-02;
+					loww = at-03;
+					qffg = dff;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7,8;
+				skrit = infinite_loop;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7,8;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7,8;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0,5;
+				skrit = select_transition;
+				[anim_files] { 00=mg; }
+			}
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+				[anim_files]
+				{
+					drnk = a_c_gan_df_fs1_dk;
+					gtup = a_c_gan_df_fs0_up;
+					look = a_c_gan_df_fs1_dff;
+					frtd = a_c_gan_df_fs0_dff;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7,8;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[physics]
+	{
+		fire_effect = human_physics_fire;
+	}
+	[inventory]
+	{
+		[equipment]
+		{
+            es_feet = bo_bo_le_light;
+		}
+	}
+}
+[t:template,n:dwarf]
+{
+	category_name = "character";
+	doc = "dwarf";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_df; }
+	[actor]
+	{
+		can_level_up = true;
+
+		race = human;
+		[skills]
+		{
+			strength 	=	0, 0, 10;
+			intelligence= 	0, 0, 10;
+			dexterity	= 	0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+
+		[textures]
+		{
+			0 = b_c_gan_df_skin_01;
+			1 = b_c_pos_a1_005;
+		}
+	}
+	[inventory]
+	{
+		grid_height = 13;
+		grid_width = 4;
+	}
+	[mind]
+	{
+		actor_auto_defends_others = true;
+		melee_engage_range = 1.9;
+		ranged_engage_range = 9.0;
+		sight_range = 12.0;
+	}
+}
+[t:template,n:torg]
+{
+	category_name = "character";
+	doc = "dwarf_foreman";
+	specializes = base_pm_dwarf;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_torg; }
+   	[actor]
+	{
+    	[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+
+            [override]
+            {
+                Melee = 3,0,0;
+            }
+		}
+	}
+
+	[aspect]
+	{
+		[textures]
+		{
+			0 = b_c_gan_df_skin_02;
+			1 = b_c_pos_a1_006;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+	}
+
+	[common] { screen_name = "Torg"; }
+   	[inventory]
+	{
+		[equipment]
+		{
+            es_weapon_hand = #axe/-no_mod/5;
+            es_chest = #body/-no_mod/7;
+            es_feet = #boots/-no_mod/7;
+		}
+
+
+	}
+
+	[conversation]{}
+}
+[t:template,n:dwarf_worker]
+{
+	category_name = "character";
+	doc = "dwarf_worker";
+	specializes = base_dwarf;
+	[actor] { portrait_icon=; }
+    [defend] { defense=66; }
+	[aspect]
+	{
+		[textures]
+		{
+			0 = b_c_gan_df_skin_03;
+			1 = b_c_pos_a1_006;
+		}
+	}
+}

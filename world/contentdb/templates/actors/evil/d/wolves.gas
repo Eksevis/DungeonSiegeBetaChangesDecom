@@ -1,0 +1,144 @@
+[t:template,n:base_wolf]
+{
+	doc = "wolf base template";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  4, 0;
+			intelligence =  1, 0;
+			dexterity =  6, 0;
+			melee =  2,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 24;
+		life = 7;
+		max_life = 7;
+		mana = 2;
+		max_mana = 2;
+		model = m_c_edm_wf_pos_1;
+		selection_indicator_scale=0.85;
+		voice:die:	* = s_e_die_wolf;
+		voice:hit_glance:	* = s_e_hit_wolf;
+		voice:hit_solid:	* = s_e_hit_wolf;
+		voice:hit_critical:	* = s_e_hit_wolf;
+	}
+	[attack]
+	{
+		damage_max = 6;
+		damage_min = 5;
+	}
+	[body]
+	{
+		avg_move_velocity = 3.60000;
+		[bone_translator]
+		{
+			body_anterior = Neck1;
+			body_mid = Shoulder_spine;
+			body_posterior = Tail1;
+			kill_bone = Neck1;
+			shield_bone = Neck1;
+			weapon_bone = Neck1;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_wf_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = die_random;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+					02 = dsf-03;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl-02; }
+			}
+		}
+	}
+	[guts_manager]
+	{
+		effect_name = melee_hit_2;
+	}
+	[common]
+	{
+		// $ removed blood effect, it is now controlled with the guts manager. -ET
+	}
+	[defend] { defense=6; }
+	[mind]
+	{
+		com_channels = dyn_party, wolf;
+		com_range = 8.0;
+		on_enemy_spotted_alert_friends = true;
+		melee_engage_range = 14.0;
+		personal_space_range = 0.7;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+	}
+}
+[t:template,n:wolf_gray]
+{
+	category_name = "evil_d";
+	doc = "wolf_gray";
+	specializes = base_wolf;
+
+	attack:attack_range = 0.3;
+
+	aspect:textures:0 = b_c_edm_wf;
+	aspect:scale_base = 0.65;
+	[common] { screen_name="Gray Wolf"; }
+}
+[t:template,n:wolf_black]
+{
+	category_name = "evil_d";
+	doc = "wolf_black";
+	specializes = base_wolf;
+
+	aspect:textures:0 = b_c_edm_wf-02;
+	aspect:scale_base = 1;
+	[common] { screen_name="Black Wolf"; }
+}
+[t:template,n:wolf_white]
+{
+	category_name = "evil_d";
+	doc = "wolf_white";
+	specializes = base_wolf;
+
+	attack:attack_range = 0.3;
+
+	aspect:textures:0 = b_c_edm_wf-03;
+	aspect:scale_base = 0.75;
+	[common] { screen_name="White Wolf"; }
+}

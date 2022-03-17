@@ -1,0 +1,11 @@
+[t:template,n:base_head]
+{
+	specializes	= base_helm;
+	doc	= "Swappable head base template.";
+
+	common:		screen_name			= "Head";
+	common:		is_pcontent_allowed	= false;
+
+	gui:		inventory_icon		= b_gui_s_notfound;
+	defend:		defense				= 0.0;
+}

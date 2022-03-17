@@ -1,0 +1,135 @@
+[t:font,n:b_gui_fnt_30p-numbers] 
+{
+	endrange = 58;
+	height = 31;
+	startrange = 48;
+	texture = b_gui_fnt_30p-numbers;
+}
+
+[t:font,n:b_gui_fnt_10p_lucinda-bright] 
+{
+	endrange = 256;
+	height = 15;
+	startrange = 32;
+	texture = b_gui_fnt_10p_lucinda-bright;
+}
+
+[t:font,n:b_gui_fnt_10p_lucinda-bevel] 
+{
+	endrange = 256;
+	height = 15;
+	startrange = 32;
+	texture = b_gui_fnt_10p_lucinda-bevel;
+}
+
+[t:font,n:b_gui_fnt_10p_lucinda-brightbevel] 
+{
+	endrange = 256;
+	height = 15;
+	startrange = 32;
+	texture = b_gui_fnt_10p_lucinda-brightbevel;
+}
+
+[t:font,n:b_gui_fnt_12p_lucinda-bright] 
+{
+	endrange = 256;
+	height = 13;
+	startrange = 32;
+	texture = b_gui_fnt_12p_lucinda-bright;
+}
+
+[t:font,n:b_gui_fnt_12p_lucinda-bevel] 
+{
+	endrange = 256;
+	height = 13;
+	startrange = 32;
+	texture = b_gui_fnt_12p_lucinda-bevel;
+}
+
+[t:font,n:b_gui_fnt_13p_lucinda-bright] 
+{
+	endrange = 256;
+	height = 14;
+	startrange = 32;
+	texture = b_gui_fnt_13p_lucinda-bright;
+}
+
+[t:font,n:b_gui_fnt_13p_lucinda-bevel] 
+{
+	endrange = 256;
+	height = 14;
+	startrange = 32;
+	texture = b_gui_fnt_13p_lucinda-bevel;
+}
+
+[t:font,n:b_gui_fnt_14p_lucinda-bright] 
+{
+	endrange = 256;
+	height = 15;
+	startrange = 32;
+	texture = b_gui_fnt_14p_lucinda-bright;
+}
+
+[t:font,n:b_gui_fnt_14p_lucinda-bevel] 
+{
+	endrange = 256;
+	height = 15;
+	startrange = 32;
+	texture = b_gui_fnt_14p_lucinda-bevel;
+}
+
+[t:font,n:b_gui_fnt_16p_lucinda-bright] 
+{
+	endrange = 256;
+	height = 17;
+	startrange = 32;
+	texture = b_gui_fnt_16p_lucinda-bright;
+}
+
+[t:font,n:b_gui_fnt_16p_lucinda-bevel] 
+{
+	endrange = 256;
+	height = 17;
+	startrange = 32;
+	texture = b_gui_fnt_16p_lucinda-bevel;
+}
+
+[t:font,n:b_gui_fnt_18p_lucinda-bright] 
+{
+	endrange = 256;
+	height = 19;
+	startrange = 32;
+	texture = b_gui_fnt_18p_lucinda-bright;
+}
+
+[t:font,n:b_gui_fnt_18p_lucinda-bevel] 
+{
+	endrange = 256;
+	height = 19;
+	startrange = 32;
+	texture = b_gui_fnt_18p_lucinda-bevel;
+}
+
+[t:font,n:b_gui_fnt_22p_lucinda-bright] 
+{
+	endrange = 256;
+	height = 23;
+	startrange = 32;
+	texture = b_gui_fnt_22p_lucinda-bright;
+}
+
+[t:font,n:b_gui_fnt_22p_lucinda-bevel] 
+{
+	endrange = 256;
+	height = 23;
+	startrange = 32;
+	texture = b_gui_fnt_22p_lucinda-bevel;
+}
+
+[t:font,n:b_gui_fnt_22p_lucinda-black] 
+{
+	endrange = 256;
+	height = 23;
+	startrange = 32;
+	texture = b_gui_fnt_22p_lucinda-black;
+}

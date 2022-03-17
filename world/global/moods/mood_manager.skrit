@@ -1,0 +1,153 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  mood_manager.skrit
+// Author(s):  James Loe, David Tomandl
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//NOTES:
+//
+//OLD VERSION MOVED TO MOOD_MANAGER_OLD FOR THE TIME BEING.  -J
+//
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$		= false;
+property string _doc$				= "Controls mood management";
+
+//float battleTime$					= 0.0;	// Track of time the party has been in battle
+//float battleDelay$					= 2.0; // Delay in seconds before battle music starts playing
+//float battleMusicTime$				= 0.0; // Time the battle music will playing beyond the end of the battle
+
+int LastFocused$ = -1;
+
+//////////////////////////////////////////////////////////////////////////////
+
+ManageMoods$( GoidColl partyMembers$, bool /*instantSwitch$*/, float /*secondsElapsed$*/ )
+{
+	///////////////////////////////////////////////////////////////////////	
+	// This was our "placeholder" system--use the hero's mood at all times
+	// Get the first go in the party
+	// Goid activeGo$	= partyMembers$.Get( 0 );
+	///////////////////////////////////////////////////////////////////////	
+	
+	// Here's our real system:
+	
+	// We care about
+	// 1. Who the camera is pointing at (the camera's focus)
+	// 2. If that changed between the last time we checked and now
+	
+	// If it hasn't changed, use the mood of the person that the camera is focused on
+	// If it has changed, instantly switch to the new person's mood
+	
+	// This is to prevent people from doing something like switching rapidly between
+	// a person outside (grey fog) and a person underground (black fog)
+	// to see too much underground
+
+	Goid focusedGo$; 	// get the focused go
+
+	int newFocused$;	// the number of the party member that is focused
+	
+	// Run through the party looking for the person with the focus
+	int i$ = 0;
+	while( i$ < partyMembers$.Size() )
+	{
+		if(partyMembers$.Get( i$ ).GetGo.IsFocused())
+		{
+			focusedGo$ = partyMembers$.Get( i$ );
+			newFocused$ = i$; //once we find it, record which number they are
+		}
+        i$ += 1;
+    }
+
+	float transitionTime$ = Mood.GetGoMoodSetting( focusedGo$ ).transitionTime;
+
+	// If the focus has changed, instantly switch to the new mood
+	if (newFocused$ != LastFocused$)
+	{
+		transitionTime$ = 0;
+	}
+	LastFocused$ = newFocused$;
+
+	// Set the focused go as the active go for all mood components
+	Mood.SetActiveSunGo( focusedGo$, transitionTime$ );
+	Mood.SetActiveFogGo( focusedGo$, transitionTime$ );
+	Mood.SetActiveRainGo( focusedGo$, transitionTime$ );
+	Mood.SetActiveSnowGo( focusedGo$, transitionTime$ );
+	Mood.SetActiveWindGo( focusedGo$, transitionTime$ );
+	Mood.SetActiveMusicGo( focusedGo$, transitionTime$ );
+
+	// Always play ambient theme
+	Mood.PlayAmbientTrack( 0.0 );
+	
+	// Play standard music if it is not already playing
+	if( !Mood.IsStandardTrackPlaying() )
+	{
+		Mood.PlayStandardTrack( 2.0 );
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+/*****************************************************************************
+**							DOCUMENTATION									**
+******************************************************************************
+
+	// If you need to retrieve information about a mood, use the following:
+
+	Mood.GetGoRequestedMood( goid );			// Get the name of the mood requested by this GO
+	Mood.GetGoMoodSetting( goid );				// Get the setting requested by the GO
+	Mood.GetMoodSetting( moodName );			// Get the setting for the mood of this name
+
+	// You can manually activate a mood by name by doing:
+
+	Mood.SetMood( moodName, transTime );		// Transition to the given mood over transTime
+
+	// Or you can activate individual mood components directly from
+	// the GO by doing:
+
+	Mood.SetActiveSunGo( goid, transTime );		// Set the active sun mood to this GO's mood, transitioning over transTime
+	Mood.SetActiveFogGo( goid, transTime );		// Set the active fog mood to this GO's mood, transitioning over transTime
+	Mood.SetActiveRainGo( goid, transTime );	// Set the active rain mood to this GO's mood, transitioning over transTime
+	Mood.SetActiveSnowGo( goid, transTime );	// Set the active snow mood to this GO's mood, transitioning over transTime
+	Mood.SetActiveWindGo( goid, transTime );	// Set the active wind mood to this GO's mood, transitioning over transTime
+	Mood.SetActiveMusicGo( goid, transTime );	// Set the active music mood to this GO's mood, transitioning over transTime
+
+	// You can retreive information about the GO's that are currently
+	// controlling different parts of the mood by calling:
+
+	Mood.GetActiveSunGo();						// Get the active sun GO
+	Mood.GetActiveFogGo();						// Get the active fog GO
+	Mood.GetActiveRainGo();						// Get the active rain GO
+	Mood.GetActiveSnowGo();						// Get the active snow GO
+	Mood.GetActiveWindGo();						// Get the active wind GO
+	Mood.GetActiveMusicGo();					// Get the active music GO
+
+	// By default, all music is disabled.  To play any tracks, you must specify the tracks
+	// to play and the time to fade the track in.  For example, to fade in the a theme:
+
+	Mood.PlayStandardTrack( 0.0 );				// Instantly start playing the standard theme
+	Mood.PlayBattleTrack( 2.0 );				// Fade in battle theme over 2 seconds
+	Mood.PlayAmbientTrack( 10.0 );				// Fade in ambient theme over 10 seconds
+
+	// Once you have started a theme, you are also responsible for stopping it.  To fade out
+	// the theme, you would do:
+
+	Mood.StopStandardTrack( 1.0 );				// Fade out standard theme over 1 second
+	Mood.StopBattleTrack( 0.0 );				// Instantly stop playing the battle theme
+	Mood.StopAmbientTrack( 2.0 );				// Fade our ambient theme of 2 seconds
+
+	// In many cases, you may need to determine if a theme is playing.  To do this:
+
+	Mood.IsStandardTrackPlaying();				// See if standard track is currently playing or not
+	Mood.IsBattleTrackPlaying();				// See if battle track is currently playing or not
+	Mood.IsAmbientTrackPlaying();				// See if ambient track is currently playing or not
+
+******************************************************************************
+**							END DOCUMENTATION								**
+*****************************************************************************/

@@ -1,0 +1,19 @@
+//////////////////////////////////////////////////////////////////////////////
+
+[t:template,n:party_humanoid]
+{
+	specializes = party;
+	doc = "Party of humanoids";
+
+	// $$$ give it a custom mind...
+}
+
+[t:template,n:party_computer]
+{
+	specializes = party;
+	doc = "Party of computer people.";
+
+	// $$$ give it a custom mind...
+}
+
+//////////////////////////////////////////////////////////////////////////////

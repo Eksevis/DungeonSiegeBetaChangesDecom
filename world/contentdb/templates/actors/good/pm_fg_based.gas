@@ -1,0 +1,364 @@
+[t:template,n:base_pm_fg]
+{
+	category_name = "character";
+	doc = "Base template for female party members based on farmgirl.";
+	specializes = base_farmgirl;
+	[inventory]
+	{
+		[equipment]
+		{
+            es_feet = bo_bo_le_f_g_c_avg;
+		}
+	}
+	[conversation]{}
+	[store]{}
+	[water_effects] {}
+}
+[t:template,n:andresa_redblade]
+{
+	doc = "andresa_redblade";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_fg_a_01;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_01;
+			1 = b_c_pos_a1_003;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 0;
+		damage_min = 0;
+		reload_delay = 0;
+	}
+	[common] { screen_name="Andresa Redblade"; }
+}
+[t:template,n:daewin]
+{
+	doc = "daewin";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_fg_a_01;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_01;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 0;
+		damage_min = 0;
+		reload_delay = 0;
+	}
+	[common] { screen_name="Daewin"; }
+}
+[t:template,n:jocelyn]
+{
+	doc = "jocelyn";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_fg_a_01;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		model = m_c_gah_fg_pos_a7;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_01;
+			1 = b_c_pos_a7_012;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 0;
+		damage_min = 0;
+		reload_delay = 0;
+	}
+	[common] { screen_name="Jocelyn"; }
+}
+[t:template,n:lyrall]
+{
+	doc = "lyrall";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_ly;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		model = m_c_gah_fg_pos_a2;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_13;
+			1 = b_c_pos_a2_022;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 0;
+		damage_min = 0;
+		reload_delay = 0;
+	}
+	[common] { screen_name="Lyrall"; }
+   	[inventory]
+	{
+		[equipment]
+		{
+			es_shield_hand = #bow/-no_mod/6.5;
+            es_chest = #body/-no_mod/3;
+            es_feet = #boots/-no_mod/1;
+		}
+
+
+	}
+
+}
+[t:template,n:naidi]
+{
+	doc = "naidi";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_na;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+
+            [override]
+            {
+                Ranged = 2,0,0;
+            }
+
+		}
+	}
+	[aspect]
+	{
+        gold_value = 510;
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_03;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+	}
+	[common] { screen_name="Naidi"; }
+   	[inventory]
+	{
+		[equipment]
+		{
+			es_shield_hand = #bow/-no_mod/6;
+            es_chest = #body,r/-no_mod/1-4;
+            es_feet = #boots/-no_mod/4;
+		}
+
+
+	}
+
+}
+[t:template,n:phaedriel]
+{
+	doc = "phaedriel";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_fg_a_01;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+
+            [override]
+            {
+                ranged = 8,0,0;
+            }
+
+		}
+	}
+	[aspect]
+	{
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_16;
+			1 = b_c_pos_a1_031;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+	}
+	[common] { screen_name="Phaedriel"; }
+   	[inventory]
+	{
+		[equipment]
+		{
+			es_shield_hand = #bow/-no_mod/12;
+            es_chest = #body/-no_mod/13;
+            es_feet = #boots/-no_mod/13;
+            es_forearms = #gloves/-no_mod/13;
+		}
+
+	}
+
+}
+[t:template,n:sikra]
+{
+	doc = "sikra";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_si;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+		}
+	}
+	[aspect]
+	{
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_15;
+			1 = b_c_pos_a1_038;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 0;
+		damage_min = 0;
+		reload_delay = 0;
+	}
+	[common] { screen_name="Sikra"; }
+}
+[t:template,n:ulora]
+{
+	doc = "ulora";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_ul;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+
+		}
+	}
+	[body]
+	{
+		head_type = m_c_gah_fg_hlmt_ulora;
+	}
+	[aspect]
+	{
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_16;
+			1 = b_c_pos_a1_026;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+	}
+	[common] { screen_name="Ulora"; }
+}
+[t:template,n:yeldwyn]
+{
+	doc = "yeldwyn";
+	specializes = base_pm_fg;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_fg_a_01;
+		[skills]
+		{
+			strength =   0, 0, 10;
+			intelligence =  0, 0, 10;
+			dexterity =   0, 0, 10;
+
+            [override]
+            {
+                nature_magic = 2,0,0;
+            }
+
+		}
+	}
+	[aspect]
+	{
+        gold_value = 550;
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_01;
+			1 = b_c_pos_a1_003;
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+	}
+	[common] { screen_name="Yeldwyn"; }
+
+   	[inventory]
+	{
+		[equipment]
+		{
+            es_weapon_hand = #mace/-no_mod/4;
+            es_chest = #body,ro/-no_mod/3-6;
+            es_feet = #boots/-no_mod/4;
+		}
+
+
+}

@@ -1,0 +1,420 @@
+[t:template,n:base_chest]
+{
+	category_name = "base template";
+	doc = "chest base template";
+	specializes = container;
+	aspect:material = steel;
+	common:rollover_display = true;
+	
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.0, 1, 0.0;
+		use_diffuse_color	=	true;
+	}
+
+	[base_chest]  {}
+}
+
+[t:template,n:chest_csl_01]
+{
+	category_name = "container";
+	doc = "chest_wood_ornate";
+	specializes = base_chest;
+	[aspect] { model=m_i_glb_chest; }
+	[common] { screen_name="Ornate Chest"; }
+}
+[t:template,n:chest_csl_02]
+{
+	category_name = "container";
+	doc = "chest_metal_ornate_sm";
+	specializes = base_chest;
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-02;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-02-close; }
+			}
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-02-open; }
+			}
+		}
+	}
+	[common] { screen_name="Small Metal Chest"; }
+}
+[t:template,n:chest_csl_03]
+{
+	
+	
+	category_name = "container";
+	doc = "$$$ [hack for demo, tell Eric to fix it.] chest_wood_plain ";
+	specializes = base_chest;
+	[aspect] { model=m_i_csl_chest-03; }
+	[common] { screen_name="Chest"; }
+	aspect:material = steel;
+	common:rollover_display = true;
+	
+	
+}
+[t:template,n:chest_csl_04]
+{
+	category_name = "container";
+	doc = "chest_cherry_gold";
+	specializes = base_chest;
+	[aspect] { model=m_i_csl_chest-04; }
+	[common] { screen_name="Chest"; }
+}
+
+[t:template,n:chest_csl_05]
+{
+	category_name = "container";
+	doc = "chest_cherry_ornate";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-03;
+		[textures]		{ 0 = b_i_csl_chest-04; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_csl_06]
+{
+	category_name = "container";
+	doc = "chest_cedar";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-03;
+		[textures]		{ 0 = b_i_csl_chest-03; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_csl_07]
+{
+	category_name = "container";
+	doc = "chest_gold_ornate";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-03;
+		[textures]		{ 0 = b_i_csl_chest-05; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_csl_08]
+{
+	category_name = "container";
+	doc = "chest_wood_stained";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-07;
+		[textures]		{ 0 = b_i_csl_chest-06; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-07-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-07-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_cav_01]
+{
+	category_name = "container";
+	doc = "chest_weathered_ornate";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-06;
+		[textures]		{ 0 = b_i_glb_chest-stone; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-06-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-06-open; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_cav_02]
+{
+	category_name = "container";
+	doc = "chest_skull";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-03;
+		[textures]		{ 0 = b_i_csl_chest-skull; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_gob_01]
+{
+	category_name = "container";
+	doc = "chest_metal";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-05;
+		[textures]		{ 0 = b_i_gob_chest-01; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_ice_01]
+{
+	category_name = "container";
+	doc = "chest_cedar_ice";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-03;
+		[textures]		{ 0 = b_i_ice_chest-open; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_grs_01]
+{
+	category_name = "container";
+	doc = "chest_oak_ornate";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-03;
+		[textures]		{ 0 = b_i_glb_chest-01; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_grs_02]
+{
+	category_name = "container";
+	doc = "chest_mossy";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-04;
+		[textures]		{ 0 = b_i_glb_chest-open-02; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_ice;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-close; }
+			}
+		}
+	}
+}
+
+[t:template,n:chest_grs_03]
+{
+	category_name = "container";
+	doc = "chest_stump";
+	specializes = base_chest;
+	[common] { screen_name="Chest"; }
+	[aspect]
+	{
+		material = steel;
+		model = m_i_glb_chest-stump;
+		[textures]		{ 0 = b_i_glb_chest-stump; }
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-stump-open; }
+			}
+			[chore_close]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-stump-open; }
+			}
+		}
+	}
+}
+

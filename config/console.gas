@@ -1,0 +1,399 @@
+[console]
+{
+	// this block is for console configuration
+
+	[exec]
+	{
+		//////////////////////////////////////////////////////////////////////
+
+		// this block is for sets of commands that may be added into the
+		// console for the "exec" command. the "global" block is added by
+		// default.
+
+		// recommended: create a block that has either your name (lee) or the
+		// name of the demo that these scripts are for (gamestock).
+
+		[global]
+		{
+		/*
+			format:
+
+			[command_name]						// this is the name you use for "exec commandname"
+			{
+				command =	"					// (optional) the command to enter, as if you had
+							add krug_scout		// typed it into the console directly. note that
+							add gold:50			// quotes are required.
+							";
+
+				skrit	=	[[					// (optional) the skrit code to execute. be sure
+							GoDb.DeselectAll	// to wrap this stuff in [[ and ]] brackets
+							]];
+
+				doc = "Add a Krug scout and some gold";		// docs printed out when someone asks for help
+			}
+		*/
+
+			[ks]
+			{
+				command =	"add krug_scout";
+				doc = "Add a Krug scout";
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////
+
+		[scott]
+		{
+			[testskrit]
+			{
+				skrit = [[ report.genericf( "Test!\n" );  ]]
+				doc = "Test of Skrit command";
+			}
+
+			[testcommand]
+			{
+				command = "add krug_scout";
+				doc = "Test of regular command";
+			}
+
+			[testdel]
+			{
+				skrit =
+				[[
+					GoCloneReq cloneReq$ = MakeGoCloneReq( "dev_sword" );
+					cloneReq$.StartingPos = GoDb.GetFocusGo.Go.Placement.Position;
+					Goid newGoid$ = GoDb.SCloneGo( cloneReq$ );
+					GoDb.SMarkForDeletion( newGoid$ );
+				]];
+			}
+
+			[t1]
+			{
+				command = teleport cf_r0;
+				doc = "This is where all the bugs are";
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////
+
+		// create more blocks here...
+
+		/*
+		[blockname]
+		{
+		}
+		*/
+
+		//////////////////////////////////////////////////////////////////////
+		
+		[levelup]
+		{
+			[1_f_2]
+			{
+				command =
+						"
+							give #melee/5
+							give #armor/6
+							stats str 1
+                            				stats melee 2
+						";
+				doc = "1 player, fighter, level 2.";
+			}
+
+			[1_f_4]
+			{
+				command =
+						"
+							give #melee/6
+							give #armor/12
+							stats str 2
+							stats dex 1
+                            				stats melee 4
+						";
+				doc = "1 player, fighter, level 4.";
+			}
+
+			[1_f_6]
+			{
+				command =
+						"
+							give #melee/7
+							give #armor/18
+							stats str 3
+							stats dex 2
+							stats int 1
+                            				stats melee 6
+						";
+				doc = "1 player, fighter, level 6.";
+			}
+
+			[1_f_8]
+			{
+				command =
+						"
+							give #melee/8
+							give #armor/24
+							stats str 5
+							stats dex 2
+							stats int 1
+               				stats melee 8
+						";
+				doc = "1 player, fighter, level 8.";
+			}
+
+			[1_f_10]
+			{
+				command =
+						"
+							give #melee/9
+							give #armor/30
+							stats str 6
+							stats dex 3
+							stats int 1
+                            				stats melee 10
+						";
+				doc = "1 player, fighter, level 10.";
+			}
+
+			[1_f_12]
+			{
+				command =
+						"
+							give #melee/10
+							give #armor/36
+							stats str 7
+							stats dex 4
+							stats int 1
+                           					stats melee 12
+						";
+				doc = "1 player, fighter, level 12.";
+			}
+
+			[1_f_14]
+			{
+				command =
+						"
+							give #melee/12
+							give #armor/42
+							stats str 8
+							stats dex 4
+							stats int 1
+                            				stats melee 14
+						";
+				doc = "1 player, fighter, level 14.";
+			}
+
+			[1_f_16]
+			{
+				command =
+						"
+							give #melee/13
+							give #armor/48
+							stats str 10
+							stats dex 5
+							stats int 1
+                            				stats melee 16
+						";
+				doc = "1 player, fighter, level 16.";
+			}
+        }
+		//////////////////////////////////////////////////////////////////////
+
+		[e3]
+		{
+			[hero_cr]
+			{
+				command =
+						"
+							stats str 2
+							stats dex 1
+							stats int 1
+               				stats melee 4
+               				stats ranged 4
+							equip bd_sl_f_g_c_avg
+							equip mc_g_c_m_1h_low
+	                        give potion_health_large
+						";
+				doc = "Add small party of heroes.";
+			}
+
+
+
+
+			[ulora_dm]
+			{
+				command =
+						"
+							stats str 2
+							stats dex 3
+							stats int 7
+               				stats cmagic 1
+               				stats nmagic 1
+							equip bd_bl_m_g_c_avg
+							equip st_d_o_r_avg
+                            equip bo_bo_le_f_g_c_avg
+                            give spell_fireshot
+				            equip book_glb_magic_01
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[hero_dm]
+			{
+				command =
+						"
+							stats str 5
+							stats dex 3
+							stats int 1
+               				stats melee 10
+               				stats ranged 10
+							equip bd_br_f_g_c_avg
+							equip sd_g_c_gl_1h_low
+                            equip bw_g_c_c_m_4_low
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add large party of heroes.";
+			}
+
+			[ulora_exit]
+			{
+				command =
+						"
+							stats str 5
+							stats dex 3
+							stats int 9
+               				stats cmagic 4
+               				stats nmagic 4
+							equip bd_sc_m_g_c_avg
+							equip gl_gl_f_g_c_avg
+                            equip bo_bo_br_f_g_c_avg
+                            give spell_iceshard
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[hero_ce]
+			{
+				command =
+						"
+							stats str 16
+							stats dex 8
+							stats int 3
+               				stats melee 26
+               				stats ranged 26
+							equip bd_un_br_f_d_c_str
+							equip bo_bo_sc_f_g_c_avg
+                            equip bw_g_c_s_l_c_avg
+                            equip gl_gl_sc_f_g_c_avg
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add large party of heroes.";
+			}
+
+			[ulora_ce]
+			{
+				command =
+						"
+							stats str 11
+							stats dex 48
+							stats int 16
+               				stats cmagic 24
+               				stats nature_magic 24
+							equip bd_ro_m_g_c_034
+							equip st_g_c_s_avg
+                            equip bo_bo_sc_f_g_c_avg
+                            equip gl_gl_sc_f_g_c_avg
+                            give spell_lightning
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[party1]
+			{
+				command =
+						"
+							add begin
+							add Rusk
+							add naidi
+                            add zed
+                            add pack_mule
+							add p end
+						";
+				doc = "Add small party of heroes for before the crypts.";
+			}
+
+			[party2]
+			{
+				command =
+						"
+							add begin
+							add gloern
+							add Lord_Bolingar
+                            add Boryev
+							add p end
+						";
+				doc = "Add small party of heroes for before the castle.";
+			}
+
+
+		}
+
+
+
+
+
+
+		//////////////////////////////////////////////////////////////////////
+		[gamestock]
+		{
+			[party]
+			{
+				command =
+						"
+							add begin
+							add cf_ranger_male_strong
+							add cf_ranger_female_weak
+                            add cf_fighter_female_weak
+                            add cf_fighter_male_strong
+                            add cf_magic_male
+							add p end
+						";
+				doc = "Add small party of heroes.";
+			}
+
+
+
+
+			[partysmall]
+			{
+				command =
+						"
+							add begin
+							add temp_cf_fighter
+							add temp_cf_ranger
+							add p end
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[partybig]
+			{
+				command =
+						"
+							add begin
+							add mage_female
+							add warrior_dwarf
+							add warrior_male
+							add p end
+						";
+				doc = "Add large party of heroes.";
+			}
+		}
+
+}

@@ -1,0 +1,79 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_sacrifice.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string	effect_script$		= ""	doc = "Effect script to call for effect";
+
+property float	initial_delay$		= 0.0	doc = "Time before first damage check.";
+
+property float	damage_radius$		= 5 	doc = "Radius of damage area";
+property float	area_magnitude$		= 5		doc = "How fast the area of damage expands";
+
+
+
+owner 	= GoSkritComponent;
+
+float 		damage_amount$;
+int		 	position$;
+Goid 		caster$;
+
+startup state Idle$
+{
+	trigger OnTimer$( 1 )
+	{
+		SetState( Damage$ );
+	}
+	
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST )
+		{
+			caster$ 			= msg$.GetSendFrom();
+			damage_amount$ 		= caster$.Go.Aspect.CurrentLife + caster$.Go.Aspect.CurrentMana;
+			
+			position$			= SiegeFx.AddVariable( caster$.go.placement.position, owner.goid );
+			
+			Siegefx.SRunScript(effect_script$,caster$,caster$,"",owner.goid, e$ );
+			this.CreateTimer( 1, initial_delay$ );
+		}
+	}
+}
+
+state Damage$
+{	
+	event OnEnterState$
+	{
+		if(caster$.IsValid)
+		{
+			int Exp_id$ = Physics.CreateExplosion( SiegeFX.GetVariable(position$,owner.goid), damage_radius$, area_magnitude$, damage_amount$, caster$, owner.goid );
+			Physics.SetDamageAll( Exp_id$, true );
+		}
+	}
+
+	trigger OnGoHandleMessage$( WE_SPELL_SYNC_END )
+	{
+		SetState( Finished$ );
+	}
+}
+
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+
+		// Since this skrit is the component of a spell and all spells are cloned before being executed
+		// then it is safe to destroy ourself after finishing execution
+
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 0.1 );
+	}
+}

@@ -1,0 +1,101 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  sound_emitter.skrit
+// Author(s):  Chad Queen
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string _doc$                = "A basic 3D sound emitter";
+property string _required_component$ = "placement";
+
+property bool	start_on_creation$	= true		doc = "Start Emitter when it enters the world";
+property bool	repeat$				= true		doc = "Will continually keep playing based on repeat rate";
+property float	repeat_rate$		= 2.0		doc = "Number of seconds before starting to play sound again";
+property string event_sound$					doc = "Name of voice event sound to play";
+property float  min_dist$			= 1.0		doc = "Minimum sound distance";
+property float  max_dist$			= 50.0		doc = "Maximum sound distance";
+property bool	continual_loop$		= false		doc = "Continually loop ( ignore repeat variables )";
+property bool	stop_instantly$		= false		doc = "Stop sound instantly on De-Activation, instead of waiting for the end of the sample.";
+
+owner = GoSkritComponent;
+
+bool deactivate_requested$ = false;
+int last_sound$;
+
+startup state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( (e$ == WE_REQ_ACTIVATE) || (( e$ == WE_ENTERED_WORLD ) && (start_on_creation$ == true)) )
+		{
+			deactivate_requested$ = false;
+			SetState Active$;
+		}
+	}
+}
+
+
+state Active$
+{
+	event OnEnterState$
+	{		
+		if ( !StringTool.IsEmpty( event_sound$ ) )
+		{
+			if ( continual_loop$ )
+			{
+				last_sound$ = owner.Go.PlayVoiceSound( event_sound$, min_dist$, max_dist$, true );
+			}
+			else
+			{
+				last_sound$ = owner.Go.PlayVoiceSound( event_sound$, min_dist$, max_dist$, false );
+
+				// Don't play again until repeat_rate$ expires
+				this.CreateTimer( 1, repeat_rate$ );		
+			}
+		}
+		else
+		{
+			Report.ErrorF( "Sound emitter used in '%s' has no sound configured!", owner.Go.TemplateName );
+		}		
+	}
+
+	transition -> Active$: OnTimer( 1 ) =
+	{	
+		if ( !continual_loop$ )
+		{	
+			// Handle sound repeat
+			if ( deactivate_requested$ )
+			{
+				SetState( Idle$ );
+			}
+			else if ( !deactivate_requested$ && repeat$ )
+			{
+				SetState( Active$ );
+			}
+			else if ( !repeat$ )
+			{
+				// Need to reset to an idle state after repeat duration
+				SetState( Idle$ );
+			}
+		}
+	}	
+
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{				
+		if ( e$ == WE_REQ_DEACTIVATE )
+		{
+			if( stop_instantly$ )
+			{
+				//stop the sound instead of waiting till the end of the sample.
+				owner.Go.StopSound( last_sound$ );
+				SetState Idle$;
+			} else {
+				deactivate_requested$ = true;
+			}
+		}
+	}
+}

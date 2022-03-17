@@ -1,0 +1,28 @@
+[mini_map]
+{
+	interface = true;
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+
+	[t:button,n:button_mini_map_exit]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = x;
+		draw_order = 9;
+		rect = 621,3,637,19;
+		texture = b_gui_cmn_button_x_up;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		consumable = true;
+		is_right_anchor = true;
+		right_anchor = 16;
+
+		[messages]
+		{
+			onbuttonpress = notify(exit_mini_map);
+		}
+
+		rollover_help = map_exit;
+	}
+}

@@ -1,0 +1,95 @@
+
+[t:interface,n:intro_menu] {
+
+	[t:window,n:generic_6] {
+		alpha = 1.000000;
+		draw_order = 1;
+		rect = 511,256,638,475;
+		texture = ui\art\frontend\menus\gui_fe_comingsoon_06.psd;
+		uvcoords = 0.000000,0.144531,0.992188,1.000000;
+		wrap_mode = clamp;
+	}
+
+
+	[t:window,n:generic_5] {
+		alpha = 1.000000;
+		draw_order = 1;
+		rect = 255,256,511,512;
+		texture = ui\art\frontend\menus\gui_fe_comingsoon_05.psd;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+
+	[t:window,n:generic_4] {
+		alpha = 1.000000;
+		draw_order = 1;
+		rect = 0,256,256,512;
+		texture = ui\art\frontend\menus\gui_fe_comingsoon_04.psd;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+
+	[t:window,n:generic_3] {
+		alpha = 1.000000;
+		draw_order = 1;
+		rect = 512,0,640,256;
+		texture = ui\art\frontend\menus\gui_fe_comingsoon_03.psd;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+
+	[t:window,n:generic_2] {
+		alpha = 1.000000;
+		draw_order = 1;
+		rect = 256,0,512,256;
+		texture = ui\art\frontend\menus\gui_fe_comingsoon_02.psd;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+
+	[t:window,n:generic_1] {
+		alpha = 1.000000;
+		draw_order = 1;
+		rect = 0,0,256,256;
+		texture = ui\art\frontend\menus\gui_fe_comingsoon_01.psd;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+
+	[t:window,n:intro] {
+		alpha = 1.000000;
+		draw_order = 2;
+		rect = 180,-1,436,127;
+		texture = ui\art\frontend\menus\gui_fe_comingsoon_intro.psd;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+
+	[t:button,n:back_button] {
+		alpha = 1.000000;
+		draw_order = 3;
+		rect = 37,426,90,468;
+		texture = ui\art\frontend\menus\gui_fe_single_back_up.psd;
+		uvcoords = 0.296875,0.078125,0.710938,0.406250;
+		wrap_mode = clamp;
+
+		[messages] {
+			onbuttonpress = notify(back_to_main);
+			onlbuttondown = loadtexture(ui\art\frontend\menus\gui_fe_single_back_dwn.psd);
+			onlbuttonup = loadtexture(ui\art\frontend\menus\gui_fe_single_back_up.psd);
+			onrolloff = loadtexture(ui\art\frontend\menus\gui_fe_single_back_up.psd) &
+								parentmessage(onchangerolloff);
+			onrollover = loadtexture(ui\art\frontend\menus\gui_fe_single_back_hov.psd) &
+								parentmessage(onchangerollover);
+		}
+
+	}
+
+}
+

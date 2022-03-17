@@ -1,0 +1,61 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_resurrect.skrit
+// Author(s):  Rick Saenz
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+property string effect_script$	= "resurrect"	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string script_params$	= ""			doc = "Parameters to pass along to the SiegeFx script";
+
+owner = GoSkritComponent;
+
+
+Goid caster$;
+Goid target$;
+
+
+startup state Start$
+{
+	transition -> MakeAlive$ : OnGoHandleMessage( WE_SPELL_SYNC_MID );
+
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST )
+		{
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+
+			// Start the visual effect
+			SiegeFx.SRunScript( effect_script$, target$, caster$, script_params$, owner.Goid, e$ );
+		}
+	}
+}
+
+state MakeAlive$
+{
+	event OnEnterState$
+	{
+		if (caster$.IsValid && target$.IsValid)
+		{
+			// Now make the poor little dead go alive again with n health
+			float n$ = 2.0 + owner.go.parent.actor.getskilllevel( owner.go.magic.spellskillname ) - target$.go.aspect.currentlife; 
+			
+			Rules.ChangeLife( owner.goid, target$, n$ );
+			
+			//target$.go.mind.SDoJob( MakeJobReq( JAT_BRAIN, JQ_BRAIN, QP_CLEAR, JO_REFLEX ));
+		}
+		SetState( Finished$ );
+	}	
+}
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+}

@@ -1,0 +1,103 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_damage_volume.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string	effect_script$		= ""	doc = "Effect script to call for effect";
+
+property float	initial_delay$		= 0.0	doc = "Time before damaging.";
+property float	start_radius$		= -1.0	doc = "radius at the point of the caster, -1 uses radius in attack block.";
+property float	end_radius$			= -1.0	doc = "radius at the point of the target, -1 uses radius in attack block.";
+
+property bool	caster_center$		= false	doc = "Damage volume is centered on the caster only.";
+
+owner 	= GoSkritComponent;
+
+Goid 		target$;
+Goid 		caster$;
+float		duration$;
+
+startup state Idle$
+{
+	trigger OnTimer$( 1 )
+	{
+		SetState Damage$;
+	}
+	
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST )
+		{
+			caster$ = msg$.GetSendFrom();
+			if( caster_center$ )
+			{
+				target$ = caster$;
+			} else {
+				target$ = MakeGoid( msg$.GetData1() );
+			}
+			duration$ = owner.Go.Magic.EvaluateEffectDuration(target$, caster$);
+			
+			Siegefx.SRunScript(effect_script$, target$, caster$, "", owner.goid, e$);
+			this.CreateTimer( 1, initial_delay$ );
+		}
+	}
+}
+
+
+state Damage$
+{	
+	event OnEnterState$
+	{
+		if( target$.IsValid() && caster$.IsValid() )
+		{
+			if( start_radius$ < 0.0 )
+			{
+				start_radius$ = owner.Go.Attack.AreaDamageRadius;
+			}
+			
+			if( end_radius$ < 0.0 )
+			{
+				end_radius$ = owner.Go.Attack.AreaDamageRadius;
+			}
+			
+			float damage$ = Math.RandomFloat( owner.Go.Attack.DamageMin, owner.Go.Attack.DamageMax );
+			
+			if( caster_center$ )
+			{
+				SiegePos new_pos$ = SiegePos.Copy( caster$.Go.placement.position );
+				new_pos$.Pos.Y = new_pos$.Pos.Y + 1.0;
+				Physics.CreateDamageVolume( caster$.Go.placement.position, new_pos$, start_radius$, end_radius$, damage$, duration$, caster$, owner.goid );
+			} else {
+				Physics.CreateDamageVolume( caster$, target$, start_radius$, end_radius$, damage$, duration$, caster$, owner.goid );
+			}
+		} else {
+			SetState Finished$;
+		}
+	}
+
+	trigger OnGoHandleMessage$( WE_SPELL_SYNC_END )
+	{
+		SetState Finished$;
+	}
+}
+
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+
+		// Since this skrit is the component of a spell and all spells are cloned before being executed
+		// then it is safe to destroy ourself after finishing execution
+
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 10 );
+	}
+}

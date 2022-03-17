@@ -1,0 +1,311 @@
+// See world\global\moods\map_world\moods1.gas for explanation of the
+// mood naming scheme.  --DT
+[mood_setting*]
+{
+	mood_name				= multiplayer_world_abc_r1_1;
+	transition_time			= 1.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 20.0f;
+		fog_far_dist		= 30.0f;
+		fog_color			= 0xFF000000;
+		fog_density			= 1.0f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_Crypts_01.mp3";
+	}
+}
+[mood_setting*]
+{
+	mood_name				= multiplayer_world_des_r1_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 30.0f;
+		fog_far_dist		= 50.0f;
+		fog_color			= 0xFF847864;
+		fog_density			= 0.6f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_path2crypts_01.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= multiplayer_world_gd_r1_1;
+	transition_time			= 1.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 20.0f;
+		fog_far_dist		= 30.0f;
+		fog_color			= 0xFF000000;
+		fog_density			= 1.0f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_Crypts_02.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= multiplayer_world_hub_1;
+	transition_time			= 1.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 20.0f;
+		fog_far_dist		= 40.0f;
+		fog_color			= 0xFF000000;
+		fog_density			= 1.0f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_crypts_02.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= multiplayer_world_mine_town_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 30.0f;
+		fog_far_dist		= 50.0f;
+		fog_color			= 0xFF686868;
+		fog_density			= 0.6f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_path2crypts_01.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= multiplayer_world_path2mines_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 30.0f;
+		fog_far_dist		= 50.0f;
+		fog_color			= 0xFF686868;
+		fog_density			= 0.6f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_path2crypts_01.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= multiplayer_world_sf_r1_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 25.0f;
+		fog_far_dist		= 40.0f;
+		fog_color			= 0xFFb8b8c8;
+		fog_density			= 1.0f;
+	}
+
+	// Snowing
+	[snow]
+	{
+		snow_density		= 350;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_Farmhouse_L.mp3"; //placeholder music
+	}
+}
+
+
+// The moods below are marked for death; they have the old style-names
+[mood_setting*]
+{
+	mood_name				= abc_r1_1;
+	transition_time			= 1.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 20.0f;
+		fog_far_dist		= 30.0f;
+		fog_color			= 0xFF000000;
+		fog_density			= 1.0f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_Crypts_01.mp3";
+	}
+}
+[mood_setting*]
+{
+	mood_name				= des_r1_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 30.0f;
+		fog_far_dist		= 50.0f;
+		fog_color			= 0xFF847864;
+		fog_density			= 0.6f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_path2crypts_01.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= gd_r1_1;
+	transition_time			= 1.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 20.0f;
+		fog_far_dist		= 30.0f;
+		fog_color			= 0xFF000000;
+		fog_density			= 1.0f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_Crypts_02.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= hub_1;
+	transition_time			= 1.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 20.0f;
+		fog_far_dist		= 40.0f;
+		fog_color			= 0xFF000000;
+		fog_density			= 1.0f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_crypts_02.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= mine_town_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 30.0f;
+		fog_far_dist		= 50.0f;
+		fog_color			= 0xFF686868;
+		fog_density			= 0.6f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_path2crypts_01.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= path2mines_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 30.0f;
+		fog_far_dist		= 50.0f;
+		fog_color			= 0xFF686868;
+		fog_density			= 0.6f;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_path2crypts_01.mp3"; //placeholder music
+	}
+}
+[mood_setting*]
+{
+	mood_name				= sf_r1_1;
+	transition_time			= 4.0f;
+
+	// Fog settings
+	[fog]
+	{
+		fog_near_dist		= 25.0f;
+		fog_far_dist		= 40.0f;
+		fog_color			= 0xFFb8b8c8;
+		fog_density			= 1.0f;
+	}
+
+	// Snowing
+	[snow]
+	{
+		snow_density		= 350;
+	}
+
+	// Music settings
+	[music]
+	{
+		ambient_track		= "";
+		standard_track		= "s_m_Farmhouse_L.mp3"; //placeholder music
+	}
+}

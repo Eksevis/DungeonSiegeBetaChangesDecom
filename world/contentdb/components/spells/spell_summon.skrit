@@ -1,0 +1,132 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_summon.skrit
+// Author(s):  Rick Saenz
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string effect_script$	= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string end_script$		= ""	doc = "Name of the SiegeFx script that will be providing the visual when un_summoning.";
+property string script_params$	= ""   	doc = "Parameters to send to SiegeFx script";
+property string template_name$	= ""   	doc = "Template name of actor to summon";
+property string state_name$		= "summoned"			doc = "Name of effect to use as a generic state and as a screen name.";
+property string description$	= "Summoned Creature"	doc = "Description of enchantment being applied";
+
+
+owner = GoSkritComponent;
+
+
+int starting_pos$;
+
+Goid summoned_goid$;
+Goid caster$;
+float summon_duration$;
+			
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+
+			Goid target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+
+			if( target$.isvalid && caster$.isvalid )
+			{
+				// Copy the reference to the starting position into SiegeFx persistant storage
+				starting_pos$ = SiegeFx.AddVariable( target$.go.placement.position, owner.goid );
+
+				// Start the visual effect
+				SiegeFx.SRunScript( effect_script$, target$, caster$, script_params$, owner.Goid, e$ );
+			}
+			else
+			{
+				SetState ( CastBegin$ );
+			}
+		}
+	}
+
+	transition -> SummonGo$ : OnGoHandleMessage( WE_SPELL_SYNC_MID );
+}
+
+
+state SummonGo$
+{
+	event OnEnterState$
+	{
+		// First create the go
+		GoCloneReq cloneReq$ = MakeGoCloneReq( template_name$ );
+		cloneReq$.StartingPos = SiegeFx.GetVariable( starting_pos$, owner.goid );
+		cloneReq$.SnapToTerrain = true;
+		summoned_goid$ = GoDb.SCloneGo( cloneReq$ );
+
+		if( summoned_goid$.isvalid) 
+		{
+			summon_duration$ = owner.Go.Magic.EvaluateEffectDuration(summoned_goid$, caster$);
+			if(summoned_goid$.go.hasactor )
+			{
+				// Now make it match the alignment of whatever spawned it
+	
+				eActorAlignment alignment$ = owner.go.parent.actor.getalignment;
+	
+				summoned_goid$.go.actor.ssetalignment( alignment$ );
+	
+				
+			}
+		}
+		this.CreateTimer( 1, 0 );
+	}
+	transition -> Finished$ : OnTimer( 1 );
+}							 
+
+
+state Finished$
+{
+	trigger OnTimer$ ( 1 )
+	{
+		if( summoned_goid$.isvalid) 
+		{
+			if ( end_script$ != "" ) {
+				SiegeFx.SRunScript( end_script$, summoned_goid$, summoned_goid$, script_params$, owner.Goid, WE_EXPLODED );
+			}		
+		}
+		
+		this.CreateTimer( 2, .1 );
+	}
+	
+	trigger OnTimer$ ( 2 )
+	{
+		if( summoned_goid$.isvalid) 
+		{
+			summoned_goid$.Go.Actor.RemoveGenericState( state_name$ );	
+			if( !Physics.ExplodeGoWithDamage( summoned_goid$, summoned_goid$, summoned_goid$ ) ) {
+				GoDb.SMarkForDeletion( summoned_goid$ );
+			}
+		}
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+		
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+	
+	
+	
+	event OnEnterState$
+	{
+		//----- construct job request
+									  
+		JobReq req$;
+  		req$ = MakeJobReq( JAT_GUARD, JQ_ACTION, QP_FRONT, JO_COMMAND, owner.go.parent.Goid );
+		summoned_goid$.go.Mind.SDoJob( req$ );
+		if( caster$.IsValid() )
+		{
+			summoned_goid$.Go.Actor.AddGenericState( state_name$, state_name$, description$, summon_duration$, caster$ );
+		}
+
+		this.CreateTimer( 1, summon_duration$ );
+	}
+}

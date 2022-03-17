@@ -1,0 +1,340 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  on_off_lever.skrit
+// Author(s):  Chooch
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        	= true;
+property string _doc$                	= "Lever which as a re-use delay which can send messages when turned on/off.";
+property string _required_component$ 	= "placement";
+
+// exported properties
+property bool        initially_active$  	= true             	doc = "Won't send messages untill it gets an activate if false.";
+property bool        one_shot$          	= false            	doc = "When true you can only use the lever once.";
+property float  	 reset_time$			= 3			    	doc = "Time it takes before you can use lever in on state.";
+property float       reset_time_2$          = 3                 doc = "Time it take before you can use the lever in off state.";
+//----Messaging
+property scid        On_Scid$                          			doc = "Scid to send message to when lever is on.";
+property eWorldEvent On_Message$			= WE_REQ_ACTIVATE   doc = "Message to send when lever is on.";
+property float       On_Message_Delay$                     		doc = "Message delay when lever is on.";
+property scid        Off_Scid$                          		doc = "Scid to send message to when lever is off.";
+property eWorldEvent Off_Message$  			= WE_REQ_DEACTIVATE	doc = "Message to send when lever is off.";
+property float       Off_Message_Delay$                     	doc = "Message delay when lever is off.";
+property scid        On_Scid_2$                          		doc = "Additional Scid to send message to when lever is on.";
+property eWorldEvent On_Message_2$   		= WE_REQ_ACTIVATE   doc = "Additional Message to send when lever is on.";
+property float       On_Message_Delay_2$                     	doc = "AdditionalMessage delay when lever is on.";
+property scid        Off_Scid_2$                          		doc = "Additional Scid to send message to when lever is off.";
+property eWorldEvent Off_Message_2$  		= WE_REQ_DEACTIVATE doc = "Additional Message to send when lever is off.";
+property float       Off_Message_Delay_2$                     	doc = "Additional Message delay when lever is off.";
+property scid        On_Scid_3$                          		doc = "Additional Scid to send message to when lever is on.";
+property eWorldEvent On_Message_3$   		= WE_REQ_ACTIVATE   doc = "Additional Message to send when lever is on.";
+property float       On_Message_Delay_3$                     	doc = "Additional Message delay when lever is on.";
+property scid        Off_Scid_3$                          		doc = "Additional Scid to send message to when lever is off.";
+property eWorldEvent Off_Message_3$  		= WE_REQ_DEACTIVATE doc = "Additional Message to send when lever is off.";
+property float       Off_Message_Delay_3$                     	doc = "Additional Message delay when lever is off.";
+property scid        On_Scid_4$                          		doc = "Additional Scid to send message to when lever is on.";
+property eWorldEvent On_Message_4$   		= WE_REQ_ACTIVATE   doc = "Additional Message to send when lever is on.";
+property float       On_Message_Delay_4$                     	doc = "Additional Message delay when lever is on.";
+property scid        Off_Scid_4$                          		doc = "Additional Scid to send message to when lever is off.";
+property eWorldEvent Off_Message_4$  		= WE_REQ_DEACTIVATE doc = "Additional Message to send when lever is off.";
+property float       Off_Message_Delay_4$                     	doc = "Additional Message delay when lever is off.";
+
+owner = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+// global state
+
+event OnGoDrawDebugHud$
+{
+	if ( On_Scid$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 On_Scid$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "On1: %s (%f)\n\n\n\n\n\n\n", ToString(On_Message$),On_Message_Delay$ ) );
+	}
+    if ( Off_Scid$.getgoid.isvalid() )
+    {
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 Off_Scid$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "Off1: %s (%f)\n\n\n\n\n\n", ToString(Off_Message$),Off_Message_Delay$ ) );
+    }
+	if ( On_Scid_2$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 On_Scid_2$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "On2: %s (%f)\n\n\n\n\n", ToString(On_Message_2$),On_Message_Delay_2$ ) );
+	}
+    if ( Off_Scid_2$.getgoid.isvalid() )
+    {
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 Off_Scid_2$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "Off2: %s (%f)\n\n\n\n", ToString(Off_Message_2$),Off_Message_Delay_2$ ) );
+    }
+    if ( On_Scid_3$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 On_Scid_3$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "On3: %s (%f)\n\n\n", ToString(On_Message_3$),On_Message_Delay_3$ ) );
+	}
+    if ( Off_Scid_3$.getgoid.isvalid() )
+    {
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 Off_Scid_3$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "Off3: %s (%f)\n\n", ToString(Off_Message_3$),Off_Message_Delay_3$ ) );
+    }
+    if ( On_Scid_4$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 On_Scid_4$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "On4: %s (%f)\n", ToString(On_Message_4$),On_Message_Delay_4$ ) );
+	}
+    if ( Off_Scid_4$.getgoid.isvalid() )
+    {
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 Off_Scid_4$.go.Placement.Position,
+                                     MakeColor( 0.0, 1.0, 0.0 ),
+                                     Debug.Format( "Off4: %s (%f)", ToString(Off_Message_4$),Off_Message_Delay_4$ ) );
+    }
+}
+///////////////////////////////////////////////////////////////////////////////
+// local states
+
+startup state WaitForSetup$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_ENTERED_WORLD )
+		{
+			// Request animation
+			MCPManager.MakeRequest( 0, owner.getgoid, PL_CLOSE);
+
+			SetState Wait1$;
+		}
+	}
+}
+
+State Wait1$
+{
+
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+    	//Set lever to active?
+		if ( (!initially_active$) && ( e$ == WE_REQ_ACTIVATE ) )
+		{
+            initially_active$ = true;
+		}
+		if ( (initially_active$) && ( e$ == WE_REQ_DEACTIVATE ) )
+        {
+            initially_active$ = false;
+		}
+	}
+
+	event OnEnterState$
+	{
+		//Make Selectable/Usable
+		Owner.Go.Aspect.RCSetIsSelectable( true );
+		Owner.Go.Aspect.RCSetIsUsable( true );
+	}
+
+	transition -> Pos2$: OnGoHandleMessage( WE_REQ_USE );
+}
+
+State Pos2$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+        //Set lever to active?
+		if ( (!initially_active$) && ( e$ == WE_REQ_ACTIVATE ) )
+		{
+            initially_active$ = true;
+		}
+		if ( (initially_active$) && ( e$ == WE_REQ_DEACTIVATE ) )
+        {
+            initially_active$ = false;
+		}
+    }
+
+	event OnEnterState$
+	{
+    	// Request animation
+		MCPManager.MakeRequest( 0, owner.getgoid, PL_OPEN);
+
+		//Play Sound
+		owner.Go.PlayMaterialSound( "lever_start", "generic", true);
+
+		//Make Non-Selectable/Non-Usable
+		Owner.Go.Aspect.RCSetIsSelectable( false );
+		Owner.Go.Aspect.RCSetIsUsable( false );
+
+        //Post Lever-On World Message
+		if ( On_Scid$.IsValid() && On_Scid$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+			if (initially_active$)
+            {
+        		//Transition after reset delay
+				PostWorldMessage( On_Message$, On_Scid$, On_Message_Delay$ );
+            }
+		}
+		if ( On_Scid_2$.IsValid() && On_Scid_2$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+			if (initially_active$)
+            {
+        		//Transition after reset delay
+				PostWorldMessage( On_Message_2$, On_Scid_2$, On_Message_Delay_2$ );
+            }
+		}
+		if ( On_Scid_3$.IsValid() && On_Scid_3$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+			if (initially_active$)
+            {
+        		//Transition after reset delay
+				PostWorldMessage( On_Message_3$, On_Scid_3$, On_Message_Delay_3$ );
+            }
+		}
+ 		if ( On_Scid_4$.IsValid() && On_Scid_4$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+			if (initially_active$)
+            {
+        		//Transition after reset delay
+				PostWorldMessage( On_Message_4$, On_Scid_4$, On_Message_Delay_4$ );
+            }
+		}
+
+		PostWorldMessage( WE_GO_TIMER_DONE, owner.Go.Goid, reset_time$ );
+    }
+
+   	transition -> Wait2$: OnGoHandleMessage( WE_GO_TIMER_DONE );
+}
+
+State Wait2$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+    	//Set lever to active?
+		if ( (!initially_active$) && ( e$ == WE_REQ_ACTIVATE ) )
+		{
+            initially_active$ = true;
+		}
+		if ( (initially_active$) && ( e$ == WE_REQ_DEACTIVATE ) )
+        {
+            initially_active$ = false;
+		}
+	}
+
+	event OnEnterState$
+	{
+		if (One_Shot$)
+        {
+            SetState Done$;
+		}
+		else
+		{
+			//Make Selectable/Usable
+			Owner.Go.Aspect.RCSetIsSelectable( true );
+			Owner.Go.Aspect.RCSetIsUsable( true );
+        }
+    }
+
+   	transition -> Pos1$: OnGoHandleMessage( WE_REQ_USE );
+}
+
+State Pos1$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+    	//Set lever to active?
+		if ( (!initially_active$) && ( e$ == WE_REQ_ACTIVATE ) )
+		{
+            initially_active$ = true;
+		}
+		if ( (initially_active$) && ( e$ == WE_REQ_DEACTIVATE ) )
+        {
+            initially_active$ = false;
+		}
+    }
+	event OnEnterState$
+	{
+		//Request animation
+		MCPManager.MakeRequest( 0, owner.getgoid, PL_CLOSE);
+
+		//Play Sound
+		owner.Go.PlayMaterialSound( "lever_end", "generic", true);
+
+		//Make Non-Selectable/Non-Usable
+		Owner.Go.Aspect.RCSetIsSelectable( false );
+		Owner.Go.Aspect.RCSetIsUsable( false );
+
+        //Post Lever-Off World Message
+		if ( Off_Scid$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+            if (initially_active$)
+            {
+				PostWorldMessage( Off_Message$, Off_Scid$, Off_Message_Delay$ );
+            }
+		}
+		if ( Off_Scid_2$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+            if (initially_active$)
+            {
+				PostWorldMessage( Off_Message_2$, Off_Scid_2$, Off_Message_Delay_2$ );
+            }
+		}
+		if ( Off_Scid_3$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+            if (initially_active$)
+            {
+				PostWorldMessage( Off_Message_3$, Off_Scid_3$, Off_Message_Delay_3$ );
+            }
+		}
+		if ( Off_Scid_4$.getgoid.isvalid() )
+        {
+            //Check to see if lever is currently active.
+            if (initially_active$)
+            {
+				PostWorldMessage( Off_Message_4$, Off_Scid_4$, Off_Message_Delay_4$ );
+            }
+		}
+        //Transition after reset delay
+		PostWorldMessage( WE_GO_TIMER_DONE, owner.Go.Goid, reset_time_2$ );
+	}
+
+   	transition -> Wait1$: OnGoHandleMessage( WE_GO_TIMER_DONE );
+}
+
+State Done$
+{
+    event OnEnterState$
+    {
+        Owner.Go.Aspect.RCSetIsSelectable( false );
+		Owner.Go.Aspect.RCSetIsUsable( false );
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////

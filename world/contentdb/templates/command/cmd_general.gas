@@ -1,0 +1,70 @@
+//////////////////////////////////////////////////////////////////////////////
+//  General commands
+
+[t:template,n:cmd_enter_nis]
+{
+	specializes	= command;
+	doc			= cmd_enter_nis;
+	extra_doc	= [cmd_enter_nis];
+    category_name       = "command";
+
+	[cmd_enter_nis] { }
+}
+
+[t:template,n:cmd_leave_nis]
+{
+	specializes	= command;
+	doc			= cmd_leave_nis;
+   	extra_doc	= [cmd_leave_nis];
+	category_name       = "command";
+
+	[cmd_leave_nis] { }
+}
+
+[t:template,n:cmd_ai_dojob]
+{
+	specializes = command;
+	doc			= cmd_generic;
+	extra_doc	= [cmd_ai_dojob];
+	category_name       = "command";
+
+	[cmd_ai_dojob] { }
+	[gizmo] { diffuse_color=1.000000,1.000000,1.000000; texture=; }
+}
+
+[t:template,n:cmd_camera_command]
+{
+	specializes = command;
+	doc			= cmd_camera_command;
+	extra_doc	= [cmd_camera_command];
+    category_name       = "command";
+
+	gizmo:model = m_i_glb_object-camera;
+
+	[cmd_camera_command] { }
+}
+
+[t:template,n:cmd_camera_waypoint]
+{
+	specializes = command;
+	doc			= cmd_camera_waypoint;
+	extra_doc	= [cmd_camera_waypoint];
+	category_name       = "command";
+
+	[cmd_camera_waypoint]	{  }
+
+	gizmo:model = m_i_glb_object-camera;
+	gizmo:scale = 0.5;
+}
+
+[t:template,n:cmd_texture]
+{
+	specializes = command;
+	doc			= cmd_texture;
+	extra_doc	= [cmd_texture];
+	category_name       = "command";
+
+	[cmd_texture]	{  }
+}
+
+//////////////////////////////////////////////////////////////////////////////

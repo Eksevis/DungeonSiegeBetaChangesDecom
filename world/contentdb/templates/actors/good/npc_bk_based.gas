@@ -1,0 +1,285 @@
+[t:template,n:base_npc_bk]
+{
+	doc = "Base template for NPC's based on the barkeep.";
+	specializes = actor_good;
+	[actor]
+	{
+		[skills]
+		{
+			dexterity = 5, 0;
+			intelligence = 5, 0;
+			strength = 5, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 1;
+		life = 1;
+		model = m_c_gbn_bk_pos_1;
+		scale_base = 0.85;
+	}
+	[attack]
+	{
+		attack_range = 1;
+		damage_max = 1;
+		damage_min = 1;
+		reload_delay = 1;
+	}
+	[body]
+	{
+		avg_move_velocity = 1;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine1;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_pelvis;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_gbn_bk_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=ds; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf-02; }
+			}
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+				[anim_files]
+				{
+					look = a_c_gbn_bk_fs0_dsf-03;
+					talk = a_c_gbn_bk_fs0_dsf-04;
+					wipe = a_c_gbn_bk_fs0_dsf-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[mind]
+	{
+		jat_talk = world\ai\jobs\common\job_talk.skrit;
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10;
+		sight_range = 10.0;
+	}
+}
+[t:template,n:hein]
+{
+	category_name = "npc";
+	doc = "hein";
+	specializes = base_npc_bk;
+	[actor] { portrait_icon = b_gui_ig_i_ic_c_bs; }
+	[aspect]
+	{
+		[textures] { 0=b_c_gbn_bk; }
+	}
+	[common] { screen_name="Hein"; }
+	[conversation]
+	{
+	}
+	[inventory]
+	{
+		[store_pcontent]
+		{
+			full_ratio = 0;
+
+			[armor]
+			{
+				[all*]
+				{
+					il_main = #body/70-75;
+					max = 3;
+					min = 3;
+				}
+				[all*]
+				{
+					il_main = #body/75-84;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #body/84-90;
+					max = 2;
+					min = 2;
+				}
+				[all*]
+				{
+					il_main = #boots/5-81;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #gloves/5-81;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #helm/35-81;
+					max = 4;
+					min = 4;
+				}
+			}
+			[shields]
+			{
+				[all*]
+				{
+					il_main = #shield/5-81;
+					max = 5;
+					min = 5;
+				}
+			}
+			[weapons]
+			{
+				[all*]
+				{
+					il_main = #melee/15-17;
+					max = 2;
+					min = 2;
+				}
+				[all*]
+				{
+					il_main = #melee/17-21;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #melee/21-23;
+					max = 2;
+					min = 2;
+				}
+
+				[all*]
+				{
+					il_main = #ranged/15-17;
+					max = 1;
+					min = 1;
+				}
+				[all*]
+				{
+					il_main = #ranged/17-21;
+					max = 3;
+					min = 3;
+				}
+				[all*]
+				{
+					il_main = #ranged/21-23;
+					max = 1;
+					min = 1;
+				}
+			}
+		}
+	}
+	[store]
+	{
+	}
+}
+[t:template,n:leftenant_dhoge]
+{
+	category_name = "npc";
+	doc = "leftenant_dhoge";
+	specializes = base_npc_bk;
+	[aspect]
+	{
+		[textures] { 0=b_c_gbn_bk; }
+	}
+	[common] { screen_name="Leftenant Dhoge"; }
+	[conversation]
+	{
+	}
+	[store]
+	{
+	}
+}
+[t:template,n:merchant_barkeep]
+{
+	category_name = "npc";
+	doc = "barkeep";
+	specializes = base_npc_bk;
+	[aspect]
+	{
+		[textures] { 0=b_c_gbn_bk; }
+	}
+	[common] { screen_name="Izen"; }
+	[conversation]
+	{
+	}
+}
+[t:template,n:merchant_innkeeper]
+{
+	category_name = "npc";
+	doc = "innkeeper";
+	specializes = base_npc_bk;
+	[aspect]
+	{
+		[textures] { 0=b_c_gbn_ik; }
+	}
+	[common] { screen_name="Innkeeper"; }
+	[conversation]
+	{
+	}
+	[store]
+	{
+	}
+}
+[t:template,n:merchant_shopkeeper]
+{
+	category_name = "npc";
+	doc = "shopkeeper";
+	specializes = base_npc_bk;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_ski; }
+	[aspect]
+	{
+		[textures] { 0=b_c_gbn_sk; }
+	}
+	[common] { screen_name="Shopkeeper"; }
+	[conversation]
+	{
+	}
+	[store]
+	{
+	}
+}
+[t:template,n:peasant_male_big]
+{
+	category_name = "npc";
+	doc = "peasant_male_big";
+	specializes = base_npc_bk;
+	[aspect]
+	{
+		[textures] { 0=b_c_gbn_pmb; }
+	}
+	[common] { screen_name="Peasant"; }
+}

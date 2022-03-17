@@ -1,0 +1,90 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_polymorph.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property string effect_script$	= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string script_params$	= ""   	doc = "Parameters to send to SiegeFx script";
+
+owner = GoSkritComponent;
+
+int pos$;
+
+Goid summoned_goid$;
+Goid caster$;
+Goid target$;
+Goid go_hit$;
+			
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+
+			if( target$.isvalid && caster$.isvalid )
+			{
+				// Start the visual
+				SiegeFx.SRunScript( effect_script$, target$, caster$, script_params$, owner.Goid, e$ );
+			}
+			else
+			{
+				SetState( CastBegin$ );
+			}
+		} else if ( e$ == WE_SPELL_COLLISION ) {
+			go_hit$ = msg$.SendFrom;
+			SetState ReplaceGo$;
+		}
+	}
+}
+
+
+state ReplaceGo$
+{
+	event OnEnterState$
+	{
+		if (go_hit$.IsValid)
+		{
+			// Copy the reference to the starting position into SiegeFx persistant storage
+			pos$ = SiegeFx.AddVariable( go_hit$.go.placement.position, owner.goid );
+		
+			// Create new game objects as specified in delayed_pcontent block
+			owner.go.inventory.AddDelayedPcontent();
+		
+			Go summoned_go$ = owner.go.children.get( 0 );
+		
+			owner.go.inventory.rcremove( summoned_go$, SiegeFx.GetVariable( pos$, owner.goid ) );
+			summoned_goid$ = summoned_go$.goid;
+		
+			// get rid of the target either by causing it to explode or by just deleting it if it doesn't have 
+			// a physics block defined
+			if( !Physics.SExplodeGo( go_hit$, 1, MakeVector(0,10,0) ) )
+			{
+				GoDb.SMarkForDeletion( go_hit$ );
+			}
+		
+			// Wait a second before assigning the new job
+		}
+		SetState Finish$;
+	}
+}							 
+
+state Finish$
+{
+	event OnEnterState$
+	{
+		SiegeFx.ClearVariables( owner.goid );
+		
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 1 );
+	}
+}
+
+
+

@@ -1,0 +1,1295 @@
+//////////////////////////////////////////////////////////////////////
+// Door base template
+
+[t:template,n:base_door]
+{
+	specializes	= prop;
+	doc			= "Basic door template.";
+
+	common:		screen_name		= "Door";
+	common:		rollover_display = true;
+
+	[aspect]
+	{
+		material = wood;
+		is_collidable = true;
+		is_usable     = true;
+		use_range     = 1.5;
+
+		life_state	  = ls_alive_conscious;
+		is_invincible = true;
+		max_life	  = 1;
+		life		  = 1;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// Door leaf templates
+
+[t:template,n:door_cav_01]
+{
+	specializes		= base_door;
+	doc				= "cav_wooden metalbound";
+    category_name   = "doors";
+
+    aspect:model	= m_i_cav_door-01;
+}
+
+[t:template,n:door_cav_gate_log]
+{
+	specializes		= base_door;
+	doc				= "cav_gate_log";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_cav_gate-log;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_cav;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= gate-log-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= gate-log-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_csl_01]
+{
+	specializes		= base_door;
+	doc				= "csl_wood";
+    category_name   = "doors";
+	[aspect]
+    {
+    	model	= m_i_csl_door-01;
+    	material = wood;
+    	[textures] {0 = b_i_csl_door-01;}
+    }
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_csl;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-01-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+[t:template,n:door_csl_02]
+{
+	specializes		= base_door;
+	doc				= "csl_doubl_wide";
+    category_name   = "doors";
+	[aspect]
+    {
+    	model	= m_i_csl_door-02;
+    	material = wood;
+    	[textures] {0 = b_i_csl_door-02;}
+    }
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_csl;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-02-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+[t:template,n:door_csl_03]
+{
+	specializes		= base_door;
+	doc				= "csl_doubl_tall";
+    category_name   = "doors";
+	[aspect]
+    {
+    	model	= m_i_csl_door-03;
+    	material = wood;
+    	[textures] {0 = b_i_csl_door-03;}
+    }
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_csl;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-03-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-03-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_csl_cell]
+{
+	specializes		= base_door;
+	doc				= "dgn_cell_bars";
+    category_name   = "doors";
+
+    aspect:model	= m_i_csl_door-cell;
+}
+
+[t:template,n:door_csl_green]
+{
+	specializes		= base_door;
+	doc				= "dgn_arch_half_green";
+    category_name   = "doors";
+
+    aspect:model		= m_i_csl_door-arch;
+    aspect:textures:0	= b_i_csl_door-green;
+}
+
+[t:template,n:door_csl_wood]
+{
+	specializes		= base_door;
+	doc				= "dgn_arch_half_wood";
+    category_name   = "doors";
+
+    aspect:model	= m_i_csl_door-arch;
+
+    [generic_objblock] {}
+}
+
+[t:template,n:door_csl_webbed]
+{
+	specializes		= base_door;
+	doc				= "dgn_arch_webbed";
+    category_name   = "doors";
+
+    aspect:model	= m_i_csl_door-webbed;
+
+	aspect:is_usable		= false;
+    aspect:is_selectable    = false;
+
+    [generic_objblock] {}
+}
+
+[t:template,n:door_csl_gate_webbed]
+{
+	specializes		= base_door;
+	doc				= "dgn_gate_webbed_lg";
+    category_name   = "doors";
+
+    aspect:model			= m_i_csl_gate-webbed;
+	aspect:is_usable		= false;
+    aspect:is_selectable    = false;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_csl;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= gate-webbed-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= gate-webbed-close;
+			}
+		}
+	}
+
+    [door_basic]
+	{
+        close_sfx_on = true;
+	}
+}
+
+[t:template,n:door_glb_barred]
+{
+	specializes		= base_door;
+	doc				= "glb_wooden_barred";
+    category_name   = "doors";
+
+    aspect:model	= m_i_glb_door-view;
+}
+
+[t:template,n:door_glb_crypt_01]
+{
+	specializes		= base_door;
+	doc				= "crypt";
+    category_name   = "doors";
+
+    [aspect]
+    {
+    	model	= m_i_glb_door-crypt-01;
+    	[textures]	{0=b_i_glb_door-crypts-01;}
+    	material = stone;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-crypt-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-crypt-01-open;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_gob_metal_01]
+{
+	specializes		= base_door;
+	doc				= "gi_wood and gears";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_gob_door-01;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-01-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_gob_metal_02]
+{
+	specializes		= base_door;
+	doc				= "gi_metal_reinforced_sm";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_gob_door-02;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-02-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_gob_metal_03]
+{
+	specializes		= base_door;
+	doc				= "gi_metal_riveted_sm";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_gob_door-03;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-03-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-03-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_gob_metal_04]
+{
+	specializes		= base_door;
+	doc				= "gi_metal_riveted_lg";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_gob_door-04;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-04-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-04-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+[t:template,n:door_gob_metal_05]
+{
+	specializes		= base_door;
+	doc				= "gi_metal_corrugated_lg";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_gob_door-05;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_gob;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-05-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-05-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_ice_gate]
+{
+	specializes		= base_door;
+	doc				= "gate_glacern";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_ice_gate-door;
+    	aspect:material = wood;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_ice;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= gate-door-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= gate-door-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_ice_cave]
+{
+	specializes		= base_door;
+	doc				= "ice caves";
+    	category_name   	= "doors";
+
+    	aspect:model	= m_i_ice_cave-door;
+    	aspect:textures:0	=   b_i_ice_runedoor;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_ice;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= cave-door-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= cave-door-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_grs_barn_right]
+{
+	specializes		= base_door;
+	doc				= "barn_door-R";
+    category_name   = "doors";
+
+    aspect:model	= m_i_glb_door-barn-01;
+    aspect:material = wood;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_grs_barn_left]
+{
+	specializes		= base_door;
+	doc				= "barn_door-L";
+    category_name   = "doors";
+
+    aspect:model	= m_i_glb_door-barn-02;
+    aspect:material = wood;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+
+[t:template,n:door_grs_peasant_right]
+{
+	specializes		= base_door;
+	doc				= "glb_wooden_peasant-R";
+    category_name   = "doors";
+
+    aspect:model		= m_i_glb_door-01-R;
+    aspect:textures:0	= b_i_grs_door-02;
+    aspect:material = wood;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_grs_peasant_left]
+{
+	specializes		= base_door;
+	doc				= "glb_wooden_peasant-L";
+    category_name   = "doors";
+
+    aspect:model		= m_i_glb_door-01-L;
+    aspect:textures:0	= b_i_grs_door-02;
+    aspect:material = wood;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_grs_ornate_right]
+{
+	specializes		= base_door;
+	doc				= "glb_wooden_ornate-R";
+    category_name   = "doors";
+
+    aspect:model		= m_i_glb_door-02-R;
+    aspect:textures:0	= b_i_grs_door-03;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+[t:template,n:door_grs_ornate_left]
+{
+	specializes		= base_door;
+	doc				= "glb_wooden_ornate-L";
+    category_name   = "doors";
+
+    aspect:model		= m_i_glb_door-02-L;
+    aspect:textures:0	= b_i_grs_door-03;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_ice_peasant_right]
+{
+	specializes		= base_door;
+	doc				= "ice_wooden_peasant-R";
+    category_name   = "doors";
+
+    aspect:model		= m_i_glb_door-03-R;
+    aspect:textures:0	= b_i_ice_door-01;
+    aspect:material = wood;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-01-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+[t:template,n:door_ice_peasant_left]
+{
+	specializes		= base_door;
+	doc				= "ice_wooden_peasant-L";
+    category_name   = "doors";
+
+    aspect:model		= m_i_glb_door-03-L;
+    aspect:textures:0	= b_i_ice_door-01;
+    aspect:material = wood;
+
+    [body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-barn-02-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_grs_farmhouse]
+{
+	specializes		= base_door;
+	doc				= "glb_wooden_farmhouse";
+    category_name   = "doors";
+
+    aspect:model	= m_i_grs_door-farmhouse;
+	aspect:material = wood;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_grs;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files:	00	= door-farmhouse-open;
+			}
+
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files:	00	= door-farmhouse-close;
+			}
+		}
+	}
+
+	[door_basic]	{}
+}
+
+[t:template,n:door_glb_chapel_right]
+{
+	specializes 		= base_door;
+	doc 				= "swp_chapel_door-R";
+    category_name   = "doors";
+
+	aspect:model 		= m_i_glb_door-chapel-01;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-01-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_glb_chapel_left]
+{
+	specializes 		= base_door;
+	doc 				= "swp_chapel_door-L";
+    category_name   = "doors";
+
+	aspect:model 		= m_i_glb_door-chapel-02;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-02-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_glb_chapel_right_02]
+{
+	specializes 	= base_door;
+	doc 			= "chapel_rt";
+    category_name   = "doors";
+
+	[aspect]
+	{
+		model 	= m_i_glb_door-chapel-01;
+		[textures] { 0 = b_i_glb_door-chapel-02;}
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-01-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+[t:template,n:door_glb_chapel_left_02]
+{
+	specializes 	= base_door;
+	doc 			= "chapel_lft";
+    category_name   = "doors";
+
+	[aspect]
+	{
+		model 	= m_i_glb_door-chapel-02;
+		[textures] { 0 = b_i_glb_door-chapel-02;}
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-chapel-02-close;
+			}
+		}
+	}
+	[door_basic]	{}
+}
+
+[t:template,n:door_glb_stormdoor_01]
+{
+	specializes		= base_door;
+	doc				= "glb_cellar-L";
+    category_name   = "doors";
+
+    aspect:model	= m_i_glb_door-cellar-01;
+    aspect:material = wood;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-cellar-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files:	00	= door-cellar-01-close;
+			}
+		}
+	}
+
+    [door_basic] {}
+}
+
+[t:template,n:door_glb_stormdoor_02]
+{
+	specializes		= base_door;
+	doc				= "glb_cellar-R";
+    category_name   = "doors";
+
+    aspect:model	= m_i_glb_door-cellar-02;
+    aspect:material = wood;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-cellar-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files:	00	= door-cellar-02-close;
+			}
+		}
+	}
+
+    [door_basic] {}
+
+}
+[t:template,n:door_swp_cemetary_left]
+{
+	specializes		= base_door;
+	doc				= "swp_cemetary-L";
+    	category_name   	= "doors";
+
+    aspect:model	= m_i_swp_cemetery-gate-left;
+    aspect:material = metal;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            		chore_prefix = a_i_swp;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= cemetery-gate-left-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files:	00	= cemetery-gate-left-close;
+			}
+		}
+	}
+
+    [door_basic] {}
+}
+[t:template,n:door_swp_cemetary_right]
+{
+	specializes		= base_door;
+	doc				= "swp_cemetary-R";
+    	category_name   	= "doors";
+
+    aspect:model	= m_i_swp_cemetery-gate-right;
+    aspect:material = metal;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+            		chore_prefix = a_i_swp;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= cemetery-gate-right-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files:	00	= cemetery-gate-right-close;
+			}
+		}
+	}
+
+    [door_basic] {}
+}
+
+[t:template,n:door_glb_spdrdungeon_01]
+{
+	specializes		= base_door;
+	doc				= "sd_thin_wood";
+    category_name   = "doors";
+
+    [aspect]
+    {
+    	model	= m_i_glb_door-spdrdungeon-01;
+    	[textures]	{ 0 = b_i_glb_door-spdrdungeon-01; }
+    	material = ;
+    	use_range     = 3.0;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-spdrdungeon-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-spdrdungeon-01-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}
+[t:template,n:door_glb_spdrdungeon_02]
+{
+	specializes		= base_door;
+	doc				= "sd_wide_bars";
+    category_name   = "doors";
+
+    [aspect]
+    {
+    	model	= m_i_glb_door-spdrdungeon-02;
+    	[textures]	{ 0 = b_i_glb_door-spdrdungeon-02; }
+    	material = ;
+    	use_range     = 3.0;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-spdrdungeon-02-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-spdrdungeon-02-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}
+[t:template,n:door_glb_spdrdungeon_03]
+{
+	specializes		= base_door;
+	doc				= "sd_wide_wood";
+    category_name   = "doors";
+
+    [aspect]
+    {
+    	model	= m_i_glb_door-spdrdungeon-03;
+    	[textures]	{ 0 = b_i_glb_door-spdrdungeon-01; }
+    	material = ;
+    	use_range     = 3.0;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-spdrdungeon-03-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-spdrdungeon-03-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_glb_gendungeon_01]
+{
+	specializes		= base_door;
+	doc				= "door_glb_gendungeon_01";
+    category_name   = "misc";
+	
+	[aspect]
+    {
+    	model		= m_i_glb_door-gendungeon-01;
+    	[textures]	{ 0 = b_i_glb_door-gendungeon-01; }
+    	use_range   = 3.0;
+    	material = ;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_glb_gendungeon_02]
+{
+	specializes		= base_door;
+	doc				= "door_glb_gendungeon_02";
+    category_name   = "misc";
+	
+	[aspect]
+    {
+    	model		= m_i_glb_door-gendungeon-01;
+    	[textures]	{ 0 = b_i_glb_door-gendungeon-02; }
+    	use_range   = 3.0;
+    	material = ;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_glb_gendungeon_03]
+{
+	specializes		= base_door;
+	doc				= "door_glb_gendungeon_03";
+    category_name   = "misc";
+	
+	[aspect]
+    {
+    	model		= m_i_glb_door-gendungeon-01;
+    	[textures]	{ 0 = b_i_glb_door-gendungeon-03; }
+    	use_range   = 3.0;
+    	material = ;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}
+
+[t:template,n:door_glb_gendungeon_04]
+{
+	specializes		= base_door;
+	doc				= "door_glb_gendungeon_04";
+    category_name   = "misc";
+	
+	[aspect]
+    {
+    	model		= m_i_glb_door-gendungeon-01;
+    	[textures]	{ 0 = b_i_glb_door-gendungeon-04; }
+    	use_range   = 3.0;
+    	material = ;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+        	chore_prefix = a_i_glb;
+
+			[chore_open]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-open;
+			}
+			[chore_close]
+			{
+				skrit			= transition;
+				anim_files: 00	= door-gendungeon-01-close;
+			}
+		}
+	}
+	[door_basic]
+	{
+		open_sfx = "door_shake";
+        oneshot = true;
+	}
+}

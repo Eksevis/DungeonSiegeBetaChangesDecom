@@ -1,0 +1,236 @@
+[t:template,n:base_club]
+{
+	doc = "Club";
+	specializes = weapon_melee;
+	[aspect]
+	{
+		material = wood;
+		[voice]
+		{
+			[put_down] { *=s_e_gui_put_down_staff_SED; }
+		}
+	}
+	[attack]
+	{
+		attack_class = ac_club;
+		is_melee = true;
+		reload_delay = 0;
+		skill_class = melee;
+	}
+	[gui]
+	{
+		active_icon = b_gui_ig_i_ic_cb_r;
+		equip_slot = es_weapon_hand;
+	}
+}
+[t:template,n:cb_g_c_r_1h_avg]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_007; }
+	[attack]
+	{
+		damage_max = 3;
+		damage_min = 2;
+	}
+	[common] { screen_name="Cudgel"; }
+	[gui]
+	{
+		equip_requirements = strength:4;
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_w_clb_007;
+		inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			modifier_max = 0;
+			modifier_min = 0;
+		}
+		[c_fin]
+		{
+			inventory_height = 2;
+			inventory_icon = b_gui_ig_i_w_clb_004;
+			inventory_width = 1;
+			model = m_w_clb_002;
+			modifier_max = 0;
+			modifier_min = 0;
+			[attack]
+			{
+				damage_max = 4;
+				damage_min = 2;
+			}
+		}
+		[o_avg]
+		{
+			inventory_height = 2;
+			inventory_icon = b_gui_ig_i_w_clb_010;
+			inventory_width = 1;
+			model = m_w_clb_010;
+			modifier_max = 1;
+			modifier_min = 0;
+			[attack]
+			{
+				damage_max = 4;
+				damage_min = 3;
+			}
+		}
+		[o_fin]
+		{
+			inventory_height = 2;
+			inventory_icon = b_gui_ig_i_w_clb_011;
+			inventory_width = 1;
+			model = m_w_clb_011;
+			modifier_max = 1;
+			modifier_min = 1;
+			[attack]
+			{
+				damage_max = 7;
+				damage_min = 3;
+			}
+		}
+	}
+}
+[t:template,n:cb_g_c_r_1h_fun]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_008; }
+	[attack]
+	{
+		damage_max = 4;
+		damage_min = 2;
+	}
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Rock Club";
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_w_clb_008;
+		inventory_width = 1;
+	}
+}
+[t:template,n:cb_g_c_r_1h_low]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_001; }
+	[attack]
+	{
+		damage_max = 3;
+		damage_min = 1;
+	}
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Bone Club";
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_w_clb_001;
+		inventory_width = 1;
+	}
+}
+[t:template,n:cb_g_d_r_1h_avg]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_004; }
+	[attack]
+	{
+		damage_max = 5;
+		damage_min = 1;
+	}
+	[common] { screen_name="Spiked Club"; }
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_w_clb_002;
+		inventory_width = 1;
+	}
+}
+[t:template,n:cb_g_d_r_1h_fun]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_003; }
+	[attack]
+	{
+		damage_max = 2;
+		damage_min = 1;
+	}
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Chair Leg";
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_w_clb_003;
+		inventory_width = 1;
+	}
+}
+[t:template,n:cb_g_d_r_1h_low]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_005; }
+	[attack]
+	{
+		damage_max = 1;
+		damage_min = 1;
+	}
+	[common]
+	{
+		allow_modifiers = FALSE;
+		screen_name = "Branch";
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_w_clb_005;
+		inventory_width = 1;
+	}
+}
+[t:template,n:cb_un_2h_cyclops]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_006; }
+	[attack]
+	{
+		damage_max = 19;
+		damage_min = 13;
+	}
+	[common]
+	{
+		is_pcontent_allowed = FALSE;
+		screen_name = "Massive Club";
+	}
+	[gui]
+	{
+		inventory_height = 4;
+		inventory_icon = b_gui_ig_i_w_clb_006;
+		inventory_width = 2;
+	}
+}
+[t:template,n:cb_un_2h_troll]
+{
+	specializes = base_club;
+	[aspect] { model=m_w_clb_009; }
+	[attack]
+	{
+		damage_max = 35;
+		damage_min = 25;
+	}
+	[common]
+	{
+		is_pcontent_allowed = FALSE;
+		screen_name = "Troll's Club";
+	}
+	[gui]
+	{
+		inventory_height = 3;
+		inventory_icon = b_gui_ig_i_w_clb_009;
+		inventory_width = 1;
+	}
+}

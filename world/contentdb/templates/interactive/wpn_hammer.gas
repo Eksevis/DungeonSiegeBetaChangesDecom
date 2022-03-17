@@ -1,0 +1,500 @@
+[t:template,n:base_hammer]
+{
+	  doc = "Hammer";
+	  specializes = weapon_melee;
+	[aspect]
+	{
+		  material = steelblunt;
+		[voice]
+		{
+			[put_down]
+			{
+				  * = s_e_gui_put_down_mace;
+			}
+		}
+	}
+	[attack]
+	{
+		  attack_class = ac_hammer;
+		  is_melee = true;
+		  reload_delay = 0;
+		  skill_class = melee;
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_hammer_hum-wood;
+		  equip_slot = es_weapon_hand;
+	}
+}
+[t:template,n:hm_g_c_1h1m_avg]
+{
+	  doc = "One-handed, single-mallet low quality hammer";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_009;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 7;
+		i damage_min = 5;
+	}
+	[common]
+	{
+		  screen_name = "Hammer";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_014;
+		  inventory_width = 1;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 1;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_015;
+			  model = m_w_hmr_009;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 8;
+				i damage_min = 6;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_017;
+			  model = m_w_hmr_011;
+			i modifier_max = 15;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 44;
+				i damage_min = 29;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_016;
+			  model = m_w_hmr_009;
+			i modifier_max = 6;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 25;
+				i damage_min = 17;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_026;
+			  model = m_w_hmr_010;
+			i modifier_max = 2;
+			i modifier_min = 1;
+			[attack]
+			{
+				i damage_max = 13;
+				i damage_min = 9;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_027;
+			  model = m_w_hmr_011;
+			i modifier_max = 4;
+			i modifier_min = 2;
+			[attack]
+			{
+				i damage_max = 19;
+				i damage_min = 12;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_029;
+			  model = m_w_hmr_011;
+			i modifier_max = 20;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 53;
+				i damage_min = 35;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_028;
+			  model = m_w_hmr_010;
+			i modifier_max = 10;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 34;
+				i damage_min = 23;
+			}
+		}
+	}
+}
+[t:template,n:hm_g_c_1h1m_fun]
+{
+	  doc = "hammer_";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_008;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 6;
+		i damage_min = 4;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Worn Hammer";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_013;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:hm_g_c_1h1m_low]
+{
+	  doc = "hammer_";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_008;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 6;
+		i damage_min = 4;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Broken Hammer";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_012;
+		  inventory_width = 1;
+	}
+}
+[t:template,n:hm_g_c_2h1m_avg]
+{
+	  doc = "Two-handed, single-mallet hammer";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_012;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 30;
+		i damage_min = 20;
+		  is_two_handed = true;
+	}
+	[common]
+	{
+		  screen_name = "Mallet";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  equip_requirements = strength:21;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_020;
+		  inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 5;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_021;
+			  model = m_w_hmr_013;
+			i modifier_max = 11;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 37;
+				i damage_min = 24;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_023;
+			  model = m_w_hmr_015;
+			i modifier_max = 87;
+			i modifier_min = 9;
+			[attack]
+			{
+				i damage_max = 105;
+				i damage_min = 70;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_022;
+			  model = m_w_hmr_014;
+			i modifier_max = 48;
+			i modifier_min = 6;
+			[attack]
+			{
+				i damage_max = 71;
+				i damage_min = 48;
+			}
+		}
+		[o_avg]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_032;
+			  model = m_w_hmr_015;
+			i modifier_max = 19;
+			i modifier_min = 4;
+			[attack]
+			{
+				i damage_max = 45;
+				i damage_min = 30;
+			}
+		}
+		[o_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_034;
+			  model = m_w_hmr_012;
+			i modifier_max = 30;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 55;
+				i damage_min = 37;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_036;
+			  model = m_w_hmr_015;
+			i modifier_max = 105;
+			i modifier_min = 10;
+			[attack]
+			{
+				i damage_max = 126;
+				i damage_min = 84;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_035;
+			  model = m_w_hmr_014;
+			i modifier_max = 68;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 86;
+				i damage_min = 58;
+			}
+		}
+	}
+}
+[t:template,n:hm_g_c_2h1m_fun]
+{
+	  doc = "hammer_";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_012;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 30;
+		i damage_min = 20;
+		  is_two_handed = true;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Worn Mallet";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_019;
+		  inventory_width = 2;
+	}
+}
+[t:template,n:hm_g_c_2h1m_low]
+{
+	  doc = "hammer_";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_012;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 29;
+		i damage_min = 19;
+		  is_two_handed = true;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Cracked Mallet";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_018;
+		  inventory_width = 2;
+	}
+}
+[t:template,n:hm_g_c_2h2m_avg]
+{
+	  doc = "Maul";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_016;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 27;
+		i damage_min = 20;
+		  is_two_handed = true;
+	}
+	[common]
+	{
+		  screen_name = "Maul";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  equip_requirements = strength:21;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_038;
+		  inventory_width = 2;
+	}
+	[pcontent]
+	{
+		[base]
+		{
+			i modifier_max = 5;
+			i modifier_min = 0;
+		}
+		[c_fin]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_039;
+			  model = m_w_hmr_017;
+			i modifier_max = 10;
+			i modifier_min = 3;
+			[attack]
+			{
+				i damage_max = 32;
+				i damage_min = 23;
+			}
+		}
+		[c_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_042;
+			  model = m_w_hmr_019;
+			i modifier_max = 84;
+			i modifier_min = 8;
+			[attack]
+			{
+				i damage_max = 97;
+				i damage_min = 72;
+			}
+		}
+		[c_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_040;
+			  model = m_w_hmr_017;
+			i modifier_max = 43;
+			i modifier_min = 5;
+			[attack]
+			{
+				i damage_max = 62;
+				i damage_min = 46;
+			}
+		}
+		[o_mag]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_044;
+			  model = m_w_hmr_021;
+			i modifier_max = 102;
+			i modifier_min = 10;
+			[attack]
+			{
+				i damage_max = 117;
+				i damage_min = 86;
+			}
+		}
+		[o_str]
+		{
+			  inventory_icon = b_gui_ig_i_w_hmr_043;
+			  model = m_w_hmr_020;
+			i modifier_max = 65;
+			i modifier_min = 7;
+			[attack]
+			{
+				i damage_max = 79;
+				i damage_min = 58;
+			}
+		}
+	}
+}
+[t:template,n:hm_g_c_2h2m_fun]
+{
+	  doc = "Maul";
+	  specializes = base_hammer;
+	[aspect]
+	{
+		  model = m_w_hmr_016;
+	}
+	[attack]
+	{
+		  attack_range = 0.5;
+		i damage_max = 26;
+		i damage_min = 19;
+		  is_two_handed = true;
+	}
+	[common]
+	{
+		  allow_modifiers = false;
+		  screen_name = "Maul";
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_axe_hum-wood;
+		  inventory_height = 3;
+		  inventory_icon = b_gui_ig_i_w_hmr_037;
+		  inventory_width = 2;
+	}
+}

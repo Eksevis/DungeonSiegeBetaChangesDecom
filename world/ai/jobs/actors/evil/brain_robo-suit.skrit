@@ -1,0 +1,333 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	brain_robo-suit.skrit
+
+	Author(s)	: 	Eric Tams
+
+	Purpose		:	Customized brain for the Goblin robo suit
+	
+	Expected Behavior	: The Robo suit will be sitting under the ground. When
+						The character enters the room he will rise from the floor.
+						When he sees the character he will power up and begin to 
+						attack. The robo-suit will fight the characters until he 
+						reaches a certain life ratio he will then back up into 
+						some tessla coils where he will be healed. 
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+Goid	m_Target$;
+Go		m_Spell$;
+Go		spell_lightning$;
+Go		spell_minigun$;
+Go		spell_grenade$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "k_job_c_attack-utils" 
+//#include "../common/k_job_c_path-utils" 
+
+////////////////////////////////////////////////////////////////////////////////
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$				= job$;
+	m_Go$				= job$.Go;
+	m_Mind$				= job$.Go.Mind;
+	m_Target$			= Goid.invalidgoid;
+	spell_lightning$	= null;
+	spell_minigun$		= null;
+	spell_grenade$		= null;
+	   
+	m_Mind$.TempGopColl1.Clear;
+	m_Go$.Inventory.ListItems( QT_SPELL, il_main, m_Mind$.TempGopColl1 );
+		
+	int spells_left$ = m_Mind$.TempGopColl1.Size();
+	
+	while ( spells_left$ > 0)
+	{
+		m_Spell$ = m_Mind$.TempGopColl1.Get(spells_left$ - 1);
+	
+		if ( m_Spell$.TemplateName == "spell_robo_suit_lightning" ) 
+		{
+			spell_lightning$ = m_Spell$;
+			report.genericf("Spell_lightning: %s\n",spell_lightning$.TemplateName);
+		} else if ( m_Spell$.TemplateName == "spell_robo_suit_minigun" ) 
+		{
+			spell_minigun$ = m_Spell$;
+			report.genericf("Spell_minigun: %s\n",spell_minigun$.TemplateName);
+		} else if ( m_Spell$.TemplateName == "spell_robo_suit_grenade" ) 
+		{
+			spell_grenade$ = m_Spell$;
+			report.genericf("Spell_grenade: %s\n",spell_grenade$.TemplateName);
+		}
+		spells_left$ -= 1;
+	}	
+}
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+	
+	SetState Start$;
+}
+
+event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{
+	if( e$ == WE_KILLED ) 
+	{
+		SetState Dying$;
+	} 
+}
+////////////////////////////////////////////////////////////////////////////////
+//  Helper Functions
+
+////////////////////////////////////////
+//	TryAnim
+
+bool TryAnim$( int FourCC$ )
+{
+	int Anim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_MISC,FourCC$);
+		
+	if (Anim$ >= 0)
+	{
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_PLAYANIM, CHORE_MISC, Anim$, 0 );
+		return true;	
+	}
+	return false;
+}
+
+////////////////////////////////////////
+//	TryFidget
+
+bool TryFidget$( int FourCC$ )
+{
+	int Anim$ = m_Go$.Aspect.AspectHandle.GetSubAnimForChoreFourCC(CHORE_FIDGET,FourCC$);
+		
+	if (Anim$ >= 0)
+	{
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FIDGET, Anim$);
+		return true;	
+	}
+	return false;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	main state machine
+
+state Start$
+{
+	transition
+	{
+		//-> Start$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+	
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_ENEMY_SPOTTED )
+		{
+			SetState Wakeup$;
+		}
+	}
+	
+	event OnEnterState$
+	{	
+		if ( !TryAnim$('slep') )
+		{
+			SetState Thinking$;
+		}
+	}
+}
+
+state Wakeup$
+{
+	transition
+	{
+		-> Thinking$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+	event OnEnterState$
+	{
+		if ( !TryAnim$('wake') )
+		{
+			m_Mind$.SetActorAutoFidgets( true ); 
+			SetState Thinking$;
+		}
+	}
+	
+}
+
+state Fidgeting$
+{
+	transition
+	{
+		-> Thinking$:	OnWorldMessage( WE_ANIM_DONE );
+		-> Thinking$:	OnWorldMessage( WE_JOB_TIMER_DONE );
+		-> Thinking$:	OnWorldMessage( WE_ENEMY_SPOTTED );
+	}
+	event OnEnterState$
+	{
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		//int select_fidget$ = Math.RandomInt( 0, 1 );
+		//if ( select_fidget$ == 1)
+		//{
+		//	if ( !TryFidget$('fdg1') )
+		//	{
+		//		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		//	}
+		//} else {
+		//	if ( !TryFidget$('fdg2') )
+		//	{
+		//		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		//	}
+		//}
+	}
+}
+
+state Thinking$
+{
+	transition
+	{
+		-> Thinking$:	OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Mind$.EnemiesVisible() )
+		{	
+			SetState RequestAction$;
+		}
+		else
+		{
+			m_Job$.SetTimer( m_Mind$.SensorScanPeriod );     
+			// SetState Fidgeting$;
+		}
+	}
+}
+
+state RequestAction$
+{
+	transition
+	{
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> RequestAction$:	OnWorldMessage( WE_MCP_CHORE_CHANGING );
+		-> RequestAction$:	OnWorldMessage( WE_ANIM_DONE );
+		-> Thinking$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Mind$.EnemiesVisible() )
+		{	
+			m_Target$ = m_Mind$.GetClosestEnemy().Goid;
+
+			ResetPathFindingParameters$();
+			
+			float attack_loop_duration$ = m_Go$.Attack.ReloadDelay;
+			
+  			MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FACE, m_Target$ );
+        	
+			int anim$ = Math.RandomInt( 0, 4 );
+			report.genericf("Trying Attack number: %d\n",anim$);  
+			
+			eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id,
+													m_Go$.Goid,
+													PL_ATTACK_OBJECT_RANGED,
+													attack_loop_duration$,
+													anim$,
+													m_Target$,
+													m_LookAhead$, m_MaxApproachTime$,
+													m_Go$.Attack.GetAttackRange()
+													);
+			if( RequestFailed(ret$) )
+			{
+				m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+			}
+			else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+			{
+				SetState( MovingCloser$ );
+			}
+			else if (ret$ == REQUEST_OK)
+			{
+				SetState Attacking$;
+			}
+			else // (ret$ == REQUEST_OK_IN_RANGE)
+			{
+				SetState Attacking$;
+			}
+		} else {
+			m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		}
+	}
+}
+
+state ContinueAction$
+{
+	event OnEnterState$
+	{
+		SetState Attacking$;
+	}
+}
+
+state Attacking$
+{
+	transition
+	{
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		//-> RequestAction$:	OnWorldMessage( WE_MCP_CHORE_CHANGING );
+		-> RequestAction$:	OnWorldMessage( WE_MCP_SECTION_COMPLETE_WARNING );
+		-> RequestAction$:	OnWorldMessage( WE_ANIM_DONE );
+		//-> Thinking$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+	
+	event OnWorldMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if ( e$ == WE_ANIM_SFX )
+		{
+			//report.genericf("sfx event: %d\n",msg$.Data1);
+			if ( msg$.Data1 == 1 )
+			{
+				if (spell_minigun$ != null)
+				{
+					spell_minigun$.Magic.SCast( m_Target$.go );
+				}
+			} else if ( msg$.Data1 == 2 )
+			{
+				Siegefx.RunScript("robo_suit_fire",m_Go$.goid,m_Go$.goid,"",m_Go$.goid, e$ );
+			} else if ( msg$.Data1 == 3 )
+			{
+				if (spell_lightning$ != null)
+				{
+					spell_lightning$.Magic.SCast( m_Target$.go );
+				}
+			} else if ( msg$.Data1 == 4 )
+			{
+				if ( spell_grenade$ != null)
+				{
+					spell_grenade$.Magic.SCast( m_Target$.go );
+				}
+			} 
+		}
+	}
+}
+
+state Dying$
+{
+}

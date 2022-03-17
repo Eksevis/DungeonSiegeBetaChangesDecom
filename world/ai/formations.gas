@@ -1,0 +1,336 @@
+[formations]
+{
+	[ui_order]
+	{
+		0 = none;
+	    1 = wedge;
+		2 = t;
+		3 = double_wedge;
+		4 = wide_wedge;
+		5 = narrow_wedge;
+		6 = column;
+		7 = double_column;
+		8 = line;
+		9 = double_line;
+	   10 = square;
+	   11 = circle;
+	}
+
+	[column]
+	{
+		initial_spacing = 0;  
+
+		min_spacing 	= 0.0;
+		max_spacing 	= 2.0;
+
+		center_w 	= 0;
+		center_l	= 4.0;
+
+		spot_w		= 0.5;
+		spot_l		= 0.8;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 1, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 2, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 3, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 4, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 0, 5, 0, 0, 0, 0;
+		-1 = 0, 0, 0, 0, 6, 0, 0, 0, 0;
+		-2 = 0, 0, 0, 0, 7, 0, 0, 0, 0;
+		-3 = 0, 0, 0, 0, 8, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[double_column]
+	{
+		initial_spacing = 0;  
+
+		min_spacing     = 0.0;
+		max_spacing     = 2.0;
+
+		center_w	= 0.0;
+		center_l	= 4.0;
+
+		spot_w		= 0.8;
+		spot_l		= 0.8;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 1, 2, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 3, 4, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 5, 6, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 7, 8, 0, 0, 0;
+		 0 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[line]
+	{
+		initial_spacing = 0;  
+
+		min_spacing     = 0.0;
+		max_spacing     = 2.0;
+
+		center_w	= 0;
+		center_l	= 0;
+		spot_w		= 0.8;
+		spot_l		= 0.5;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 0 = 0, 7, 5, 3, 1, 2, 4, 6, 8;
+		-1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[double_line]
+	{
+		initial_spacing = 0;  
+
+		min_spacing 	= 0.0;
+		max_spacing 	= 2.0;
+
+		center_w	= 0;
+		center_l	= 0;
+
+		spot_w		= 0.8;
+		spot_l		= 0.8;
+
+		reserved_decal          = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 3, 1, 2, 4, 0, 0;
+		-1 = 0, 0, 0, 7, 5, 6, 8, 0, 0;
+		-2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[t]
+	{
+		initial_spacing = 0;  
+
+		min_spacing 	= 0.0;
+		max_spacing 	= 2.0;
+
+		center_w	= 0.0;
+		center_l	= 4.0;
+
+		spot_w		= 0.8;
+		spot_l		= 0.8;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 5, 3, 1, 2, 4, 0, 0;
+		 3 = 0, 0, 0, 0, 6, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 7, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 8, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[wedge]
+	{
+		 initial_spacing = 0;  
+
+		 min_spacing = 0.0;
+		 max_spacing = 2.0;
+
+		 center_w	= 0;
+		 center_l	= 0;
+
+		 spot_w		= 0.5;
+		 spot_l		= 0.5;
+
+		 reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		 free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		 leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		 terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+	
+		 4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 0, 1, 0, 0, 0, 0;
+		-1 = 0, 0, 0, 3, 0, 2, 0, 0, 0;
+		-2 = 0, 0, 5, 0, 0, 0, 4, 0, 0;
+		-3 = 0, 7, 0, 0, 8, 0, 0, 6, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[double_wedge]
+	{
+		 initial_spacing = 0;  
+
+		 min_spacing = 0.0;
+		 max_spacing = 2.0;
+
+		 center_w	= 0;
+		 center_l	= 4.0;
+
+		 spot_w		= 0.5;
+		 spot_l		= 0.5;
+
+		 reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		 free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		 leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		 terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+	
+		 4 = 0, 0, 0, 0, 1, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 3, 0, 2, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 4, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 6, 0, 5, 0, 0, 0;
+		-1 = 0, 0, 8, 0, 0, 0, 7, 0, 0;
+		-2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-3 = 0, 0, 0, 0, 8, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[wide_wedge]
+	{
+		initial_spacing = 0;  
+
+		min_spacing = 0.0;
+		max_spacing = 2.0;
+
+		center_w	= 0;
+		center_l	= 0;
+
+		spot_w		= 1.0;
+		spot_l		= 0.5;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 0, 1, 0, 0, 0, 0;
+		-1 = 0, 0, 0, 3, 0, 2, 0, 0, 0;
+		-2 = 0, 0, 5, 0, 0, 0, 4, 0, 0;
+		-3 = 0, 7, 0, 0, 8, 0, 0, 6, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[narrow_wedge]
+	{
+		initial_spacing = 0;  
+
+		min_spacing = 0.0;
+		max_spacing = 2.0;
+
+		center_w	= 0;
+		center_l	= 0;
+
+		spot_w		= 0.5;
+		spot_l		= 1.0;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 0, 1, 0, 0, 0, 0;
+		-1 = 0, 0, 0, 3, 0, 2, 0, 0, 0;
+		-2 = 0, 0, 5, 0, 0, 0, 4, 0, 0;
+		-3 = 0, 7, 0, 0, 8, 0, 0, 6, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[square]
+	{
+		initial_spacing = 0;  
+
+		min_spacing = 0.0;
+		max_spacing = 2.0;
+
+		center_w	= 0;
+		center_l	= 0;
+
+		spot_w		= 0.8;
+		spot_l		= 0.8;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 2 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 0 = 0, 0, 0, 3, 1, 2, 0, 0, 0;
+		-1 = 0, 0, 0, 5, 0, 4, 0, 0, 0;
+		-2 = 0, 0, 0, 7, 8, 6, 0, 0, 0;
+		-3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+	}
+
+	[circle]
+	{
+		initial_spacing = 0;  
+
+		min_spacing = 0.0;
+		max_spacing = 2.0;
+
+		center_w	= 0;
+		center_l	= 4.0;
+
+		spot_w		= 0.35;
+		spot_l		= 0.35;
+
+		reserved_decal        = art\bitmaps\decals\b_d_formation_spot.%img%;
+		free_decal            = art\bitmaps\decals\b_d_formation_unocc.%img%;
+		leader_decal          = art\bitmaps\decals\b_d_formation_leader.%img%;
+		terrain_blocked_decal = art\bitmaps\decals\b_d_red_x.%img%;
+
+		 4 = 0, 0, 0, 0, 1, 0, 0, 0, 0;
+		 3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 2 = 0, 2, 0, 0, 0, 0, 0, 3, 0;
+		 1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		 0 = 4, 0, 0, 0, 0, 0, 0, 0, 5;
+		-1 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-2 = 0, 6, 0, 0, 0, 0, 0, 7, 0;
+		-3 = 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		-4 = 0, 0, 0, 0, 8, 0, 0, 0, 0;
+	}
+}

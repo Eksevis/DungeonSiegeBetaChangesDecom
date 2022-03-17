@@ -1,0 +1,22 @@
+[t:interface,n:common_gridbox]
+{
+	interface = true;
+
+	[t:gridbox,n:common_gridbox_8x10] 
+	{
+		alpha = 1.000000;
+		box_height = 32.000000;
+		box_width = 32.000000;
+		columns = 8;
+		common_control = false;
+		common_template = ;
+		draw_order = 0;
+		grid_type = inventory;
+		rect = 363,91,619,411;
+		rows = 10;
+		texture = ;
+		uvcoords = 0.000000,10.000000,8.000000,0.000000;
+		wrap_mode = tiled;
+		visible = false;
+	}	
+}

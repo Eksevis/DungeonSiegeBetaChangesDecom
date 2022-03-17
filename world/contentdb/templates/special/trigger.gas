@@ -1,0 +1,387 @@
+//////////////////////////////////////////////////////////////////////////////
+
+[t:template,n:trigger_generic]
+{
+	specializes = trigger;
+	doc = "trigger_generic";
+    extra_doc = "Generic trigger which does nothing except trigger stuff.";
+
+	category_name       = "trigger";
+
+	[gizmo] { diffuse_color=1.000000,1.000000,1.000000; texture=; }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+[t:template,n:trigger_catalyst_in_sphere]
+{
+	specializes = trigger;
+	doc = "trigger_catalyst_in_sphere";
+	extra_doc = "This trigger will make any actor within its radius the catalyst of an AI command.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = send_world_message("we_req_activate",0,0.000000,"result_of_condition","actor_within_sphere");
+				condition* = actor_within_sphere(2.500000);
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = true;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:accumulate_trigger]
+{
+	specializes		= trigger;
+
+	doc				= [generic_accumtrigger];
+	category_name	= "trigger";
+
+	[generic_accumtrigger] { }
+}
+[t:template,n:trigger_change_mood_box]
+{
+	specializes = trigger;
+	doc = "trigger_change_mood_box";
+	extra_doc = "Bounding Box Trigger Used to Change Moods.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This is supposed to be an instance trigger.  If you have questions please come talk with Chooch. -J
+		[instance_triggers]
+		{
+			[*]
+			{
+				condition* = party_member_within_bounding_box(2.0,1.0,2.0);
+				action* = mood_change("","party_member_within_bounding_box");			
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:trigger_fade_node_box]
+{
+	specializes = trigger;
+	doc = "trigger_fade_node_box";
+	extra_doc = "Bounding Box Trigger Used to Fade a Single Node.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This should just fade a single node with a single bounding box.  --DT
+		[instance_triggers]
+		{
+			[*]
+			{
+				condition* = party_member_within_bounding_box(2.0,2.0,2.0);
+				action* = fade_node(0,"out:black");
+				action* = when_false fade_node(0,"in");
+				flip_flop = true;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:trigger_fade_nodes_box]
+{
+	specializes = trigger;
+	doc = "trigger_fade_nodes_box";
+	extra_doc = "Bounding Box Trigger Used to Fade a Group of Nodes.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This should fade a group of nodes with a single bounding box.  --DT
+		[instance_triggers]
+		{
+			[*]
+			{
+				condition* = party_member_within_bounding_box(2.0,2.0,2.0);
+				action* = fade_nodes(0,-1,-1,-1,"out:black","party_member_within_bounding_box");
+				action* = when_false fade_nodes(0,-1,-1,-1,"in","party_member_within_bounding_box");
+				flip_flop = true;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=0.200000,0.800000,0.200000; texture=; }
+
+}
+[t:template,n:trigger_fade_nodes_node]
+{
+	specializes = trigger;
+	doc = "trigger_fade_nodes_node";
+	extra_doc = "Node Trigger Used to Fade a Group of Nodes.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This should fade a group of nodes when a party member is within the defined nodes.  --DT
+		[instance_triggers]
+		{
+			[*]
+			{
+				condition* = party_member_within_node(0,-1,-1,-1);
+				action* = fade_nodes(0,-1,-1,-1,"out:black","party_member_within_node");
+				action* = when_false fade_nodes(0,-1,-1,-1,"in","party_member_within_node");
+				flip_flop = true;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=0.200000,0.800000,0.600000; texture=; }
+
+}
+[t:template,n:trigger_fade_nodes_global_box]
+{
+	specializes = trigger;
+	doc = "trigger_fade_nodes_global_box";
+	extra_doc = "Bounding Box Trigger Used to Globally Fade Out A Group of Nodes.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		[instance_triggers]
+		{
+			[*]
+			{
+				  action* = fade_nodes_global(0,1,1,-1,"out:black");
+				  condition* = party_member_within_bounding_box(2.000000,2.000000,2.000000);
+				f delay = 0.000000;
+				b flip_flop = false;
+				  occupants_group = ;
+				f poll_frequency = 0.000000;
+				f reset_duration = 0.000000;
+				b single_shot = false;
+				b start_active = true;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=0.600000,0.000000,0.000000; texture=; }
+
+}
+[t:template,n:trigger_fade_node_offonly_box]
+{
+	specializes = trigger;
+	doc = "trigger_fade_node_offonly_box";
+	extra_doc = "Bounding Box Trigger Used to Fade a Single Node Out Forever.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		[instance_triggers]
+		{
+			[*]
+			{
+				condition* = party_member_within_bounding_box(2.0,2.0,2.0);
+				action* = fade_node(0,"out:black");
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:trigger_catalyst_in_bounding_box]
+{
+	specializes = trigger;
+	doc = "trigger_catalyst_in_bounding_box";
+	extra_doc = "This trigger will make any actor within the box the catalyst of an AI command.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = send_world_message("we_req_activate",0,0.000000,"result_of_condition","actor_within_sphere");
+				condition* = party_member_within_bounding_box(2.0,1.0,2.0);
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = true;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:event_manager]
+{
+	specializes = trigger;
+	doc			= "event_manager";
+	extra_doc	= "This object is used for managing more than two events locked down via an external trigger.";
+
+    category_name       = "trigger";
+
+	[common]
+	{
+        //THIS IS AN INSTANCE_TRIGGER FOR PRE-PACKAGING.   -JE
+		[instance_triggers]
+		{
+			[*]
+			{
+				action* = send_world_message("we_req_activate",0,0.000000,"default","");
+				condition* = receive_world_message("we_req_activate");
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:trigger_rec_msg_activate]
+{
+	specializes = trigger;
+	doc = "trigger_rec_msg_activate";
+	extra_doc = "Trigger waits for activate message.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This is supposed to be an instance trigger.  If you have questions please come talk with Chooch. -J
+		[instance_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_req_activate");
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:trigger_snd_msg_activate]
+{
+	specializes = trigger;
+	doc = "trigger_snd_msg_activate";
+	extra_doc = "Trigger sends activate message.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This is supposed to be an instance trigger.  If you have questions please come talk with Chooch. -J
+		[instance_triggers]
+		{
+			[*]
+			{
+				action* = send_world_message("we_req_activate",0,0,"default","");
+				flip_flop = false;
+				reset_duration = 0.000000;
+				single_shot = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=1.000000,0.500000,0.000000; texture=; }
+
+}
+[t:template,n:trigger_fade_secret_area_box]
+{
+	specializes = trigger;
+	doc = "trigger_fade_box_secret_area";
+	extra_doc = "Bounding Box Trigger Used to Fade a Secret Area.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This should delete caps (if necessary) and fade off caps, exposing a secret area for the whole party  --DT
+		[instance_triggers]
+		{
+			[*]
+			{
+				action* = send_world_message("we_req_delete",0,0.000000,"default","party_member_within_bounding_box");
+				action* = fade_nodes_global(0,-1,-1,-1,"out");
+				condition* = party_member_within_bounding_box(0.500000,2.000000,6.000000);
+				delay = 0.000000;
+				flip_flop = false;
+				occupants_group = ;
+				poll_frequency = 0.000000;
+				reset_duration = 0.000000;
+				single_shot = true;
+				start_active = false;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=0.700000,0.100000,0.700000; texture=; }
+}
+[t:template,n:trigger_fade_node_group]
+{
+	specializes = trigger;
+	doc = "trigger_fade_node_group";
+	extra_doc = "Trigger Used to Fade an Area Bounded by a Group of Triggers.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//This should fade a single node that is bounded by multiple triggers (bounding boxes, spheres, etc.) --DT
+		[instance_triggers]
+		{
+			[*]
+			{
+				action* = fade_node(0,"out:black"), group(1);
+				action* = fade_node(0,"in"), group(2);
+				condition* = party_member_entered_trigger_group("I_need_a_name"), group(1);
+				condition* = party_member_left_trigger_group("I_need_a_name"), group(2);
+				delay = 0.000000;
+				flip_flop = false;
+				occupants_group = ;
+				poll_frequency = 0.000000;
+				reset_duration = 0.000000;
+				single_shot = false;
+				start_active = true;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=0.000000,0.000000,0.600000; texture=; }
+}
+[t:template,n:trigger_plane_box]
+{
+	specializes = trigger;
+	doc = "trigger_plane_box";
+	extra_doc = "Skinny, Wide, and Tall Bounding Box Trigger.";
+    category_name       = "trigger";
+
+    [common]
+	{
+		//Requested by Ernsie, implemented by DT
+		[instance_triggers]
+		{
+			[*]
+			{
+				condition* = party_member_within_bounding_box(7.000000,3.000000,0.300000);
+				delay = 0.000000;
+				flip_flop = false;
+				occupants_group = ;
+				poll_frequency = 0.000000;
+				reset_duration = 0.000000;
+				single_shot = false;
+				start_active = true;
+			}
+		}
+	}
+	[gizmo] { diffuse_color=0.800000,0.800000,0.000000; texture=; }
+}

@@ -1,0 +1,308 @@
+[data_bar]
+{
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+
+	b interface = true;
+	[t:button,n:button_awp_maximize]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 3;
+		  rect = 5,449,37,475;
+		  texture = b_gui_ig_mnu_icon_awpmax_up;
+		  uvcoords = 0.000000,0.187500,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  visible = false;
+
+		[messages]
+		{
+			onbuttonpress = notify(expand_awp);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_icon_awpmax_dwn);
+			onlbuttonup	  = loadtexture(b_gui_ig_mnu_icon_awpmax_up);
+			onrollover	  = loadtexture(b_gui_ig_mnu_icon_awpmax_hov);
+			onrolloff	  = loadtexture(b_gui_ig_mnu_icon_awpmax_up);
+		}
+
+		is_bottom_anchor = true;
+		bottom_anchor = 35;
+
+		rollover_help = awp_maximize;
+
+		dock_group = information_dockbar;		
+	}
+	[t:button,n:button_awp_minimize]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 2;
+		  rect = 5,449,37,475;
+		  texture = b_gui_ig_mnu_icon_awpmin_up;
+		  uvcoords = 0.000000,0.187500,1.000000,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(contract_awp);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_icon_awpmin_dwn);
+			onlbuttonup	  = loadtexture(b_gui_ig_mnu_icon_awpmin_up);
+			onrollover	  = loadtexture(b_gui_ig_mnu_icon_awpmin_hov);
+			onrolloff	  = loadtexture(b_gui_ig_mnu_icon_awpmin_up);
+		}
+
+		is_bottom_anchor = true;
+		bottom_anchor = 35;
+
+		rollover_help = awp_minimize;
+
+		dock_group = information_dockbar;		
+	}
+	[t:button,n:button_health_potions]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 4;
+		  rect = 45,444,67,476;
+		  texture = b_gui_ig_mnu_icon_health_up;
+		  uvcoords = 0.000000,0.000000,0.687500,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(drink_health_potions);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_icon_health_dwn);
+			onlbuttonup	  = loadtexture(b_gui_ig_mnu_icon_health_up);
+			onrollover	  = loadtexture(b_gui_ig_mnu_icon_health_hov);
+			onrolloff	  = loadtexture(b_gui_ig_mnu_icon_health_up);
+		}
+
+		is_bottom_anchor = true;
+		bottom_anchor = 41;
+
+		rollover_help = button_health_potions;
+
+		dock_group = information_dockbar;
+		group = information_dockbar;		
+	}
+	[t:button,n:button_mana_potions]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 5;
+		  rect = 71,444,93,476;
+		  texture = b_gui_ig_mnu_icon_mana_up;
+		  uvcoords = 0.000000,0.000000,0.687500,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(drink_mana_potions);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_icon_mana_dwn);
+			onlbuttonup	  = loadtexture(b_gui_ig_mnu_icon_mana_up);
+			onrollover	  = loadtexture(b_gui_ig_mnu_icon_mana_hov);
+			onrolloff	  = loadtexture(b_gui_ig_mnu_icon_mana_up);
+		}
+
+		is_bottom_anchor = true;
+		bottom_anchor = 41;
+
+		rollover_help = button_mana_potions;
+
+		dock_group = information_dockbar;
+		group = information_dockbar;		
+	}
+	[t:button,n:button_mega_map]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 7;
+		  rect = 541,444,568,475;
+		  texture = b_gui_ig_mnu_icon_map_up;
+		  uvcoords = 0.000000,0.031250,0.843750,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(activate_mini_map);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_icon_map_dwn);
+			onlbuttonup	  = loadtexture(b_gui_ig_mnu_icon_map_up);
+			onrollover	  = loadtexture(b_gui_ig_mnu_icon_map_hov);
+			onrolloff	  = loadtexture(b_gui_ig_mnu_icon_map_up);
+		} 
+
+		is_bottom_anchor = true;
+		bottom_anchor = 41;
+		is_right_anchor = true;
+		right_anchor = 99;
+
+		rollover_help = button_mega_map;
+
+		dock_group = information_dockbar;
+		group = information_dockbar;		
+	}
+	[t:button,n:button_menu]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 8;
+		  rect = 611,444,635,476;
+		  texture = b_gui_ig_mnu_icon_door_up;
+		  uvcoords = 0.000000,0.000000,0.750000,1.000000;
+		  wrap_mode = clamp;
+
+		[messages]
+		{		
+			onbuttonpress = notify(options_menu);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_icon_door_dwn);
+			onlbuttonup	  = loadtexture(b_gui_ig_mnu_icon_door_up);
+			onrollover	  = loadtexture(b_gui_ig_mnu_icon_door_hov);
+			onrolloff	  = loadtexture(b_gui_ig_mnu_icon_door_up);
+		}
+		
+		is_bottom_anchor = true;
+		bottom_anchor = 41;
+		is_right_anchor = true;
+		right_anchor = 29;	
+
+		rollover_help = button_menu;
+		
+		dock_group = information_dockbar;
+		group = information_dockbar;			  
+	}
+	[t:button,n:button_quest_log]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 9;
+		  rect = 575,444,603,476;
+		  texture = b_gui_ig_mnu_icon_book_up;
+		  uvcoords = 0.000000,0.000000,0.875000,1.000000;
+		  wrap_mode = clamp;
+		
+		[messages]
+		{		
+			onbuttonpress = notify(toggle_quest_log);
+			onlbuttondown = loadtexture(b_gui_ig_mnu_icon_book_dwn);
+			onlbuttonup	  = loadtexture(b_gui_ig_mnu_icon_book_up);
+			onrollover	  = loadtexture(b_gui_ig_mnu_icon_book_hov);
+			onrolloff	  = loadtexture(b_gui_ig_mnu_icon_book_up);
+			onstartanim   = flashanimation(0.4,true,1,5);			
+		}
+
+		is_bottom_anchor = true;
+		bottom_anchor = 41;
+		is_right_anchor = true;
+		right_anchor = 65;
+
+		rollover_help = button_quest_log;
+
+		dock_group = information_dockbar;
+		group = information_dockbar;		
+	}
+	[t:dockbar,n:data_bar]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 1;
+		  rect = 0,449,640,480;
+		  texture = b_gui_ig_mnu_statusbar;
+		  uvcoords = 0.000000,0.000000,1.000000,0.861111;
+		  wrap_mode = clamp;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 31;
+		b stretch_x = true;			
+
+		dock_group = information_dockbar;
+		group = information_dockbar;
+		dockbar_type = dockbar_screen_y;
+	}
+	[t:text_box,n:text_box_info]
+	{
+		f alpha = 1.000000;
+		b common_control = false;
+		  common_template = ;
+		i draw_order = 12;
+		b fixed_location = true;
+		b has_slider = false;
+		  rect = 127,450,533,479;
+		f scroll_rate = 0.000000;
+		  uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		  wrap_mode = clamp;
+		  font_type = b_gui_fnt_14p_lucinda-bright;
+		  justify = center;
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 30;
+		b stretch_x = true;
+		b pass_through = true;	
+
+		dock_group = information_dockbar;
+		group = information_dockbar;		
+	}
+
+	[t:window,n:paused_window] 
+	{
+		alpha = 1.000000;
+		drag_delay = 0.5;
+		drag_x = 4;
+		drag_y = 4;
+		draggable = true;
+		draw_order = 34;
+		group = paused;
+		rect = 558,404,622,420;
+		texture = b_gui_c_paused;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages] 
+		{
+			oncreated = flashanimation(0.35,true);
+		}
+
+		b is_bottom_anchor = true;
+		i bottom_anchor = 55;
+		b is_right_anchor = true;
+		i right_anchor = 345;
+
+		dock_group = information_dockbar;
+		group = information_dockbar;	
+	}
+
+	[t:window,n:window_camera]
+	{
+	  f alpha = 1.000000;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x00000024;
+		rect = 95,464,127,480;
+		texture = b_gui_ig_mnu_cam-label;
+		uvcoords = 0.000000,0.000000,1.000000,0.500000;
+		wrap_mode = clamp;
+		visible = false;
+		is_bottom_anchor = true;
+		bottom_anchor = 16;
+	}
+	[t:window,n:window_labels]
+	{
+	  f alpha = 1.000000;
+	  b common_control = false;
+		common_template = ;
+	  x draw_order = 0x00000025;
+		rect = 95,448,127,465;
+		texture = b_gui_ig_mnu_cam-label;
+		uvcoords = 0.000000,0.468750,1.000000,1.000000;
+		wrap_mode = clamp;
+		visible = false;
+		is_bottom_anchor = true;
+		bottom_anchor = 32;
+	}
+}

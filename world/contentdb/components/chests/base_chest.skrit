@@ -1,0 +1,94 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  base_chest.skrit
+// Author(s):  biddle
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        = true;
+property string _doc$                = "Basic Open/Closed Chest";
+property string _required_component$ = "placement";
+
+// exported properties
+property float  speed_bias$          = 1.0;
+property bool   initially_open$      = false;
+
+owner                                = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+
+startup state WaitForSetup$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_ENTERED_WORLD )
+		{
+			if( initially_open$ == true )
+			{
+				// Request animation
+				AnimReq aReq$		= MakeAnimReq( CHORE_OPEN );
+				aReq$.ReqFlags			= 1;		// ANIMFLAG_STARTATEND
+				owner.Go.Body.RCAnimate( aReq$ );
+
+				SetState Open$;
+			}
+			else
+			{
+				// Request initial door setup
+				WorldTerrain.RequestObjectBlock( owner.Go.Goid );
+				SetState Closed$;
+			}
+		}
+	}
+}
+
+State Closed$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_REQ_USE )
+		{
+			// Request animation
+			AnimReq aReq$		= MakeAnimReq( CHORE_OPEN );
+			owner.Go.Body.SAnimate( aReq$ );
+        	owner.Go.PlayMaterialSound( "chest_open", "generic", true);
+
+			//it's possible to break this up and wait for the WE_ANIM_DONE, but
+			//I'm just going to drop the stuff around the chest right away
+			//unless somebody complains.  --DT
+
+			// $$$ BART!  please check this scatter code
+  			// owner.Go.DebugProbeReport( "Scattering treasure\n" );
+ 	 		if (owner.Go.HasInventory())
+	 		{
+		 		owner.Go.Inventory.DropItemsAroundBody();
+	 		}
+
+			SetState Open$;
+		}
+	}
+
+}
+
+State Open$
+{
+	// This chest is now used up and can not be selected or used again 
+	// This should finally satisfy bug #160 "chests that are opened should stay that way" --DT
+    event OnEnterState$
+    {
+        Owner.Go.Aspect.SSetIsSelectable( false );
+		Owner.Go.Aspect.SSetIsUsable( false );
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////

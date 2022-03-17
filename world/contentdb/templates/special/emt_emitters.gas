@@ -1,0 +1,124 @@
+//////////////////////////////////////////////////////////////////////////////
+// Emitters
+[t:template,n:emt_generic]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_generic";
+    extra_doc = "requires trigger activation";
+	[generic_emitter] {}
+}
+
+[t:template,n:emt_go]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_go";
+    extra_doc = "requires trigger activation";
+	[go_emitter]	{}
+}
+
+[t:template,n:emt_glow]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_glow";
+    extra_doc = "requires trigger activation";
+	[glow_emitter]	{}
+}
+
+[t:template,n:emt_particle]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_particle";
+    extra_doc = "requires trigger activation";
+	[particle_emitter]	{}
+}
+
+[t:template,n:emt_spark]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_spark";
+    extra_doc = "requires trigger activation";
+	[spark_emitter]	{}
+}
+
+[t:template,n:emt_fire]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_fire";
+    extra_doc = "requires trigger activation";
+	[fire_emitter]	{}
+}
+
+[t:template,n:emt_mist]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_mist";
+    extra_doc = "requires trigger activation";
+	[mist_emitter]	{}
+}
+
+[t:template,n:emt_mist_line]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_mist_line";
+    extra_doc = "requires trigger activation";
+	[line_mist_emitter]	{}
+}
+
+[t:template,n:emt_fireball]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_fireball";
+    extra_doc = "requires trigger activation";
+	[fireball_emitter]	{}
+}
+
+[t:template,n:emt_sound]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_sound";
+    extra_doc = "requires trigger activation";
+	[sound_emitter]	{}
+}
+
+[t:template,n:emt_hub_ball]
+{
+	specializes	=	emitter;
+    category_name = "emitter";
+
+	doc			=	"t_emt_hub_ball";
+    extra_doc = "requires trigger activation";
+	[generic_emitter] 
+	{
+		rep_freq_min = .3;
+		rep_freq_max = .3;
+		
+		other_effect = hub_balls;
+		
+		// fade_rate affects length of trail
+		// color0 & 1 are the color of the efect in RGB
+		// vdisplace specifies the movement
+		// dur is how long the effect lasts
+		
+		other_params = [fade_rate(8)color0(.5,.5,.5)color1(.5,.5,.5)][vdisplace(45)dur(.5)];
+	}
+}

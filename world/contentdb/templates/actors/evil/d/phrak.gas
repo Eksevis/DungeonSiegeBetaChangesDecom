@@ -1,0 +1,196 @@
+[t:template,n:base_phrak]
+{
+	category_name = "evil_d";
+	doc = "phrak";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  1, 0;
+			intelligence =  1, 0;
+			dexterity =  3, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 4;
+		life = 2;
+        max_life = 2;
+        mana = 2;
+		max_mana = 2;
+		model = m_c_edm_st_pos_1;
+		scale_base = 0.55;
+		textures:0 = b_c_edm_ph;
+        voice:die:	* = s_e_die_phrak;
+        voice:hit_glance:	* = s_e_hit_phrak;
+		voice:hit_solid:	* = s_e_hit_phrak;
+		voice:hit_critical:	* = s_e_hit_phrak;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 4;
+		damage_min = 2;
+	}
+	[body]
+	{
+		avg_move_velocity = 4.000000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_st_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=fl; }
+			}
+		}
+	}
+	[common] { screen_name="Phrak"; }
+	[mind]
+	{
+		melee_engage_range = 14;
+		personal_space_range = 0.4;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+	}
+}
+
+[t:template,n:phrak]
+{
+	category_name = "evil_d";
+	doc = "phrak";
+	specializes = base_phrak;
+}
+
+[t:template,n:phrak_large]
+{
+	category_name = "evil_d";
+	doc = "phrak";
+	specializes = base_phrak;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  1, 0;
+			intelligence =  1, 0;
+			dexterity =  3, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 4;
+		life = 2;
+        max_life = 2;
+        mana = 2;
+		max_mana = 2;
+		scale_base = 1.05;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 1;
+		damage_min = 1;
+	}
+}
+
+[t:template,n:caged_phrak]
+{
+	category_name = "bad";
+	doc = "phrak caged";
+	specializes = base_phrak;
+
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_st_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					slep = dsf;
+					wake = ds;
+				}
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=fl; }
+			}
+		}
+	}
+	[mind]
+	{
+		actor_auto_fidgets = false;
+	}
+}

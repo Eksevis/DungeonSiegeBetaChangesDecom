@@ -1,0 +1,153 @@
+[in_game_menu]
+{
+	type = interface;
+	modal = true;
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+	centered = save_button;
+
+	[t:button,n:resume_button]
+	{
+		common_control = true;
+		common_template = button_4;
+		alpha = 1.000000;
+		draw_order = 11;
+		rect = 240,200,400,216;
+		type = button;
+		uvcoords = 0.000000,0.84252,0.976563,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:text_resume]
+		{
+			alpha = 1.000000;
+			draw_order = 12;
+			font_color = -1;		
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			rect = 257,182,382,197;
+			text = "RESUME";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			justify = center;
+		}
+		[messages]
+		{
+			onbuttonpress = notify(resume_game);
+		}
+	}
+	[t:button,n:options_button]
+	{
+		common_control = true;
+		common_template = button_4;
+		alpha = 1.000000;
+		draw_order = 10;
+		rect = 240,216,400,232;
+		type = button;
+		uvcoords = 0.000000,0.84252,0.976563,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:text_options]
+		{
+			alpha = 1.000000;
+			draw_order = 13;
+			font_color = -1;		
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			rect = 257,202,382,217;
+			text = "OPTIONS";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			justify = center;
+		}
+		[messages]
+		{
+			onbuttonpress = notify(options);
+		}
+	}
+	[t:button,n:save_button]
+	{
+		common_control = true;
+		common_template = button_4;
+		alpha = 1.000000;
+		draw_order = 9;
+		rect = 240,232,400,248;
+		type = button;
+		uvcoords = 0.000000,0.84252,0.976563,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:text_save]
+		{
+			alpha = 1.000000;
+			draw_order = 14;
+			font_color = -1;		
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			rect = 257,221,382,236;
+			text = "SAVE";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			justify = center;
+		}
+		[messages]
+		{
+			onbuttonpress = notify(save_game);
+		}
+	}
+	[t:button,n:load_button]
+	{
+		common_control = true;
+		common_template = button_4;
+		alpha = 1.000000;
+		draw_order = 8;
+		rect = 240,248,400,264;
+		type = button;
+		uvcoords = 0.000000,0.84252,0.976563,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:text_load]
+		{
+			alpha = 1.000000;
+			draw_order = 15;
+			font_color = -1;		
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			rect = 257,242,382,257;
+			text = "LOAD";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			justify = center;
+		}
+		[messages]
+		{
+			onbuttonpress = notify(load_game);
+		}
+	}
+	[t:button,n:exit_game_button]
+	{
+		common_control = true;
+		common_template = button_4;
+		alpha = 1.000000;
+		draw_order = 7;
+		rect = 240,264,400,280;
+		uvcoords = 0.000000,0.84252,0.976563,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:text_exit_game_button]
+		{
+			alpha = 1.000000;
+			draw_order = 16;
+			font_color = -1;		
+			font_type = b_gui_fnt_14p_lucinda-bright;			
+			rect = 450,437,640,452;
+			text = "EXIT GAME";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			justify = center;
+		}
+		[messages]
+		{
+			onbuttonpress = notify(show_exit_game_dialog);
+		}
+	}
+}

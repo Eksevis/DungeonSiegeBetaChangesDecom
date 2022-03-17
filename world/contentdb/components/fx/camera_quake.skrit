@@ -1,0 +1,80 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  camera_quake.skrit
+// Author(s):  Scott Bilas
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool		_server_only$			= false;
+property string		_doc$					= "Earthquake camera effect";
+
+// exported properties
+property float		magnitude_x$			= 1.0				doc = "Magnitude of x quake";
+property float		magnitude_y$			= 1.0				doc = "Magnitude of y quake";
+property float		magnitude_z$			= 1.0				doc = "Magnitude of z quake";
+property float		duration$				= 1.0				doc = "Duration for effect to last in seconds (0 for infinite)";
+property bool		camera_space$			= false				doc = "Shake in camera space, otherwise shake in object (node) space";
+property bool		self_destruct$			= false				doc = "Self-destruct on algorithm completion";
+
+owner = GoSkritComponent;
+
+// globals
+float norm_magnitude_x$, norm_magnitude_y$, norm_magnitude_z$;
+float time$;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Wait$
+{
+	transition -> Play$: OnGoHandleMessage( WE_REQ_ACTIVATE ) =
+	{
+		// normalize the magnitude
+		norm_magnitude_x$ = Math.Abs( magnitude_x$ ) / 2;
+		norm_magnitude_y$ = Math.Abs( magnitude_y$ ) / 2;
+		norm_magnitude_z$ = Math.Abs( magnitude_z$ ) / 2;
+
+		time$ = 0;
+		if ( duration$ > 0 )
+		{
+			PostWorldMessage( self_destruct$ ? WE_REQ_DELETE : WE_REQ_DEACTIVATE, owner.Goid, duration$ );
+		}
+	}
+}
+
+state Play$
+{
+	transition -> Wait$: OnGoHandleMessage( WE_REQ_DEACTIVATE );
+
+	event OnGoUpdate$( float deltaTime$ )
+	{
+		time$ += deltaTime$;
+
+		float t$ = (duration$ == 0)
+				 ? 1.0
+				 : Math.Sin( (time$ / duration$) * Math.Pi );
+		Vector v$ = MakeVector( Math.RandomFloat( -norm_magnitude_x$ * t$, norm_magnitude_x$ * t$ ),
+								Math.RandomFloat( -norm_magnitude_y$ * t$, norm_magnitude_y$ * t$ ),
+								Math.RandomFloat( -norm_magnitude_z$ * t$, norm_magnitude_z$ * t$ ) );
+
+		if ( camera_space$ )
+		{
+			CameraAgent.SubmitCameraOffset( v$ );
+		}
+		else
+		{
+			SiegePos pos$ = SiegePos.Copy( owner.Go.Placement.Position );
+			pos$.Pos = v$;
+			CameraAgent.SubmitCameraOffset( pos$ );
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

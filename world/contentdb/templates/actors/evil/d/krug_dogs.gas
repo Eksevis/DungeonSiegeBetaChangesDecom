@@ -1,0 +1,234 @@
+[t:template,n:base_krug_dog]
+{
+	doc = "krug dog base template";
+	specializes = actor_evil;
+	[aspect]
+	{
+		material = claw;
+		selection_indicator_scale=0.85;
+		voice:die:	* = s_e_die_krug_dog;
+		voice:hit_glance:	* = s_e_hit_krug_dog;
+		voice:hit_solid:	* = s_e_hit_krug_dog;
+		voice:hit_critical:	* = s_e_hit_krug_dog;
+	}
+	[body]
+	{
+		avg_move_velocity = 4.260000;
+		[bone_translator]
+		{
+			body_anterior = muzzle_bone;
+			body_mid = bone02;
+			body_posterior = tail_bone;
+			kill_bone = head_bone;
+			shield_bone = bone12;
+			weapon_bone = jaw_bone;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_kd_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at-04;
+					01 = at-02;
+					02 = at-03;
+					03 = at;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[water_effects]
+	{
+		deep_water_effect = water_splashes;
+		effect_scale = .75;
+	}
+	[guts_manager]
+	{
+		effect_name = melee_hit_2;
+	}
+	[common]
+	{
+		// $ removed blood effect, it is now controlled with the guts manager. -ET
+	}
+	[mind]
+	{
+		com_channels = dyn_party, krug_dog;
+		com_range = 8.0;
+	}
+}
+[t:template,n:krug_dog]
+{
+	category_name = "evil_d";
+	doc = "krug_dog";
+	specializes = base_krug_dog;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  3, 0;
+			intelligence =  1, 0;
+			dexterity =  6, 0;
+			melee =  1,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 28;
+		life = 5;
+		max_life = 5;
+		mana = 2;
+		max_mana = 2;
+		model = m_c_edm_kd_pos_1;
+	}
+	[attack]
+	{
+		damage_max = 4;
+		damage_min = 2;
+	}
+	[common] { screen_name="Krugdog"; }
+	[defend] { defense=5; }
+	[mind]
+	{
+		on_enemy_spotted_alert_friends = true;
+		melee_engage_range = 14.0;
+		personal_space_range = 0.7;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+	}
+	[physics]
+	{
+		break_effect = blood_mist;
+		break_sound = s_e_meat_explosion;
+		[break_particulate]
+		{
+			frag_glb_krug_02 = 1;
+			frag_glb_krug_03 = 1;
+			frag_glb_krug_04 = 1;
+		}
+	}
+}
+[t:template,n:krug_dog_killer]
+{
+	category_name = "evil_d";
+	doc = "Krug_dog_killer";
+	specializes = base_krug_dog;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  9, 0;
+			intelligence =  3, 0;
+			dexterity =  8, 0;
+			melee =  4,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 53;
+		life = 15;
+		max_life = 15;
+		mana = 6;
+		max_mana = 6;
+		model = m_c_edm_kd_pos_1;
+		scale_base = 1.25;
+		[textures] { 0=b_c_edm_kd-02; }
+	}
+	[attack]
+	{
+		damage_max = 12;
+		damage_min = 8;
+	}
+	[common] { screen_name="Krug Killer Dog"; }
+	[defend] { defense=10; }
+	[mind]
+	{
+		on_enemy_spotted_alert_friends = true;
+		melee_engage_range = 14.0;
+		personal_space_range = 0.7;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+	}
+	[physics]
+	{
+		break_effect = blood_mist;
+		break_sound = s_e_meat_explosion;
+		[break_particulate]
+		{
+			frag_glb_krug_02 = 1;
+			frag_glb_krug_03 = 1;
+			frag_glb_krug_04 = 1;
+		}
+	}
+}
+[t:template,n:krug_dog_skeleton]
+{
+	category_name = "evil_d";
+	doc = "krug_dog_skeleton";
+	specializes = base_krug_dog;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  6, 0;
+			intelligence =  1, 0;
+			dexterity =  6, 0;
+			melee =  4,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 69;
+		life = 12;
+		max_life = 12;
+		mana = 2;
+		max_mana = 2;
+		model = m_c_edm_kd_pos_sk;
+		[textures] { 0=b_c_edm_kd-sk; }
+	}
+	[attack]
+	{
+		damage_max = 14;
+		damage_min = 6;
+	}
+	[common] { screen_name="Krug Dog Skeleton"; }
+	[defend] { defense=16; }
+	[mind]
+	{
+		melee_engage_range = 10.0;
+		outer_comfort_zone_range = 4.0;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10.0;
+	}
+}

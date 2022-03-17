@@ -1,0 +1,159 @@
+[t:template,n:base_mangler]
+{
+	category_name = "evil_d";
+	doc = "base templated for mangler-type actors";
+	specializes = actor_evil;
+	[aspect]
+	{
+		model = m_c_edm_mn_pos_1;
+		voice:die:			* = s_e_die_mangler;
+		voice:hit_glance:	* = s_e_hit_mangler;
+		voice:hit_solid:	* = s_e_hit_mangler;
+		voice:hit_critical:	* = s_e_hit_mangler;
+	}
+	[body]
+	{
+		avg_move_velocity = 2.980000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_mn_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[water_effects]
+	{
+		shallow_water_effect = water_splashes;
+		deep_water_effect = water_splashes;
+		effect_scale = .9;
+		battle_scale = 0.4;
+		max_scale = 1.0;
+	}
+	[mind]
+	{
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10.0;
+   		job_travel_distance_limit = 10;
+		on_engaged_lost_return_to_job_origin = true;
+		on_job_reached_travel_distance_abort_attack = true;
+		sight_origin_height	= 1;
+	}
+}
+[t:template,n:mangler]
+{
+	doc = "mangler";
+	specializes = base_mangler;
+	[actor]
+	{
+		[skills]
+		{
+			strength = 	16, 0;
+			intelligence = 	5, 0;
+			dexterity = 	9, 0;
+			melee =  		12,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 114;
+		life = 25;
+		max_life = 25;
+		mana = 10;
+		max_mana = 10;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 19;
+		damage_min = 13;
+	}
+	[common] { screen_name="Mangler"; }
+	[defend] { defense=20; }
+	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				chance = 0.2;
+				il_main = #*/9-12;
+			}
+		}
+	}
+}
+[t:template,n:snapper]
+{
+	doc = "snapper";
+	specializes = base_mangler;
+	[actor]
+	{
+		[skills]
+		{
+			strength = 	4, 0;
+			intelligence = 	2, 0;
+			dexterity = 	3, 0;
+			melee =  		1,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 10;
+		life = 2;
+		max_life = 2;
+		mana = 4;
+		max_mana = 4;
+		scale_base = 0.60;
+		[textures]	{0=b_c_edm_mn-02;}
+	}
+	[attack]
+	{
+		attack_range = 0.2;
+		damage_max = 3;
+		damage_min = 1;
+	}
+	[common] { screen_name="Snapper"; }
+	[defend] { defense=2; }
+}

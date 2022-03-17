@@ -1,0 +1,208 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  elevator_hidden_stairwell.skrit
+// Author(s):  James Loe
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool      _server_only$          = true;
+property string    _doc$                  = "Specialty hidden stairwell";
+property string    _required_component$   = "placement";
+
+// exported properties
+property SiegeId   stairwell_node$        = 0;
+property SiegeId   stair_node_1$          = 0;
+property SiegeId   stair_node_2$          = 0;
+property SiegeId   stair_node_3$          = 0;
+property SiegeId   stair_node_4$          = 0;
+property SiegeId   stair_node_5$          = 0;
+property SiegeId   stair_node_6$          = 0;
+property SiegeId   stair_node_7$          = 0;
+property SiegeId   stair_node_8$          = 0;
+property SiegeId   stair_node_9$          = 0;
+property SiegeId   stair_node_10$         = 0;
+
+property int       stair_door_side$       = 0;
+property int       stair_door_front_top$  = 0;
+property int       stair_door_front_bot$  = 0;
+property int       stair_door_back$       = 0;
+
+property int       stairwell_door1_up$    = 0;
+property int       stairwell_door2_up$    = 0;
+property int       stairwell_door3_up$    = 0;
+property int       stairwell_door4_up$    = 0;
+property int       stairwell_door5_up$    = 0;
+property int       stairwell_door6_up$    = 0;
+property int       stairwell_door7_up$    = 0;
+property int       stairwell_door8_up$    = 0;
+property int       stairwell_door9_up$    = 0;
+property int       stairwell_door10_up$   = 0;
+
+property int       stairwell_door1_down$  = 0;
+property int       stairwell_door2_down$  = 0;
+property int       stairwell_door3_down$  = 0;
+property int       stairwell_door4_down$  = 0;
+property int       stairwell_door5_down$  = 0;
+property int       stairwell_door6_down$  = 0;
+property int       stairwell_door7_down$  = 0;
+property int       stairwell_door8_down$  = 0;
+property int       stairwell_door9_down$  = 0;
+property int       stairwell_door10_down$ = 0;
+
+property float     duration$              = 0;
+
+int                transitions_complete$  = 0;
+float              temp_duration$         = 0;
+
+owner                                     = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+trigger OnGoHandleMessage$( WE_REQ_DEACTIVATE )
+{
+	SetState Deactivated$;
+}
+
+state Deactivated$
+{
+}
+
+startup state L1_Wait$
+{
+	transition -> L1_Moving$: OnGoHandleMessage( WE_REQ_USE ) =
+	{
+		temp_duration$	= duration$ / 10.0;
+
+		WorldTerrain.SRequestNodeTransition( stair_node_1$, stair_door_side$,
+											 stairwell_node$, stairwell_door1_down$,
+											 temp_duration$ * 1.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_2$, stair_door_side$,
+											 stairwell_node$, stairwell_door2_down$,
+											 temp_duration$ * 2.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_3$, stair_door_side$,
+											 stairwell_node$, stairwell_door3_down$,
+											 temp_duration$ * 3.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_4$, stair_door_side$,
+											 stairwell_node$, stairwell_door4_down$,
+											 temp_duration$ * 4.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_5$, stair_door_side$,
+											 stairwell_node$, stairwell_door5_down$,
+											 temp_duration$ * 5.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_6$, stair_door_side$,
+											 stairwell_node$, stairwell_door6_down$,
+											 temp_duration$ * 6.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_7$, stair_door_side$,
+											 stairwell_node$, stairwell_door7_down$,
+											 temp_duration$ * 7.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_8$, stair_door_side$,
+											 stairwell_node$, stairwell_door8_down$,
+											 temp_duration$ * 8.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_9$, stair_door_side$,
+											 stairwell_node$, stairwell_door9_down$,
+											 temp_duration$ * 9.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_10$, stair_door_side$,
+											 stairwell_node$, stairwell_door10_down$,
+											 temp_duration$ * 10.0, AH_NONE, owner.Go.Goid, true );
+		transitions_complete$ = 0;
+	}
+}
+
+state L1_Moving$
+{
+	event OnGoHandleMessage$( eWorldEvent event$, WorldMessage /*msg$*/ )
+	{
+		if( event$ == WE_TERRAIN_TRANSITION_DONE )
+		{
+			transitions_complete$ += 1;
+			if( transitions_complete$ == 10 )
+			{
+				WorldTerrain.SRequestNodeConnection( stair_node_1$, stair_door_front_bot$, stair_node_2$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_2$, stair_door_front_bot$, stair_node_3$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_3$, stair_door_front_bot$, stair_node_4$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_4$, stair_door_front_bot$, stair_node_5$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_5$, stair_door_front_bot$, stair_node_6$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_6$, stair_door_front_bot$, stair_node_7$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_7$, stair_door_front_bot$, stair_node_8$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_8$, stair_door_front_bot$, stair_node_9$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_9$, stair_door_front_bot$, stair_node_10$, stair_door_back$, true );
+
+				SetState L2_Wait$;
+			}
+		}
+	}
+}
+
+state L2_Wait$
+{
+	transition -> L2_Moving$: OnGoHandleMessage( WE_REQ_USE ) =
+	{
+		temp_duration$	= duration$ / 10.0;
+
+		WorldTerrain.SRequestNodeTransition( stair_node_1$, stair_door_side$,
+											 stairwell_node$, stairwell_door1_up$,
+											 temp_duration$ * 1.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_2$, stair_door_side$,
+											 stairwell_node$, stairwell_door2_up$,
+											 temp_duration$ * 2.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_3$, stair_door_side$,
+											 stairwell_node$, stairwell_door3_up$,
+											 temp_duration$ * 3.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_4$, stair_door_side$,
+											 stairwell_node$, stairwell_door4_up$,
+											 temp_duration$ * 4.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_5$, stair_door_side$,
+											 stairwell_node$, stairwell_door5_up$,
+											 temp_duration$ * 5.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_6$, stair_door_side$,
+											 stairwell_node$, stairwell_door6_up$,
+											 temp_duration$ * 6.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_7$, stair_door_side$,
+											 stairwell_node$, stairwell_door7_up$,
+											 temp_duration$ * 7.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_8$, stair_door_side$,
+											 stairwell_node$, stairwell_door8_up$,
+											 temp_duration$ * 8.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_9$, stair_door_side$,
+											 stairwell_node$, stairwell_door9_up$,
+											 temp_duration$ * 9.0, AH_NONE, owner.Go.Goid, true );
+		WorldTerrain.SRequestNodeTransition( stair_node_10$, stair_door_side$,
+											 stairwell_node$, stairwell_door10_up$,
+											 temp_duration$ * 10.0, AH_NONE, owner.Go.Goid, true );
+		transitions_complete$ = 0;
+	}
+}
+
+state L2_Moving$
+{
+	event OnGoHandleMessage$( eWorldEvent event$, WorldMessage /*msg$*/ )
+	{
+		if( event$ == WE_TERRAIN_TRANSITION_DONE )
+		{
+			transitions_complete$ += 1;
+			if( transitions_complete$ == 10 )
+			{
+				WorldTerrain.SRequestNodeConnection( stair_node_1$, stair_door_front_top$, stair_node_2$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_2$, stair_door_front_top$, stair_node_3$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_3$, stair_door_front_top$, stair_node_4$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_4$, stair_door_front_top$, stair_node_5$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_5$, stair_door_front_top$, stair_node_6$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_6$, stair_door_front_top$, stair_node_7$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_7$, stair_door_front_top$, stair_node_8$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_8$, stair_door_front_top$, stair_node_9$, stair_door_back$, true );
+				WorldTerrain.SRequestNodeConnection( stair_node_9$, stair_door_front_top$, stair_node_10$, stair_door_back$, true );
+
+				SetState L1_Wait$;
+			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

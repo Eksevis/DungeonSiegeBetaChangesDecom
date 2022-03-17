@@ -1,0 +1,252 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_helper_follow.skrit
+
+	Author(s)	: 	Eric Tams
+
+	Purpose		: 	Follow another actor and help out if you can. Currently this
+					Will try to transfer mana and pick up items. If the folower
+					can do so.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Goid	m_Target$;
+float	m_FollowDistance$;
+float	m_ApproachDistance$;
+Go 		last_item$;
+Go 		item$;
+
+startup state STARTUP$
+{
+}
+
+#include "k_job_c_path-utils" 
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+	m_Body$		= job$.Go.Body;
+	last_item$	= NULL;
+	item$		= NULL;
+	m_FollowDistance$		= 3.5;
+	m_ApproachDistance$		= 2.0;
+	//report.generic("breakable un-set\n");
+		    		
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$	= job$.GoalObject;
+	
+	ResetPathFindingParameters$();
+
+	SetState RequestAction$;
+}
+
+////////////////////////////////////////////////////////////////////
+//	global response to messages for my guardee
+event OnCCWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{
+	if( e$ == WE_KILLED )
+	{
+		SetState( Exiting$ );
+	}
+	else if( e$ == WE_LOST_CONSCIOUSNESS )
+	{
+		SetState( Exiting$ );
+	}
+}
+
+trigger OnGoHandleMessage$( WE_DESTRUCTED )
+{
+	SetState Exiting$;
+}
+
+trigger OnGoHandleMessage$( WE_LEFT_WORLD )
+{
+	SetState Exiting$;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state RequestAction$
+{
+	transition
+	{
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		// We are switching to the fidget that is automatic upon arrival
+		-> Arrived$:		OnWorldMessage( WE_MCP_CHORE_CHANGING );
+		-> Arrived$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+   
+   		eReqRetCode ret$ = MCPManager.MakeRequest(
+										m_Job$.Id,
+										m_Go$.Goid,
+										PL_APPROACH, 
+										m_Target$,
+										m_LookAhead$, m_MaxApproachTime$,
+										m_ApproachDistance$ ) ;
+
+		if( RequestFailed(ret$) )
+		{
+			SetState( Arrived$ );
+		}
+		else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+		{
+			SetState( MovingCloser$ );
+		}
+		else if (ret$ == REQUEST_OK)
+		{
+		}
+		else // (ret$ == REQUEST_OK_IN_RANGE)
+		{
+				SetState( Arrived$ );
+		}
+	}
+}
+
+state Arrived$
+{
+	transition
+	{
+		-> Arrived$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+		-> FidgetAgain$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	trigger OnTimer$( 1 )
+	{
+		SetState RequestAction$;
+	}
+	
+	event OnEnterState$
+	{
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		float dist$ = m_Mind$.GetDistanceAtPlanEnd( m_Target$.Go );
+		
+		if( m_Mind$.ClosestEnemy != NULL )
+		{
+			m_Go$.Mind.SDoJob( MakeJobReq( JAT_FLEE_FROM_OBJECT, JQ_ACTION, QP_FRONT, JO_REFLEX, m_Mind$.ClosestEnemy.goid ) );
+		} else {
+		
+			if ( m_Mind$.ItemsVisible() )
+			{
+				item$ = m_Mind$.GetClosestItem();
+			}
+			
+			if( m_Mind$.ActorAutoXfersMana && !m_Go$.Inventory.IsSpellInProgress( "spell_mana_channel" ) && (m_Go$.Aspect.CurrentMana > 5))
+			{
+				Go spell$ = m_Go$.Inventory.GetSelectedSpell();
+				
+				//report.genericf( "Spell = %s\n",spell$.GetTemplateName());
+				//report.genericf( "Mana = %g\n",m_Go$.Aspect.CurrentMana);
+				if(spell$.GetTemplateName() == "spell_mana_channel")
+				{
+					m_Go$.Mind.SDoJob( MakeJobReq( JAT_CAST, JQ_ACTION, QP_FRONT, JO_REFLEX, m_Target$, spell$.Goid ) );
+				}
+			} else if( m_Mind$.ActorAutoHealsOthersLife && !m_Go$.Inventory.IsSpellInProgress( "spell_infuse_life" ) && (m_Go$.Aspect.CurrentMana > 5)) {
+				Go spell$ = m_Go$.Inventory.GetSelectedSpell();
+				
+				//report.genericf( "Spell = %s\n",spell$.GetTemplateName());
+				//report.genericf( "Mana = %g\n",m_Go$.Aspect.CurrentMana);
+				if(spell$.GetTemplateName() == "spell_infuse_life")
+				{
+					m_Go$.Mind.SDoJob( MakeJobReq( JAT_CAST, JQ_ACTION, QP_FRONT, JO_REFLEX, m_Target$, spell$.Goid ) );
+				}
+			}
+			else if( m_Mind$.ActorAutoPicksUpItems() && m_Mind$.ItemsVisible() && (item$ != last_item$) && (item$ != NULL))
+			{
+				if (!item$.IsInsideInventory())
+				{
+					m_Mind$.SDoJob( MakeJobReq( JAT_GET, JQ_ACTION, QP_FRONT, JO_REFLEX, item$.Goid ) );
+					last_item$ = item$;
+					item$ = NULL;
+				} 
+			} else {
+				m_Mind$.TempGopColl1.Clear;
+				m_Mind$.TempGopColl2.Clear;
+				
+				m_Mind$.GetOccupantsInSphere( m_Mind$.SightRange, m_Mind$.TempGopColl1);
+				int i$ = 0;
+				while( i$ < m_Mind$.TempGopColl1.Size() )
+				{
+					if(m_Mind$.TempGopColl1.Get( i$ ).IsBreakable() && !m_Mind$.TempGopColl1.Get( i$ ).IsActor())
+					{
+						m_Mind$.TempGopColl2.Add( m_Mind$.TempGopColl1.Get( i$ ) );
+					}
+			        i$ += 1;
+			    }
+			    //report.genericf("size: %d\n", m_Mind$.TempGopColl2.Size());
+			    if ( m_Mind$.TempGopColl2.Size() > 0 )
+			    {
+    				m_Mind$.SDoJob( MakeJobReq(JAT_ATTACK_OBJECT, JQ_ACTION, QP_FRONT, m_Job$.GetOrigin, m_Mind$.TempGopColl2.Get( 0 ).goid, m_Go$.Goid ) );
+			    } else {
+			    	m_Mind$.TempGopColl2.Clear;
+			    
+			    	int i$ = 0;
+					while( i$ < m_Mind$.TempGopColl1.Size() )
+					{
+						if(m_Mind$.TempGopColl1.Get( i$ ).IsContainer() && m_Mind$.TempGopColl1.Get( i$ ).IsUsable() && !m_Mind$.TempGopColl1.Get( i$ ).IsActor())
+						{
+							m_Mind$.TempGopColl2.Add( m_Mind$.TempGopColl1.Get( i$ ) );
+						}
+				        i$ += 1;
+				    }
+				    if ( m_Mind$.TempGopColl2.Size() > 0 )
+				    {
+			    		m_Mind$.SDoJob( MakeJobReq( JAT_USE, JQ_ACTION, QP_FRONT, JO_REFLEX, m_Mind$.TempGopColl2.Get( 0 ).goid ) );
+				    } else {
+				    	if( ( dist$ > m_FollowDistance$ ) && ( m_Mind$.GetDistance( m_Target$.Go ) > m_ApproachDistance$ ) )
+						{
+							this.CreateTimer( 1, .05 );
+						}
+					}
+				}
+			
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state FidgetAgain$
+{
+	event OnEnterState$
+	{
+
+		eAnimStance stance$ = m_Go$.inventory.animstance;
+		int subanim$ = m_Go$.Aspect.AspectHandle.NumSubAnimsForChoreAndStance(CHORE_FIDGET,stance$);
+		subanim$ = Math.RandomInt(0, Math.MaxInt( 0, subanim$-1 ) ) ;
+		MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FIDGET, subanim$);
+		SetState Arrived$;
+	}
+}
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}

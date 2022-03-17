@@ -1,0 +1,174 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spark_emitter.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+property bool	start_on_creation$	=	true	doc = "Start Emitter when it enters the world";
+
+property float	duration$			=	0.5		doc = "duration of the effects";
+
+property float	red$				=	0.4		doc = "Red color intensity 0-1";
+property float	green$				=	0.5		doc = "Green color intensity 0-1";
+property float	blue$				=	0.8		doc = "Blue color intensity 0-1";
+
+property float	red_var$			=	0.1		doc = "Red color variance 0-1";
+property float	green_var$			=	0.1		doc = "Green color variance 0-1";
+property float	blue_var$			=	0.2		doc = "Blue color variance 0-1";
+
+property float	xvel$				=	1.0		doc = "X component of initial velocity";
+property float	yvel$				=	1.2		doc = "Y component of initial velocity";
+property float	zvel$				=	0.0  	doc = "Z component of initial velocity";
+
+property float	xrvel$				=	0.0		doc = "X component of random velocity";
+property float	yrvel$				=	0.0		doc = "Y component of random velocity";
+property float	zrvel$				=	0.0		doc = "Z component of random velocity";
+
+property float	vmin$				=	2.0		doc = "Y component of acceleration";
+property float	vmax$				=	2.0 	doc = "Z component of acceleration";
+
+property float	fade_begin$			=	0.5 	doc = "begining particle alpha";
+property float	fade_end$			=	1.0 	doc = "ending particle alpha";
+
+property float	bounce$				=	.85 	doc = "how elastic is the particle";
+property float	radius$				=	0.3 	doc = "spawn radius factor";
+
+property int	count$				=	10		doc = "Maximum number of particles";
+
+property bool	dark$				=	false	doc = "Enable dark blending method";
+property bool	collide$			=	true	doc = "do particles bounce?";
+property bool	grey$				=	false	doc = "use grey instead of red default texture.";
+property bool	use_tex$			=	true	doc = "use a texture.";
+
+						
+property float	size_min$			=	0.2		doc = "min Size of an individual particle";
+property float	size_max$			=	0.3		doc = "max Size of an individual particle";
+
+property float	srate$				=	0.0		doc = "Time between spawning particles";
+property float	repeat_min$			=	0.3		doc = "min Time before repeat";
+property float	repeat_max$			=	0.7		doc = "max Time before repeat";
+
+property string texture$			=	"b_sfx_sparkle01" doc = "Texture to use";
+
+property bool	use_light$			=	true	doc = "use a dynamic light.";
+
+property float	light_red$			=	0.4		doc = "Red color intensity 0-1";
+property float	light_green$		=	0.5		doc = "Green color intensity 0-1";
+property float	light_blue$			=	0.8		doc = "Blue color intensity 0-1";
+
+property float	light_red_var$		=	0.1		doc = "Red color variance 0-1";
+property float	light_green_var$	=	0.1		doc = "Green color variance 0-1";
+property float	light_blue_var$		=	0.2		doc = "Blue color variance 0-1";
+
+property float	inner_radius$		=	0.0		doc = "inner falloff radius";
+property float	outer_radius$		=	5.0		doc = "outer falloff radius";
+
+property float	trans_in$			=	0.01	doc = "transition in time in seconds";
+property float	trans_out$			=	0.01	doc = "transition out time in seconds";
+
+property float	freq$				=	1		doc = "flicker frequency";
+
+
+
+
+
+string params$;
+string params2$;
+
+owner = GoSkritComponent;
+
+startup state Idle$
+{
+	event OnEnterState$
+	{
+		params$ = "[-";
+		params2$ = "[-";
+
+		if( dark$ )
+		{
+			StringTool.Append( params$, "dark()" );
+		}
+		if( collide$ )
+		{
+			StringTool.Append( params$, "collide()" );
+			StringTool.Appendf( params$, "rebound(%d)", bounce$ );
+		}
+		if( grey$ )
+		{
+			StringTool.Append( params$, "grey_tex()" );
+		}
+		if( use_tex$ )
+		{
+			StringTool.Appendf( params$, "texture(%s)", texture$);
+		}
+		
+		StringTool.Appendf( params$, "dur(%g)", duration$ );
+		
+		StringTool.Appendf( params$, "color0(%g,%g,%g)", red$, green$, blue$ );
+		StringTool.Appendf( params$, "color1(%g,%g,%g)", red_var$, green_var$, blue_var$ );
+		
+		StringTool.Appendf( params$, "ivel(%g,%g,%g)", xvel$, yvel$, zvel$ );
+		StringTool.Appendf( params$, "rvel(%g,%g,%g)", xrvel$, yrvel$, zrvel$ );
+		StringTool.Appendf( params$, "vmin(%g)", vmin$ );
+		StringTool.Appendf( params$, "vmax(%g)", vmax$ );
+		StringTool.Appendf( params$, "radius(%g)", radius$ );
+		
+		StringTool.Appendf( params$, "fade_range(%g,%g,0)", fade_begin$, fade_end$ );
+		StringTool.Appendf( params$, "count(%d)", count$ );
+		StringTool.Appendf( params$, "scale_range(%g,%g,0)", size_min$, size_max$ );
+		
+		StringTool.Append( params$, MakeStringF( "srate(%g)]", srate$ ) );
+		
+		StringTool.Appendf( params2$, "dur(%g)", duration$ );
+		
+		StringTool.Appendf( params2$, "color0(%g,%g,%g)", light_red$, light_green$, light_blue$ );
+		StringTool.Appendf( params2$, "color1(%g,%g,%g)", light_red_var$, light_green_var$, light_blue_var$ );
+		
+		StringTool.Appendf( params2$, "iradius(%g)", inner_radius$ );
+		StringTool.Appendf( params2$, "radius(%g)", outer_radius$ );
+		
+		StringTool.Appendf( params2$, "tin(%g)", trans_in$ );
+		StringTool.Appendf( params2$, "tout(%g)", trans_out$ );
+		StringTool.Appendf( params2$, "frequency(%g)]", freq$ );
+	}
+	
+	
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( ( e$ == WE_REQ_ACTIVATE )  || (( e$ == WE_ENTERED_WORLD ) && (start_on_creation$ == true)) )
+		{
+ 			SetState Spark$;
+		}
+	}
+}
+
+state Spark$
+{
+	trigger OnTimer$( 1 )
+	{
+		SetState Spark$;
+	}
+	
+	transition -> Stop$ : OnGoHandleMessage( WE_REQ_DEACTIVATE );
+	
+	event OnEnterState$
+	{
+		SiegeFx.RunScript( "spark_emitter", owner.Goid, owner.Goid, params$, owner.Goid, WE_REQ_ACTIVATE );
+		if (use_light$)
+		{
+			SiegeFx.RunScript( "spark_emitter_light", owner.Goid, owner.Goid, params$, owner.Goid, WE_REQ_ACTIVATE );
+		}
+		float random_delay$ = Math.RandomFloat( repeat_min$, repeat_max$ );
+		this.CreateTimer( 1, random_delay$ );
+	}
+}
+
+state Stop$
+{
+	transition -> Spark$ : OnGoHandleMessage( WE_REQ_ACTIVATE );
+}

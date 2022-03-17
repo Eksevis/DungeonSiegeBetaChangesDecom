@@ -1,0 +1,386 @@
+[t:template,n:ui_backdrop]
+{
+	specializes = ui;
+	doc = "UI Frontend Backdrop";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_backdrop;
+		
+		[textures]
+		{
+			0 = b_gui_fe_m_mn_3d_background-01;
+			1 = b_gui_fe_m_mn_3d_background-02;
+			2 = b_gui_fe_m_mn_3d_background-03;			
+			3 = b_gui_fe_m_mn_3d_background-04;
+			4 = b_gui_fe_m_mn_3d_background-05;
+			5 = b_gui_fe_m_mn_3d_background-06;
+			6 = b_gui_fe_m_mn_3d_background-07;
+			7 = b_gui_fe_m_mn_3d_background-08;
+			8 = b_gui_fe_m_mn_3d_background-09;
+		}					
+	}	
+}
+
+
+[t:template,n:ui_mainmenu]
+{
+	specializes = ui;
+	doc = "UI Frontend Main Menu Piece";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_mainmenu;
+
+		[textures]
+		{
+			0 = b_gui_fe_m_mn_3d_mainmenu;
+			1 = b_gui_fe_m_mn_3d_text-01L;
+			2 = b_gui_fe_m_mn_3d_text-01R;			
+			3 = b_gui_fe_m_mn_3d_text-02L;
+			4 = b_gui_fe_m_mn_3d_text-02R;	
+			5 = b_gui_fe_m_mn_3d_shadows;		
+		}		
+	}
+
+	[body]
+	{	
+		initial_chore = chore_misc;
+		[chore_dictionary]
+		{
+			[chore_misc]			
+			{
+				skrit = simple_transition;
+
+				[anim_files]
+				{
+					00 = a_gui_fe_m_mn_3d_mainmenu_default;
+					01 = a_gui_fe_m_mn_3d_mainmenu_begin;
+					02 = a_gui_fe_m_mn_3d_mainmenu_flyin;					
+					03 = a_gui_fe_m_mn_3d_mainmenu_down;
+					04 = a_gui_fe_m_mn_3d_mainmenu_up;
+					05 = a_gui_fe_m_mn_3d_mainmenu_mm2sp;
+					06 = a_gui_fe_m_mn_3d_mainmenu_sng2sp;
+					07 = a_gui_fe_m_mn_3d_mainmenu_sp2mm;
+					08 = a_gui_fe_m_mn_3d_mainmenu_sp2sng;
+					09 = a_gui_fe_m_mn_3d_mainmenu_dsm2mp;
+					10 = a_gui_fe_m_mn_3d_mainmenu_lg2sp;
+					11 = a_gui_fe_m_mn_3d_mainmenu_lm2sng;
+					12 = a_gui_fe_m_mn_3d_mainmenu_mm2mp;
+					13 = a_gui_fe_m_mn_3d_mainmenu_mp2dsm;
+					14 = a_gui_fe_m_mn_3d_mainmenu_mp2mm;
+					15 = a_gui_fe_m_mn_3d_mainmenu_sng2lm;
+					16 = a_gui_fe_m_mn_3d_mainmenu_sp2lg;	
+					17 = a_gui_fe_m_mn_3d_mainmenu_lm2cd;
+					18 = a_gui_fe_m_mn_3d_mainmenu_cd2lm;				
+				}				
+			}
+	 	}
+	}		
+}
+
+
+[t:template,n:ui_heromenu]
+{
+	specializes = ui;
+	doc = "UI Frontend Hero Menu";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_heromenu;
+
+		[textures]
+		{			
+			0 = b_gui_fe_m_mn_3d_heromenu;
+			1 = b_gui_fe_m_mn_3d_heromenu;
+			2 = b_gui_fe_m_mn_3d_heromenu;
+			3 = b_gui_fe_m_mn_3d_heromenu;
+			4 = b_gui_fe_m_mn_3d_heromenu;
+			5 = b_gui_fe_m_mn_3d_heromenu;
+			6 = b_gui_fe_m_mn_3d_heromenu;
+			7 = b_gui_fe_m_mn_3d_heromenu;
+			8 = b_gui_fe_m_mn_3d_heromenu;
+			9 = b_gui_fe_m_mn_3d_heromenu;
+			10 = b_gui_fe_m_mn_3d_heromenu;
+			11 = b_gui_fe_m_mn_3d_text-small;
+			12 = b_gui_fe_m_mn_3d_shadows;
+		}		
+	}
+
+	[body]
+	{	
+		initial_chore = chore_misc;
+		[chore_dictionary]
+		{
+			[chore_misc]			
+			{
+				skrit = simple_transition;
+
+				[anim_files]
+				{
+					00 = a_gui_fe_m_mn_3d_heromenu_default;
+					01 = a_gui_fe_m_mn_3d_heromenu_begin;
+					02 = a_gui_fe_m_mn_3d_heromenu_flyin;
+					03 = a_gui_fe_m_mn_3d_heromenu_down;
+					04 = a_gui_fe_m_mn_3d_heromenu_up;
+				}				
+			}
+	 	}
+	}		
+}
+
+
+[t:template,n:ui_leftside]
+{
+	specializes = ui;
+	doc = "UI Frontend Left Side Piece";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_leftside;
+
+		[textures]
+		{
+			0 = b_gui_fe_m_mn_3d_doors-01;
+			1 = b_gui_fe_m_mn_3d_doors-03;
+			2 = b_gui_fe_m_mn_3d_columns;
+			3 = b_gui_fe_m_mn_3d_background-01;
+			4 = b_gui_fe_m_mn_3d_background-02;
+			5 = b_gui_fe_m_mn_3d_shadows;
+		}		
+	}
+
+	[body]
+	{	
+		initial_chore = chore_misc;
+		[chore_dictionary]
+		{
+			[chore_misc]			
+			{
+				skrit = simple_transition;
+
+				[anim_files]
+				{
+					00 = a_gui_fe_m_mn_3d_leftside_default;
+					01 = a_gui_fe_m_mn_3d_leftside_begin;
+					02 = a_gui_fe_m_mn_3d_leftside_flyin;
+					03 = a_gui_fe_m_mn_3d_leftside_owin;
+					04 = a_gui_fe_m_mn_3d_leftside_cwin;
+				}				
+			}
+	 	}		
+	}		
+}
+
+
+[t:template,n:ui_menubars]
+{
+	specializes = ui;
+	doc = "UI Frontend Menu Bars Piece";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_menubars;
+
+		[textures]
+		{			
+			0 = b_gui_fe_m_mn_3d_menubars;
+			1 = b_gui_fe_m_mn_3d_menubars;
+			2 = b_gui_fe_m_mn_3d_menubars;
+			3 = b_gui_fe_m_mn_3d_menubars;
+			4 = b_gui_fe_m_mn_3d_menubars;
+			5 = b_gui_fe_m_mn_3d_menubars;
+			6 = b_gui_fe_m_mn_3d_text-menubars1;
+			7 = b_gui_fe_m_mn_3d_text-menubars2;
+			8 = b_gui_fe_m_mn_3d_text-menubars1;
+			9 = b_gui_fe_m_mn_3d_text-menubars2;
+			10 = b_gui_fe_m_mn_3d_text-menubars1;
+			11 = b_gui_fe_m_mn_3d_text-menubars2;
+			12 = b_gui_fe_m_mn_3d_text-menubars1;
+			13 = b_gui_fe_m_mn_3d_text-menubars2;
+			14 = b_gui_fe_m_mn_3d_text-menubars1;
+			15 = b_gui_fe_m_mn_3d_text-menubars2;
+			16 = b_gui_fe_m_mn_3d_shadows;				
+		}		
+	}
+
+	[body]
+	{	
+		initial_chore = chore_misc;
+		[chore_dictionary]
+		{
+			[chore_misc]			
+			{
+				skrit = simple_transition;
+
+				[anim_files]
+				{
+					00 = a_gui_fe_m_mn_3d_menubars_default;
+					01 = a_gui_fe_m_mn_3d_menubars_begin;
+					02 = a_gui_fe_m_mn_3d_menubars_flyin;
+					03 = a_gui_fe_m_mn_3d_menubars_alldown;
+					04 = a_gui_fe_m_mn_3d_menubars_allup;
+					05 = a_gui_fe_m_mn_3d_menubars_mm2sp;
+					06 = a_gui_fe_m_mn_3d_menubars_sp2mm;
+					07 = a_gui_fe_m_mn_3d_menubars_sp-down;
+					08 = a_gui_fe_m_mn_3d_menubars_sp-up;
+					09 = a_gui_fe_m_mn_3d_menubars_mm2mp;
+					10 = a_gui_fe_m_mn_3d_menubars_mp2mm;
+					11 = a_gui_fe_m_mn_3d_menubars_lm2cd;
+					12 = a_gui_fe_m_mn_3d_menubars_cd2lm;
+				}				
+			}
+	 	}
+	}		
+}
+
+
+[t:template,n:ui_rightside]
+{
+	specializes = ui;
+	doc = "UI Frontend Right Side Piece";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_rightside;
+
+		[textures]
+		{
+			0 = b_gui_fe_m_mn_3d_doors-02;
+			1 = b_gui_fe_m_mn_3d_doors-04;
+			2 = b_gui_fe_m_mn_3d_columns;
+			3 = b_gui_fe_m_mn_3d_background-01;
+			4 = b_gui_fe_m_mn_3d_background-02;
+			5 = b_gui_fe_m_mn_3d_shadows;
+		}		
+	}
+
+	[body]
+	{	
+		initial_chore = chore_misc;
+		[chore_dictionary]
+		{
+			[chore_misc]			
+			{
+				skrit = simple_transition;
+
+				[anim_files]
+				{
+					00 = a_gui_fe_m_mn_3d_rightside_default;
+					01 = a_gui_fe_m_mn_3d_rightside_begin;
+					02 = a_gui_fe_m_mn_3d_rightside_flyin;
+					03 = a_gui_fe_m_mn_3d_rightside_close;
+					04 = a_gui_fe_m_mn_3d_rightside_open;					
+				}				
+			}
+	 	}
+	}		
+}
+
+
+[t:template,n:ui_backbutton]
+{
+	specializes = ui;
+	doc = "UI Frontend Back Button";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_backbutton;
+
+		[textures]
+		{
+			0 = b_gui_fe_m_mn_3d_exitback;
+			1 = b_gui_fe_m_mn_3d_exitback;
+			2 = b_gui_fe_m_mn_3d_exitback;
+			3 = b_gui_fe_m_mn_3d_exitback;
+			4 = b_gui_fe_m_mn_3d_exitback;
+			5 = b_gui_fe_m_mn_3d_exitback;
+			6 = b_gui_fe_m_mn_3d_text-small;
+			7 = b_gui_fe_m_mn_3d_text-small;
+			8 = b_gui_fe_m_mn_3d_text-small;
+			9 = b_gui_fe_m_mn_3d_text-small;
+			10 = b_gui_fe_m_mn_3d_shadows;						
+		}		
+	}
+
+	[body]
+	{	
+		initial_chore = chore_misc;
+		[chore_dictionary]
+		{
+			[chore_misc]			
+			{
+				skrit = simple_transition;
+
+				[anim_files]
+				{
+					00 = a_gui_fe_m_mn_3d_backbutton_begin;
+					01 = a_gui_fe_m_mn_3d_backbutton_begin;
+					02 = a_gui_fe_m_mn_3d_backbutton_b2e;
+					03 = a_gui_fe_m_mn_3d_backbutton_b2pn;
+					04 = a_gui_fe_m_mn_3d_backbutton_pn2b;
+					05 = a_gui_fe_m_mn_3d_backbutton_e2b;
+					06 = a_gui_fe_m_mn_3d_backbutton_pn2ac;
+					07 = a_gui_fe_m_mn_3d_backbutton_ac2pn;
+					08 = a_gui_fe_m_mn_3d_backbutton_b2ac;
+					09 = a_gui_fe_m_mn_3d_backbutton_ac2b;
+				}				
+			}
+	 	}
+	}		
+}
+
+
+[t:template,n:ui_loadmap]
+{
+	specializes = ui;
+	doc = "UI Frontend Load Map Screen";
+
+	category_name = "gui";
+
+	[aspect]
+	{
+		model = m_gui_fe_m_mn_3d_loadmap;
+
+		[textures]
+		{
+			0 = b_gui_fe_m_mn_3d_loadmap;
+			1 = b_gui_fe_m_mn_3d_heromenu;
+			2 = b_gui_fe_m_mn_3d_shadows;			
+		}		
+	}
+
+	[body]
+	{	
+		initial_chore = chore_misc;
+		[chore_dictionary]
+		{
+			[chore_misc]			
+			{
+				skrit = simple_transition;
+
+				[anim_files]
+				{
+					00 = a_gui_fe_m_mn_3d_loadmap_down;
+					01 = a_gui_fe_m_mn_3d_loadmap_up;
+					02 = a_gui_fe_m_mn_3d_loadmap_down2;					
+					03 = a_gui_fe_m_mn_3d_loadmap_up2;					
+				}				
+			}
+	 	}
+	}		
+}

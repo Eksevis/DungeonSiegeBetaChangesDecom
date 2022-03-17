@@ -1,0 +1,87 @@
+// Animation Skrit: Simple_Transition
+//
+// This skrit sends no messages so its safe to call in the front end
+// or a default_chore
+//
+// History:
+//		VERSION 1.0:	Initial implementation
+
+property int MAJORVERSION$ = 1;
+property int MINORVERSION$ = 0;
+
+owner = Aspect;
+
+////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+RestartChore$ ( int newanim$ )
+{ 
+
+	owner.GetCurrentActiveChore().ResetTimeWarp();
+
+ 	int numanims$ = owner.GetCurrentActiveChore().NumSubAnimsForActiveStance();
+
+	if (newanim$ >= numanims$) {
+		newanim$ = 0;
+	}
+
+	int bg$ = owner.GetCurrentActiveChore().OpenBlendGroup();
+	owner.GetCurrentActiveChore().AddAnimToBlendGroup(newanim$,1);
+	owner.GetCurrentActiveChore().CloseBlendGroup();
+	owner.GetCurrentActiveChore().SetBlendGroupWeight(bg$,1);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+
+startup state InitialState$ 
+{
+
+	event OnStartChore$ ( int subanim$, int /*flags$*/ )
+	{
+		RestartChore$ ( subanim$ ); 
+		SetState LinearTransition$;
+	}
+
+}
+
+//----------------------------
+
+state LinearTransition$	
+{
+ 
+	event OnStartChore$ ( int subanim$, int /*flags$*/ )
+	{
+		RestartChore$ ( subanim$ );
+ 	}
+
+	event OnUpdate$( float delta_t$, float /* speed_bias$ */)
+	{
+
+ 	 	int events$ = owner.UpdateTimeline(delta_t$);
+
+		if (AnimEventBitTest(events$,ANIMEVENT_FINISH)) {
+			PostWorldMessage( WE_ANIM_DONE, owner.goid, owner.CurrentReqBlock, 0 );
+			owner.AnimationCallback('done');
+			SetState (HoldAtEnd$);
+		}
+
+ 	}
+
+}
+ 
+
+//----------------------------
+
+state HoldAtEnd$
+{
+	event OnStartChore$ ( int subanim$, int /*flags$*/ )
+	{
+		RestartChore$ ( subanim$ ); 
+		SetState LinearTransition$;
+ 	}
+
+}

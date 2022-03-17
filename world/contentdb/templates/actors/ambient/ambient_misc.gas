@@ -1,0 +1,916 @@
+[t:template,n:bat]
+{
+	category_name = "ambients";
+	doc = "bat";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect]
+	{
+		draw_shadow = false;
+		model = m_c_na_bt_pos_1;
+	}
+	[body]
+	{
+		avg_move_velocity = 3.000000;
+		[bone_translator]
+		{
+			body_anterior = root_bone;
+			body_mid = root_bone;
+			body_posterior = root_bone;
+			kill_bone = root_bone;
+			shield_bone = lt_upper;
+			weapon_bone = rt_upper;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_bt_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=fl-02; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=fl-02; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = fl;
+					01 = fl-02;
+				}
+			}
+		}
+	}
+	[common] { screen_name="Bat"; }
+	[mind]
+	{
+		flee_count = 1000;
+		on_enemy_spotted_alert_friends = false;
+		on_enemy_spotted_attack = false;
+		on_enemy_entered_ocz_attack = false;
+		on_enemy_entered_icz_attack = false;
+		on_enemy_entered_ocz_flee = true;
+		on_friend_entered_ocz_flee = true;
+		on_enemy_entered_weapon_engage_range_attack = false;
+		inner_comfort_zone_range = 0.1;
+		melee_engage_range = 0.1;
+		outer_comfort_zone_range = 2;
+		personal_space_range = 0.4;
+		sight_range = 6.0;
+	}
+}
+[t:template,n:bear]
+{
+	category_name = "ambients";
+	doc = "bear";
+	specializes = actor_evil;
+	[actor]
+	{
+		race=other;
+		[skills]
+		{
+			strength =  18, 0;
+			intelligence =  4, 0;
+			dexterity =  8, 0;
+			melee =  3,  0;
+		}
+
+	}
+	[aspect]
+	{
+		life = 32;
+		max_life = 32;
+        experience_value = 55;
+		model=m_c_na_br_pos_1;
+		material = claw;
+		voice:die:	* = s_e_die_bear;
+		voice:hit_glance:	* = s_e_hit_bear_SED;
+		voice:hit_solid:	* = s_e_hit_bear_SED;
+		voice:hit_critical:	* = s_e_hit_bear_SED;
+		voice:hit_glance:	* = s_e_hit_bear2_SED;
+		voice:hit_solid:	* = s_e_hit_bear2_SED;
+		voice:hit_critical:	* = s_e_hit_bear2_SED;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 3;
+		damage_min = 8;
+	}
+	[body]
+	{
+		avg_move_velocity = 2.180000;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine1;
+			body_posterior = bip01_spine2;
+			kill_bone = bip01_spine1;
+			shield_bone = bip01_l_hand;
+			weapon_bone = bip01_r_hand;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_br_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Bear"; }
+    [defend] { defense=6; }
+	[mind]
+	{
+		inner_comfort_zone_range = 3;
+		melee_engage_range = 6;
+		outer_comfort_zone_range = 4;
+		personal_space_range = 1.5;
+		sight_range = 10;
+	}
+}
+[t:template,n:bird]
+{
+	category_name = "ambients";
+	doc = "bird";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect] { model=m_c_na_bd_pos_1; }
+	[body]
+	{
+		avg_move_velocity = 3.000000;
+		[bone_translator]
+		{
+			body_anterior = bone03;
+			body_mid = bone02;
+			body_posterior = bone11;
+			kill_bone = bone02;
+			shield_bone = bone02;
+			weapon_bone = bone03;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_bd_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=fl; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=fl; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=fl; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = fl;
+					01 = fl-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = fl;
+					01 = fl-02;
+				}
+			}
+		}
+	}
+	[common] { screen_name="Bird"; }
+}
+[t:template,n:crab]
+{
+	category_name = "ambients";
+	doc = "crab";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect] { model=m_c_na_cb_pos_1; }
+	[body]
+	{
+		avg_move_velocity = 0.400000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_cb_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=wl; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+					02 = dsf-03;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Crab"; }
+	[mind]
+	{
+		flee_count = 1000;
+		on_enemy_spotted_alert_friends = false;
+		on_enemy_spotted_attack = false;
+		on_enemy_entered_ocz_flee = true;
+		on_friend_entered_ocz_flee = true;
+		inner_comfort_zone_range = 0.1;
+		melee_engage_range = 0.1;
+		outer_comfort_zone_range = 3;
+		personal_space_range = 0.4;
+		sight_range = 6;
+	}
+}
+[t:template,n:dog]
+{
+	category_name = "ambients";
+	doc = "dog";
+	specializes = actor_ambient;
+	[actor]
+	{
+		alignment = aa_good;
+		race = other;
+	}
+	[aspect] { model=m_c_na_dg_pos_1; }
+	[body]
+	{
+		avg_move_velocity = 1.270000;
+		[bone_translator]
+		{
+			body_anterior = bone05;
+			body_mid = bone01;
+			body_posterior = bone09;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone05;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_dg_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=su; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=sg; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Dog"; }
+}
+[t:template,n:gecko]
+{
+	category_name = "ambients";
+	doc = "gecko";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect] 
+	{ 
+		model=m_c_na_gk_pos_1; 
+		scale_base = 0.75;
+	}
+	[body]
+	{
+		avg_move_velocity = 2.200000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_gk_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=dsf-02; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Gecko"; }
+	[mind]
+	{
+		flee_count = 1000;
+		on_enemy_spotted_alert_friends = false;
+		on_enemy_spotted_attack = false;
+		on_enemy_entered_ocz_flee = true;
+		on_friend_entered_ocz_flee = true;
+		inner_comfort_zone_range = 0.1;
+		melee_engage_range = 0.1;
+		outer_comfort_zone_range = 3;
+		personal_space_range = 0.4;
+		sight_range = 6;
+	}
+}
+[t:template,n:mule]
+{
+	doc = "mule_ambient";
+	specializes = actor_ambient;
+    category_name = "ambients";
+
+	[actor]
+	{
+		alignment = aa_good;
+		race = other;
+	}
+	[aspect]
+	{
+		does_block_path = false;
+		gold_value = 200;
+		life = 2;
+		max_life = 2;
+		model = m_c_na_pm_pos_1;
+	}
+	[body]
+	{
+		avg_move_velocity = 4.550000;
+		[bone_translator]
+		{
+			body_anterior = bone21_neck_top;
+			body_mid = bone32_load;
+			body_posterior = bone47_pelvis;
+			kill_bone = bone01_root;
+			shield_bone = bone41_sack_l;
+			weapon_bone = bone37_sack_r;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_pm_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+					02 = dsf-03;
+					03 = dsf-04;
+					04 = dsf-05;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[common] { screen_name="Mule"; }
+	[mind]
+	{
+		flee_count = 1000;
+		jat_attack_object_melee 	= world\ai\jobs\actors\good\job_attack_face_away.skrit;
+		on_enemy_spotted_alert_friends = false;
+		on_enemy_spotted_attack = false;
+		//actor_attacks_others_in_icz = false;
+		on_enemy_entered_ocz_flee = true;
+		inner_comfort_zone_range = 4;
+		outer_comfort_zone_range = 8;
+		personal_space_range = 0.7;
+		sight_range = 10;
+	}
+}
+[t:template,n:pig]
+{
+	category_name = "ambients";
+	doc = "pig";
+	specializes = actor_ambient;
+	[actor]
+	{
+		alignment = aa_good;
+		race = other;
+	}
+	[aspect]
+	{
+		experience_value = 2;
+		life = 2;
+		max_life = 2;
+		model = m_c_na_pg_pos_1;
+	}
+	[body]
+	{
+		avg_move_velocity = 4.830000;
+		[bone_translator]
+		{
+			body_anterior = head_bone27;
+			body_mid = spine_bk_bone28;
+			body_posterior = pelvis_cntr_bone29;
+			kill_bone = head_bone27;
+			shield_bone = spine_frt_bone09;
+			weapon_bone = spine_frt_bone09;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_pg_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[common] { screen_name="Pig"; }
+	[mind]
+	{
+		flee_count = 1000;
+		on_enemy_spotted_alert_friends              = false;
+		on_enemy_spotted_attack                     = false;
+		on_enemy_entered_ocz_attack                 = false;
+		on_enemy_entered_icz_attack                 = false;
+		on_enemy_entered_ocz_flee                   = true;
+		on_enemy_entered_weapon_engage_range_attack = false;
+		inner_comfort_zone_range                    = 0.1;
+		melee_engage_range                          = 0.1;
+		outer_comfort_zone_range                    = 3;
+		personal_space_range                        = 0.4;
+		sight_range                                 = 6;
+	}
+}
+[t:template,n:rat]
+{
+	category_name = "ambients";
+	doc = "rat";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect] 
+	{ 
+		model=m_c_na_rt_pos_1; 
+		scale_base = 0.75;	
+	}
+	[body]
+	{
+		avg_move_velocity = 2.050000;
+		[bone_translator]
+		{
+			body_anterior = bone05;
+			body_mid = bone01;
+			body_posterior = bone02;
+			kill_bone = bone05;
+			shield_bone = bone05;
+			weapon_bone = bone05;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_rt_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=wl; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=ds; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Rat"; }
+	[mind]
+	{
+		flee_count = 1000;
+		on_enemy_spotted_alert_friends = false;
+		on_enemy_spotted_attack = false;
+		on_enemy_entered_ocz_flee = true;
+		on_friend_entered_ocz_flee = true;
+		inner_comfort_zone_range = 0.1;
+		melee_engage_range = 0.1;
+		outer_comfort_zone_range = 3;
+		personal_space_range = 0.4;
+		sight_range = 6;
+	}
+}
+[t:template,n:raven]
+{
+	category_name = "ambients";
+	doc = "raven";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect] { model=m_c_na_ra_pos_1; }
+	[body]
+	{
+		avg_move_velocity = 0.000000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_ra_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=fl; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=fl; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=fl; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = fl;
+					01 = fl-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = fl;
+					01 = fl-02;
+				}
+			}
+		}
+	}
+	[common] { screen_name="Raven"; }
+}
+[t:template,n:seagull]
+{
+	category_name = "ambients";
+	doc = "seagull";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect]
+	{
+		draw_shadow = false;
+		model = m_c_na_sg_pos_1;
+	}
+	[body]
+	{
+		avg_move_velocity = 0.000000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_sg_fs;
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = fl;
+					01 = fl-02;
+					02 = fl-03;
+				}
+			}
+		}
+	}
+	[mind]
+	{
+		// $ all of these are none except for the fidget job. -ET
+		
+		jat_brain	= jat_none;
+		jat_attack_object			= jat_none;
+		jat_attack_object_melee 	= jat_none;
+		jat_attack_object_ranged	= jat_none;
+		jat_attack_position			= jat_none;
+		jat_attack_position_ranged	= jat_none;
+		jat_cast	    			= jat_none;
+		jat_cast_position  			= jat_none;
+		jat_die           			= jat_none;
+		jat_drink					= jat_none;
+		jat_do_se_command			= jat_none;
+		jat_drop          			= jat_none;
+		jat_equip         			= jat_none;
+		jat_face					= jat_none;
+		jat_flee_from_object		= jat_none;
+		jat_gain_consciousness		= jat_none;
+		jat_get           			= jat_none;
+		jat_give          			= jat_none;
+		jat_guard         			= jat_none;
+		jat_move          			= jat_none;
+		jat_patrol         			= jat_none;
+		jat_play_anim				= jat_none;
+		jat_stop          			= jat_none;
+		jat_use           			= jat_none;
+	}
+	[common] { screen_name="Seagull"; }
+}
+[t:template,n:spider_baby]
+{
+	category_name = "ambients";
+	doc = "spider_baby";
+	specializes = actor_ambient;
+	[actor] { race=other; }
+	[aspect]
+	{
+		draw_shadow = false;
+		model=m_c_na_bs_pos_1;
+		scale_base = 0.5;
+	}
+	[body]
+	{
+		avg_move_velocity = 2.300000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_bs_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=ds; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00=dsf;
+					01=dsf-02;
+					02=dsf-03;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common] { screen_name="Baby Spider"; }
+	[mind]
+	{
+		flee_count = 1000;
+		on_enemy_spotted_alert_friends = false;
+		on_enemy_spotted_attack = false;
+		on_enemy_entered_ocz_flee = true;
+		on_friend_entered_ocz_flee = true;
+		inner_comfort_zone_range = 0.1;
+		melee_engage_range = 0.1;
+		outer_comfort_zone_range = 3;
+		personal_space_range = 0.4;
+		sight_range = 6;
+	}
+}

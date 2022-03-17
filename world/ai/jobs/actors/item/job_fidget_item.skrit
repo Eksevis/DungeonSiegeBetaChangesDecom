@@ -1,0 +1,45 @@
+/*
+
+	playing with smart objects
+
+*/
+
+
+Go		m_Go$;
+Job		m_Job$;
+
+
+
+startup state Unknown$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Fidget$;
+}
+
+State Fidget$
+{
+	trigger OnWorldMessage$( WE_JOB_TIMER_DONE )
+	{
+		SetState( Begin$ );
+	}
+
+	event OnEnterState$
+	{
+		m_Job$.SetTimer( m_Go$.Attack.ReloadDelay );
+	}
+}

@@ -1,0 +1,96 @@
+/*
+	playing with smart objects.
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Go		m_Spell$;
+	
+
+Goid	m_Target$;
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$			= job$;
+	m_Go$			= job$.Go;
+	m_Mind$			= job$.Go.Mind;
+	m_Body$			= job$.Go.Body;
+	m_Spell$ 		= job$.Go.Inventory.SelectedItem;
+}
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$		= job$.GoalObject;
+	SetState Begin$;
+}
+
+
+
+event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{
+	if( e$ == WE_DESTRUCTED )
+	{
+		SetState Exiting$;
+	}
+	else if	( e$ == WE_ENGAGED_INVALID ) 
+	{
+		SetState Exiting$;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Begin$
+{
+	event OnEnterState$
+	{
+		if( m_Go$.Aspect.CurrentMana < m_Spell$.Magic.ManaCost )
+		{
+			SetState Exiting$;
+		}
+		else
+		{
+			m_Spell$.Magic.SCast( m_Mind$.GetEngagedObject.GetGo );
+		}
+		SetState Shot$;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Shot$
+{
+	trigger OnWorldMessage$( WE_JOB_TIMER_DONE )
+	{
+		SetState( Exiting$ );
+	}
+
+	event OnEnterState$
+	{
+		m_Job$.SetTimer( m_Go$.Attack.ReloadDelay );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}
+

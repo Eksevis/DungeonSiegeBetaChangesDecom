@@ -1,0 +1,2203 @@
+[t:template,n:base_fragment_krug]
+{
+	doc = "krug piece.";
+	specializes = fragment;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("gib_blood");
+				condition* = receive_world_message("we_constructed");
+			}
+		}
+	}
+}
+[t:template,n:frag_glb_blaster_01]
+{
+	doc = "blaster fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-blaster-01; }
+}
+[t:template,n:frag_glb_blaster_02]
+{
+	doc = "blaster fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-blaster-02; }
+}
+[t:template,n:frag_glb_blaster_03]
+{
+	doc = "blaster fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-blaster-03; }
+}
+[t:template,n:frag_glb_blaster_04]
+{
+	doc = "blaster fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-blaster-04; }
+}
+[t:template,n:frag_glb_blaster_05]
+{
+	doc = "blaster fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-blaster-05; }
+}
+[t:template,n:frag_glb_boardwalk_01]
+{
+	doc = "boardwalk fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-01; }
+}
+[t:template,n:frag_glb_boardwalk_02]
+{
+	doc = "boardwalk fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-02; }
+}
+[t:template,n:frag_glb_boardwalk_03]
+{
+	doc = "boardwalk fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-03; }
+}
+[t:template,n:frag_glb_boardwalk_04]
+{
+	doc = "boardwalk fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-04; }
+}
+[t:template,n:frag_glb_boardwalk_05]
+{
+	doc = "boardwalk fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-05; }
+}
+[t:template,n:frag_glb_boardwalk_06]
+{
+	doc = "boardwalk fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-06; }
+}
+[t:template,n:frag_glb_bone_01]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-bone-01; }
+}
+[t:template,n:frag_glb_bone_02]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-bone-02; }
+}
+[t:template,n:frag_glb_bone_03]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-bone-03; }
+}
+[t:template,n:frag_glb_bone_04]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-bone-04; }
+}
+[t:template,n:frag_glb_bone_05]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-bone-05; }
+}
+[t:template,n:frag_glb_bone_06]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-bone-06; }
+}
+[t:template,n:frag_glb_copter_01]
+{
+	doc = "copter fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-copter-01; }
+}
+[t:template,n:frag_glb_copter_02]
+{
+	doc = "copter fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-copter-02; }
+}
+[t:template,n:frag_glb_copter_03]
+{
+	doc = "copter fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-copter-03; }
+}
+[t:template,n:frag_glb_copter_04]
+{
+	doc = "copter fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-copter-04; }
+}
+[t:template,n:frag_glb_copter_05]
+{
+	doc = "copter fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-copter-05; }
+}
+[t:template,n:frag_glb_dung_01]
+{
+	doc = "chunk o' dung";
+	specializes = base_fragment_krug;
+	[aspect] { model=m_i_glb_frag-dung; }
+}
+[t:template,n:frag_glb_dung_02]
+{
+	doc = "chunk o' dung the sequel";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-dung; }
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script(dung_effects);
+				condition* = receive_world_message(we_constructed);
+			}
+		}
+	}
+}
+[t:template,n:frag_glb_gargoyle_01]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-gargoyle-01; }
+}
+[t:template,n:frag_glb_gargoyle_02]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-gargoyle-02; }
+}
+[t:template,n:frag_glb_gargoyle_03]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-gargoyle-03; }
+}
+[t:template,n:frag_glb_gargoyle_04]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-gargoyle-04; }
+}
+[t:template,n:frag_glb_gargoyle_05]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-gargoyle-05; }
+}
+[t:template,n:frag_glb_gargoyle_06]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-gargoyle-06; }
+}
+[t:template,n:frag_glb_gargoyle_large_01]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		scale_base = 3.0;
+		model=m_i_glb_frag-gargoyle-01;
+		textures:0	= b_c_edm_ga-02;
+	}
+}
+[t:template,n:frag_glb_gargoyle_large_02]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		scale_base = 3.0;
+		model=m_i_glb_frag-gargoyle-02;
+		textures:0	= b_c_edm_ga-02;
+	}
+}
+[t:template,n:frag_glb_gargoyle_large_03]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		scale_base = 3.0;
+		model=m_i_glb_frag-gargoyle-03;
+		textures:0	= b_c_edm_ga-02;
+	}
+}
+[t:template,n:frag_glb_gargoyle_large_04]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		scale_base = 3.0;
+		model=m_i_glb_frag-gargoyle-04;
+		textures:0	= b_c_edm_ga-02;
+	}
+}
+[t:template,n:frag_glb_gargoyle_large_05]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		scale_base = 3.0;
+		model=m_i_glb_frag-gargoyle-05;
+		textures:0	= b_c_edm_ga-02;
+	}
+}
+[t:template,n:frag_glb_gargoyle_large_06]
+{
+	doc = "Gargoyle fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		scale_base = 3.0;
+		model=m_i_glb_frag-gargoyle-06;
+		textures:0	= b_c_edm_ga-02;
+	}
+}
+[t:template,n:frag_glb_glass_01]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-01; }
+}
+[t:template,n:frag_glb_glass_02]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-02; }
+}
+[t:template,n:frag_glb_glass_03]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-03; }
+}
+[t:template,n:frag_glb_glass_04]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-04; }
+}
+[t:template,n:frag_glb_glass_05]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-05; }
+}
+[t:template,n:frag_glb_glass_06]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-06; }
+}
+[t:template,n:frag_glb_glass_07]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-07; }
+}
+[t:template,n:frag_glb_glass_08]
+{
+	doc = "glass fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-glass-08; }
+}
+[t:template,n:frag_glb_glass_09]
+{
+	doc = "glass fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-glass-09; }
+}
+[t:template,n:frag_glb_glass_10]
+{
+	doc = "glass fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-glass-10; }
+}
+[t:template,n:frag_glb_glass_11]
+{
+	doc = "glass fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-glass-11; }
+}
+[t:template,n:frag_glb_glass_12]
+{
+	doc = "glass fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-glass-12; }
+}
+[t:template,n:frag_glb_robo-suit_01]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-01; }
+}
+[t:template,n:frag_glb_robo-suit_02]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-02; }
+}
+[t:template,n:frag_glb_robo-suit_03]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-03; }
+}
+[t:template,n:frag_glb_robo-suit_04]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-04; }
+}
+[t:template,n:frag_glb_robo-suit_05]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-05; }
+}
+[t:template,n:frag_glb_robo-suit_06]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-06; }
+}
+[t:template,n:frag_glb_robo-suit_07]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-07; }
+}
+[t:template,n:frag_glb_robo-suit_08]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-08; }
+}
+[t:template,n:frag_glb_robo-suit_09]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-09; }
+}
+[t:template,n:frag_glb_robo-suit_10]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-10; }
+}
+[t:template,n:frag_glb_robo-suit_11]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-11; }
+}
+[t:template,n:frag_glb_robo-suit_12]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-12; }
+}
+[t:template,n:frag_glb_robo-suit_13]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-13; }
+}
+[t:template,n:frag_glb_robo-suit_14]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-14; }
+}
+[t:template,n:frag_glb_robo-suit_15]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-15; }
+}
+[t:template,n:frag_glb_robo-suit_16]
+{
+	doc = "Robo Suit fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-robo-suit-16; }
+}
+[t:template,n:frag_glb_heater_01]
+{
+	doc = "heater fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-heater-01; }
+}
+[t:template,n:frag_glb_heater_02]
+{
+	doc = "heater fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-heater-02; }
+}
+[t:template,n:frag_glb_heater_03]
+{
+	doc = "heater fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-heater-03; }
+}
+[t:template,n:frag_glb_heater_04]
+{
+	doc = "heater fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-heater-04; }
+}
+[t:template,n:frag_glb_heater_05]
+{
+	doc = "heater fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-heater-05; }
+}
+[t:template,n:frag_glb_ice_01]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-01; }
+}
+[t:template,n:frag_glb_ice_02]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-02; }
+}
+[t:template,n:frag_glb_ice_03]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-03; }
+}
+[t:template,n:frag_glb_ice_04]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-04; }
+}
+[t:template,n:frag_glb_ice_05]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-05; }
+}
+[t:template,n:frag_glb_ice_06]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-06; }
+}
+[t:template,n:frag_glb_ice_07]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-07; }
+}
+[t:template,n:frag_glb_ice_08]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-08; }
+}
+[t:template,n:frag_glb_ice_09]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-09; }
+}
+[t:template,n:frag_glb_ice_10]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-10; }
+}
+[t:template,n:frag_glb_ice_11]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-11; }
+}
+[t:template,n:frag_glb_ice_12]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-12; }
+}
+[t:template,n:frag_glb_ice_13]
+{
+	doc = "ice fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-ice-13; }
+}
+[t:template,n:frag_glb_krug_01]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-01;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_02]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-02;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_03]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-03;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_04]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-04;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_05]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-05;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_06]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-06;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_07]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-07;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_08]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-08;
+		[textures] { 0=b_c_eam_kg; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_01]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-01;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_02]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-02;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_03]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-03;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_04]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-04;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_05]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-05;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_06]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-06;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_07]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-07;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_commander_08]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-08;
+		[textures] { 0=b_c_eam_kc; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_01]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-01;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_02]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-02;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_03]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-03;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_04]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-04;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_05]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-05;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_06]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-06;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_07]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-07;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_raider_08]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-08;
+		[textures] { 0=b_c_eam_kr; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_01]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-01;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_02]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-02;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_03]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-03;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_04]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-04;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_05]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-05;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_06]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-06;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_07]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-07;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_scout_08]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-08;
+		[textures] { 0=b_c_eam_ksc; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_01]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-01;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_02]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-02;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_03]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-03;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_04]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-04;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_05]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-05;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_06]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-06;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_07]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-07;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_krug_shaman_08]
+{
+	doc = "misc";
+	specializes = base_fragment_krug;
+	[aspect]
+	{
+		model = m_i_glb_frag-krug-08;
+		[textures] { 0=b_c_eam_ks; }
+	}
+}
+[t:template,n:frag_glb_metal_01]
+{
+	doc = "metal fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-metal-01; }
+}
+[t:template,n:frag_glb_metal_02]
+{
+	doc = "metal fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-metal-02; }
+}
+[t:template,n:frag_glb_metal_03]
+{
+	doc = "metal fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-metal-03; }
+}
+[t:template,n:frag_glb_metal_04]
+{
+	doc = "metal fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-metal-04; }
+}
+[t:template,n:frag_glb_metal_05]
+{
+	doc = "metal fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-metal-05; }
+}
+[t:template,n:frag_glb_metal_06]
+{
+	doc = "metal fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-metal-06; }
+}
+[t:template,n:frag_glb_molten_golem_01]
+{
+	doc = "molten golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-01;
+		[textures] { 0=b_c_edm_mg; }
+	}
+}
+[t:template,n:frag_glb_molten_golem_02]
+{
+	doc = "molten golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-02;
+		[textures] { 0=b_c_edm_mg; }
+	}
+}
+[t:template,n:frag_glb_molten_golem_03]
+{
+	doc = "molten golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-03;
+		[textures] { 0=b_c_edm_mg; }
+	}
+}
+[t:template,n:frag_glb_molten_golem_04]
+{
+	doc = "molten golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-04;
+		[textures] { 0=b_c_edm_mg; }
+	}
+}
+[t:template,n:frag_glb_molten_golem_05]
+{
+	doc = "molten golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-05;
+		[textures] { 0=b_c_edm_mg; }
+	}
+}
+[t:template,n:frag_glb_perforator_01]
+{
+	doc = "perforator fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-perforator-01; }
+}
+[t:template,n:frag_glb_perforator_02]
+{
+	doc = "perforator fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-perforator-02; }
+}
+[t:template,n:frag_glb_perforator_03]
+{
+	doc = "perforator fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-perforator-03; }
+}
+[t:template,n:frag_glb_perforator_04]
+{
+	doc = "perforator fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-perforator-04; }
+}
+[t:template,n:frag_glb_perforator_05]
+{
+	doc = "perforator fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-perforator-05; }
+}
+[t:template,n:frag_glb_proxo_01]
+{
+	doc = "proxo fragment - used for the proxo robot.";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-proxo-01; }
+}
+[t:template,n:frag_glb_proxo_02]
+{
+	doc = "proxo fragment - used for the proxo robot.";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-proxo-02; }
+}
+[t:template,n:frag_glb_proxo_03]
+{
+	doc = "proxo fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-proxo-03; }
+}
+[t:template,n:frag_glb_proxo_04]
+{
+	doc = "proxo fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-proxo-04; }
+}
+[t:template,n:frag_glb_proxo_05]
+{
+	doc = "proxo fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-proxo-05; }
+}
+[t:template,n:frag_glb_proxo_06]
+{
+	doc = "proxo fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-proxo-06; }
+}
+[t:template,n:frag_glb_rector_01]
+{
+	doc = "frag_glb_rector_01";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rector-01; }
+}
+[t:template,n:frag_glb_rector_02]
+{
+	doc = "frag_glb_rector_02";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rector-02; }
+}
+[t:template,n:frag_glb_rector_03]
+{
+	doc = "frag_glb_rector_03";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rector-03; }
+}
+[t:template,n:frag_glb_rector_04]
+{
+	doc = "frag_glb_rector_04";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rector-04; }
+}
+[t:template,n:frag_glb_rector_05]
+{
+	doc = "frag_glb_rector_05";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rector-05; }
+}
+
+[t:template,n:frag_glb_rock_beast_01]
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rock-beast-01; }
+}
+[t:template,n:frag_glb_rock_beast_02]
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rock-beast-02; }
+}
+[t:template,n:frag_glb_rock_beast_03]
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rock-beast-03; }
+}
+[t:template,n:frag_glb_rock_beast_04]
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rock-beast-04; }
+}
+[t:template,n:frag_glb_rock_beast_05]
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-rock-beast-05; }
+}
+[t:template,n:frag_glb_rock_beast_06] // these are for the rock beast blast spell. -ET
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-rock-beast-06;
+		scale_base = 1.2;
+	}
+	physics:sim_duration = 2;
+}
+[t:template,n:frag_glb_rock_beast_07] // these are for the rock beast blast spell. -ET
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-rock-beast-07;
+		scale_base = 1.4; 
+	}
+	physics:sim_duration = 2;
+}
+[t:template,n:frag_glb_rock_beast_08] // these are for the rock beast blast spell. -ET
+{
+	doc = "misc";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-rock-beast-08;
+		scale_base = 2; 
+	}
+	physics:sim_duration = 2;
+}
+[t:template,n:frag_glb_rock_golem_01]
+{
+	doc = "rock golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-01;
+		[textures] { 0=b_c_edm_rg; }
+	}
+}
+[t:template,n:frag_glb_rock_golem_02]
+{
+	doc = "rock golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-02;
+		[textures] { 0=b_c_edm_rg; }
+	}
+}
+[t:template,n:frag_glb_rock_golem_03]
+{
+	doc = "rock golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-03;
+		[textures] { 0=b_c_edm_rg; }
+	}
+}
+[t:template,n:frag_glb_rock_golem_04]
+{
+	doc = "rock golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-04;
+		[textures] { 0=b_c_edm_rg; }
+	}
+}
+[t:template,n:frag_glb_rock_golem_05]
+{
+	doc = "rock golem fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-molten-golem-05;
+		[textures] { 0=b_c_edm_rg; }
+	}
+}
+[t:template,n:frag_glb_stone_01]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-stone-01; }
+}
+[t:template,n:frag_glb_stone_02]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-stone-02; }
+}
+[t:template,n:frag_glb_stone_03]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-stone-03; }
+}
+[t:template,n:frag_glb_stone_04]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-stone-04; }
+}
+[t:template,n:frag_glb_stone_05]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-stone-05; }
+}
+[t:template,n:frag_glb_stone_06]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-stone-06; }
+}
+
+[t:template,n:frag_glb_stone_07]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		 model=m_i_glb_frag-stone-07;
+		[textures]	{0=b_i_cav_container-01;}
+	}
+}
+
+[t:template,n:frag_glb_stone_08]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		 model=m_i_glb_frag-stone-08;
+		[textures]	{0=b_i_cav_container-01;}
+	}
+}
+[t:template,n:frag_glb_stone_09]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		 model=m_i_glb_frag-stone-09;
+		[textures]	{0=b_i_cav_container-01;}
+	}
+}
+[t:template,n:frag_glb_stone_10]
+{
+	doc = "stone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		 model=m_i_glb_frag-stone-10;
+		[textures]	{0=b_i_cav_container-01;}
+	}
+}
+
+[t:template,n:frag_glb_wood_01]
+{
+	doc = "Wood fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-wood-01; }
+}
+[t:template,n:frag_glb_wood_02]
+{
+	doc = "Wood fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-wood-02; }
+}
+[t:template,n:frag_glb_wood_03]
+{
+	doc = "Wood fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-wood-03; }
+}
+[t:template,n:frag_glb_wood_04]
+{
+	doc = "Wood fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-wood-04; }
+}
+[t:template,n:frag_glb_wood_05]
+{
+	doc = "Wood fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-wood-05; }
+}
+[t:template,n:frag_glb_wood_06]
+{
+	doc = "Wood fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-wood-06; }
+}
+[t:template,n:frag_glb_swamp_door_01]
+{
+	doc = "Swamp door fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-swamp-door-01; }
+}
+[t:template,n:frag_glb_swamp_door_02]
+{
+	doc = "Swamp door fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-swamp-door-02; }
+}
+[t:template,n:frag_glb_swamp_door_03]
+{
+	doc = "Swamp door fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-swamp-door-03; }
+}
+[t:template,n:frag_glb_swamp_door_04]
+{
+	doc = "Swamp door fragment";
+	specializes = fragment;
+	[aspect] { model=m_i_glb_frag-swamp-door-04; }
+}
+
+[t:template,n:frag_swp_boardwalk_01]
+{
+	doc = "frag_swp_boardwalk_01";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-01; }
+}
+
+[t:template,n:frag_swp_boardwalk_02]
+{
+	doc = "frag_swp_boardwalk_02";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-02; }
+}
+
+[t:template,n:frag_swp_boardwalk_03]
+{
+	doc = "frag_swp_boardwalk_03";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-03; }
+}
+
+[t:template,n:frag_swp_boardwalk_04]
+{
+	doc = "frag_swp_boardwalk_04";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-04; }
+}
+
+[t:template,n:frag_swp_boardwalk_05]
+{
+	doc = "frag_swp_boardwalk_05";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-05; }
+}
+
+[t:template,n:frag_swp_boardwalk_06]
+{
+	doc = "frag_swp_boardwalk_06";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_frag-boardwalk-06; }
+}
+
+[t:template,n:frag_glb_cage_01]
+{
+	doc = "frag_glb_cage_01";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-cage-01; 
+		scale_base = 0.55;
+	}
+}
+[t:template,n:frag_glb_cage_02]
+{
+	doc = "frag_glb_cage_02";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-cage-02; 
+		scale_base = 0.55;
+	}
+}
+[t:template,n:frag_glb_cage_03]
+{
+	doc = "frag_glb_cage_03";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-cage-03; 
+		scale_base = 0.55;
+	}
+}
+[t:template,n:frag_glb_cage_04]
+{
+	doc = "frag_glb_cage_04";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-cage-04; 
+		scale_base = 0.55;
+	}
+}
+[t:template,n:frag_glb_cage_05]
+{
+	doc = "frag_glb_cage_05";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model=m_i_glb_frag-cage-05; 
+		scale_base = 0.55;
+	}
+}
+//Temp model... need to replace with real ice frags for Meriks tomb. -Ernsie
+[t:template,n:frag_ice_boulder_01]
+{
+	doc = "frag_glb_cage_05";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_rock-03; }
+}
+//Temp model... need to replace with real ones for dl_r1. -Ernsie
+[t:template,n:frag_cav_boulder_01]
+{
+	doc = "frag_cav_boulder_01";
+	specializes = fragment;
+	[aspect] { model=m_i_swp_rock-03; }
+}
+[t:template,n:frag_cav_boulder_02]
+{
+	doc = "frag_cav_boulder_02";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_swp_rock-03;
+        scale_multiplier=0.35;
+	}
+}
+
+[t:template,n:frag_glb_bone_dirty_01]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-bone-01;
+		[textures] {0 = b_c_ecm_sk-02; }
+	}
+}
+[t:template,n:frag_glb_bone_dirty_02]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-bone-02;
+		[textures] {0 = b_c_ecm_sk-02; }
+	}
+}
+[t:template,n:frag_glb_bone_dirty_03]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-bone-03;
+		[textures] {0 = b_c_ecm_sk-02; }
+	}
+}
+[t:template,n:frag_glb_bone_dirty_04]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-bone-04;
+		[textures] {0 = b_c_ecm_sk-02; }
+	}
+}
+[t:template,n:frag_glb_bone_dirty_05]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-bone-05;
+		[textures] {0 = b_c_ecm_sk-02; }
+	}
+}
+[t:template,n:frag_glb_bone_dirty_06]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-bone-06;
+		[textures] {0 = b_c_ecm_sk-02; }
+	}
+}
+[t:template,n:frag_glb_roundstone_01]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-roundstone-01;
+	}
+}
+[t:template,n:frag_glb_roundstone_02]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-roundstone-02;
+	}
+}
+[t:template,n:frag_glb_roundstone_03]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-roundstone-03;
+	}
+}
+[t:template,n:frag_glb_roundstone_04]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-roundstone-04;
+	}
+}
+[t:template,n:frag_glb_roundstone_05]
+{
+	doc = "bone fragment";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_glb_frag-roundstone-05;
+	}
+}
+
+[t:template,n:frag_des_egg_dragon_01]
+{
+	doc = "frag_des_egg_dragon_01";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_des_frag-egg-dragon-01;
+	}
+}
+[t:template,n:frag_des_egg_dragon_02]
+{
+	doc = "frag_des_egg_dragon_02";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_des_frag-egg-dragon-02;
+	}
+}
+[t:template,n:frag_des_egg_dragon_03]
+{
+	doc = "frag_des_egg_dragon_03";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_des_frag-egg-dragon-03;
+	}
+}
+[t:template,n:frag_des_egg_dragon_04]
+{
+	doc = "frag_des_egg_dragon_04";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_des_frag-egg-dragon-04;
+	}
+}
+[t:template,n:frag_des_egg_dragon_05]
+{
+	doc = "frag_des_egg_dragon_05";
+	specializes = fragment;
+	[aspect]
+	{
+		model=m_i_des_frag-egg-dragon-05;
+	}
+}
+
+[t:template,n:frag_gob_tesla_coil_01]
+{
+	doc = "tesla coil frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_gob_frag-tesla-coil-01;
+		[textures] {0 = b_i_gob_tesla-coil-broken; }
+	}
+}
+[t:template,n:frag_gob_tesla_coil_02]
+{
+	doc = "tesla coil frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_gob_frag-tesla-coil-02;
+		[textures] {0 = b_i_gob_tesla-coil-broken; }
+	}
+}
+[t:template,n:frag_gob_tesla_coil_03]
+{
+	doc = "tesla coil frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_gob_frag-tesla-coil-03;
+		[textures] {0 = b_i_gob_tesla-coil-broken; }
+	}
+}
+[t:template,n:frag_gob_tesla_coil_04]
+{
+	doc = "tesla coil frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_gob_frag-tesla-coil-04;
+		[textures] {0 = b_i_gob_tesla-coil-broken; }
+	}
+}
+[t:template,n:frag_gob_tesla_coil_05]
+{
+	doc = "tesla coil frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_gob_frag-tesla-coil-05;
+		[textures] {0 = b_i_gob_tesla-coil-broken; }
+	}
+}
+[t:template,n:frag_gob_tesla_coil_06]
+{
+	doc = "tesla coil frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_gob_frag-tesla-coil-06;
+		[textures] {0 = b_i_gob_tesla-coil-broken; }
+	}
+}
+
+[t:template,n:frag_glb_adolescent_spider_01]
+{
+	doc = "adolescent spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-01;
+		[textures] {0 = b_c_edm_as; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_02]
+{
+	doc = "adolescent spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-02;
+		[textures] {0 = b_c_edm_as; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_03]
+{
+	doc = "adolescent spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-03;
+		[textures] {0 = b_c_edm_as; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_04]
+{
+	doc = "adolescent spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-04;
+		[textures] {0 = b_c_edm_as; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_05]
+{
+	doc = "adolescent spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-05;
+		[textures] {0 = b_c_edm_as; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_yel_01]
+{
+	doc = "adolescent yellow spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-01;
+		scale_base = 0.5;
+		[textures] {0 = b_c_edm_as-yel; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_yel_02]
+{
+	doc = "adolescent yellow spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-02;
+		scale_base = 0.5;
+		[textures] {0 = b_c_edm_as-yel; }
+	}
+}
+
+[t:template,n:frag_glb_adolescent_spider_yel_03]
+{
+	doc = "adolescent yellow spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-03;
+		scale_base = 0.5;
+		[textures] {0 = b_c_edm_as-yel; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_yel_04]
+{
+	doc = "adolescent yellow spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-04;
+		scale_base = 0.5;
+		[textures] {0 = b_c_edm_as-yel; }
+	}
+}
+[t:template,n:frag_glb_adolescent_spider_yel_05]
+{
+	doc = "adolescent yellow spider frag";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-spider-adolescent-05;
+		scale_base = 0.5;
+		[textures] {0 = b_c_edm_as-yel; }
+	}
+}
+[t:template,n:frag_glb_mucosa_01]
+{
+	doc = "frag_glb_mucosa_01";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-01;
+		[textures] {0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:frag_glb_mucosa_02]
+{
+	doc = "frag_glb_mucosa_02";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-02;
+		[textures] {0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:frag_glb_mucosa_03]
+{
+	doc = "frag_glb_mucosa_03";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-03;
+		[textures] {0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:frag_glb_mucosa_04]
+{
+	doc = "frag_glb_mucosa_04";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-04;
+		[textures] {0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:frag_glb_mucosa_05]
+{
+	doc = "frag_glb_mucosa_05";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-05;
+		[textures] {0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:frag_glb_mucosa_06]
+{
+	doc = "frag_glb_mucosa_06";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-06;
+		[textures] {0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:frag_glb_mucosa_07]
+{
+	doc = "frag_glb_mucosa_07";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-07;
+		[textures] {0 = b_c_edm_mu; }
+	}
+}
+[t:template,n:frag_glb_mucosa_small_01]
+{
+	doc = "frag_glb_mucosa_small_01";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-01;
+		scale_base = 0.80;
+		[textures] {0 = b_c_edm_mu-02; }
+	}
+}
+[t:template,n:frag_glb_mucosa_small_02]
+{
+	doc = "frag_glb_mucosa_small_02";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-02;
+		scale_base = 0.80;
+		[textures] {0 = b_c_edm_mu-02; }
+	}
+}
+[t:template,n:frag_glb_mucosa_small_03]
+{
+	doc = "frag_glb_mucosa_small_03";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-03;
+		scale_base = 0.80;
+		[textures] {0 = b_c_edm_mu-02; }
+	}
+}
+[t:template,n:frag_glb_mucosa_small_04]
+{
+	doc = "frag_glb_mucosa_small_04";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-04;
+		scale_base = 0.80;
+		[textures] {0 = b_c_edm_mu-02; }
+	}
+}
+[t:template,n:frag_glb_mucosa_small_05]
+{
+	doc = "frag_glb_mucosa_small_05";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-05;
+		scale_base = 0.80;
+		[textures] {0 = b_c_edm_mu-02; }
+	}
+}
+[t:template,n:frag_glb_mucosa_small_06]
+{
+	doc = "frag_glb_mucosa_small_06";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-06;
+		scale_base = 0.80;
+		[textures] {0 = b_c_edm_mu-02; }
+	}
+}
+[t:template,n:frag_glb_mucosa_small_07]
+{
+	doc = "frag_glb_mucosa_small_07";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-07;
+		scale_base = 0.80;
+		[textures] {0 = b_c_edm_mu-02; }
+	}
+}
+
+[t:template,n:frag_glb_mucosa_large_01]
+{
+	doc = "frag_glb_mucosa_large_01";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-01;
+		scale_base = 1.20;
+		[textures] {0 = b_c_edm_mu-03; }
+	}
+}
+[t:template,n:frag_glb_mucosa_large_02]
+{
+	doc = "frag_glb_mucosa_large_02";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-02;
+		scale_base = 1.20;
+		[textures] {0 = b_c_edm_mu-03; }
+	}
+}
+[t:template,n:frag_glb_mucosa_large_03]
+{
+	doc = "frag_glb_mucosa_large_03";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-03;
+		scale_base = 1.20;
+		[textures] {0 = b_c_edm_mu-03; }
+	}
+}
+[t:template,n:frag_glb_mucosa_large_04]
+{
+	doc = "frag_glb_mucosa_large_04";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-04;
+		scale_base = 1.20;
+		[textures] {0 = b_c_edm_mu-03; }
+	}
+}
+[t:template,n:frag_glb_mucosa_large_05]
+{
+	doc = "frag_glb_mucosa_large_05";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-05;
+		scale_base = 1.20;
+		[textures] {0 = b_c_edm_mu-03; }
+	}
+}
+[t:template,n:frag_glb_mucosa_large_06]
+{
+	doc = "frag_glb_mucosa_large_06";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-06;
+		scale_base = 1.20;
+		[textures] {0 = b_c_edm_mu-03; }
+	}
+}
+[t:template,n:frag_glb_mucosa_large_07]
+{
+	doc = "frag_glb_mucosa_large_07";
+	specializes = fragment;
+	[aspect]
+	{
+		model = m_i_glb_frag-mucosa-07;
+		scale_base = 1.20;
+		[textures] {0 = b_c_edm_mu-03; }
+	}
+}
+[t:template,n:frag_glb_spider_frostnid_01]
+{
+	doc = "frag_glb_spider_frostnid_01";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-frostnid-01; }
+}
+[t:template,n:frag_glb_spider_frostnid_02]
+{
+	doc = "frag_glb_spider_frostnid_02";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-frostnid-02; }
+}
+[t:template,n:frag_glb_spider_frostnid_03]
+{
+	doc = "frag_glb_spider_frostnid_03";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-frostnid-03; }
+}
+[t:template,n:frag_glb_spider_frostnid_04]
+{
+	doc = "frag_glb_spider_frostnid_04";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-frostnid-04; }
+}
+[t:template,n:frag_glb_spider_frostnid_05]
+{
+	doc = "frag_glb_spider_frostnid_05";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-frostnid-05; }
+}
+
+[t:template,n:frag_glb_window_chapel_01]
+{
+	doc = "frag_glb_window_chapel_01";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-window-chapel-01; }
+}
+
+[t:template,n:frag_glb_window_chapel_02]
+{
+	doc = "frag_glb_window_chapel_02";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-window-chapel-02; }
+}
+
+[t:template,n:frag_glb_window_chapel_03]
+{
+	doc = "frag_glb_window_chapel_03";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-window-chapel-03; }
+}
+
+[t:template,n:frag_glb_window_chapel_04]
+{
+	doc = "frag_glb_window_chapel_04";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-window-chapel-04; }
+}
+
+[t:template,n:frag_glb_window_chapel_05]
+{
+	doc = "frag_glb_window_chapel_05";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-window-chapel-05; }
+}
+
+[t:template,n:frag_glb_window_chapel_06]
+{
+	doc = "frag_glb_window_chapel_06";
+	specializes = fragment;
+	[aspect] { model = m_i_glb_frag-window-chapel-06; }
+}
+[t:template,n:frag_glb_cage_door_01]
+{
+	doc = "frag_glb_cage_door_01";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-cage-door-01; 
+		[textures] { 0 = b_i_glb_door-cage-01; }
+	}
+}
+[t:template,n:frag_glb_cage_door_02]
+{
+	doc = "frag_glb_cage_door_02";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-cage-door-02; 
+		[textures] { 0 = b_i_glb_door-cage-01; }
+	}
+}
+[t:template,n:frag_glb_cage_door_03]
+{
+	doc = "frag_glb_cage_door_03";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-cage-door-03; 
+		[textures] { 0 = b_i_glb_door-cage-01; }
+	}
+}
+
+[t:template,n:frag_glb_shard_01]
+{
+	doc = "frag_glb_shard_01";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-shard-01; 
+		[textures] { 0 = b_i_cav_gems-01-static; }
+	}
+}
+
+[t:template,n:frag_glb_shard_02]
+{
+	doc = "frag_glb_shard_02";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-shard-02; 
+		[textures] { 0 = b_i_cav_gems-01-static; }
+	}
+}
+
+[t:template,n:frag_glb_shard_03]
+{
+	doc = "frag_glb_shard_03";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-shard-03; 
+		[textures] { 0 = b_i_cav_gems-01-static; }
+	}
+}
+
+[t:template,n:frag_glb_shard_04]
+{
+	doc = "frag_glb_shard_04";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-shard-04; 
+		[textures] { 0 = b_i_cav_gems-01-static; }
+	}
+}
+
+[t:template,n:frag_glb_shard_05]
+{
+	doc = "frag_glb_shard_05";
+	specializes = fragment;
+	[aspect] 
+	{ 
+		model = m_i_glb_frag-shard-05; 
+		[textures] { 0 = b_i_cav_gems-01-static; }
+	}
+}

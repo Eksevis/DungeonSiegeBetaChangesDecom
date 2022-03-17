@@ -1,0 +1,1410 @@
+[t:template,n:bones_des_broken]
+{
+	category_name = "dead";
+	doc = "bone_rib_broken_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-broken; }
+}
+[t:template,n:bones_des_femur]
+{
+	category_name = "dead";
+	doc = "bone_femur_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-femur; }
+}
+[t:template,n:bones_des_pelvis]
+{
+	category_name = "dead";
+	doc = "bone_pelvis_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-pelvis; }
+}
+[t:template,n:bones_des_rib]
+{
+	category_name = "dead";
+	doc = "bone_rib_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-rib; }
+}
+[t:template,n:bones_des_ribcage]
+{
+	category_name = "dead";
+	doc = "bone_ribcage_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-ribcage; }
+}
+[t:template,n:bones_des_skull]
+{
+	category_name = "dead";
+	doc = "bone_skull_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-skull; }
+}
+[t:template,n:bones_des_spine_01]
+{
+	category_name = "dead";
+	doc = "bone_spine_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-spine-01; }
+}
+[t:template,n:bones_des_vertebrae]
+{
+	category_name = "dead";
+	doc = "bone_vertebrae_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_bones-vertebrae; }
+}
+[t:template,n:bones_glb_arm]
+{
+	category_name = "dead";
+	doc = "bones_arm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_bones-arm; }
+}
+[t:template,n:bones_glb_body]
+{
+	category_name = "dead";
+	doc = "bones_body";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_bones-body; }
+}
+[t:template,n:bones_grs_animal]
+{
+	category_name = "dead";
+	doc = "bones_animal_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_bones-animal; }
+}
+[t:template,n:branch_swp_01]
+{
+	category_name = "trees";
+	doc = "swp_branch_sm_moss";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_branch-01; }
+}
+[t:template,n:branch_swp_02]
+{
+	category_name = "trees";
+	doc = "swp_branch_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_branch-02; }
+}
+[t:template,n:cattail_grs_01]
+{
+	category_name = "foliage";
+	doc = "grs_cattail_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+	         model=m_i_grs_cattail-01;
+			 scale_multiplier = 2.0;
+
+	}
+}
+[t:template,n:cattail_grs_02]
+{
+	category_name = "foliage";
+	doc = "grs_cattail_med";
+	specializes = non_interactive_nonblocking;
+    [aspect]
+	{
+	         model=m_i_grs_cattail-02;
+			 scale_multiplier = 2.0;
+
+	}
+}
+[t:template,n:crystal_cav_01]
+{
+	category_name = "rocks";
+	doc = "cav_crystal purple";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_crystal-01; }
+}
+[t:template,n:crystal_cav_02]
+{
+	category_name = "rocks";
+	doc = "cav_crystal blue";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_crystal-02; }
+}
+[t:template,n:fungus_cav]
+{
+	category_name = "foliage";
+	doc = "cav_fungus";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_fungus; }
+}
+[t:template,n:gem_cav_01]
+{
+	category_name = "rocks";
+	doc = "cav_gems_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_gem-01; }
+}
+[t:template,n:gem_cav_02]
+{
+	category_name = "rocks";
+	doc = "cav_gems_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_gem-02; }
+}
+[t:template,n:log_glb_03]
+{
+	category_name = "misc";
+	doc = "beach_driftwood with sand_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_driftwood-02;
+		[textures] { 0=b_i_glb_driftwood-03; }
+	}
+}
+[t:template,n:pilings_glb_01]
+{
+	category_name = "misc";
+	doc = "beach_piling_pool";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_pilings-01; }
+}
+[t:template,n:pinecone_grs_01]
+{
+	category_name = "misc";
+	doc = "grs_pinecone";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_pinecone-01; }
+}
+[t:template,n:pinecone_grs_02]
+{
+	category_name = "misc";
+	doc = "grs_pinecone_group";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_pinecone-02; }
+}
+[t:template,n:cattail_grs_03]
+{
+	category_name = "foliage";
+	doc = "grs_cattail_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+	         model=m_i_grs_cattail-03;
+             scale_multiplier = 2.0;
+    }
+}
+[t:template,n:cattail_grs_04]
+{
+	category_name = "foliage";
+	doc = "grs_cattail_sm_sway";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_cattail-04; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_grs;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=cattail-04-sway; }
+			}
+		}
+	}
+}
+[t:template,n:cattail_grs_05]
+{
+	category_name = "foliage";
+	doc = "grs_cattail_lg_sway";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_cattail-05; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_grs;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=cattail-05-sway; }
+			}
+		}
+	}
+}
+[t:template,n:cobweb_csl_01]
+{
+	category_name = "misc";
+	doc = "cobweb_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-01; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_02]
+{
+	category_name = "misc";
+	doc = "cobweb_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-02; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_03]
+{
+	category_name = "misc";
+	doc = "cobweb_cocoon_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-03; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_04]
+{
+	category_name = "misc";
+	doc = "cobweb_cocoon_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-04; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_05]
+{
+	category_name = "misc";
+	doc = "cobweb_xsm";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-05; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_06]
+{
+	category_name = "misc";
+	doc = "cobweb_xlg";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-06; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_07]
+{
+	category_name = "misc";
+	doc = "cobweb_lg_01";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-07; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_08]
+{
+	category_name = "misc";
+	doc = "cobweb_lg_02";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-08; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cobweb_csl_10]
+{
+	category_name = "misc";
+	doc = "cobweb_xxlg";
+	specializes = non_interactive_nonblocking;
+	[aspect] 
+	{ 
+		model=m_i_csl_cobweb-10; 
+		dynamically_lit = false;
+	}
+}
+[t:template,n:cornstalk_grs_burnt_01]
+{
+	category_name = "foliage";
+	doc = "grs_cornstalk_burnt";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_cornstalk-01-burnt; }
+}
+[t:template,n:cornstalk_grs_burnt_02]
+{
+	category_name = "foliage";
+	doc = "grs_cornstalk_burnt_bent";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_cornstalk-02-burnt; }
+}
+[t:template,n:debris_cav_01]
+{
+	category_name = "misc";
+	doc = "cav_debris_1 clump";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_debris-01; }
+}
+[t:template,n:debris_cav_02]
+{
+	category_name = "misc";
+	doc = "cav_debris_2 clumps";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_debris-02; }
+}
+[t:template,n:debris_cav_03]
+{
+	category_name = "misc";
+	doc = "cav_debris_3 clumps";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_debris-03; }
+}
+[t:template,n:debris_glb_shore_01]
+{
+	category_name = "misc";
+	doc = "beach_debris_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_shore-debris-01; }
+}
+[t:template,n:debris_glb_shore_02]
+{
+	category_name = "misc";
+	doc = "beach_debris_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_shore-debris-02; }
+}
+[t:template,n:debris_glb_shore_03]
+{
+	category_name = "misc";
+	doc = "beach_debris_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_shore-debris-03; }
+}
+[t:template,n:dirt_csl_01]
+{
+	category_name = "misc";
+	doc = "dirt_floor_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_dirt-01; }
+}
+[t:template,n:dirt_csl_02]
+{
+	category_name = "misc";
+	doc = "dirt_floor_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_dirt-02; }
+}
+[t:template,n:dirt_csl_03]
+{
+	category_name = "misc";
+	doc = "dirt_floor_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_dirt-03; }
+}
+[t:template,n:dirt_csl_04]
+{
+	category_name = "misc";
+	doc = "dirt_corner_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_dirt-04; }
+}
+[t:template,n:egg_csl_sacks_spider_06]
+{
+	category_name = "dead";
+	doc = "cobweb_dense and fleshy";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_csl_eggsacks-spider-06; }
+}
+[t:template,n:fern_grs_01]
+{
+	category_name = "foliage";
+	doc = "grs_fern";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_fern-01; }
+}
+[t:template,n:fern_grs_02]
+{
+	category_name = "foliage";
+	doc = "grs_fern_clump_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_fern-02; }
+}
+[t:template,n:fern_grs_03]
+{
+	category_name = "foliage";
+	doc = "grs_fern_clump_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_fern-03; }
+}
+[t:template,n:flowers_grs_04]
+{
+	category_name = "foliage";
+	doc = "grs_flr_lupine_violet";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-04; }
+}
+[t:template,n:flowers_grs_05]
+{
+	category_name = "foliage";
+	doc = "grs_flr_iris_violet";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-05; }
+}
+[t:template,n:flowers_grs_06]
+{
+	category_name = "foliage";
+	doc = "grs_flr_aster_blue";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-06; }
+}
+[t:template,n:flowers_grs_07]
+{
+	category_name = "foliage";
+	doc = "grs_flr_pansy_orange";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-07; }
+}
+[t:template,n:flowers_grs_08]
+{
+	category_name = "foliage";
+	doc = "grs_flr_dandelion_yllw";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-08; }
+}
+[t:template,n:flowers_grs_blue]
+{
+	category_name = "foliage";
+	doc = "grs_flrptls_petunia_blue";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-02; }
+}
+[t:template,n:flowers_grs_red]
+{
+	category_name = "foliage";
+	doc = "grs_flrptls_zinnia_red";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-03; }
+}
+[t:template,n:flowers_grs_yellow]
+{
+	category_name = "foliage";
+	doc = "grs_flrptls_begonia_yllw";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_flowers-01; }
+}
+[t:template,n:foliage_grs_01]
+{
+	category_name = "foliage";
+	doc = "grs_ferns_grndcvr";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_foliage-01; }
+}
+[t:template,n:gold_cav_01]
+{
+	category_name = "rocks";
+	doc = "cav_gold_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_gold-01; }
+}
+[t:template,n:gold_cav_02]
+{
+	category_name = "rocks";
+	doc = "cav_gold_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_gold-02; }
+}
+[t:template,n:gold_cav_03]
+{
+	category_name = "rocks";
+	doc = "cav_gold_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_gold-03; }
+}
+[t:template,n:gold_glb_nugget_01]
+{
+	category_name = "rocks";
+	doc = "gold_nugget";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_nugget-gold-01; }
+}
+[t:template,n:grass_des_01]
+{
+	category_name = "foliage";
+	doc = "des_grs_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_grass-01; }
+}
+[t:template,n:grass_des_02]
+{
+	category_name = "foliage";
+	doc = "des_grs_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_grass-02; }
+}
+[t:template,n:grass_des_03]
+{
+	category_name = "foliage";
+	doc = "des_grass_clump";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_grass-03; }
+}
+[t:template,n:grass_glb_beach_01]
+{
+	category_name = "foliage";
+	doc = "beach_grass_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_grass-beach-01; }
+}
+[t:template,n:grass_glb_beach_02]
+{
+	category_name = "foliage";
+	doc = "beach_grass_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_grass-beach-02; }
+}
+[t:template,n:grass_grs_01]
+{
+	category_name = "foliage";
+	doc = "grs_grass_short_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-01; }
+}
+[t:template,n:grass_grs_02]
+{
+	category_name = "foliage";
+	doc = "grs_grass_short_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-02; }
+}
+[t:template,n:grass_grs_03]
+{
+	category_name = "foliage";
+	doc = "grs_grass_short_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-03; }
+}
+[t:template,n:grass_grs_04]
+{
+	category_name = "foliage";
+	doc = "grs_grass_tall_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-04; }
+}
+[t:template,n:grass_grs_05]
+{
+	category_name = "foliage";
+	doc = "grs_grass_tall_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-05; }
+}
+[t:template,n:grass_grs_06]
+{
+	category_name = "foliage";
+	doc = "grs_grass_tall_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-06; }
+}
+[t:template,n:grass_grs_07]
+{
+	category_name = "foliage";
+	doc = "grs_grass_seeded_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-07; }
+}
+[t:template,n:grass_grs_08]
+{
+	category_name = "foliage";
+	doc = "grs_grass_seeded_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-08; }
+}
+[t:template,n:grass_grs_09]
+{
+	category_name = "foliage";
+	doc = "grs_grass_seeded_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_grass-09; }
+}
+[t:template,n:grass_swp_01]
+{
+	category_name = "foliage";
+	doc = "swp_grass_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_grass-01; }
+}
+[t:template,n:grass_swp_02]
+{
+	category_name = "foliage";
+	doc = "swp_grass_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_grass-02; }
+}
+[t:template,n:grass_swp_03]
+{
+	category_name = "foliage";
+	doc = "swp_grass_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_grass-03; }
+}
+[t:template,n:groundcover_grs_01]
+{
+	category_name = "foliage";
+	doc = "grs_groundcover_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_groundcover-01; }
+}
+[t:template,n:groundcover_grs_02]
+{
+	category_name = "foliage";
+	doc = "grs_groundcover_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_groundcover-02; }
+}
+[t:template,n:groundcover_grs_03]
+{
+	category_name = "foliage";
+	doc = "grs_groundcover_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_groundcover-03; }
+}
+[t:template,n:groundcover_grs_04]
+{
+	category_name = "misc";
+	doc = "grs_underbrush";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_growth-falloff; }
+}
+[t:template,n:groundcover_grs_05]
+{
+	category_name = "foliage";
+	doc = "grs_fern_grndcvr_med";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_ground-cover-01;
+		[textures] { 0=b_i_grs_ground-cover-01; }
+	}
+}
+[t:template,n:groundcover_grs_06]
+{
+	category_name = "foliage";
+	doc = "grs_fern_grndcvr_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_ground-cover-02;
+		[textures] { 0=b_i_grs_ground-cover-01; }
+	}
+}
+[t:template,n:groundcover_grs_07]
+{
+	category_name = "foliage";
+	doc = "grs_fern_grndcvr_lg_sparse";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_ground-cover-03;
+		[textures] { 0=b_i_grs_ground-cover-01; }
+	}
+}
+[t:template,n:groundcover_grs_08]
+{
+	category_name = "foliage";
+	doc = "grs_fern_grndcvr_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_ground-cover-04;
+		[textures] { 0=b_i_grs_ground-cover-01; }
+	}
+}
+[t:template,n:icicles_ice_01]
+{
+	category_name = "misc";
+	doc = "icicles_ice_01";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_ice_icicles-01; }
+}
+[t:template,n:ivy_grs_01]
+{
+	category_name = "foliage";
+	doc = "grs_ivy_right_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_ivy-01; }
+}
+[t:template,n:ivy_grs_02]
+{
+	category_name = "foliage";
+	doc = "grs_ivy_left_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_ivy-02; }
+}
+[t:template,n:ivy_grs_03]
+{
+	category_name = "foliage";
+	doc = "grs_ivy_thin_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_ivy-03; }
+}
+[t:template,n:ivy_grs_04]
+{
+	category_name = "foliage";
+	doc = "grs_ivy_right_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_ivy-04; }
+}
+[t:template,n:ivy_grs_05]
+{
+	category_name = "foliage";
+	doc = "grs_ivy_border_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_ivy-05; }
+}
+[t:template,n:ivy_grs_06]
+{
+	category_name = "foliage";
+	doc = "grs_ivy_clump_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_ivy-06; }
+}
+[t:template,n:lilypad_swp_01]
+{
+	category_name = "foliage";
+	doc = "swp_lilypads_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_lilypad-01; }
+}
+[t:template,n:lilypad_swp_02]
+{
+	category_name = "foliage";
+	doc = "swp_lilypads_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_lilypad-02; }
+}
+[t:template,n:lilypad_swp_03]
+{
+	category_name = "foliage";
+	doc = "swp_lilypads_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_lilypad-03; }
+}
+[t:template,n:lilypad_swp_04]
+{
+	category_name = "foliage";
+	doc = "swp_lilypad_lg_sway";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_lilypad-04; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_swp;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=lilypad-04-sway; }
+			}
+		}
+	}
+}
+[t:template,n:lilypad_swp_05]
+{
+	category_name = "foliage";
+	doc = "swp_lilypad_sm_sway";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_lilypad-05; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_swp;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=lilypad-05-sway; }
+			}
+		}
+	}
+}
+[t:template,n:log_glb_02]
+{
+	category_name = "misc";
+	doc = "beach_driftwood with sand_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_driftwood-02; }
+}
+[t:template,n:log_glb_04]
+{
+	category_name = "misc";
+	doc = "beach_driftwood_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_driftwood-03; }
+}
+[t:template,n:log_glb_05]
+{
+	category_name = "misc";
+	doc = "beach_driftwood_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_driftwood-04; }
+}
+[t:template,n:moss_swp_01]
+{
+	category_name = "foliage";
+	doc = "swp_moss_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_moss-01; }
+}
+[t:template,n:moss_swp_02]
+{
+	category_name = "foliage";
+	doc = "swp_moss_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_moss-02; }
+}
+[t:template,n:moss_swp_03]
+{
+	category_name = "foliage";
+	doc = "swp_moss_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_moss-03; }
+}
+[t:template,n:mushrooms_cav_01]
+{
+	category_name = "foliage";
+	doc = "cav_mushrooms_flat_dk";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_mushrooms-01; }
+}
+[t:template,n:mushrooms_cav_02]
+{
+	category_name = "foliage";
+	doc = "cav_mushrooms_flat_lt";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_mushrooms-02; }
+}
+[t:template,n:mushrooms_cav_03]
+{
+	category_name = "foliage";
+	doc = "cav_mushrooms_flat_red";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_mushrooms-03; }
+}
+[t:template,n:ore_cav_01]
+{
+	category_name = "rocks";
+	doc = "cav_ore_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_ore-01; }
+}
+[t:template,n:ore_cav_02]
+{
+	category_name = "rocks";
+	doc = "cav_ore_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_ore-02; }
+}
+[t:template,n:ore_cav_03]
+{
+	category_name = "rocks";
+	doc = "cav_ore_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_ore-03; }
+}
+[t:template,n:reed_des_01]
+{
+	category_name = "foliage";
+	doc = "des_reed_group_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_reed-01; }
+}
+[t:template,n:reed_des_02]
+{
+	category_name = "foliage";
+	doc = "des_reed_group_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_reed-02; }
+}
+[t:template,n:reed_des_03]
+{
+	category_name = "foliage";
+	doc = "des_reeds_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_reed-03; }
+}
+[t:template,n:reed_des_04]
+{
+	category_name = "foliage";
+	doc = "des_reeds_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_reed-01; }
+}
+[t:template,n:reed_des_05]
+{
+	category_name = "foliage";
+	doc = "des_reeds_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_reed-02; }
+}
+[t:template,n:reed_des_06]
+{
+	category_name = "foliage";
+	doc = "des_reed_group_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_reed-03; }
+}
+[t:template,n:reed_grs_01]
+{
+	category_name = "foliage";
+	doc = "grs_reed_short";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_reed-01; }
+}
+[t:template,n:reed_grs_02]
+{
+	category_name = "foliage";
+	doc = "grs_reed_tall";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_reed-02; }
+}
+[t:template,n:reed_grs_03]
+{
+	category_name = "foliage";
+	doc = "grs_reed_clump";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_reed-03; }
+}
+[t:template,n:reed_swp_04]
+{
+	category_name = "foliage";
+	doc = "swp_reeds_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_reed-04; }
+}
+[t:template,n:reed_swp_05]
+{
+	category_name = "foliage";
+	doc = "swp_reeds_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_reed-05; }
+}
+[t:template,n:reed_swp_06]
+{
+	category_name = "foliage";
+	doc = "swp_reeds_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_reed-06; }
+}
+[t:template,n:reed_swp_07]
+{
+	category_name = "foliage";
+	doc = "swp_reed_sm_sway";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_reed-07; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_swp;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=reed-07-sway; }
+			}
+		}
+	}
+}
+[t:template,n:reed_swp_08]
+{
+	category_name = "foliage";
+	doc = "swp_reed_lg_sway";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_swp_reed-08; }
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_swp;
+			[chore_default]
+			{
+				skrit = infinite_loop;
+				[anim_files] { 00=reed-07-sway; }
+			}
+		}
+	}
+}
+[t:template,n:rocks_cav_01]
+{
+	category_name = "rocks";
+	doc = "cav_rocks_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_rock-01; }
+}
+[t:template,n:rocks_cav_02]
+{
+	category_name = "rocks";
+	doc = "cav_rocks_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_rock-02; }
+}
+[t:template,n:rocks_cav_03]
+{
+	category_name = "rocks";
+	doc = "cav_rocks_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_rock-03; }
+}
+[t:template,n:rocks_cav_04]
+{
+	category_name = "rocks";
+	doc = "rvr_rocks_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_rock-river-01; }
+}
+[t:template,n:rocks_cav_05]
+{
+	category_name = "rocks";
+	doc = "rvr_rocks_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_rock-river-02; }
+}
+[t:template,n:rocks_cav_06]
+{
+	category_name = "rocks";
+	doc = "rvr_rocks_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_rock-river-03; }
+}
+[t:template,n:rocks_cav_07]
+{
+	category_name = "rocks";
+	doc = "rvr_rock";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_cav_rock-river-04; }
+}
+[t:template,n:rock_ice_05]
+{
+	category_name = "rocks";
+	doc = "ice_rock_xsm";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_rock-05;
+		[textures] { 0=b_i_ice_rock; }
+	}
+}
+[t:template,n:rock_ice_06]
+{
+	category_name = "rocks";
+	doc = "ice_rock_group_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_rock-06;
+		[textures] { 0=b_i_ice_rock; }
+	}
+}
+[t:template,n:rock_ice_07]
+{
+	category_name = "rocks";
+	doc = "ice_rock_group_med";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_rock-07;
+		[textures] { 0=b_i_ice_rock; }
+	}
+}
+[t:template,n:rock_ice_08]
+{
+	category_name = "rocks";
+	doc = "ice_rock_group_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_glb_rock-08;
+		[textures] { 0=b_i_ice_rock; }
+	}
+}
+[t:template,n:seashell_glb_01]
+{
+	category_name = "misc";
+	doc = "beach_shell_seastar";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seashells-01; }
+}
+[t:template,n:seashell_glb_02]
+{
+	category_name = "misc";
+	doc = "beach_shell_clam";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seashells-02; }
+}
+[t:template,n:seashell_glb_03]
+{
+	category_name = "misc";
+	doc = "beach_shell_scallop";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seashells-03; }
+}
+[t:template,n:seashell_glb_04]
+{
+	category_name = "misc";
+	doc = "beach_shell_sand_dollar";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seashells-04; }
+}
+[t:template,n:seashell_glb_05]
+{
+	category_name = "misc";
+	doc = "beach_shell_mussell";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seashells-05; }
+}
+[t:template,n:seaweed_glb_01]
+{
+	category_name = "foliage";
+	doc = "beach_algae_plum";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seaweed-01; }
+}
+[t:template,n:seaweed_glb_02]
+{
+	category_name = "foliage";
+	doc = "beach_algea_green";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seaweed-02; }
+}
+[t:template,n:seaweed_glb_03]
+{
+	category_name = "foliage";
+	doc = "beach_kelp_brown";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_seaweed-03; }
+}
+[t:template,n:shadow_des_01]
+{
+	category_name = "misc";
+	doc = "shadow_des";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_des_shadow-01; }
+}
+[t:template,n:shadow_grs_01]
+{
+	category_name = "misc";
+	doc = "shadow_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_shadow-01; }
+}
+[t:template,n:shadow_grs_02]
+{
+	category_name = "misc";
+	doc = "shadow_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_shadow-02; }
+}
+[t:template,n:shadow_grs_03]
+{
+	category_name = "misc";
+	doc = "shadow_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_grs_shadow-03; }
+}
+[t:template,n:mist_glb_large_01]
+{
+	category_name = "node";
+	doc = "mist_large";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_mist-large-01; }
+}
+[t:template,n:mist_glb_med_01]
+{
+	category_name = "node";
+	doc = "mist_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_mist-med-01; }
+}
+[t:template,n:mist_glb_small_01]
+{
+	category_name = "node";
+	doc = "mist_small";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_mist-small-01; }
+}
+
+[t:template,n:rock_grs_01]
+{
+	category_name = "rocks";
+	doc = "grs_rock_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_rock-01; }
+}
+
+[t:template,n:rock_grs_05]
+{
+	category_name = "rocks";
+	doc = "grs_rock_xsm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_rock-05; }
+}
+[t:template,n:rock_grs_06]
+{
+	category_name = "rocks";
+	doc = "grs_rock_group_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_rock-06; }
+}
+[t:template,n:rock_grs_07]
+{
+	category_name = "rocks";
+	doc = "grs_rock_group_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_rock-07; }
+}
+[t:template,n:rock_grs_08]
+{
+	category_name = "rocks";
+	doc = "grs_rock_group_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_rock-08; }
+}
+[t:template,n:stump_glb_burnt_01]
+{
+	category_name = "misc";
+	doc = "grs_stump_burnt";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_stump-burnt-01; }
+}
+[t:template,n:tree_grs_stump]
+{
+	category_name = "misc";
+	doc = "grs_stump_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_stump; }
+}
+[t:template,n:tree_grs_stump_woodcutting]
+{
+	category_name = "misc";
+	doc = "grs_stump_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_stump-flat; }
+}
+[t:template,n:tree_grs_uproot]
+{
+	category_name = "misc";
+	doc = "grs_stump_uproot";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model=m_i_glb_tree-uproot; }
+}
+[t:template,n:hole_cav_01]
+{
+	category_name = "misc";
+	doc = "cav_hole";
+	specializes = non_interactive_nonblocking;
+	[aspect]
+	{
+		model = m_i_cav_hole-01;
+		[textures] { 0 = b_i_cav_hole-01; }
+	}
+}
+[t:template,n:roots_glb_01]
+{
+	category_name = "foliage";
+	doc = "dun_roots_delicate_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-01; }
+}
+[t:template,n:roots_glb_02]
+{
+	category_name = "foliage";
+	doc = "dun_roots_delicate_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-02; }
+}
+[t:template,n:roots_glb_03]
+{
+	category_name = "foliage";
+	doc = "dun_roots_delicate_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-03; }
+}
+[t:template,n:roots_glb_04]
+{
+	category_name = "foliage";
+	doc = "dun_roots_delicate_xlg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-04; }
+}
+[t:template,n:roots_glb_05]
+{
+	category_name = "foliage";
+	doc = "dun_roots_thick_double";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-05; }
+}
+[t:template,n:roots_glb_06]
+{
+	category_name = "foliage";
+	doc = "dun_roots_thick_single_sm";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-06; }
+}
+[t:template,n:roots_glb_07]
+{
+	category_name = "foliage";
+	doc = "dun_roots_thick_single_med";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-07; }
+}
+[t:template,n:roots_glb_08]
+{
+	category_name = "foliage";
+	doc = "dun_roots_thick_single_lg";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_glb_roots-08; }
+}
+
+[t:template,n:chunks_ice_01]
+{
+	category_name = "misc";
+	doc = "chunks_ice_01";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_ice_chunks-01; }
+}
+[t:template,n:chunks_ice_02]
+{
+	category_name = "misc";
+	doc = "chunks_ice_02";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_ice_chunks-02; }
+}
+[t:template,n:chunks_ice_03]
+{
+	category_name = "misc";
+	doc = "chunks_ice_03";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_ice_chunks-03; }
+}
+[t:template,n:chunks_ice_04]
+{
+	category_name = "misc";
+	doc = "chunks_ice_04";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_ice_chunks-04; }
+}
+[t:template,n:chunks_ice_05]
+{
+	category_name = "misc";
+	doc = "chunks_ice_05";
+	specializes = non_interactive_nonblocking;
+	[aspect] { model = m_i_ice_chunks-05; }
+}

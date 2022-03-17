@@ -1,0 +1,159 @@
+[t:template,n:amulet_common]
+{
+	doc = "Template common to all amulets";
+	specializes = amulet;
+
+	[pcontent]
+	{
+		[b_c_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_006;
+			modifier_max = 34;
+			modifier_min = 31;
+		}
+		[b_c_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_007;
+			modifier_max = 37;
+			modifier_min = 34;
+		}
+		[b_c_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_008;
+			modifier_max = 39;
+			modifier_min = 37;
+		}
+		[b_d_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_003;
+			modifier_max = 10;
+			modifier_min = 8;
+		}
+		[b_d_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_004;
+			modifier_max = 13;
+			modifier_min = 10;
+		}
+		[b_d_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_005;
+			modifier_max = 16;
+			modifier_min = 13;
+		}
+		[b_o_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_009;
+			modifier_max = 57;
+			modifier_min = 55;
+		}
+		[b_o_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_010;
+			modifier_max = 59;
+			modifier_min = 57;
+		}
+		[g_c_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_024;
+			modifier_max = 63;
+			modifier_min = 59;
+		}
+		[g_c_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_025;
+			modifier_max = 52;
+			modifier_min = 49;
+		}
+		[g_c_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_026;
+			modifier_max = 55;
+			modifier_min = 52;
+		}
+		[g_d_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_021;
+			modifier_max = 24;
+			modifier_min = 26;
+		}
+		[g_d_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_022;
+			modifier_max = 28;
+			modifier_min = 26;
+		}
+		[g_d_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_023;
+			modifier_max = 31;
+			modifier_min = 28;
+		}
+		[g_o_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_027;
+			modifier_max = 70;
+			modifier_min = 75;
+		}
+		[g_o_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_029;
+			modifier_max = 90;
+			modifier_min = 75;
+		}
+		[s_c_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_015;
+			modifier_max = 41;
+			modifier_min = 39;
+		}
+		[s_c_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_016;
+			modifier_max = 43;
+			modifier_min = 41;
+		}
+		[s_c_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_017;
+			modifier_max = 47;
+			modifier_min = 43;
+		}
+		[s_d_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_012;
+			modifier_max = 18;
+			modifier_min = 16;
+		}
+		[s_d_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_013;
+			modifier_max = 21;
+			modifier_min = 18;
+		}
+		[s_d_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_014;
+			modifier_max = 24;
+			modifier_min = 21;
+		}
+		[s_o_avg]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_018;
+			modifier_max = 65;
+			modifier_min = 63;
+		}
+		[s_o_fin]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_019;
+			modifier_max = 67;
+			modifier_min = 65;
+		}
+		[s_o_mag]
+		{
+			inventory_icon = b_gui_ig_i_it_amulet_020;
+			modifier_max = 70;
+			modifier_min = 67;
+		}
+	}
+}

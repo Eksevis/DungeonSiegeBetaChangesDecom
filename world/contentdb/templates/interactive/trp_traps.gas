@@ -1,0 +1,12 @@
+//////////////////////////////////////////////////////////////////////////////
+// Traps
+
+[t:template,n:trp_firetrap]
+{
+	specializes	=	trap;
+    category_name       ="trap";
+
+	doc			=	[trap_firetrap];
+	[trp_firetrap]	{}
+}
+

@@ -1,0 +1,922 @@
+////////////////////////////////////////////////////////////////
+// Light leaf templates - things that have fire effects attached
+// or would throw light, e.g. torches, fireplaces, lamps, etc.
+
+///////// TORCHES /////////////////////////
+
+[t:template,n:torch_glb_stick]
+{
+	specializes			= non_interactive;
+	doc					= "torch_tiki";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_torch-stick;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:torch_swp_stick_01]
+{
+	specializes			= non_interactive;
+	doc					= "torch_tiki_yllw";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_swp_torch-01;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews3");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:torch_swp_stick_02]
+{
+	specializes			= non_interactive;
+	doc					= "torch_tiki_white";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_swp_torch-02;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews3");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:torch_glb_holder_01]
+{
+	specializes			= non_interactive_nonblocking;
+	doc					= "torch_wall_bracketed_lit";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_light-torch-01;
+	aspect:textures:0	= b_i_glb_torch-05;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews1");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:torch_glb_holder_02]
+{
+	specializes			= non_interactive;
+	doc					= "torch_wall_bracketed_unlit";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_light-torch-01;
+	aspect:textures:0	= b_i_glb_torch-05;
+
+	// unlit, no effect  -mm 10.11.00
+}
+
+[t:template,n:torch_glb_holder_03]
+{
+	specializes			= non_interactive_nonblocking;
+	doc					= "torch_wall_spiked";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_light-torch-02;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:torch_glb_stand_01]
+{
+	specializes			= non_interactive;
+	doc					= "torch_stand_ornate_gld";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_light-torch-stand-01;
+	aspect:textures:0	= b_i_csl_torch-gold;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:torch_glb_stand_02]
+{
+	specializes			=	non_interactive;
+	doc					=	"torch_stand_unlit";
+    category_name       =  "lighting";
+
+	aspect:model		= m_i_glb_light-torch-stand-01;
+
+	// effect goes here  -mm 10.11.00
+	// torch_fire2_relight
+}
+
+[t:template,n:torch_glb_stand_03]
+{
+	specializes			=	non_interactive;
+	doc					=	"torch_stand_ornate_blk";
+    category_name       =   "lighting";
+
+	aspect:model		= m_i_glb_light-torch-stand-01;
+	aspect:textures:0	= b_i_csl_torch-black;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:torch_glb_stand_04]
+{
+	specializes			=	non_interactive;
+	doc					=	"torch_stand_blck";
+    category_name       =   "lighting";
+
+	aspect:model		= m_i_glb_light-torch-stand-01;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+[t:template,n:torch_csl_sconce]
+{
+	specializes			= non_interactive;
+	doc					= "sconce_gld_ornate";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_light-sconce;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews2");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+[t:template,n:lightstand_lightable]
+{
+	specializes 		= interactive;
+	doc 				= "torch_lightable";
+    category_name       = "lighting";
+
+	[aspect]
+	{
+    	model 				= m_i_glb_light-torch-01;
+
+	}
+
+	[aspect]
+	{
+        is_usable     = true;
+        use_range     = 3.0;
+        is_selectable = true;
+	}
+    aspect:textures:0	= b_i_glb_torch-05;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+                single_shot = true;
+				condition*  = receive_world_message("WE_REQ_USE");
+				action*     = call_sfx_script("torch_firews1");
+			}
+		}
+	}
+
+    [generic_objblock]	{}
+	[light_enable] 		
+	{
+		initially_active = false;
+	}
+	[light_flicker] 	
+	{
+		initially_active = false;
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+	}
+	[msg_switch]		{}
+}
+
+[t:template,n:torch_activate]
+{
+	specializes 		= non_interactive;
+	doc 				= "torch_activate";
+    category_name       = "lighting";
+
+	[aspect]
+	{
+    	model 				= m_i_glb_light-torch-01;
+	}
+	aspect:textures:0	= b_i_glb_torch-05;
+
+	[effect_manager]
+	{
+		effect_name			= "torch_firews1";                                           
+	    repeat				= false;					
+	                                                
+	    start_msg			= WE_REQ_ACTIVATE;			
+	    stop_msg			= WE_REQ_DEACTIVATE;			
+	}
+    [generic_objblock]	{}
+    [light_enable] 		
+    {
+    	initially_active = false;
+    }
+    [common]
+	{
+		forced_expiration_class = normal;
+		auto_expiration_class = normal;
+	}
+    [light_flicker] 	
+    {
+    	initially_active = false;
+    	magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+    }
+}
+
+///////// CANDLES ///////////////////////////
+
+[t:template,n:candle_glb_01]
+{
+	specializes			= non_interactive;
+	doc					= "candle_short";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_candle-01;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("candle_fire1");
+			}
+		}
+	}
+}
+
+[t:template,n:candle_glb_02]
+{
+	specializes			= non_interactive;
+	doc					= "candle_tall";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_candle-02;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("candle_fire1");
+			}
+		}
+	}
+}
+
+[t:template,n:candlestand_csl_01]
+{
+	specializes			= non_interactive;
+	doc					= "candlestick_single";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_csl_candlestand-01;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("candle_fire1");
+			}
+		}
+	}
+}
+
+[t:template,n:candlestand_csl_02]
+{
+	specializes			= non_interactive;
+	doc					= "candlestick_floor";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_csl_candlestand-02;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("candle_fire2");
+			}
+		}
+	}
+}
+
+[t:template,n:candlestand_csl_03]
+{
+	specializes			= non_interactive;
+	doc					= "candlestick_tri";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_csl_candlestand-03;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("candle_fire3");
+			}
+		}
+	}
+}
+
+
+
+///////// LAMPS /////////////////////////////
+
+[t:template,n:lamp_glb_post]
+{
+	specializes			= non_interactive;
+	doc					= "lamp post";
+    category_name       = "lighting";
+
+	common:screen_name	= "Lamp Post";
+
+	aspect:model		= m_i_glb_lamp-post;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("candle_fire1");
+			}
+		}
+	}
+}
+
+[t:template,n:lamp_glb_table]
+{
+	specializes			= non_interactive;
+	doc					= "lamp table";
+    category_name       = "lighting";
+
+	common:screen_name	= "Table Lamp";
+
+	aspect:model		= m_i_glb_lamp-table;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("candle_fire1");
+			}
+		}
+	}
+}
+
+[t:template,n:lamp_glb_wall]
+{
+	specializes			= non_interactive;
+	doc					= "lamp wall";
+    category_name       = "lighting";
+
+	common:screen_name	= "Lamp";
+
+	aspect:model		= m_i_glb_lamp-wall;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_fire_small");
+			}
+		}
+	}
+}
+
+[t:template,n:lamp_csl_01]
+{
+	specializes			= non_interactive;
+	doc					= "lantern_hanging";
+    category_name       = "lighting";
+
+	common:screen_name	= "Lantern";
+
+	aspect:model		= m_i_csl_lantern-01;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("lamp_glow_yellow");
+			}
+		}
+	}
+}
+
+[t:template,n:lamp_csl_02]
+{
+	specializes			= non_interactive;
+	doc					= "lamp_table_stone";
+    category_name       = "lighting";
+
+	common:screen_name	= "Lamp";
+
+	aspect:model		= m_i_csl_lantern-02;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("torch_firews2");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:lamp_gob_wall_01]
+{
+	specializes			= non_interactive;
+	doc					= "lamp_wall_gobinv";
+    category_name       = "lighting";
+
+	common:screen_name	= "lamp_gob_wall_01";
+
+	aspect:model		= m_i_gob_wall-lamp-01;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("gobinv_lamp_wall");
+			}
+		}
+	}
+}
+[t:template,n:lamp_gob_wall_02]
+{
+	specializes			= non_interactive;
+	doc					= "lamp_wall_gobinv";
+    category_name       = "lighting";
+
+	common:screen_name	= "lamp_gob_wall_01";
+
+	aspect:model		= m_i_gob_wall-lamp-01;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("gobinv_lamp_wall_02");
+			}
+		}
+	}
+}
+
+[t:template,n:lamp_gob_floor_01]
+{
+	specializes			= non_interactive_blocking;
+	doc					= "lamp_floor_gobinv";
+    category_name       = "lighting";
+
+	common:screen_name	= "lamp_gob_floor_01";
+
+	aspect:model		= m_i_gob_floor-lamp-01;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("gobinv_lamp_floor");
+			}
+		}
+	}
+}
+
+[t:template,n:lamp_glb_wall_01]
+{
+	specializes			= non_interactive;
+	doc					= "lamp_wall_mono";
+    	category_name       	= "lighting";
+
+	common:screen_name	= "Lamp";
+
+	aspect:model		= m_i_glb_wall-lamp-01;
+	
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("soft_lamp_glow");
+			}
+		}
+	}
+}
+
+[t:template,n:lamp_ice_01]
+{
+	specializes			= non_interactive;
+	doc					= "lamppost_bracketed_wood_ice";
+    	category_name       	= "lighting";
+
+	common:screen_name	= "Lamp";
+
+	aspect:model		= m_i_glb_lamp-post-01;
+	aspect:textures:0	= b_i_ice_lamp-posts;
+	aspect:scale_base = 2.0;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("lamp_glow_orange");
+			}
+		}
+	}
+}
+[t:template,n:lamp_ice_02]
+{
+	specializes			= non_interactive;
+	doc					= "lamppost_bracketed_metal_ice";
+    	category_name       	= "lighting";
+
+	common:screen_name	= "Lamp";
+
+	aspect:model		= m_i_glb_lamp-post-02;
+	aspect:textures:0	= b_i_ice_lamp-posts;
+	aspect:scale_base = 2.0;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("lamp_glow_orange3");
+			}
+		}
+	}
+}
+[t:template,n:lamp_ice_03]
+{
+	specializes			= non_interactive;
+	doc					= "lamppost_metal_ice";
+    	category_name       	= "lighting";
+
+	common:screen_name	= "Lamp";
+
+	aspect:model		= m_i_glb_lamp-post-03;
+	aspect:textures:0	= b_i_ice_lamp-posts;
+	aspect:scale_base = 2.0;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("lamp_glow_orange2");
+			}
+		}
+	}
+}
+
+///////// MISC /////////////////////////////
+
+[t:template,n:fire_glb_01]
+{
+	specializes			= non_interactive;
+	doc					= "Fireplace fire";
+    category_name       = "lighting";
+
+	aspect:model		= m_i_glb_fire-01;
+}
+/////////////////////////////////////////////////////////////////
+[t:template,n:firepit_des_dragon]
+{
+	specializes = non_interactive;
+	doc = "torch_dragon claw";
+    category_name       = "lighting";
+
+    aspect:model =  m_i_des_firepit-dragon;
+
+    [common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("fire_pit_fire","ap_light");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+/////////////////////////////////////////////////////////////////
+[t:template,n:firepit_glb]
+{
+	specializes			=	non_interactive_blocking;
+	doc					=	"firepit_empty";
+    category_name       =   "lighting";
+
+	aspect:model		= m_i_glb_firepit02;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("fireplace_fire");
+			}
+		}
+	}
+}
+
+[t:template,n:firepit_glb_03]
+{
+	specializes			=	non_interactive_blocking;
+	doc					=	"firepit with rocks";
+    category_name       =   "lighting";
+
+	aspect:model		= m_i_glb_firepit-03;
+	aspect:textures:0 = b_i_glb_firepit-02;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("fireplace_fire");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:fire_grs_campfire]
+{
+	specializes			=	non_interactive_blocking;
+	doc					=	"campfire";
+    category_name       =   "lighting";
+
+	aspect:model		= m_i_grs_campfire;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("fireplace_fire");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}
+
+[t:template,n:wood_glb_pile_fireplace_burnt]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "fireplace_logs_burning";
+    category_name       = "lighting";
+
+	aspect:model 		= m_i_glb_woodpile-02;
+	aspect:textures:0	= b_i_glb_woodpile-burnt;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*    = call_sfx_script("fireplace_fire");
+			}
+		}
+	}
+	[light_flicker] 	
+	{
+		magnitude = .15;
+		duration = 0;
+		flicker_frequency_min = 10;
+		flicker_frequency_max = 12;
+		initially_active = true;
+	}
+}

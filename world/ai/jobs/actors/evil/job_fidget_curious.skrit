@@ -1,0 +1,256 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_fidget_curious.skrit
+
+	Author(s)	: 	Eric Tams orig Bartosz Kijanka
+
+	Purpose		: 	Follow nearby creatues at a distance.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Goid	m_Target$;
+float	m_FollowDistance$;
+float	m_ApproachDistance$;
+float	m_LoseInterest$;
+float	m_RandomMove$;
+float	m_TooHigh$;
+
+#include "k_job_c_path-utils"
+	
+////////////////////////////////////////////////////////////////////////////////
+
+startup state Unknown$
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$					= job$;
+	m_Go$					= job$.Go;
+	m_Mind$					= job$.Go.Mind;
+	m_Body$					= job$.Go.Body;
+	m_FollowDistance$		= 7.0;
+	m_ApproachDistance$		= 6.0;
+	m_LoseInterest$			= 0.10;
+	m_RandomMove$			= 0.10;
+	m_TooHigh$				= 2.0;
+}
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+	
+	m_Target$ = Goid.InvalidGoid;
+	
+	if( m_Mind$.FriendsVisible() )
+	{
+		go temp$;
+		temp$ = m_Mind$.GetClosestFriend();
+		if (temp$ != NULL)
+		{
+			m_Target$ = temp$.goid;
+			ResetPathFindingParameters$();
+		}
+	}
+	
+	//ResetPathFindingParameters$();
+	
+	SetState RequestAction$;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state RequestAction$
+{
+	transition
+	{
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+	}
+
+	trigger OnWorldMessage$( WE_ANIM_DONE )
+	{
+		eAnimStance stance$ = m_Go$.inventory.animstance;
+		int subanim$ = m_Go$.Aspect.AspectHandle.NumSubAnimsForChoreAndStance(CHORE_FIDGET,stance$);
+		subanim$ = Math.RandomInt(0, Math.MaxInt( 0, subanim$-1 ) ) ;
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FIDGET, subanim$);
+		SetState (Fidgeting$);
+	}
+	
+
+	event OnEnterState$
+	{
+
+		if( m_Target$.IsValid() ) {
+   		
+	   		float lose_interest$ = math.RandomFloat(1);
+	   		if (lose_interest$ < m_LoseInterest$)
+	   		{
+	   			m_Target$ = Goid.InvalidGoid;
+	   		}
+			else
+			{
+		   		eReqRetCode ret$ = MCPManager.MakeRequest(
+												m_Job$.Id,
+												m_Go$.Goid,
+												PL_APPROACH, 
+												m_Target$,
+												m_LookAhead$, m_MaxApproachTime$,
+												m_ApproachDistance$ ) ;
+  
+				if (ret$ == REQUEST_OK_BEYOND_RANGE)
+				{
+					SetState( MovingCloser$ );
+				}
+				else if RequestOk(ret$) 
+				{
+					SetState( Fidgeting$ );
+				}
+			}
+			// Request failed, target must not be valid anymore
+			m_Target$ = Goid.InvalidGoid;
+		}
+   		
+   		float random_move$ = math.RandomFloat(1);
+
+   		if (random_move$ < m_RandomMove$)
+   		{
+			SiegePos new_pos$ = SiegePos.Copy( m_Go$.placement.position );
+			float cur_pos_x$ = new_pos$.pos.X;
+			float cur_pos_z$ = new_pos$.pos.z;
+
+			// Try to move to a point farther away
+			float min_range$ = 0.10 * m_Mind$.FleeDistance;
+			float max_range$ = 0.50 * m_Mind$.FleeDistance;
+				
+			// Try four directions for each move
+			float deltax$ = math.RandomFloat(min_range$,max_range$);
+			float deltaz$ = math.RandomFloat(min_range$,max_range$);
+	   		new_pos$.Pos.X = cur_pos_x$ + deltax$;
+	   		new_pos$.Pos.Z = cur_pos_z$ + deltaz$;
+			bool moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			
+			if (!moveok$) 
+			{
+		   		new_pos$.Pos.X = cur_pos_x$ - deltaz$;
+		   		new_pos$.Pos.Z = cur_pos_z$ + deltax$;
+				moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			}
+			if (!moveok$) 
+			{
+		   		new_pos$.Pos.X = cur_pos_x$ - deltax$;
+		   		new_pos$.Pos.Z = cur_pos_z$ - deltaz$;
+				moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			}
+			if (!moveok$) 
+			{
+		   		new_pos$.Pos.X = cur_pos_x$ + deltaz$;
+		   		new_pos$.Pos.Z = cur_pos_z$ - deltax$;
+				moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			}
+
+			if (!moveok$)
+			{ 
+				// Try four MORE directions for each move
+				deltax$ = math.RandomFloat(min_range$,max_range$);
+				deltaz$ = math.RandomFloat(min_range$,max_range$);
+		   		new_pos$.Pos.X = cur_pos_x$ + deltax$;
+		   		new_pos$.Pos.Z = cur_pos_z$ + deltaz$;
+				moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			}
+			
+			if (!moveok$) 
+			{
+		   		new_pos$.Pos.X = cur_pos_x$ - deltaz$;
+		   		new_pos$.Pos.Z = cur_pos_z$ + deltax$;
+				moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			}
+			if (!moveok$) 
+			{
+		   		new_pos$.Pos.X = cur_pos_x$ - deltax$;
+		   		new_pos$.Pos.Z = cur_pos_z$ - deltaz$;
+				moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			}
+			if (!moveok$) 
+			{
+		   		new_pos$.Pos.X = cur_pos_x$ + deltaz$;
+		   		new_pos$.Pos.Z = cur_pos_z$ - deltax$;
+				moveok$ = AIQuery.FindLocationToDrop( new_pos$, m_Mind$.TempPos1 );
+			}
+
+
+	   		if ( moveok$ )
+	   		{
+	   			if ( Math.Abs(m_Mind$.TempPos1.Pos.Y - m_Go$.placement.position.Pos.Y) < m_TooHigh$)
+	   			{
+					eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_APPROACH, m_Mind$.TempPos1, 0.2 );
+				
+					if (ret$ == REQUEST_OK_BEYOND_RANGE)
+					{
+						SetState( MovingCloser$ );
+					}
+				}
+			}
+		}
+		SetState( Fidgeting$ );
+	}
+}
+
+state Fidgeting$
+{
+
+	trigger OnTimer$( 1 )
+	{
+		// This will reset the MCP
+		SetState RepeatAction$;
+	}
+	
+	trigger OnWorldMessage$( WE_ANIM_DONE )
+	{
+		// Keep fidgeting until the timer expires
+		eAnimStance stance$ = m_Go$.inventory.animstance;
+		int subanim$ = m_Go$.Aspect.AspectHandle.NumSubAnimsForChoreAndStance(CHORE_FIDGET,stance$);
+		subanim$ = Math.RandomInt(0, Math.MaxInt( 0, subanim$-1 ) ) ;
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FIDGET, subanim$);
+	}
+	
+	event OnEnterState$
+	{
+
+		if( m_Target$.IsValid() )
+   		{
+			float dist$ = m_Mind$.GetDistanceAtPlanEnd( m_Target$.Go );
+			
+			if( ( dist$ > m_FollowDistance$ ) && ( m_Mind$.GetDistance( m_Target$.Go ) > m_ApproachDistance$ ) )
+			{
+				////////////////////////////////////////
+				//	try to stay close to client
+			} else {
+				m_Target$ = Goid.InvalidGoid;
+			}	
+			
+		} else if( m_Mind$.FriendsVisible() ) {
+			go temp$;
+			temp$ = m_Mind$.GetClosestFriend();
+			if (temp$ != NULL)
+			{
+				m_Target$ = temp$.goid;
+				ResetPathFindingParameters$();
+			}
+		}
+   		this.CreateTimer( 1, 3 ); // time out after 3 seconds
+	}
+}
+

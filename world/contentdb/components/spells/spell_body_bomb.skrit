@@ -1,0 +1,74 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_body_bomb.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//
+// note: checking to see that the target was a body was removed, this should be
+// 			handled in the spell definition in spl_spell.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+property string	effect_script$		= ""	doc = "Effect script to call for effect";
+
+property float	particle_fit$		= -1.0	doc = "set this between 0 and 1 and fire damage will be passed as a parameter ot the FX script";
+
+owner 	= GoSkritComponent;
+
+Goid 		target$;
+Goid 		caster$;
+
+startup state Idle$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{	
+		if( e$ == WE_REQ_CAST )
+		{
+			target$ 			= MakeGoid( msg$.GetData1() );
+			caster$ 			= msg$.GetSendFrom();
+			
+			string params$ = "";
+			
+			if( particle_fit$ > 0.0 )
+			{
+				StringTool.AppendF( params$, "[ignite()fdamage(%g,%g,%g)]", owner.Go.Attack.DamageMin, owner.Go.Attack.DamageMax, particle_fit$ );
+			}
+			
+			Siegefx.SRunScript(effect_script$,target$,caster$,params$,owner.goid, e$ );
+			
+			SetState( Pop$ );
+		}
+	}
+}
+state Pop$
+{
+	trigger OnGoHandleMessage$( WE_SPELL_SYNC_MID )
+	{
+		if(target$.IsValid())
+		{
+			if (owner.Go.Attack.AreaDamageRadius >= .01)
+			{
+				float damage$ = Math.RandomFloat( owner.Go.Attack.DamageMin, owner.Go.Attack.DamageMax );
+			
+				Physics.CreateExplosion( target$.go.placement.position, owner.Go.Attack.AreaDamageRadius, owner.Go.Physics.ExplosionMagnitude, damage$ , owner.goid, owner.goid );
+			}
+			if( !Physics.SExplodeGo( target$, 5, MakeVector(0,1,0) ) ) 
+			{
+				GoDb.SMarkForDeletion( target$ );
+			}
+		}
+		
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+
+		// Since this skrit is the component of a spell and all spells are cloned before being executed
+		// then it is safe to destroy ourself after finishing execution
+
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 0.1 );	
+	}
+}
+

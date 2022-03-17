@@ -1,0 +1,6703 @@
+[t:template,n:base_spell_dark]
+{
+	  doc = "Dark spell base template";
+	  specializes = spell;
+	[magic]
+	{
+		  magic_class = mc_combat_magic;
+		  skill_class = "Combat Magic";
+	}
+}
+[t:template,n:base_spell_good]
+{
+	  doc = "Nature spell base template";
+	  specializes = spell;
+	[magic]
+	{
+		  magic_class = mc_nature_magic;
+		  skill_class = "Nature Magic";
+	}
+}
+[t:template,n:base_spell_monster]
+{
+	  doc = "Monster spell base template";
+	  specializes = spell;
+	[gui]
+	{
+		  is_droppable = false;
+	}
+	[magic]
+	{
+		  magic_class = mc_combat_magic;
+		  skill_class = "Combat Magic";
+	}
+}
+[t:template,n:spell_ambivalence]
+{
+	  category_name = "magic";
+	  doc = "scroll ambivalence";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Ambivalence";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  apply_enchantments = false;
+		  cast_range = 20;
+		  cast_reload_delay = 5;
+		  effect_duration = 30;
+		  mana_cost = 4;
+		  requires_line_of_sight = true;
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+	}
+	[spell_switch_alignment]
+	{
+		  alignment1 = aa_neutral;
+		  description = "Ambivalence spell";
+		  effect_script = ambivalence;
+		  num_alignments = 1;
+		  screen_name = "Neutral";
+	}
+}
+[t:template,n:spell_animate_dead]
+{
+	  category_name = "magic";
+	  doc = "scroll animate dead";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "Raises a skeleton to do your bidding";
+		  screen_name = "Animate Dead";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[inventory]
+	{
+		[delayed_pcontent]
+		{
+			[oneof*]
+			{
+				[all*]
+				{
+					  il_main = skeleton;
+				}
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 20;
+		  required_level = 10;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Animate Dead";
+		  target_type_flags = tt_dead_friend | tt_dead_enemy;
+		  usage_context_flags = uc_passive;
+	}
+}
+[t:template,n:spell_barrel_trap]
+{
+	  category_name = "magic";
+	  doc = "Scroll barrel_trap";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Barrel Trap";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Barrel_trap";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  script_params = "[scale(1)]";
+		  template_name = barrel_glb_powder_keg_trap;
+	}
+}
+[t:template,n:spell_blaster]
+{
+	  category_name = "magic";
+	  doc = "scroll blaster";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 4;
+		  damage_min = 4;
+	}
+	[common]
+	{
+		  description = "Sprays small magic projectiles at an enemy";
+		  screen_name = "Blaster";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("blaster");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 2;
+		  is_one_shot = false;
+		  mana_cost = 4;
+		  max_level = 12;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Blaster";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_blaster_bomb]
+{
+	  category_name = "magic";
+	  doc = "scroll blaster bomb";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  aiming_error_range_x = 12.5;
+		  aiming_error_range_y = 12.5;
+		  ammo_attach_bone = reciol_blaster_bone04;
+		  ammo_template = grenade;
+		  area_damage_radius = 3.5;
+		  damage_max = 30;
+		  damage_min = 18;
+		  use_aiming_error = true;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 2;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Bomb";
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+	[spell_launch]
+	{
+		  number = 1;
+	}
+}
+[t:template,n:spell_bomb]
+{
+	  category_name = "magic";
+	  doc = "scroll bomb";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 676;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 2.5;
+		  aiming_error_range_y = 2.5;
+		  ammo_attach_bone = weapon_grip;
+		  ammo_template = grenade;
+		  area_damage_radius = 3.5;
+		  damage_max = 30;
+		  damage_min = 18;
+		  use_aiming_error = true;
+	}
+	[common]
+	{
+		  description = "Tosses a magical bomb at an enemy";
+		  screen_name = "Bomb";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 3;
+		  is_one_shot = false;
+		  mana_cost = 10;
+		  max_level = 10;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Bomb";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+	[spell_launch]
+	{
+		  number = 1;
+	}
+}
+[t:template,n:spell_bombard]
+{
+	  category_name = "magic";
+	  doc = "scroll bombard";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 676;
+	}
+	[attack]
+	{
+		  area_damage_radius = 2;
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  description = "Launches several large exploding balls of fire at an enemy";
+		  screen_name = "Bombard";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("bombard");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_fire-ball;
+	}
+	[magic]
+	{
+		  cast_range = 30;
+		  cast_reload_delay = 1.5;
+		  is_one_shot = false;
+		  mana_cost = 10;
+		  max_level = 40;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Bombard";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_braak_iceblast]
+{
+	  category_name = "magic";
+	  doc = "scroll braak iceblast";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  aiming_error_range_x = 8;
+		  aiming_error_range_y = 8;
+		  ammo_attach_bone = weapon_grip;
+		  ammo_template = ice_shard_03;
+		  damage_max = 5;
+		  damage_min = 5;
+		  use_aiming_error = true;
+	}
+	[common]
+	{
+		  screen_name = "Iceblast";
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 6;
+	}
+	[spell_launch]
+	{
+		  delay_between_shots = false;
+		  number = 4;
+	}
+}
+[t:template,n:spell_burn_body]
+{
+	  category_name = "magic";
+	  doc = "scroll burn body";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 75;
+	}
+	[common]
+	{
+		  description = "Destroys the corpse of a fallen foe";
+		  screen_name = "Burn Body";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "burn_body" );
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_bb;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 5;
+		  max_level = 7;
+		  required_level = 2;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Burn Body";
+		  target_type_flags = tt_dead_enemy;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_body_bomb]
+	{
+		  effect_script = "burn_body";
+	}
+}
+[t:template,n:spell_charm]
+{
+	  category_name = "magic";
+	  doc = "scroll charm";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 450;
+	}
+	[common]
+	{
+		  description = "Charms a single monster which will then guard caster";
+		  screen_name = "Charm";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("charmed_line");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_ch;
+	}
+	[magic]
+	{
+		  apply_enchantments = false;
+		  cast_range = 10;
+		  cast_reload_delay = 3;
+		  effect_duration = 20;
+		  is_one_shot = true;
+		  mana_cost = 30;
+		  max_level = 34;
+		  required_level = 28;
+		  requires_line_of_sight = true;
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+	}
+	[spell_charm]
+	{
+		  description = "Charm spell";
+		  effect_script = charmed;
+		  state_name = "Charmed";
+	}
+}
+[t:template,n:spell_cluster_bomb]
+{
+	  category_name = "magic";
+	  doc = "scroll bomb";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 676;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 12.5;
+		  aiming_error_range_y = 12.5;
+		  ammo_attach_bone = weapon_grip;
+		  ammo_template = grenade;
+		  area_damage_radius = 3.5;
+		  damage_max = 20;
+		  damage_min = 18;
+		  use_aiming_error = true;
+	}
+	[common]
+	{
+		  description = "Tosses a group of magical bombs at an enemy";
+		  screen_name = "Cluster Bomb";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 3;
+		  is_one_shot = false;
+		  mana_cost = 10;
+		  max_level = 10;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Cluster Bomb";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+	[spell_launch]
+	{
+		  number = 5;
+	}
+}
+[t:template,n:spell_confusion]
+{
+	  category_name = "magic";
+	  doc = "scroll confusion";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Confusion";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  apply_enchantments = false;
+		  cast_range = 20;
+		  cast_reload_delay = 5;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 4;
+		  requires_line_of_sight = true;
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+	}
+	[spell_switch_alignment]
+	{
+		  alignment_freq_max = 5;
+		  alignment_freq_min = 3;
+		  description = "Confusion spell";
+		  effect_script = confusion;
+		  screen_name = "Confused";
+	}
+}
+[t:template,n:spell_copter_lightning]
+{
+	  category_name = "magic";
+	  doc = "Copter Lightning";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		 damage_min = 2;
+		 damage_max = 3;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("copter_lightning");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_darkling_spark]
+{
+	  category_name = "magic";
+	  doc = "scroll darkling spark";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 4;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("darkling_spark");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_deathball]
+{
+	  category_name = "magic";
+	  doc = "scroll deathball";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  description = "Throws a tracking ball of death at an enemy";
+		  screen_name = "Deathball";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("green_deathball");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  max_level = 10;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Deathball";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_divine_intervention]
+{
+	  category_name = "magic";
+	  doc = "scroll divine intervention";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Divine Intervention";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 60;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Divine Intervention";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_strength;
+				  description = "Holy Strength";
+				  duration = 60;
+				  value = 2*(#magic+10);
+			}
+			[*]
+			{
+				  alteration = alter_dexterity;
+				  description = "Holy Skill";
+				  duration = 60;
+				  value = 2*(#magic+10);
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = blessed;
+		  effect_script = divine_intervention;
+		  state_name = intervention;
+	}
+}
+[t:template,n:spell_dragon_fire]
+{
+	  category_name = "magic";
+	  doc = "scroll dragon fire";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "Fries enemies with a huge stream of Dragon Fire";
+		  screen_name = "Dragon Fire";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("dragon_fire");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1.5;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  max_level = 10;
+		  requires_line_of_sight = false;
+		  speed_bias = 1;
+		  spell_skill_name = "Dragon Fire";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_drake_fire]
+{
+	  category_name = "magic";
+	  doc = "Drake Fire";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  screen_name = "Drake Fire";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("drake_fire");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_duplicate]
+{
+	  category_name = "magic";
+	  doc = "scroll duplicate";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Duplicate";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  apply_enchantments = false;
+		  cast_range = 20;
+		  cast_reload_delay = 5;
+		  mana_cost = 4;
+		  requires_line_of_sight = true;
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_duplicate]
+	{
+		  effect_script = duplicate_launch;
+		  effect_script_end = duplicate_destroy;
+		  effect_script_sum = duplicate_create;
+		  script_params = "[scale(1.25)]";
+		  script_params_end = "[scale(1.25)]";
+		  script_params_sum = "[scale(1.25)]";
+	}
+}
+[t:template,n:spell_earthquake]
+{
+	  category_name = "magic";
+	  doc = "scroll Earthquake";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[attack]
+	{
+		  area_damage_radius = 10;
+		  damage_max = 60;
+		  damage_min = 45;
+	}
+	[common]
+	{
+		  description = "A violent earthquake damages all in a large area";
+		  screen_name = "Earthquake";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 2;
+		  max_level = 15;
+		  required_level = 7;
+		  requires_line_of_sight = false;
+		  speed_bias = 1;
+		  spell_skill_name = "Earthquake";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  explosion_magnitude = 10;
+	}
+	[spell_area_effect]
+	{
+		  damage_checks = 2;
+		  damage_frequency = 1;
+		  effect_script = "earthquake";
+	}
+}
+[t:template,n:spell_energy_ball]
+{
+	  category_name = "magic";
+	  doc = "scroll energy ball";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 350;
+	}
+	[attack]
+	{
+		  damage_max = 45;
+		  damage_min = 35;
+	}
+	[common]
+	{
+		  screen_name = "Energy ball";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("energy_ball");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_eb;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 0;
+		  is_one_shot = false;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Energy Ball";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_entangle]
+{
+	  category_name = "magic";
+	  doc = "scroll hold creature";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Entangle";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("entangle_test");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 11;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Entangle";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+	}
+}
+[t:template,n:spell_explode_body]
+{
+	  category_name = "magic";
+	  doc = "scroll explode body";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  area_damage_radius = 3;
+		  damage_max = 40;
+		  damage_min = 35;
+	}
+	[common]
+	{
+		  description = "Violently explodes a dead body";
+		  screen_name = "Explode Body";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 2;
+		  max_level = 13;
+		  required_level = 6;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Explode Body";
+		  target_type_flags = tt_dead_friend | tt_dead_enemy;
+		  usage_context_flags = uc_passive;
+	}
+	[physics]
+	{
+		  explosion_magnitude = 3;
+	}
+	[spell_body_bomb]
+	{
+		  effect_script = "explode_body";
+	}
+}
+[t:template,n:spell_fireball]
+{
+	  category_name = "magic";
+	  doc = "scroll fireball";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 676;
+	}
+	[attack]
+	{
+		  area_damage_radius = 3;
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  description = "Shoots an exploding ball of fire";
+		  screen_name = "Fireball";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fireball");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_fire-ball;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 3;
+		  is_one_shot = false;
+		  mana_cost = 4;
+		  max_level = 7;
+		  required_level = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Fireball";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  explosion_magnitude = 3;
+	}
+}
+[t:template,n:spell_fireball_rain]
+{
+	  category_name = "magic";
+	  doc = "scroll fireball rain";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "Large drops of fire rain from the sky damaging enemies";
+		  screen_name = "Fireball Rain";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 4;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 18;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Fireball Storm";
+		  target_type_flags = tt_terrain | tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 3;
+		  drop_damage_radius = 3;
+		  drop_freq_max = .55;
+		  drop_freq_min = .375;
+		  drop_script = "fireball_storm";
+		  exp_magnitude = 15;
+		  max_drops = 10;
+		  spawn_height = 10.0;
+		  spawn_radius = 2.75;
+	}
+}
+[t:template,n:spell_fireball_storm]
+{
+	  category_name = "magic";
+	  doc = "scroll fireball storm";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "A storm of large fire balls rains from the sky damaging enemies";
+		  screen_name = "Fireball Storm";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 4;
+		  is_one_shot = false;
+		  mana_cost = 1;
+		  max_level = 18;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Fireball Storm";
+		  target_type_flags = tt_terrain | tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 3;
+		  drop_damage_radius = 3;
+		  drop_freq_max = .55;
+		  drop_freq_min = .375;
+		  drop_script = "fireball_storm";
+		  exp_magnitude = 15;
+		  max_drops = 20;
+		  spawn_height = 10.0;
+		  spawn_radius = 6;
+	}
+}
+[t:template,n:spell_fireblast]
+{
+	  category_name = "magic";
+	  doc = "scroll fireblast";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  description = "Shoots multiple exploding balls of fire at an enemy";
+		  screen_name = "Fireblast";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fire_blast");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_fire-ball;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  max_level = 12;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Fireblast";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_firebomb]
+{
+	  category_name = "magic";
+	  doc = "scroll firebomb";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 676;
+	}
+	[attack]
+	{
+		  area_damage_radius = 5;
+		  damage_max = 20;
+		  damage_min = 10;
+	}
+	[common]
+	{
+		  description = "Launches a large exploding ball of fire at an enemy";
+		  screen_name = "Firebomb";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("firebomb");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_fire-ball;
+	}
+	[magic]
+	{
+		  cast_range = 30;
+		  cast_reload_delay = 3;
+		  is_one_shot = false;
+		  mana_cost = 10;
+		  max_level = 10;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Firebomb";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  explosion_magnitude = 40;
+	}
+}
+[t:template,n:spell_firerain]
+{
+	  category_name = "magic";
+	  doc = "scroll firerain";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "Small drops of fire rain from the sky damaging enemies";
+		  screen_name = "Firerain";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_fr;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 10;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Firerain";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 35;
+		  drop_damage_radius = 2;
+		  drop_freq_max = .55;
+		  drop_freq_min = .375;
+		  drop_script = "firestorm";
+		  exp_magnitude = 10;
+		  max_drops = 10;
+		  spawn_height = 10.0;
+		  spawn_radius = 2.75;
+	}
+}
+[t:template,n:spell_firerain_test]
+{
+	  category_name = "magic";
+	  doc = "scroll firerain";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "Small drops of fire rain from the sky damaging enemies";
+		  screen_name = "Firerain";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_fr;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 10;
+		  cast_sub_animation = 1;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Firerain";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 35;
+		  drop_damage_radius = 2;
+		  drop_freq_max = .55;
+		  drop_freq_min = .375;
+		  drop_script = "firestorm";
+		  exp_magnitude = 10;
+		  max_drops = 10;
+		  spawn_height = 10.0;
+		  spawn_radius = 2.75;
+	}
+}
+[t:template,n:spell_fireshot]
+{
+	  category_name = "magic";
+	  doc = "scroll fireshot";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 50;
+	}
+	[attack]
+	{
+		  damage_max = 4;
+		  damage_min = 3;
+	}
+	[common]
+	{
+		  description = "Shoots a small ball of fire";
+		  screen_name = "Fireshot";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fireshot");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_fs;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = (#magic);
+		  attack_damage_modifier_min = (#magic);
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  mana_cost_modifier = (#magic+0.9);
+		  max_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Fireshot";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_firespray]
+{
+	  category_name = "magic";
+	  doc = "scroll firespray";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 0;
+		  damage_min = 0;
+	}
+	[common]
+	{
+		  description = "Shoots multiple balls of fire";
+		  screen_name = "Firespray";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fire_spray");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_fsp;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = (1+ #magic);
+		  attack_damage_modifier_min = (#magic);
+		  cast_range = 15;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 4;
+		  mana_cost_modifier = (#magic*2);
+		  max_level = 9;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Firespray";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_firestorm]
+{
+	  category_name = "magic";
+	  doc = "scroll firestorm";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "A storm of fire rains from the sky damaging enemies";
+		  screen_name = "Firestorm";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 10;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 13;
+		  required_level = 6;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Firestorm";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 35;
+		  drop_damage_radius = 2;
+		  drop_freq_max = .375;
+		  drop_freq_min = .25;
+		  drop_script = "firestorm";
+		  exp_magnitude = 10;
+		  max_drops = 20;
+		  spawn_height = 10.0;
+		  spawn_radius = 6;
+	}
+}
+[t:template,n:spell_flame]
+{
+	  category_name = "magic";
+	  doc = "scroll flame";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  description = "Toasts Nearby enemies with a sweep of fire.";
+		  screen_name = "Flame";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_fl;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  required_level = 7;
+		  requires_line_of_sight = false;
+		  speed_bias = 1;
+		  spell_skill_name = "Flame";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = flame;
+		  particle_fit = 0.1;
+	}
+}
+[t:template,n:spell_flame_blades]
+{
+	  category_name = "magic";
+	  doc = "scroll flame blades";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  description = "Extends two flaming blades from the hands";
+		  screen_name = "Flame Blades";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  effect_duration = 60;
+		  is_one_shot = true;
+		  mana_cost = 2;
+		  max_level = 9;
+		  required_level = 2;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Flame blades";
+		  target_type_flags = tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = flame_blades;
+		  particle_fit = 0.1;
+	}
+}
+[t:template,n:spell_flame_shield]
+{
+	  category_name = "magic";
+	  doc = "scroll flame shield";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 4;
+		  damage_min = 3;
+	}
+	[common]
+	{
+		  screen_name = "Flame Shield";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  effect_duration = 60;
+		  is_one_shot = true;
+		  mana_cost = 2;
+		  max_level = 9;
+		  required_level = 2;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Flame Shield";
+		  target_type_flags = tt_self;
+		  usage_context_flags = uc_defensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = flame_shield;
+		  particle_fit = 0.9;
+	}
+}
+[t:template,n:spell_freak]
+{
+	  category_name = "magic";
+	  doc = "Scroll Freak";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Freak";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 5;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 10;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Freak";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+	}
+	[spell_freak]
+	{
+		  effect_script = "freak";
+		  script_params = "";
+	}
+}
+[t:template,n:spell_freeze]
+{
+	  category_name = "magic";
+	  doc = "scroll freeze";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  screen_name = "Freeze";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  effect_duration = 4;
+		  is_one_shot = true;
+		  mana_cost = 2;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Freeze";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_freeze]
+	{
+		  description = "Freeze spell";
+		  effect_script = "freeze";
+		  state_name = "Frozen";
+	}
+}
+[t:template,n:spell_frostnid_freeze]
+{
+	  category_name = "magic";
+	  doc = "scroll frostnid freeze";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 18;
+		  damage_min = 10;
+	}
+	[magic]
+	{
+		  cast_range = 8;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = frostnid_freeze;
+		  ignite = false;
+		  particle_fit = 0.7;
+	}
+}
+[t:template,n:spell_fury_zap_0]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_zap","","[0]");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_fury_zap_1]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_zap","","[1]");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_fury_zap_2]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_zap","","[2]");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_fury_zap_3]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_zap","","[3]");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_fury_zap_4]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_zap","","[4]");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_fury_zap_5]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_zap","","[5]");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_fury_zap_6]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_zap","","[0]");
+				  action* = call_sfx_script("fury_zap","","[1]");
+				  action* = call_sfx_script("fury_zap","","[2]");
+				  action* = call_sfx_script("fury_zap","","[3]");
+				  action* = call_sfx_script("fury_zap","","[4]");
+				  action* = call_sfx_script("fury_zap","","[5]");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_fury_zap_7]
+{
+	  category_name = "magic";
+	  doc = "Fury Zap";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  model = m_i_glb_frag-fury-eye;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fury_blast");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+		  inventory_height = 2;
+		  inventory_icon = b_gui_ig_i_it_fury-eye;
+		  inventory_width = 2;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_gargoyle_spear]
+{
+	  category_name = "magic";
+	  doc = "Gargoyle Spear";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  aiming_error_range_x = 3.5;
+		  aiming_error_range_y = 3.5;
+		  ammo_attach_bone = weapon_grip;
+		  ammo_template = spear_gargoyle;
+		  damage_max = 5;
+		  damage_min = 3;
+		  use_aiming_error = true;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+	[spell_launch]
+	{
+		  number = 1;
+	}
+}
+[t:template,n:spell_gargoyle_zap]
+{
+	  category_name = "magic";
+	  doc = "scroll gargoyle zap";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 7;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("gargoyle_zap");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 0.35;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_giant_spider_acid]
+{
+	  category_name = "magic";
+	  doc = "Spider Acid";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 41;
+		  damage_min = 85;
+	}
+	[magic]
+	{
+		  cast_range = 18;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = giant_spider_acid;
+		  ignite = false;
+		  particle_fit = 0.1;
+	}
+}
+[t:template,n:spell_googore_spit]
+{
+	  category_name = "magic";
+	  doc = "scroll googore spit";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 4;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("googore_spit");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_gorack_deathball]
+{
+	  category_name = "magic";
+	  doc = "scroll gorack deathball";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 3;
+		  damage_min = 2;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("green_deathball");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_healing_hands]
+{
+	  category_name = "magic";
+	  doc = "scroll healing hands";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 50;
+	}
+	[common]
+	{
+		  description = "Restores up to X life to a single character";
+		  screen_name = "Healing hands";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("healing", "@body_mid");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_hh;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 10;
+		  max_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Healing Hands";
+		  target_type_flags = tt_conscious_friend | tt_unconscious_friend;
+		  usage_context_flags = uc_life_giving;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_life;
+				  description = "healing hands spell";
+				  initial_delay = 0.5;
+				  value = 19+((#magic+1)*6);
+			}
+		}
+	}
+}
+[t:template,n:spell_healing_wind]
+{
+	  category_name = "magic";
+	  doc = "scroll healing wind";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Healing Wind";
+	}
+	[common]
+	{
+		  screen_name = "Healing wind";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("healing_wind");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 12;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Healing wind";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_life_giving;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_life;
+				  description = "healing windspell";
+				  duration = 0.5;
+				  frequency = 0.1;
+				  initial_delay = 2.5;
+				  value = (#magic+10);
+			}
+		}
+	}
+}
+[t:template,n:spell_heater_fire]
+{
+	  category_name = "magic";
+	  doc = "Heater Fire";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 20;
+		  damage_min = 10;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = heater_fire;
+		  particle_fit = 0.2;
+	}
+}
+[t:template,n:spell_hold_creature]
+{
+	  category_name = "magic";
+	  doc = "scroll hold creature";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Hold Creature";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 7;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Hold Creature";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+	}
+	[spell_switch_alignment]
+	{
+		  alignment1 = aa_neutral;
+		  description = "Hold Creature spell";
+		  effect_script = hold_creature;
+		  num_alignments = 1;
+		  screen_name = "Held";
+	}
+}
+[t:template,n:spell_hydrack_fire]
+{
+	  category_name = "magic";
+	  doc = "Hydrak Fire";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 30;
+		  damage_min = 20;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = hydrack_fire;
+		  particle_fit = 0.2;
+	}
+}
+[t:template,n:spell_iceblast]
+{
+	  category_name = "magic";
+	  doc = "scroll iceblast";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 10;
+		  aiming_error_range_y = 10;
+		  ammo_attach_bone = weapon_grip;
+		  ammo_template = ice_shard_01;
+		  damage_max = 6;
+		  damage_min = 6;
+		  use_aiming_error = true;
+	}
+	[common]
+	{
+		  description = "Hurls jagged ice shards at the enemy";
+		  screen_name = "Iceblast";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 1;
+		  max_level = 15;
+		  required_level = 6;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Iceblast";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 6;
+	}
+	[spell_launch]
+	{
+		  number = 5;
+	}
+}
+[t:template,n:spell_icerain]
+{
+	  category_name = "magic";
+	  doc = "scroll icerain";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "A rain of jagged ice shards fall from the sky";
+		  screen_name = "Icerain";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 10;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 11;
+		  required_level = 7;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Icerain";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 0;
+		  drop_damage_radius = 0;
+		  drop_freq_max = .25;
+		  drop_freq_min = .175;
+		  drop_script = "ice_storm";
+		  exp_magnitude = 3;
+		  max_drops = 10;
+		  spawn_height = 10.0;
+		  spawn_radius = 2.75;
+	}
+}
+[t:template,n:spell_iceshard]
+{
+	  category_name = "magic";
+	  doc = "scroll ice shard";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 450;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 2;
+		  aiming_error_range_y = 2;
+		  ammo_attach_bone = weapon_grip;
+		  ammo_template = ice_shard_03;
+		  damage_max = 15;
+		  damage_min = 12;
+	}
+	[common]
+	{
+		  screen_name = "Iceshard";
+	}
+	[common]
+	{
+		  description = "Hurls a jagged ice shard at target";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_is;
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 9;
+		  max_level = 7;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Iceshard";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 7.2;
+	}
+	[spell_launch]
+	{
+		  number = 1;
+	}
+}
+[t:template,n:spell_icestorm]
+{
+	  category_name = "magic";
+	  doc = "scroll icestorm";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "A storm of jagged ice shards fall from the sky";
+		  screen_name = "Icestorm";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 10;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Icestorm";
+		  target_type_flags = tt_terrain | tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 0;
+		  drop_damage_radius = 0;
+		  drop_freq_max = .175;
+		  drop_freq_min = .125;
+		  drop_script = "ice_storm";
+		  exp_magnitude = 3;
+		  max_drops = 25;
+		  spawn_height = 10.0;
+		  spawn_radius = 6;
+	}
+}
+[t:template,n:spell_infuse_life]
+{
+	  category_name = "magic";
+	  doc = "scroll infuse life";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Infuse life";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 0;
+		  max_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Infuse life";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_life_giving;
+	}
+	[spell_heal]
+	{
+		  effect_params = "";
+		  effect_script = "infuse_life";
+		  heal_amount = 3;
+		  heal_freq_max = 1.0;
+		  heal_freq_min = 0.66;
+		  mana_cost = 1;
+		  max_heal = 15;
+	}
+}
+[t:template,n:spell_insect_swarm]
+{
+	  category_name = "magic";
+	  doc = "scroll insect swarm";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  screen_name = "Insect Swarm";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("insect_swarm");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  max_level = 10;
+		  required_level = 3;
+		  requires_line_of_sight = false;
+		  speed_bias = 1;
+		  spell_skill_name = "Insect Swarm";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_inspiration]
+{
+	  category_name = "magic";
+	  doc = "scroll inspiration";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Inspiration";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 60;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Inspiration";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_intelligence;
+				  description = "Insight";
+				  duration = 60;
+				  value = 2*(#magic+10);
+			}
+			[*]
+			{
+				  alteration = alter_nature_magic;
+				  description = "Good Skill";
+				  duration = 60;
+				  value = 2*(#magic+10);
+			}
+			[*]
+			{
+				  alteration = alter_combat_magic;
+				  description = "Dark Skill";
+				  duration = 60;
+				  value = 2*(#magic+10);
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = inspired;
+		  effect_script = inspiration;
+		  state_name = inspiration;
+	}
+}
+[t:template,n:spell_invulnerability]
+{
+	  category_name = "magic";
+	  doc = "scroll invulnerability";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Invulnerability";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 60;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Invulnerability";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_invincibility;
+				  description = "Invulnerability";
+				  duration = 60;
+				  value = 20;
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = invulnerable;
+		  effect_script = invulnerability;
+		  state_name = invulnerability;
+	}
+}
+[t:template,n:spell_iron_fist]
+{
+	  category_name = "magic";
+	  doc = "scroll iron fist";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 300;
+	}
+	[common]
+	{
+		  description = "Raises the strength of a party member";
+		  screen_name = "Iron Fist";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_if;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 120+(#magic*2);
+		  is_one_shot = true;
+		  mana_cost = 40;
+		  max_level = 4;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Iron Fist";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_strength;
+				  description = "Raise Strength";
+				  duration = 120+(#magic*2);
+				  frequency = 0;
+				  initial_delay = 0.25;
+				  value = 1;
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = strengthened;
+		  effect_script = iron_fist;
+		  state_name = fist;
+	}
+}
+[t:template,n:spell_kell_blast]
+{
+	  category_name = "magic";
+	  doc = "Kell Blast";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("kell_blast");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  cast_sub_animation = 0;
+		  is_one_shot = true;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_kell_bolt]
+{
+	  category_name = "magic";
+	  doc = "Kell Bolt";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("kell_bolt");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  cast_sub_animation = 1;
+		  is_one_shot = true;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_kell_shot]
+{
+	  category_name = "magic";
+	  doc = "Kell Shot";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("kell_shot");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  cast_sub_animation = 2;
+		  is_one_shot = true;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_laser_minor]
+{
+	  category_name = "magic";
+	  doc = "scroll laser minor";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 160;
+	}
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  description = "Fires a beam of coherent light at an enemy.";
+		  screen_name = "Laser minor";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("laser_minor");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = (#magic);
+		  attack_damage_modifier_min = (#magic);
+		  cast_range = 15;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 5;
+		  mana_cost_modifier = (#magic);
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Laser minor";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_laser_major]
+{
+	  category_name = "magic";
+	  doc = "scroll laser major";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 160;
+	}
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  description = "Fires a Massive beam of coherent light at an enemy.";
+		  screen_name = "Laser major";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("laser_major");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = 2*(#magic);
+		  attack_damage_modifier_min = 2*(#magic);
+		  cast_range = 15;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 5;
+		  mana_cost_modifier = (#magic);
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Laser major";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+		  cast_sub_animation = 1;
+	}
+}
+[t:template,n:spell_leech_life]
+{
+	  category_name = "magic";
+	  doc = "scroll leech life";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 350;
+	}
+	[common]
+	{
+		  screen_name = "Leech Life";
+	}
+	[common]
+	{
+		  description = "Sucks life from an enemy which the caster imbibes";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_ll;
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 5;
+		  mana_cost_modifier = (#magic);
+		  max_level = 15;
+		  required_level = 2;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Leech Life";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_life_getting;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_life;
+				  description = "leech life";
+				  duration = 1;
+				  effect_script = leech_life_blob;
+				  frequency = 0.1;
+				  initial_delay = 0.0;
+				  is_enhancement = true;
+				  is_permanent = true;
+				  is_source_transfer = true;
+				  is_target_transfer = false;
+				  max_value = 10;
+				  transfer_efficiency = 1;
+				  value = (#magic*2)/10;
+			}
+		}
+	}
+}
+[t:template,n:spell_lightning]
+{
+	  category_name = "magic";
+	  doc = "scroll lightning";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 20;
+		  damage_min = 10;
+	}
+	[common]
+	{
+		  description = "A bolt of lightning arcs from the caster to an enemy";
+		  screen_name = "Lightning";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("bolts");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_li;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 5;
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Lightning";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_lightning_storm]
+{
+	  category_name = "magic";
+	  doc = "scroll lightning storm";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  description = "Calls lightning bolts from the sky";
+		  screen_name = "Lightning storm";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 10;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 18;
+		  required_level = 7;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Lightning Storm";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 0;
+		  drop_damage_radius = 0;
+		  drop_freq_max = .5;
+		  drop_freq_min = .375;
+		  drop_script = "lightning_storm";
+		  exp_magnitude = 3;
+		  max_drops = 10;
+		  spawn_height = 10.0;
+		  spawn_radius = 5.75;
+	}
+}
+[t:template,n:spell_magic_armor]
+{
+	  category_name = "magic";
+	  doc = "scroll magic armor";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 50;
+	}
+	[common]
+	{
+		  description = "Increase the armor of a single actor by X";
+		  screen_name = "Magic Armor";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_ma;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 15*(#magic+5);
+		  is_one_shot = true;
+		  mana_cost = 4;
+          mana_cost_modifier = (#magic);
+		  max_level = 8;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Magic Armor";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_armor;
+				  description = "Magic Armor spell";
+				  duration = 15*(#magic+5);
+				  value = 1+(#magic);
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = armored;
+		  effect_script = magic_armor;
+		  state_name = armor;
+	}
+}
+[t:template,n:spell_magic_armor_reactive_fireshot]
+{
+	  category_name = "magic";
+	  doc = "scroll magic armor reactive fireshot";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 50;
+	}
+	[attack]
+	{
+		  damage_max = 4;
+		  damage_min = 3;
+	}
+	[common]
+	{
+		  description = "Increase the armor of a single actor by X, shoots fire back at your attacker.";
+		  screen_name = "Magic Armor Fireshot";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_ma;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = (#magic);
+		  attack_damage_modifier_min = (#magic);
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 15*(#magic+5);
+		  is_one_shot = true;
+		  mana_cost = 4;
+          mana_cost_modifier = (#magic);
+		  max_level = 8;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Magic Armor";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_armor;
+				  description = "Magic Armor spell";
+				  duration = 15*(#magic+5);
+				  value = 1+(#magic);
+			}
+		}
+	}
+	[spell_reactive_armor]
+	{
+		  description = armored;
+		  effect_script = magic_armor;
+		  react_script = fireshot;
+		  state_name = armor;
+	}
+}
+[t:template,n:spell_magic_lantern]
+{
+	  category_name = "magic";
+	  doc = "scroll magic lantern";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 250;
+	}
+	[common]
+	{
+		  screen_name = "Magic Lantern";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 30/(#magic+1);
+		  max_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Magic Lantern";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+	}
+	[spell_status_effect]
+	{
+		  description = lit;
+		  effect_script = magic_lantern;
+		  state_name = lantern;
+	}
+}
+[t:template,n:spell_malign]
+{
+	  category_name = "magic";
+	  doc = "scroll malign";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 1000;
+	}
+	[common]
+	{
+		  description = "Weakens an enemy making it less effective in combat";
+		  screen_name = "Malign";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  effect_duration = 30+(#magic*2);
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Malign";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_strength;
+				  description = "Lower Strength";
+				  duration = 30+(#magic*2);
+				  frequency = 0;
+				  initial_delay = 0.25;
+				  value = -(#magic+5);
+			}
+			[*]
+			{
+				  alteration = alter_dexterity;
+				  description = "Lower Dexterity";
+				  duration = 30+(#magic*2);
+				  frequency = 0;
+				  initial_delay = 0.25;
+				  value = -(#magic+5);
+			}
+			[*]
+			{
+				  alteration = alter_intelligence;
+				  description = "Lower Inteligence";
+				  duration = 30+(#magic*2);
+				  frequency = 0;
+				  initial_delay = 0.25;
+				  value = -(#magic+5);
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = maligned;
+		  effect_script = malign;
+		  state_name = malign;
+	}
+}
+[t:template,n:spell_mana_channel]
+{
+	  category_name = "magic";
+	  doc = "scroll mana channel";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 250;
+	}
+	[common]
+	{
+		  screen_name = "Mana Channel";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Mana Channel";
+		  target_type_flags = tt_can_store_mana;
+		  usage_context_flags = uc_mana_giving;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_mana;
+				  description = mana channel;
+				  duration = #int + (1+2.5*(#magic+1));
+				  effect_script = mana_trail;
+				  frequency = 0.10;
+				  initial_delay = 0.0;
+				  is_enhancement = true;
+				  is_permanent = true;
+				  is_source_transfer = false;
+				  is_target_transfer = true;
+				  max_value = 11 + 5.5*(#magic+1);
+				  transfer_efficiency = ((#int/100.0)+(#mana_recovery_unit/#mana_recovery_period)) * (#magic+1);
+				  value = 1 + 5.5*(#magic+1);
+			}
+		}
+	}
+}
+[t:template,n:spell_mana_chant]
+{
+	  category_name = "magic";
+	  doc = "scroll mana chant";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Mana Chant";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_reload_delay = 5;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 0;
+		  max_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Mana Chant";
+		  target_type_flags = tt_self;
+		  usage_context_flags = uc_mana_getting;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_mana_recovery_unit;
+				  description = "Charge Mana";
+				  duration = 30+#magic;
+				  value = 10;
+			}
+		}
+	}
+	[spell_penalty]
+	{
+		  decrease_health = 0.1;
+		  description = chanting;
+		  effect_script = mana_chant;
+		  state_name = chant;
+	}
+}
+[t:template,n:spell_mana_extract]
+{
+	  category_name = "magic";
+	  doc = "scroll mana extract";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 250;
+	}
+	[common]
+	{
+		  screen_name = "Mana Extract";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Mana Extract";
+		  target_type_flags = tt_can_store_mana;
+		  usage_context_flags = uc_mana_getting;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_mana;
+				  description = mana channel;
+				  duration = #int + (1+2.5*(#magic+1));
+				  effect_script = mana_trail;
+				  frequency = 0.10;
+				  initial_delay = 0.0;
+				  is_enhancement = true;
+				  is_permanent = true;
+				  is_source_transfer = true;
+				  is_target_transfer = false;
+				  max_value = 11 + 5.5*(#magic+1);
+				  transfer_efficiency = ((#int/100.0)+(#mana_recovery_unit/#mana_recovery_period)) * (#magic+1);
+				  value = 1 + 5.5*(#magic+1);
+			}
+		}
+	}
+}
+[t:template,n:spell_mana_shield]
+{
+	  category_name = "magic";
+	  doc = "scroll mana shield";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 50;
+	}
+	[common]
+	{
+		  description = "Surounds the character in a mana bubble which will absorb some of the incoming damage.";
+		  screen_name = "Mana Shield";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_ma;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 15*(#magic+5);
+		  is_one_shot = true;
+		  mana_cost = 4;
+          mana_cost_modifier = (#magic);
+		  max_level = 8;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Magic Armor";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_armor;
+				  description = "Magic Armor spell";
+				  duration = 15*(#magic+5);
+				  value = 1+(#magic);
+			}
+		}
+	}
+	[spell_mana_shield]
+	{
+		  description = Mana Shielded;
+		  effect_script = mana_shield;
+		  state_name = mshield;
+	}
+}
+[t:template,n:spell_meteor]
+{
+	  category_name = "magic";
+	  doc = "scroll meteor";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 5000;
+	}
+	[common]
+	{
+		  description = "Calls a meteor from the sky to smite your enemies";
+		  screen_name = "Meteor";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 40;
+		  cast_reload_delay = 10;
+		  is_one_shot = true;
+		  mana_cost = 10;
+		  max_level = 100;
+		  required_level = 20;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Meteor";
+		  target_type_flags = tt_terrain | tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 300;
+		  drop_damage_radius = 7;
+		  drop_freq_max = 4.1;
+		  drop_freq_min = 4;
+		  drop_script = "meteor_ball";
+		  exp_magnitude = 7;
+		  max_drops = 1;
+		  spawn_height = 15.0;
+		  spawn_radius = .5;
+	}
+}
+[t:template,n:spell_meteor_storm]
+{
+	  category_name = "magic";
+	  doc = "scroll meteor storm";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 5000;
+	}
+	[common]
+	{
+		  description = "Calls several meteors from the sky to smite your enemies";
+		  screen_name = "Meteor Storm";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 40;
+		  cast_reload_delay = 10;
+		  is_one_shot = true;
+		  mana_cost = 10;
+		  max_level = 100;
+		  required_level = 30;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Meteor Storm";
+		  target_type_flags = tt_terrain | tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_deathrain]
+	{
+		  drop_damage_amount = 300;
+		  drop_damage_radius = 7;
+		  drop_freq_max = 1.2;
+		  drop_freq_min = 1;
+		  drop_script = "meteor_storm";
+		  exp_magnitude = 7;
+		  max_drops = 4;
+		  spawn_height = 15.0;
+		  spawn_radius = 4;
+	}
+}
+[t:template,n:spell_mine_worm_spikes]
+{
+	  category_name = "magic";
+	  doc = "Mine Worm Spikes";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  aiming_error_range_x = 2.5;
+		  aiming_error_range_y = 2.5;
+		  ammo_attach_bone = ap_flame;
+		  ammo_template = spike_mine_worm;
+		  damage_max = 10;
+		  damage_min = 12;
+		  use_aiming_error = true;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 25;
+	}
+	[spell_launch]
+	{
+		  number = 5;
+	}
+}
+[t:template,n:spell_mucosa_poison]
+{
+	  category_name = "magic";
+	  doc = "Spell Mucosa Poison";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 6;
+		  damage_min = 5;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = mucosa_poison;
+		  ignite = false;
+		  particle_fit = 0.6;
+	}
+}
+[t:template,n:spell_perforator_minigun_l]
+{
+	  category_name = "magic";
+	  doc = "scroll perforator minigun";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  aiming_error_range_x = 8;
+		  aiming_error_range_y = 8;
+		  ammo_attach_bone = left_gun;
+		  ammo_template = bolt;
+		  damage_max = 5;
+		  damage_min = 5;
+		  use_aiming_error = true;
+	}
+	[common]
+	{
+		  screen_name = "perforator minigun";
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 16;
+	}
+	[spell_launch]
+	{
+		  effect_script = "perforator_muzzle_flash";
+		  number = 3;
+		  script_params = "[Left_gun]";
+	}
+}
+[t:template,n:spell_perforator_minigun_r]
+{
+	  category_name = "magic";
+	  doc = "scroll perforator minigun";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  aiming_error_range_x = 8;
+		  aiming_error_range_y = 8;
+		  ammo_attach_bone = right_gun;
+		  ammo_template = bolt;
+		  damage_max = 5;
+		  damage_min = 5;
+		  use_aiming_error = true;
+	}
+	[common]
+	{
+		  screen_name = "perforator minigun";
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 16;
+	}
+	[spell_launch]
+	{
+		  effect_script = "perforator_muzzle_flash";
+		  number = 3;
+		  script_params = "[Right_gun]";
+	}
+}
+[t:template,n:spell_pestilence]
+{
+	  category_name = "magic";
+	  doc = "scroll pestilence";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[attack]
+	{
+		  area_damage_radius = 3;
+		  damage_max = 40;
+		  damage_min = 35;
+	}
+	[common]
+	{
+		  description = "Rot and decay damages all in cloud of poison gas";
+		  screen_name = "Pestilence";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 2;
+		  max_level = 13;
+		  required_level = 6;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "pestilence";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  explosion_magnitude = 3;
+	}
+	[spell_area_effect]
+	{
+		  damage_checks = 10;
+		  damage_frequency = 2.5;
+		  effect_script = "pestilence";
+	}
+}
+[t:template,n:spell_pillar_fire]
+{
+	  category_name = "magic";
+	  doc = "scroll pillar of fire";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 1150;
+	}
+	[attack]
+	{
+		  damage_max = 20;
+		  damage_min = 10;
+	}
+	[common]
+	{
+		  description = "Calls a pillar of fire from the sky to burn your enemies";
+		  screen_name = "Pillar of Fire";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 5;
+		  effect_duration = 20;
+		  is_one_shot = true;
+		  mana_cost = 5;
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Pillar Fire";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = fire_pillar2;
+		  particle_fit = 0.1;
+	}
+}
+[t:template,n:spell_polymorph]
+{
+	  category_name = "magic";
+	  description = "Turns an enemy into another creature";
+	  doc = "Scroll Polymorph";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Polymorph";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[inventory]
+	{
+		[delayed_pcontent]
+		{
+			[oneof*]
+			{
+				[all*]
+				{
+					  chance = 0.16;
+					  il_main = cow_brown;
+				}
+				[all*]
+				{
+					  chance = 0.16;
+					  il_main = cow_black_white;
+				}
+				[all*]
+				{
+					  chance = 0.16;
+					  il_main = deer_fawn;
+				}
+				[all*]
+				{
+					  chance = 0.16;
+					  il_main = dog;
+				}
+				[all*]
+				{
+					  chance = 0.16;
+					  il_main = mule;
+				}
+				[all*]
+				{
+					  chance = 0.2;
+					  il_main = pig;
+				}
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 5;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 9;
+		  required_level = 2;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Polymorph";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+	}
+	[spell_polymorph]
+	{
+		  effect_script = "polymorph";
+		  script_params = "";
+	}
+}
+[t:template,n:spell_pop]
+{
+	  category_name = "magic";
+	  doc = "scroll pop";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  area_damage_radius = 3;
+		  damage_max = 40;
+		  damage_min = 35;
+	}
+	[common]
+	{
+		  description = "Violently explodes an enemy";
+		  screen_name = "Pop!";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 2;
+		  max_level = 20;
+		  required_level = 9;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Pop";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  explosion_magnitude = 3;
+	}
+	[spell_body_bomb]
+	{
+		  effect_script = "explode_body";
+	}
+}
+[t:template,n:spell_possess]
+{
+	  category_name = "magic";
+	  description = "Through intense mental effort the caster can control the actions of an enemy";
+	  doc = "scroll possess";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Possess";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  apply_enchantments = false;
+		  cast_range = 10;
+		  cast_reload_delay = 10;
+		  effect_duration = 100;
+		  mana_cost = 4;
+		  requires_line_of_sight = true;
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy;
+		  usage_context_flags = uc_aggressive;
+		[enchantments]
+		{
+			[caster_mana_drain]
+			{
+				  abort_on_min = true;
+				  alteration = alter_mana;
+				  description = "Possess mana drain";
+				  duration = #infinite;
+				  frequency = 1;
+				  is_enhancement = false;
+				  is_permanent = true;
+				  value = ( (#highest_skill-#src_highest_skill) >= 0 ) ?
+
+									-3.333 * ( -#src_highest_skill / ( #src_highest_skill - (1.0 + #highest_skill) ) ) :
+
+									-3.333 * (#src_highest_skill - #highest_skill)
+								  ;
+			}
+		}
+	}
+	[spell_possess]
+	{
+		  description = "Possess spell";
+		  effect_script = possessed;
+		  state_name = "Possessed";
+	}
+}
+[t:template,n:spell_pupod_gas]
+{
+	  category_name = "magic";
+	  doc = "scroll pupod gas";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  area_damage_radius = 3;
+		  damage_max = 5;
+		  damage_min = 4;
+	}
+	[magic]
+	{
+		  cast_range = 3;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy | tt_conscious_friend;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_damage_volume]
+	{
+		  caster_center = true;
+		  effect_script = pupod_gas;
+	}
+}
+[t:template,n:spell_rage]
+{
+	  category_name = "magic";
+	  doc = "scroll rage";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  description = "Spills the targets blood to drive it into a killing frenzy";
+		  screen_name = "Rage";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_ra;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30+(#magic*20);
+		  is_one_shot = true;
+		  mana_cost = 8;
+		  max_level = 9;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Rage";
+		  target_type_flags = tt_conscious_friend;
+		  usage_context_flags = uc_passive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_damage_min;
+				  description = "Raise Minimun Damage";
+				  duration = 30+(#magic*20);
+				  initial_delay = 0.25;
+				  value = 2;
+			}
+			[*]
+			{
+				  alteration = alter_damage_max;
+				  description = "Raise Maximun Damage";
+				  duration = 30+(#magic*20);
+				  initial_delay = 0.25;
+				  value = 2;
+			}
+		}
+	}
+	[spell_penalty]
+	{
+		  decrease_health = 0.2;
+		  description = enraged;
+		  effect_script = rage;
+		  state_name = rage;
+	}
+}
+[t:template,n:spell_rainblow]
+{
+	  category_name = "magic";
+	  doc = "scroll rainblow";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  description = "Attacks with a multi-colored assault";
+		  screen_name = "Rainblow";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("rainblow");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 20;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  max_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Rainblow";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_regeneration]
+{
+	  category_name = "magic";
+	  doc = "scroll regeneration";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 300;
+	}
+	[common]
+	{
+		  description = "Increases The healing rate of a party member.";
+		  screen_name = "Regeneration";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 120+(#magic*2);
+		  is_one_shot = true;
+		  mana_cost = 40;
+		  max_level = 4;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Regeneration";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_life_recovery_unit;
+				  description = "Raise Healing";
+				  duration = 120+(#magic*2);
+				  frequency = 0;
+				  initial_delay = 0.25;
+				  value = 10;
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = Regenerating;
+		  effect_script = regeneration;
+		  state_name = regen;
+	}
+}
+[t:template,n:spell_rector_burn]
+{
+	  category_name = "magic";
+	  doc = "scroll frostnid freeze";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 9;
+		  damage_min = 7;
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 1;
+		  effect_duration = 8;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = rector_burn;
+		  ignite = true;
+		  particle_fit = 0.2;
+	}
+}
+[t:template,n:spell_resurrect]
+{
+	  category_name = "magic";
+	  doc = "scroll resurrect";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 200;
+	}
+	[common]
+	{
+		  screen_name = "Resurrect";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_re;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 70;
+		  max_level = 20;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Resurrect";
+		  target_type_flags = tt_dead_friend | tt_dead_enemy;
+		  usage_context_flags = uc_passive;
+	}
+}
+[t:template,n:spell_rip_mana]
+{
+	  category_name = "magic";
+	  doc = "scroll rip mana";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 50;
+	}
+	[common]
+	{
+		  screen_name = "Rip Mana";
+	}
+	[common]
+	{
+		  description = "Tears mana from the target and gives it to the caster";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_rm;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 3;
+          mana_cost_modifier = (#magic);
+		  max_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Rip Mana";
+		  target_type_flags = tt_can_store_mana;
+		  usage_context_flags = uc_mana_getting;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_mana;
+				  description = mana channel;
+				  duration = #int + (1+1.5*(#magic+1));
+				  effect_script = mana_trail;
+				  frequency = 0.10;
+				  initial_delay = 0.0;
+				  is_enhancement = true;
+				  is_permanent = true;
+				  is_source_transfer = true;
+				  is_target_transfer = false;
+				  max_value = 11 + 5.5*(#magic+1);
+				  transfer_efficiency = 1;
+				  value = 1 + 3.5*(#magic+1);
+			}
+		}
+	}
+}
+[t:template,n:spell_robo_suit_grenade]
+{
+	  category_name = "magic";
+	  doc = "Robo-Suit Grenade";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  gold_value = 676;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 6;
+		  aiming_error_range_y = 6;
+		  ammo_attach_bone = bone17;
+		  ammo_template = grenade;
+		  damage_max = 30;
+		  damage_min = 15;
+		  use_aiming_error = true;
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 0;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+	[spell_launch]
+	{
+		  number = 1;
+	}
+}
+[t:template,n:spell_robo_suit_lightning]
+{
+	  category_name = "magic";
+	  doc = "Robo-Suit Lightning";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 1;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("robo_suit_lightning");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 0;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_robo_suit_minigun]
+{
+	  category_name = "magic";
+	  doc = "Robo-Suit Minigun";
+	  specializes = base_spell_monster;
+	[aspect]
+	{
+		  gold_value = 676;
+	}
+	[attack]
+	{
+		  aiming_error_range_x = 5;
+		  aiming_error_range_y = 5;
+		  ammo_attach_bone = bone04;
+		  ammo_template = bolt;
+		  damage_max = 10;
+		  damage_min = 10;
+		  use_aiming_error = true;
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 0;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+	[spell_launch]
+	{
+		  launch_freq_max = .1;
+		  launch_freq_min = .1;
+		  number = 2;
+	}
+}
+[t:template,n:spell_rock_beast_blast]
+{
+	  category_name = "magic";
+	  doc = "Rock Beast Blast";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 12;
+		  damage_min = 8;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = true;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = rock_beast_blast;
+		  ignite = false;
+		  particle_fit = 0.2;
+	}
+}
+[t:template,n:spell_sacrifice]
+{
+	  category_name = "magic";
+	  doc = "spell Sacrifice";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 1150;
+	}
+	[common]
+	{
+		  description = "Giving up the mortal shell the casters soul is unleashed";
+		  screen_name = "Sacrifice";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 0;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 0;
+		  max_level = 15;
+		  required_level = 9;
+		  requires_line_of_sight = false;
+		  speed_bias = 1;
+		  spell_skill_name = "Sacrifice";
+		  target_type_flags = tt_self;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_sacrifice]
+	{
+		  area_magnitude = 8;
+		  damage_radius = 8;
+		  effect_script = "the_bomb";
+		  initial_delay = 3;
+	}
+}
+[t:template,n:spell_shade_sap]
+{
+	  category_name = "magic";
+	  doc = "scroll shade sap";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 12;
+		  damage_min = 10;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("shade_sap");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 12;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_shadow_walk]
+{
+	  category_name = "magic";
+	  doc = "scroll shadow walk";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Shadow Walk";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  apply_enchantments = false;
+		  cast_range = 20;
+		  cast_reload_delay = 5;
+		  effect_duration = 30;
+		  mana_cost = 4;
+		  requires_line_of_sight = true;
+		  target_type_flags = tt_self;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_switch_alignment]
+	{
+		  alignment1 = aa_neutral;
+		  description = "Hidden";
+		  effect_script = shadow_walk;
+		  num_alignments = 1;
+		  screen_name = "shadow";
+	}
+}
+[t:template,n:spell_shock]
+{
+	  category_name = "magic";
+	  doc = "scroll shock";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[attack]
+	{
+		  area_damage_radius = 2;
+		  damage_max = 0;
+		  damage_min = 0;
+	}
+	[common]
+	{
+		  screen_name = "Shock";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_sh;
+	}
+	[magic]
+	{
+		  apply_enchantments = false;
+		  attack_damage_modifier_max = (#magic*1.75);
+		  attack_damage_modifier_min = (#magic*1.375);
+		  cast_range = 3;
+		  cast_reload_delay = 1;
+		  effect_duration = 2;
+		  mana_cost = 10;
+		  mana_cost_modifier = (#magic*1.5);
+		  max_level = 14;
+		  required_level = 7;
+		  requires_line_of_sight = true;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_damage_volume]
+	{
+		  caster_center = true;
+		  effect_script = shock;
+	}
+}
+[t:template,n:spell_skrubb_spit]
+{
+	  category_name = "magic";
+	  doc = "scroll skrubb spit";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 4;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("skrubb_spit");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_spark]
+{
+	  category_name = "magic";
+	  doc = "scroll spark";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 160;
+	}
+	[attack]
+	{
+		  damage_max = 4;
+		  damage_min = 2;
+	}
+	[common]
+	{
+		  description = "Fires two shots of pure electricity that will track the target";
+		  screen_name = "Spark";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("spark");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_sk;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = (#magic);
+		  attack_damage_modifier_min = (#magic);
+		  cast_range = 15;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 5;
+		  mana_cost_modifier = (#magic*1.3);
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Spark";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_spark_multi]
+{
+	  category_name = "magic";
+	  doc = "scroll spark multi";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 160;
+	}
+	[attack]
+	{
+		  damage_max = 4;
+		  damage_min = 2;
+	}
+	[common]
+	{
+		  description = "Fires several shots of pure electricity that will track the target";
+		  screen_name = "Multi-Spark";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("spark_multi");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_sk;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = (#magic);
+		  attack_damage_modifier_min = (#magic);
+		  cast_range = 15;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 5;
+		  mana_cost_modifier = (#magic*1.3);
+		  max_level = 11;
+		  required_level = 4;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Spark Multi";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_speed]
+{
+	  category_name = "magic";
+	  doc = "scroll speed";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Speed";
+	}
+	[common]
+	{
+		  screen_name = "Speed";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("speed");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 9;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Speed";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_speed_bias;
+				  description = "Speed Up";
+				  duration = 30+(#magic*3);
+				  value = 1;
+			}
+		}
+	}
+}
+[t:template,n:spell_spiked_maw_spikes]
+{
+	  category_name = "magic";
+	  doc = "Spiked Maw Spikes";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  aiming_error_range_x = 2.5;
+		  aiming_error_range_y = 2.5;
+		  ammo_attach_bone = bip01_spine;
+		  ammo_template = spike_spiked_maw;
+		  damage_max = 3;
+		  damage_min = 4;
+		  use_aiming_error = true;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[physics]
+	{
+		  velocity = 10;
+	}
+	[spell_launch]
+	{
+		  delay_between_shots = false;
+		  number = 6;
+		  randomize_offsets = true;
+		  use_offsets = true;
+		  x_offset = .5;
+		  y_offset = .5;
+		  z_offset = .5;
+	}
+}
+[t:template,n:spell_spirit_armor]
+{
+	  category_name = "magic";
+	  doc = "scroll spirit armor";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Spirit Armor";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 60;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Spirit Armor";
+		  target_type_flags = tt_unconscious_friend | tt_conscious_friend;
+		  usage_context_flags = uc_defensive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_armor;
+				  description = "Magic Armor spell";
+				  duration = 60;
+				  value = 4*(#magic+10);
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = protected;
+		  effect_script = spirit_armor;
+		  state_name = armor;
+	}
+}
+[t:template,n:spell_summon_bear]
+{
+	  category_name = "magic";
+	  doc = "scroll summon bear";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon bear";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 25;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Bear";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  end_script = "un_summon";
+		  script_params = "[scale(2.75)]";
+		  template_name = bear;
+	}
+}
+[t:template,n:spell_summon_chicken_heal]
+{
+	  category_name = "magic";
+	  doc = "Scroll Healing Chicken";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Heal Chicken";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Heal Chicken";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  script_params = "[scale(1.25)]";
+		  template_name = heal_chicken;
+	}
+}
+[t:template,n:spell_summon_chicken_mana]
+{
+	  category_name = "magic";
+	  doc = "Scroll Infusing Chicken";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Mana Chicken";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Mana Chicken";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  script_params = "[scale(1.25)]";
+		  template_name = mana_chicken;
+	}
+}
+[t:template,n:spell_summon_fire_elemental]
+{
+	  category_name = "magic";
+	  doc = "scroll_summon_fire_elemental";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Fire Elemental";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 26;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Fire Elemental";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  template_name = fire_elemental;
+	}
+}
+[t:template,n:spell_summon_gargoyle]
+{
+	  category_name = "magic";
+	  doc = "Scroll Summon Gargoyle";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 180;
+	}
+	[common]
+	{
+		  screen_name = "Summon Gargoyle";
+	}
+	[common]
+	{
+		  description = "Summons a Gargoyle";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_sg;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 145;
+		  is_one_shot = true;
+		  mana_cost = 25;
+		  max_level = 10;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Gargoyle";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "gargoyle_summon";
+		  script_params = "";
+		  template_name = gargoyle;
+	}
+}
+[t:template,n:spell_summon_golem]
+{
+	  category_name = "magic";
+	  doc = "Scroll Summon Golem";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Golem";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[inventory]
+	{
+		[delayed_pcontent]
+		{
+			[oneof*]
+			{
+				[all*]
+				{
+					  chance = 0.475;
+					  il_main = molten_golem;
+				}
+				[all*]
+				{
+					  chance = 0.475;
+					  il_main = rock_golem;
+				}
+				[all*]
+				{
+					  chance = 0.025;
+					  il_main = chicken_white;
+				}
+				[all*]
+				{
+					  chance = 0.025;
+					  il_main = chicken_red;
+				}
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Golem";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon_random]
+	{
+		  effect_script = "summon";
+		  script_params = "[scale(1.75)]";
+	}
+}
+[t:template,n:spell_summon_helper]
+{
+	  category_name = "magic";
+	  doc = "Scroll Summon Helper";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Helper";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 300;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Helper";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  end_script = "un_summon";
+		  script_params = "[scale(0.5)]";
+	}
+}
+[t:template,n:spell_summon_ice_archer]
+{
+	  category_name = "magic";
+	  doc = "scroll_summon_ice_archer";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Ice Archer";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 27;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Ice Archer";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  template_name = ice_archer;
+	}
+}
+[t:template,n:spell_summon_ice_fly]
+{
+	  category_name = "magic";
+	  doc = "scroll_summon_ice_fly";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Ice Fly";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 28;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Ice Fly";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  template_name = ice_fly;
+	}
+}
+[t:template,n:spell_summon_ice_warrior]
+{
+	  category_name = "magic";
+	  doc = "scroll_summon_ice_warrior";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Ice Warrior";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 29;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Ice Warrior";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  template_name = ice_warrior;
+	}
+}
+[t:template,n:spell_summon_killer_gremal]
+{
+	  category_name = "magic";
+	  doc = "scroll summon killer gremal";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  screen_name = "Summon Killer Gremal";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_skg;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 25;
+		  is_one_shot = true;
+		  mana_cost = 20;
+		  required_level = 7;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Killer Gremal";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  end_script = "un_summon";
+		  script_params = "[scale(2.75)]";
+		  template_name = gremal_killer;
+	}
+}
+[t:template,n:spell_summon_molten_golem]
+{
+	  category_name = "magic";
+	  doc = "Scroll Summon Molten Golem";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Cinder";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Molten Golem";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  script_params = "[scale(1.75)]";
+		  template_name = molten_golem;
+	}
+}
+[t:template,n:spell_summon_rock_golem]
+{
+	  category_name = "magic";
+	  doc = "Scroll Summon Rock Golem";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon Rock Golem";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 15;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Rock Golem";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  script_params = "[scale(1.75)]";
+		  template_name = rock_golem;
+	}
+}
+[t:template,n:spell_summon_skeleton]
+{
+	  category_name = "magic";
+	  doc = "scroll summon skeleton";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Summon skeleton";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 25;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Skeleton";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  template_name = skeleton_good;
+	}
+}
+[t:template,n:spell_summon_wolf]
+{
+	  category_name = "magic";
+	  doc = "Scroll Summon Wolf";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 450;
+	}
+	[common]
+	{
+		  screen_name = "Summon Wolf";
+	}
+	[common]
+	{
+		  description = "Summons a Gray Wolf";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_sw;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 145;
+		  is_one_shot = true;
+		  mana_cost = 30;
+		  max_level = 10;
+		  required_level = 5;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Summon Wolf";
+		  target_type_flags = tt_terrain;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_summon]
+	{
+		  effect_script = "summon";
+		  end_script = "un_summon";
+		  script_params = "[scale(1.75)]";
+		  template_name = wolf_gray;
+	}
+}
+[t:template,n:spell_super_energy_ball]
+{
+	  category_name = "magic";
+	  doc = "scroll super energy ball";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 350;
+	}
+	[attack]
+	{
+		  damage_max = 10;
+		  damage_min = 5;
+	}
+	[common]
+	{
+		  screen_name = "Super Energy ball";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("energy_ball2");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_dark;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 3;
+		  is_one_shot = false;
+		  mana_cost = 1;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Super Energy Ball";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_syrrus_fire]
+{
+	  category_name = "magic";
+	  doc = "Syrrus Fire";
+	  specializes = base_spell_monster;
+	[attack]
+	{
+		  damage_max = 30;
+		  damage_min = 20;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 5;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_fire]
+	{
+		  effect_script = syrrus_fire;
+		  particle_fit = 0.2;
+	}
+}
+[t:template,n:spell_tesla_bolt]
+{
+	  category_name = "magic";
+	  doc = "Tesla Bolt";
+	  specializes = base_spell_monster;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("tesla_bolt");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_tesla_bolt2]
+{
+	  category_name = "magic";
+	  doc = "Tesla Bolt";
+	  specializes = base_spell_monster;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("tesla_bolt2");
+				  condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 0;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_offensive;
+	}
+}
+[t:template,n:spell_transmute]
+{
+	  category_name = "magic";
+	  doc = "Scroll Transmute";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 500;
+	}
+	[common]
+	{
+		  screen_name = "Transmute";
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  cast_range = 15;
+		  cast_reload_delay = 5;
+		  is_one_shot = true;
+		  mana_cost = 1;
+		  max_level = 10;
+		  required_level = 3;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Transmute";
+		  target_type_flags = tt_weapon_melee | tt_weapon_ranged | tt_armor | tt_shield;
+		  usage_context_flags = uc_passive;
+	}
+	[spell_transmute]
+	{
+		  effect_script = "transmute";
+		  script_params = "";
+	}
+}
+[t:template,n:spell_weaken]
+{
+	  category_name = "magic";
+	  doc = "scroll weaken";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 150;
+	}
+	[common]
+	{
+		  description = "Rots the muscles of the target, making its attacks less powerful.";
+		  screen_name = "Weaken";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_we;
+	}
+	[magic]
+	{
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  effect_duration = 30+(#magic*2);
+		  is_one_shot = true;
+		  mana_cost = 15;
+		  required_level = 7;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  spell_skill_name = "Weaken";
+		  target_type_flags = tt_conscious_enemy;
+		  usage_context_flags = uc_passive;
+		[enchantments]
+		{
+			[*]
+			{
+				  alteration = alter_damage_min;
+				  description = "Lower Minimun Damage";
+				  duration = 30+(#magic*2);
+				  initial_delay = 0.25;
+				  multiply_value = true;
+				  value = .8;
+			}
+			[*]
+			{
+				  alteration = alter_damage_max;
+				  description = "Lower Maximun Damage";
+				  duration = 30+(#magic*2);
+				  initial_delay = 0.25;
+				  multiply_value = true;
+				  value = .8;
+			}
+		}
+	}
+	[spell_status_effect]
+	{
+		  description = weakened;
+		  effect_script = weaken;
+		  state_name = weaken;
+	}
+}
+[t:template,n:spell_zap]
+{
+	  category_name = "magic";
+	  doc = "scroll zap";
+	  specializes = base_spell_good;
+	[aspect]
+	{
+		  gold_value = 50;
+	}
+	[attack]
+	{
+		  damage_max = 3;
+		  damage_min = 1;
+	}
+	[common]
+	{
+		  description = "Arcs a small bolt of energy to your enemy";
+		  screen_name = "Zap";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("zap");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "item_ring" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_w_mag_light;
+	}
+	[magic]
+	{
+		  attack_damage_modifier_max = (#magic);
+		  attack_damage_modifier_min = (#magic);
+		  cast_range = 10;
+		  cast_reload_delay = 0;
+		  is_one_shot = false;
+		  mana_cost = 1;
+		  mana_cost_modifier = (#magic+0.9);
+		  max_level = 6;
+		  requires_line_of_sight = true;
+		  speed_bias = 2;
+		  spell_skill_name = "Zap";
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable;
+		  usage_context_flags = uc_offensive;
+	}
+}

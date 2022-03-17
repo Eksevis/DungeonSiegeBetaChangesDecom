@@ -1,0 +1,111 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_area_effect.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//
+// need to delay before deleting ownership.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+property string	effect_script$		= ""	doc = "Effect script to call for effect";
+
+property int	damage_checks$		= 10  	doc = "Number of times to do damage";
+property float	damage_frequency$	= .5	doc = "Time between damage checks";
+property float	initial_delay$		= 0.0	doc = "Time before first damage check.";
+
+//property float	damage_radius$		= 5 	doc = "Radius of damage area";
+//property float	area_magnitude$		= 5		doc = "How fast the area of damage expands";
+
+//property float	damage_amount$ 		= 35	doc = "Total damage";
+property bool	nice$				= TRUE	doc = "Nice spells don't hurt the caster";
+
+
+owner 	= GoSkritComponent;
+
+int			checks_remaining$;
+float 		damage_per_tick$;
+int		 	position$;
+Goid 		target$;
+Goid 		caster$;
+
+startup state Idle$
+{
+	trigger OnTimer$( 1 )
+	{
+		SetState( Damage$ );
+	}
+	
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST )
+		{
+			checks_remaining$	= damage_checks$;
+			
+			target$ 			= MakeGoid( msg$.GetData1() );
+			caster$ 			= msg$.GetSendFrom();
+			damage_per_tick$ 	= Math.RandomFloat( owner.Go.Attack.DamageMin, owner.Go.Attack.DamageMax );
+			damage_per_tick$    /= damage_checks$;
+			
+			position$			= SiegeFx.AddVariable( target$.go.placement.position, owner.goid );
+			
+			Siegefx.SRunScript(effect_script$, target$, caster$, "", owner.goid, e$);
+			this.CreateTimer( 1, initial_delay$ );
+		}
+	}
+}
+
+
+state Damage$
+{
+	trigger OnTimer$( 1 )
+	{
+		if( checks_remaining$ <= 0 )
+		{
+			SetState( Finished$ );
+		}
+		else
+		{
+			SetState( Damage$ );
+		}
+	}
+		
+	event OnEnterState$
+	{
+		if( checks_remaining$ > 0 )
+		{
+		
+			// $$$ need to find a way to create explosions which wont damage caster.
+			Physics.CreateExplosion( SiegeFX.GetVariable(position$,owner.goid), owner.Go.Attack.AreaDamageRadius, owner.Go.Physics.ExplosionMagnitude, damage_per_tick$, caster$, owner.goid );
+			this.CreateTimer( 1, damage_frequency$ );
+			checks_remaining$ -= 1;
+		}
+	}
+
+	trigger OnGoHandleMessage$( WE_SPELL_SYNC_END )
+	{
+		if( checks_remaining$ <= 0 )
+		{
+			SetState( Finished$ );
+		}
+	}
+}
+
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+
+		// Since this skrit is the component of a spell and all spells are cloned before being executed
+		// then it is safe to destroy ourself after finishing execution
+
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, 10 );
+	}
+}

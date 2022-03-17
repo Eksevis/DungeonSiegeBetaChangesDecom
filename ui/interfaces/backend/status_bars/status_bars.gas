@@ -1,0 +1,338 @@
+[status_bars]
+{
+	interface = true;
+	intended_resolution_height = 480;
+	intended_resolution_width = 640;
+	
+	[t:status_bar,n:health_bar_1]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_1]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_2]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_2]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_3]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:mana_bar_3]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_4]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_4]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_5]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_5]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_6]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_6]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_7]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_7]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_8]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_8]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+
+	[t:status_bar,n:health_bar_enemy]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		rect = 209,286,237,294;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.125000,0.875000,0.625000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+	[t:status_bar,n:mana_bar_enemy]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 2;
+		
+		rect = 172,282,200,289;
+		texture = b_gui_ig_mnu_status_bars;
+		uvcoords = 0.000000,0.562500,0.875000,1.000000;
+		wrap_mode = clamp;
+		dynamic_edge = right;
+
+		[messages]
+		{
+			oncreated = setvisible(false);
+		}
+	}
+}

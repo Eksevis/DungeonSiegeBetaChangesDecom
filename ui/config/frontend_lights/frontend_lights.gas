@@ -1,0 +1,414 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  frontend_lights.gas
+// Author(s):  Chad Queen
+//
+// Copyright c 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Description:  
+//
+// The frontend lights are the lights attached to the various 3D elements of 
+// the frontend interface.  Lights have to be applied to each seperate 3D 
+// element.  You can have as many lights as you want for each 3D element.  
+// You can also set the ambient lighting for each element.  Here is a sample:
+//
+//
+//	[ui_backdrop]
+//	{
+//		ambience = 0xFF808080;					// Ambience in alpha-red-green-blue
+//												// hex format
+//
+//		// Add as many as you want
+//		[light*]
+//		{
+//			lightsource_type = infinite;		// can be point, spot, or infinite
+//			color = 0xffffffff;					// 0xaarrggbb
+//			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+//			intensity = 1.0;
+//						
+//			position = 1.0, 1.0, 2.0;			// Only for spot and point lights
+//
+//			inner_cone = 0.2;					// Only for spot lights
+//			outer_cone = 1.0;					// Only for spot lights
+//
+//			inner_radius = 0.5;					// Only for point lights
+//			outer_radius = 1.0					// Only for point lights
+//
+//			// Notifications let you change the light's settings depending on
+//			// messages sent to the game.			
+//			[notifications]
+//			{
+//				// When the game requests to see the single player menu we can
+//				// alter the light
+//				[show_single_player_menu]
+//				{
+//					ramp = true;
+//					ramp_duration = 2.0;
+//					start_intensity = 0.0;					
+//					intensity = 1.0;	
+//				}
+//			}
+//		}	
+//
+//
+//		// You can also set notifications per 3D element.  The only thing you can
+//      // change is the ambience.
+//		[notifications]
+//		{
+//			[show_single_player_menu]
+//			{
+//				ramp = true;			
+//				ramp_duration = 1.0;			// How fast to get from starting to end ambience
+//				start_ambience = 0xff000000;	// The initial ambience ( if ramp_none, this is ignored )
+//				ambience = 0xffffffff;	
+//			}
+//		}	
+//	}
+//
+//
+//
+//	Here's a list of all the possible notifications:
+//
+//  to_main_menu			 // Transition from splash screen -> Main Menu
+//  on_change_map			 // Transition from Choose Hero -> Map Screen ( or loading bar screen )
+//  show_single_player_menu  // Transition from Main Menu -> Single Player Menu
+//	back_to_main			 // Transition from Single Player Menu -> Main Menu
+//	show_options			 // Transition from Main Menu -> Options Menu
+//	multi_player_button_down // Transition from Main Menu -> Multiplayer
+//	intro_button_down		 // Transition from Main Menu -> Intro
+//  credits_button_down		 // Transition from Main Menu -> Credits
+//	show_character_selection //	Transition from Single Player Menu -> Character Selection
+//  next_character			 // Select next character
+//  previous_character		 // Select previous character
+//  load_single_player		 // Transition from Single Player Menu -> Single Player Load
+//	back_to_single_player	 // Transition from Choose Hero -> Single Player Menu
+//  
+//  
+//////////////////////////////////////////////////////////////////////////////
+
+
+[frontend_lights]
+{
+
+//=============BACKDROP====================
+	[ui_backdrop]
+	{
+		ambience = 0xFF404040;
+
+		[notifications]
+		{
+			[back_to_single_player]
+			{
+				ramp = true;			
+				ramp_duration = 1.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xffB0B0B0;	// The initial ambience 			
+				ambience = 0xff404040;					
+			}
+
+			[show_character_selection]
+			{
+				ramp = true;			
+				ramp_duration = 1.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff404040;	// The initial ambience 
+				ambience = 0xffB0B0B0;	
+			}
+
+			[to_main_menu]
+			{
+				ramp = true;			
+				ramp_duration = 6.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff000000;	// The initial ambience 
+				ambience = 0xff404040;	
+			}
+
+		}
+
+
+		[light*]
+		{
+			lightsource_type = infinite;			// can be point, spot, or infinite
+			color = 0xffffffff;					// 0xaarrggbb
+			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+			intensity = 0.5;
+						
+
+		}	
+
+	}
+
+
+//=============MAIN MENU====================
+	[ui_mainmenu]
+	{
+		ambience = 0xFF808080;
+
+		[notifications]
+		{
+			[to_main_menu]
+			{
+				ramp = true;			
+				ramp_duration = 2.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff000000;	// The initial ambience 
+				ambience = 0xff808080;	
+			}
+		}	
+
+		[light*]
+		{
+			lightsource_type = infinite;			// can be point, spot, or infinite
+			color = 0xffffffff;					// 0xaarrggbb
+			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+			intensity = 1.0;
+
+			[notifications]
+			{
+				[to_main_menu]
+				{
+					ramp = true;
+					ramp_duration = 2.0;
+					start_intensity = 0.0;					
+					intensity = 1.0;	
+				}
+			}
+						
+		}	
+
+
+
+	}
+
+
+//=============HERO MENU====================
+
+	[ui_heromenu]
+	{
+		ambience = 0xFF808080;
+
+		[notifications]
+		{
+			[show_character_selection]
+			{
+				ramp = true;			
+				ramp_duration = 0.5;			// How fast to get from starting to end ambience
+				start_ambience = 0xff404040;	// The initial ambience 
+				ambience = 0xff808080;	
+			}
+		}	
+
+		[light*]
+		{
+			lightsource_type = infinite;			// can be point, spot, or infinite
+			color = 0xffffffff;					// 0xaarrggbb
+			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+			intensity = 1.0;
+						
+		}	
+
+
+	}
+
+//=============MENUBARS====================
+
+	[ui_menubars]
+	{
+		ambience = 0xFF808080;
+
+		[notifications]
+		{
+			[to_main_menu]
+			{
+				ramp = true;			
+				ramp_duration = 2.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff000000;	// The initial ambience 
+				ambience = 0xff808080;	
+			}
+		}	
+
+		[light*]
+		{
+			lightsource_type = infinite;			// can be point, spot, or infinite
+			color = 0xffffffff;					// 0xaarrggbb
+			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+			intensity = 1.00;
+						
+			[notifications]
+			{
+				[to_main_menu]
+				{
+					ramp = true;
+					ramp_duration = 2.0;
+					start_intensity = 0.0;					
+					intensity = 1.0;	
+				}
+			}
+						
+		}	
+
+	}
+
+
+//=============LEFTSIDE====================
+
+	[ui_leftside]
+	{
+		ambience = 0xFF505050;
+
+		[notifications]
+		{
+
+			[to_main_menu]
+			{
+				ramp = true;			
+				ramp_duration = 3.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff000000;	// The initial ambience 
+				ambience = 0xff505050;	
+			}
+
+			[back_to_single_player]
+			{
+				ramp = true;			
+				ramp_duration = 1.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff909090;	// The initial ambience 			
+				ambience = 0xff505050;					
+			}
+
+			[show_character_selection]
+			{
+				ramp = true;			
+				ramp_duration = 1.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff505050;	// The initial ambience 
+				ambience = 0xff909090;	
+			}
+
+		}
+
+		[light*]
+		{
+			lightsource_type = infinite;			// can be point, spot, or infinite
+			color = 0xffffffff;					// 0xaarrggbb
+			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+			intensity = 0.5;
+
+			[notifications]
+			{
+				[to_main_menu]
+				{
+					ramp = true;
+					ramp_duration = 2.0;
+					start_intensity = 0.0;					
+					intensity = 0.5;	
+				}
+			}
+						
+		}	
+
+
+	}
+
+//=============RIGHTSIDE====================
+
+	[ui_rightside]
+	{
+		ambience = 0xFF505050;
+
+		[notifications]
+		{
+			[back_to_single_player]
+			{
+				ramp = true;			
+				ramp_duration = 1.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff909090;	// The initial ambience 			
+				ambience = 0xff505050;					
+			}
+
+			[show_character_selection]
+			{
+				ramp = true;			
+				ramp_duration = 1.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff505050;	// The initial ambience 
+				ambience = 0xff909090;	
+			}
+
+			[to_main_menu]
+			{
+				ramp = true;			
+				ramp_duration = 3.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff000000;	// The initial ambience 
+				ambience = 0xff505050;	
+			}
+
+		}
+
+		[light*]
+		{
+			lightsource_type = infinite;			// can be point, spot, or infinite
+			color = 0xffffffff;					// 0xaarrggbb
+			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+			intensity = 0.5;
+
+			[notifications]
+			{
+				[to_main_menu]
+				{
+					ramp = true;
+					ramp_duration = 2.0;
+					start_intensity = 0.0;					
+					intensity = 0.5;	
+				}
+			}
+						
+					
+		}	
+
+	}
+
+//=============BACK BUTTON====================
+
+	[ui_backbutton]
+	{
+		ambience = 0xFF808080;
+
+		[notifications]
+		{
+			[to_main_menu]
+			{
+				ramp = true;			
+				ramp_duration = 2.0;			// How fast to get from starting to end ambience
+				start_ambience = 0xff000000;	// The initial ambience 
+				ambience = 0xff808080;	
+			}
+		}	
+
+
+		[light*]
+		{
+			lightsource_type = infinite;			// can be point, spot, or infinite
+			color = 0xffffffff;					// 0xaarrggbb
+			direction = 0,0.7071,0.7071;		// Only for spot and infinite lights
+			intensity = 1.00;
+
+			[notifications]
+			{
+				[to_main_menu]
+				{
+					ramp = true;
+					ramp_duration = 2.0;
+					start_intensity = 0.0;					
+					intensity = 1.0;	
+				}
+			}
+						
+						
+		}	
+
+	}
+}
+
+

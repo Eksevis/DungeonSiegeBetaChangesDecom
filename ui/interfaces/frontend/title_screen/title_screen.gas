@@ -1,0 +1,208 @@
+[t:interface,n:title_screen]
+{
+	interface = true;
+	[t:button,n:panel_1]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1;
+		group = title;
+		rect = 0,0,256,256;
+		texture = b_gui_fe_m_in_01;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_10]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 13;
+		group = title;
+		rect = 512,512,768,640;
+		texture = b_gui_fe_m_in_11;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_11]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 16;
+		group = title;
+		rect = 768,512,800,640;
+		texture = b_gui_fe_m_in_12;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_12]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 18;
+		group = title;
+		rect = 768,0,800,256;
+		texture = b_gui_fe_m_in_04;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_2]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 4;
+		group = title;
+		rect = 256,0,512,256;
+		texture = b_gui_fe_m_in_02;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_3]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 5;
+		group = title;
+		rect = 512,0,768,256;
+		texture = b_gui_fe_m_in_03;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_4]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 7;
+		group = title;
+		rect = 0,256,256,512;
+		texture = b_gui_fe_m_in_05;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_5]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 8;
+		group = title;
+		rect = 256,256,512,512;
+		texture = b_gui_fe_m_in_06;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_6]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 14;
+		group = title;
+		rect = 512,256,768,512;
+		texture = b_gui_fe_m_in_07;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_7]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 9;
+		group = title;
+		rect = 768,256,800,512;
+		texture = b_gui_fe_m_in_08;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_8]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 10;
+		group = title;
+		rect = 0,512,256,640;
+		texture = b_gui_fe_m_in_09;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+	[t:button,n:panel_9]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 12;
+		group = title;
+		rect = 256,512,512,640;
+		texture = b_gui_fe_m_in_10;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			onbuttonpress = notify(to_main_menu);
+			onescape = notify(to_main_menu);
+		}
+	}
+}
