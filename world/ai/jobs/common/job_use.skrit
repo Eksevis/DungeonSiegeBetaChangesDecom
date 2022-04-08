@@ -1,0 +1,120 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_use.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: Use an item.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Goid	m_Target$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "k_job_c_path-utils" 
+
+////////////////////////////////////////////////////////////////////////////////
+
+startup state Startup$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$ = job$.GoalObject;
+
+	ResetPathFindingParameters$();
+
+	SetState RequestAction$;
+}
+
+
+state RequestAction$
+{
+	transition
+	{
+		->TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		->Using$:		OnWorldMessage( WE_MCP_SECTION_COMPLETED );
+		->Using$:		OnWorldMessage( WE_ANIM_DONE );
+		->Exiting$:		OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+
+	event OnEnterState$
+	{
+  		eReqRetCode ret$ = MCPManager.MakeRequest(
+  									m_Job$.Id,
+  									m_Go$.Goid, 
+  									PL_APPROACH, 
+  									m_Target$, 
+									m_LookAhead$, m_MaxApproachTime$,
+  									m_Target$.Go.Aspect.UseRange );
+
+		report.ReportF("aimove","[%s] USE (PL_APPROACH) [%s] returned [%s]\n",
+		 	m_Go$.TemplateName,
+		 	m_Target$.go.TemplateName,
+			ToString(ret$) );
+
+		if( RequestFailed(ret$) )
+		{
+			SetState( Exiting$ );
+		}
+		else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+		{
+			SetState( MovingCloser$ );
+		}
+		else if (ret$ == REQUEST_OK)
+		{
+		}
+		else // (ret$ == REQUEST_OK_IN_RANGE)
+		{
+			SetState Using$;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Using$
+{
+	event OnEnterState$
+	{
+		// use the item
+		m_Go$.Inventory.SAutoUse( m_Target$ );
+		SetState Exiting$;
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}

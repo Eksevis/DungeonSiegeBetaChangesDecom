@@ -1,0 +1,75 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_stop.skrit
+
+	Author(s)	: 	Bartosz Kijanka
+
+	Purpose		: 	Walk an actor over to a position.
+
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+
+
+startup state Unknown$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Stopping$;
+}
+
+
+state Stopping$
+{
+	transition
+	{
+//		-> Arrived$:	OnWorldMessage( WE_NAV_GOAL_REACHED );
+	}
+
+	event OnEnterState$
+	{
+		//m_Go$.Placement.Path.Reset;
+		MCPManager.Flush(m_Go$.Goid);
+		MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_FIDGET );
+		//m_Job$.ReqPlan( MakePlanReq( m_Go$.Goid, PL_FIDGET ) );
+		SetState Exiting$;
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}
+
+

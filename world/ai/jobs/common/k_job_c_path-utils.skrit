@@ -1,0 +1,146 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: k_job_c_path-utils
+
+	Author(s)	: biddle
+
+	Purpose		: This file contains shared path finding/following routines
+				  used by AI skrits that need to move
+
+	Requirements	: There must be an m_Job$, m_Go$, and m_Target$
+					  as well as a RequestAction$ state defined in the 
+					  skrit that includes these utilities
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+float	m_MaxApproachTime$;
+float	m_LookAhead$;
+float	m_MinRetargetDelay$;
+float	m_MaxRetargetDelay$;
+
+////////////////////////////////////////////////////////////////////////////////
+// Reset the lookahead and delays
+void ResetPathFindingParameters$() 
+{
+
+	// How long would it take to go to the limit of the engage range?
+//  	m_MaxApproachTime$ = m_Go$.mind.MeleeEngageRange / m_Go$.body.AvgMoveVelocity;
+  	m_MaxApproachTime$ = 5.0 / m_Go$.body.AvgMoveVelocity;
+
+	if (m_Target$.go.HasBody())
+	{
+		m_LookAhead$       = 2.0 / m_Target$.go.body.AvgMoveVelocity;
+	}
+	else
+	{
+		m_LookAhead$       = 1.0;   // If there is body, the object can't move
+									// so we just make sure this value is non-zero
+	}
+
+	m_MaxRetargetDelay$ = Math.MinFloat((m_MaxApproachTime$*0.9), 1.75);
+	m_MinRetargetDelay$ = Math.MinFloat((m_MaxApproachTime$*0.8), 1.50);
+
+
+//	report.genericf("%s:SMARTS  [mt] %5.3f [la] %5.3f [rd] %5.3f-%5.3f\n",
+//				m_Go$.TemplateName,
+//				m_MaxApproachTime$,
+//				m_LookAhead$,
+//				m_MinRetargetDelay$,
+//				m_MaxRetargetDelay$ );
+}
+
+state MovingCloser$
+{
+
+	transition
+	{
+		-> HeadToHead$:		OnWorldMessage( WE_MCP_MUTUAL_DEPENDANCY );
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> AlmostDone$:   	OnWorldMessage( WE_MCP_SECTION_COMPLETE_WARNING );
+		-> AnimDone$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		report.reportf("aimove","[%s] BEYOND RANGE, MOVING CLOSER\n",m_Go$.TemplateName);
+
+		this.CreateTimer( 1, Math.RandomFloat( m_MinRetargetDelay$,m_MaxRetargetDelay$ ) );
+		return;
+	}
+
+	trigger OnTimer$( 1 )
+	{
+		SetState (TimeIsUp$);
+	}
+
+}
+
+state HeadToHead$
+{
+	// No timer when we are going head-to-head
+	transition
+	{
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> AnimDone$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		report.reportf("aimove","[%s] Target is now on head to head path\n",m_Go$.TemplateName);
+	}
+
+}
+
+state TargetMoved$
+{
+	event OnEnterState$
+	{
+		report.reportf("aimove","[%s] Target moved!...try again\n",m_Go$.TemplateName);
+ 		SetState (RepeatAction$);
+	}
+}
+
+state AlmostDone$
+{
+	event OnEnterState$
+	{
+		report.reportf("aimove","[%s] About to finish walk section (avoid pop!)...try again\n",m_Go$.TemplateName);
+ 		SetState (RepeatAction$);
+	}
+}
+
+state TimeIsUp$
+{
+	event OnEnterState$
+	{
+		report.reportf("aimove","[%s] Timer Expired...try again\n",m_Go$.TemplateName);
+ 		SetState (RepeatAction$);
+	}
+}
+
+state AnimDone$
+{
+	event OnEnterState$
+	{
+		report.reportf("aimove","[%s] Anim Done [ugly pop!]...approach again\n",m_Go$.TemplateName);
+ 		SetState (RepeatAction$);
+ 	}
+}
+
+state RepeatAction$
+{
+	event OnEnterState$
+	{
+		// really want to flush the MCP here
+		MCPManager.Flush(m_Go$.goid,0);
+		SetState (RequestAction$);
+	}
+}
+

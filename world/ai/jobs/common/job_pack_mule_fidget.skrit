@@ -1,0 +1,52 @@
+// $$$ DELETE ME
+
+Behavior m_Behavior$;
+GO m_GO$;
+
+
+event OnWorldMessage$( eWorldEvent Event$, WorldMessage /*Message$*/ )
+{
+	if( Event$ == CONSTRUCTED ) {
+
+		report.generic( "OnWorldMessage fCONSTRUCTED\n" );
+
+		m_Behavior$ = OwnerBehavior$;
+		m_GO$ = OwnerBehavior$.GetGO();
+		SetState CycleFidget$;
+	}
+}
+
+
+event OnCCWorldMessage$( eWorldEvent /*Event$*/, WorldMessage /*Message$*/, Behavior /*OwnerBehavior$*/ )
+{
+}
+
+
+
+
+startup state Default$
+{
+	event OnEnterState$
+	{
+		report.generic( "State Default\n" );
+	}
+}
+
+
+
+state CycleFidget$
+{
+	transition
+	{
+//		-> CycleFidget$: OnWorldMessage( ANIMATOR_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+
+		m_Behavior$.GetAnimator.RCAnimate( CHORE_FIDGET,0, false, m_Behavior$);
+
+		// The choreographer now handles all the fidgeting
+
+	}
+}

@@ -1,0 +1,166 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_listen.skrit
+
+	Author(s)	: 	Bartosz Kijanka
+
+	Purpose		: 	If we're told to listen to someone, and they're not
+					already talking AND talking to US, walk over to them,
+					request for a chat then listen until they finish.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Goid	m_Target$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "k_job_c_path-utils" 
+
+////////////////////////////////////////////////////////////////////////////////
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+	m_Body$		= job$.Go.Body;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$	= job$.GoalObject;
+
+	ResetPathFindingParameters$();
+
+	SetState RequestAction$;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	get close to talker
+state RequestAction$
+{
+	transition
+	{
+		-> TargetMoved$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> AskToTalk$:		OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		Go target$ = m_Target$.Go;
+
+		if( target$ == NULL )
+		{
+			SetState Exiting$;
+		}
+
+		eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id,
+												 m_Go$.Goid,
+												 PL_APPROACH,
+												 m_Target$,
+												 m_LookAhead$, m_MaxApproachTime$,
+												 m_Mind$.InnerComfortZoneRange );
+
+		if( RequestFailed(ret$) )
+		{
+			SetState( Exiting$ );
+		}
+		else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+		{
+			SetState( MovingCloser$ );
+		}
+		else if (ret$ == REQUEST_OK)
+		{
+		}
+		else // (ret$ == REQUEST_OK_IN_RANGE)
+		{
+			SetState( AskToTalk$ );
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	ask talker to talk, if not already doing so
+state AskToTalk$
+{
+	event OnEnterState$
+	{
+		Job targetAction$ = m_Target$.Go.Mind.GetFrontJob( JQ_ACTION );
+
+		if ( targetAction$ != NULL )
+		{
+			////////////////////////////////////////
+			//	if they're not talking to us, ask them to
+			if( !((targetAction$.JobAbstractType == JAT_TALK) && (targetAction$.GoalObject == m_Go$.Goid )) )
+			{
+				SendWorldMessage( WE_REQ_TALK_BEGIN, m_Go$.Goid, m_Target$, MakeInt( m_Go$.Goid ) );
+			}
+		}
+		else
+		{
+			SendWorldMessage( WE_REQ_TALK_BEGIN, m_Go$.Goid, m_Target$, MakeInt( m_Go$.Goid ) );
+		}
+		
+		SetState Listen$;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	listen and wait for the talker to finish talking to us
+state Listen$
+{
+	event OnCCWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_MIND_ACTION_Q_EMPTIED )
+		{
+			SetState Exiting$;
+		}
+	}
+
+	event OnEnterState$
+	{
+		Job targetAction$ = m_Target$.Go.Mind.GetFrontJob( JQ_ACTION );
+
+		if( targetAction$ == NULL )
+		{
+			// $$ error - the target should already be talking
+			SetState Exiting$;
+		}
+		else if( !( ( targetAction$.JobAbstractType == JAT_TALK ) && ( targetAction$.GoalObject == m_Go$.Goid ) ) )
+		{
+			// $$ error - target should be talking AND talking to ME
+		}
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}		  

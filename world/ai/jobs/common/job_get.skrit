@@ -1,0 +1,101 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_get.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: Get an item.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+
+
+startup state Startup$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	SetState Approaching$;
+}
+
+
+state Approaching$
+{
+	transition
+	{
+		->Getting$:		OnWorldMessage( WE_MCP_SECTION_COMPLETE_WARNING );
+		->Exiting$:		OnWorldMessage( WE_MCP_INVALIDATED );
+	}
+
+	event OnEnterState$
+	{
+		if ( m_Go$.Inventory.TestGet( m_Job$.GoalObject ) )
+		{
+			//m_Job$.ReqPlan( MakePlanReq( m_Go$.Goid, PL_WALK, m_Job$.GoalPosition, 0.1 ));
+			eReqRetCode ret$ = MCPManager.MakeRequest( m_Job$.Id, m_Go$.Goid, PL_APPROACH, m_Job$.GoalPosition, 0.5 );
+			report.ReportF("aimove","[%s] GET (PL_APPROACH) [%s] returned [%s]\n",
+				m_Go$.TemplateName,
+				 MakeSiegePosString(m_Job$.GoalPosition),
+				 ToString(ret$) );
+
+			if (ret$ == REQUEST_OK_IN_RANGE)
+			{
+				SetState( Getting$ );
+			}
+			else if (ret$ != REQUEST_OK)
+			{
+				SetState( Exiting$ );
+			}
+		}
+		else
+		{
+			SetState Exiting$;
+		}		
+	}
+}
+
+
+state Getting$
+{
+	event OnEnterState$
+	{
+		// use the item
+		m_Go$.Inventory.SAutoGet( m_Job$.GoalObject );
+		SetState Exiting$;
+	}
+}
+
+
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion( true );
+	}
+}
