@@ -1,0 +1,156 @@
+//////////////////////////////////////////////////////////////////////////////
+//  General commands
+
+[t:template,n:cmd_enter_nis]
+{
+	specializes	= cmd_const;
+	doc			= cmd_enter_nis;
+	extra_doc	= [cmd_enter_nis];
+    category_name       = "nis";
+
+	[cmd_enter_nis] { }
+}
+
+[t:template,n:cmd_leave_nis]
+{
+	specializes	= cmd_const;
+	doc			= cmd_leave_nis;
+   	extra_doc	= [cmd_leave_nis];
+	category_name       = "nis";
+
+	[cmd_leave_nis] { }
+}
+
+[t:template,n:cmd_const]
+{
+	specializes = command;
+
+	// this is meant for 'const' commands that do not maintain state and do
+	// not need to persist after leaving the world.
+	common:auto_expiration_class = immediate;
+}
+
+[t:template,n:cmd_ai_dojob]
+{
+	specializes = cmd_const;
+	doc			= cmd_generic;
+	extra_doc	= [cmd_ai_dojob];
+	category_name       = "zurb";
+
+	[cmd_ai_dojob] { }
+	[gizmo] { diffuse_color=1.000000,1.000000,1.000000; texture=; }
+}
+
+[t:template,n:cmd_actor_stats]
+{
+	specializes = cmd_const;
+	doc			= "DONT PLACE cmd_generic";
+	extra_doc	= "DONT PLACE [cmd_actor_stats]";
+	category_name  = "zurb";
+
+	[cmd_actor_stats] { }
+	[gizmo] { diffuse_color=1.000000,0.600000,1.000000; texture=; }
+}
+
+[t:template,n:cmd_camera_command]
+{
+	specializes = cmd_const;
+	doc			= cmd_camera_command;
+	extra_doc	= [cmd_camera_command];
+    category_name       = "nis";
+
+	gizmo:model = m_i_glb_object-camera;
+
+	[cmd_camera_command] { }
+}
+
+[t:template,n:cmd_camera_waypoint]
+{
+	specializes = cmd_const;
+	doc			= cmd_camera_waypoint;
+	extra_doc	= [cmd_camera_waypoint];
+	category_name       = "nis";
+
+	[cmd_camera_waypoint]	{  }
+
+	gizmo:model = m_i_glb_object-camera;
+	gizmo:scale = 0.5;
+}   
+    
+[t:template,n:cmd_texture] // not currently used. -ET
+{ 
+	specializes = command;
+	doc			= cmd_texture;
+	extra_doc	= [cmd_texture];
+	category_name       = "zurb";
+  
+	[cmd_texture]	{  }
+}
+
+[t:template,n:cmd_animation_command]
+{
+	specializes = cmd_const;
+	doc			= cmd_animation_command;
+	extra_doc	= [cmd_animation_command];
+	category_name       = "zurb";
+
+	[cmd_animation_command]	{}
+}
+
+[t:template,n:animate_object]
+{
+    specializes 	= cmd_const;
+	doc				= "animate object";
+	category_name	= "zurb";
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.5, 0.0, 0.5;
+		use_diffuse_color	=	true;
+	}
+	
+	[animate_object] {}
+}
+
+[t:template,n:cmd_delete_object]
+{
+    specializes 	= cmd_const;
+	doc				= "delete object";
+	extra_doc		= "deletes object in data1 of activate message";
+
+	category_name	= "zurb";
+
+	[gizmo]
+	{
+		model				=	m_i_glb_object-waypoint;
+		texture				=	;
+		diffuse_color		=	0.5, 0.0, 0.5;
+		use_diffuse_color	=	true;
+	}
+	
+	[cmd_delete_object] {}
+}
+
+[t:template,n:cmd_auto_save]
+{
+	specializes = cmd_const;
+	doc			= cmd_auto_save;
+	extra_doc	= [cmd_auto_save];
+	category_name       = "zurb";
+
+	[cmd_auto_save]	{}
+}
+
+[t:template,n:cmd_screen_report]
+{
+	specializes = cmd_const;
+	doc			= cmd_screen_report;
+	extra_doc	= [cmd_screen_report];
+	category_name       = "zurb";
+
+	[screen_report]	{}
+}
+
+//////////////////////////////////////////////////////////////////////////////

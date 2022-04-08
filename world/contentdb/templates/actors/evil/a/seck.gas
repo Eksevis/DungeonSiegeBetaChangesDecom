@@ -1,0 +1,1330 @@
+[t:template,n:base_seck]
+{
+	doc = "Seck base template";
+	specializes = actor_evil;
+	[aspect]
+	{
+		[voice]
+		{
+			[die]			{ * = s_e_die_seck; }
+			[enemy_spotted]	{ * = s_e_call_seck_SED; }
+			[hit_critical]	{ * = s_e_hit_seck_SED; }
+			[hit_glance]	{ * = s_e_hit_seck_SED; }
+			[hit_solid]		{ * = s_e_hit_seck_SED; }
+		}
+	}
+	[body]
+	{
+		min_move_velocity = 3.0;
+		avg_move_velocity = 3.590000;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine2;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_spine2;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sk_fs;
+			[chore_attack]
+			{
+				chore_stances = 0,1,2,6;
+				skrit = select_attack;
+				[anim_files]
+				{
+					0000 = at;
+					0001 = at-02;
+					qffg = dff;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0,1,2,6;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0,1,2,6;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0,1,2,6;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00=mg;
+					01=mg-02;
+				}
+			}
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+				[anim_files]
+				{
+					staf = a_c_eam_sk_fs0_dsf-02;
+					nost = a_c_eam_sk_fs0_dsf-03;
+					magc = a_c_eam_sk_fs0_mg-02;
+					slep = a_c_eam_sk_fs0_ds;
+					wake = a_c_eam_sk_fs0_ds;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0,1,2,6;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}	
+		}
+	}
+	[common]
+	{
+		membership = monster, seck;
+	}
+	[mind]
+	{
+		jat_brain						= world\ai\jobs\common\brain_hero.skrit
+			?actor_creates_own_party		= true
+			&actor_joins_existing_party		= true
+			&party_template					= "party_seck";
+
+		jat_fidget						= world\ai\jobs\common\job_fidget.skrit
+			?curious						= 0.75
+			&meander						= true
+			&interest						= interest
+			&still							= false;
+
+		melee_engage_range = 15;
+		personal_space_range = 0.7;
+		ranged_engage_range = 15.0;
+		sight_range = 15.0;
+	}
+	[physics]
+	{
+		explode_when_killed = true;
+		break_effect = seck_swap;
+	}
+}
+[t:template,n:seck_archer_base]
+{
+	category_name = "evil_a";
+	doc = "Seck Archer";
+	specializes = base_seck;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	25, 0;
+			intelligence =  19, 0;
+			dexterity =  	30, 0;
+			ranged =  		25, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 73000;
+		life = 780;
+		max_life = 780;
+		mana = 26;
+		max_mana = 26;
+		model = m_c_eam_sa_pos_1;
+		[textures] { 0=b_c_eam_sa; }
+	}
+
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 160;
+		damage_min = 120;
+	}
+	[common] { screen_name="Seck Archer"; }
+	[defend] { defense=350; }
+	[generator_in_object]
+	{
+		spawn_chance = 1.0;
+		child_template_name = seck_archer_body;
+	}
+	[inventory]
+	{
+		selected_active_location = IL_ACTIVE_RANGED_WEAPON;
+		[pcontent]
+		{
+			[oneof*]
+			{
+				es_shield_hand = bw_un_seck_avg;
+			}
+
+   			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.25;
+					il_main = #*/84-128;
+					il_main = #armor/215-415;
+				}
+				[oneof*]
+				{
+	            	chance = 0.004;
+	                il_main = #weapon/-rare(1)/128-140;
+	                il_main = #armor/-rare(1)/410-436;
+                    il_main = #*/-rare(1)/128-140;
+                }
+				[oneof*]
+				{
+                	chance = 0.002;
+	                il_main = #weapon/-unique(2)/128-140;
+	                il_main = #armor/-unique(2)/410-436;
+                    il_main = #*/-unique(2)/128-140;
+	            }
+				[gold*]
+				{
+					chance = 0.125;
+					max = 21990;
+					min = 19879;
+				}
+			}
+		}
+	}
+	[mind]
+	{
+		jat_fidget	= world\ai\jobs\common\job_fidget.skrit
+			?still	= false;
+	}
+}
+[t:template,n:seck_archer]
+{
+	category_name = "evil_a";
+	doc = "seck archer";
+	specializes = seck_archer_base;
+}
+[t:template,n:seck_archer_reveal]
+{
+	category_name = "evil_a";
+	doc = "seck archer reveal";
+	specializes = seck_archer_base;
+	[hidden_reveal] {}
+	[mind]
+	{
+		jat_startup = world\ai\jobs\common\job_startup_reveal.skrit
+			?invisible = true
+			&vis_delay = 1.0;
+		sight_origin_height = 1;
+		actor_auto_fidgets = false;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				single_shot = true;
+				action* = call_sfx_script("seck_reveal");
+				condition* = receive_world_message("we_enemy_spotted");
+			}
+		}
+	}
+}
+[t:template,n:gresh]
+{
+	category_name = "evil_a";
+	doc = "Gresh, the Seck Commander";
+	specializes = base_seck;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	23, 0;
+			intelligence =  13, 0;
+			dexterity =  	13, 0;
+			melee =  		38, 0;
+            combat_magic=   38, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 24000;
+		life = 1200;
+		max_life = 1200;
+		mana = 600;
+		max_mana = 600;
+		model = m_c_eam_sc_pos_1;
+		[textures] { 0=b_c_eam_sc; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 34;
+		damage_min = 26;
+	}
+	[common]
+	{
+		screen_name="Gresh";
+		membership = monster,immune_charm,immune_control,immune_freeze,immune_polymorph,immune_align_change,immune_explode;
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("gresh_hand_swipe_right");
+				action* = call_sfx_script("gresh_hand_swipe_left");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+			[*]
+			{
+				action* = call_sfx_script("gresh_hand_swipe_right");
+				action* = call_sfx_script("gresh_hand_swipe_left");
+				condition* = receive_world_message("we_anim_sfx",2);
+			}
+		}
+	}
+	[conversation] { }
+	[defend] { defense=550; }
+	[generator_in_object]
+	{
+		spawn_chance = 1.0;
+		child_template_name = seck_grunt_body;
+	}
+	[inventory]
+	{
+    	[pcontent]
+		{
+   			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.894;
+					il_main = #*/104-118;
+					il_main = #armor/315-375;
+				}
+				
+				[oneof*]
+				{
+	            	chance = 0.004;
+	                il_main = #weapon/-rare(1)/119-129;
+	                il_main = #armor/-rare(1)/367-388;
+                    il_main = #*/-rare(1)/119-129;
+                }
+				[oneof*]
+				{
+                	chance = 0.002;
+	                il_main = #weapon/-unique(2)/119-129;
+	                il_main = #armor/-unique(2)/367-388;
+                    il_main = #*/-unique(2)/119-129;
+	            }
+				[gold*]
+				{
+					chance = 0.1;
+					max = 28102;
+					min = 24201;
+				}
+			}
+		}
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			il_active_primary_spell = spell_fireball_gresh;
+			il_spell_1=spell_fireball_gresh;
+			il_spell_2=spell_summon_gresh;
+		}
+	}
+	[mind]
+	{
+		jat_attack_object_melee	 		= world\ai\jobs\common\job_attack_object_melee.skrit
+			?persistence				= 0.0
+			&hit_multiple				= true;
+		jat_cast 						= world\ai\jobs\common\job_cast.skrit
+			?rand_spell					= true
+			&spell_chances				= "0.5,                0.5"
+			&spells						= "spell_summon_gresh, spell_fireball_gresh";
+
+		jat_fidget						= world\ai\jobs\common\job_fidget.skrit;
+
+        actor_weapon_preference			= WP_MAGIC;
+		actor_auto_switches_to_magic	= true;
+		actor_auto_switches_to_karate	= false;
+		actor_auto_switches_to_melee	= true;
+		
+		on_enemy_entered_icz_switch_to_melee = true;
+
+		melee_engage_range = 14;
+		personal_space_range = 0.7;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+	}
+
+}
+[t:template,n:seck_grunt_base]
+{
+	category_name = "evil_a";
+	doc = "Seck Grunt";
+	specializes = base_seck;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	45, 0;
+			intelligence =  17, 0;
+			dexterity =  	26, 0;
+			melee =  		35, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 82000;
+		life = 1480;
+		max_life = 1480;
+		mana = 24;
+		max_mana = 24;
+		model = m_c_eam_sg_pos_1;
+		[textures] { 0=b_c_eam_sg; }
+	}
+
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 70;
+		damage_min = 40;
+	}
+	[common]
+	{
+		screen_name="Seck Grunt";
+	}
+	[generator_in_object]
+	{
+		spawn_chance = 1.0;
+		child_template_name = seck_grunt_body;
+	}
+	[defend] { defense=600; }
+   	[inventory]
+	{
+		selected_active_location = IL_ACTIVE_MELEE_WEAPON;
+		[pcontent]
+		{
+			[oneof*]
+			{
+				es_weapon_hand = sd_un_seck_1h_avg;
+			}
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.25;
+					il_main = #*/14-18;
+					il_main = #armor/45-75;
+	                il_main = #nmagic/5-29;
+	                il_main = #cmagic/5-29;
+				}
+				[oneof*]
+				{
+	            	chance = 0.004;
+	                il_main = #weapon/-rare(1)/18-28;
+	                il_main = #armor/-rare(1)/69-88;
+                    il_main = #*/-rare(1)/18-28;
+                }
+				[oneof*]
+				{
+                	chance = 0.002;
+	                il_main = #weapon/-unique(2)/18-28;
+	                il_main = #armor/-unique(2)/69-88;
+                    il_main = #*/-unique(2)/18-28;
+	            }
+				[gold*]
+				{
+					chance = 0.125;
+					max = 22004;
+					min = 17345;
+				}
+			}
+		}
+	}
+}
+[t:template,n:seck_grunt]
+{
+	category_name = "evil_a";
+	doc = "seck grunt";
+	specializes = seck_grunt_base;
+}
+[t:template,n:seck_grunt_reveal]
+{
+	category_name = "evil_a";
+	doc = "seck grunt reveal";
+	specializes = seck_grunt_base;
+	[hidden_reveal] {}
+	[mind]
+	{
+		jat_startup = world\ai\jobs\common\job_startup_reveal.skrit
+			?invisible = true
+			&vis_delay = 1.0;
+		sight_origin_height = 1;
+		actor_auto_fidgets = false;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				single_shot = true;
+				action* = call_sfx_script("seck_reveal");
+				condition* = receive_world_message("we_enemy_spotted");
+			}
+		}
+	}
+}
+
+[t:template,n:seck_mage_base]
+{
+	category_name = "evil_a";
+	doc = "Seck Mage";
+	specializes = base_seck;
+	[actor]
+	{
+		[skills]
+		{
+			strength 		=  27, 0;
+			intelligence 	=  46, 0;
+			dexterity 		=  29, 0;
+            combat_magic 	=  39, 0;
+            nature_magic 	=  15, 0;
+		}
+		drops_spellbook = false;
+	}
+	[aspect]
+	{
+		experience_value = 55000;
+		life = 993;
+		max_life = 993;
+        mana = 120;
+        max_mana = 120;
+		model = m_c_eam_sm_pos_1;
+		[textures] { 0=b_c_eam_sm; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 171;
+		damage_min = 111;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sm_fs;
+			[chore_attack]
+			{
+				chore_stances = 5;
+				skrit = select_attack;
+				[anim_files]
+				{
+					0000 = at;
+					0001 = at-02;
+					qffg = dff;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 5;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 5;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 5;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 5;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 5;
+				skrit = select_attack;
+				[anim_files] { 00=mg; }
+			}
+		}
+		[weapon_scales]
+		{
+			as_single_melee	= 1.3, 1.3, 1.3;
+		}
+	}
+	[common]
+	{
+		screen_name="Seck Mage";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("seck_charge");
+				condition* = receive_world_message("we_anim_sfx");
+			}
+		}
+	}
+	[defend] { defense=310; }
+   	[generator_in_object]
+	{
+		spawn_chance = 1.0;
+		child_template_name = seck_mage_body;
+	}
+	[inventory]
+	{
+		[pcontent]
+		{
+			[all*]
+			{
+				es_weapon_hand = st_un_seck_mage;
+			}
+
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.55;
+					il_main = #*/114-128;
+					il_main = #armor/245-365;
+	                il_main = #nmagic/45-53;
+	                il_main = #cmagic/45-53;
+				}
+				[oneof*]
+				{
+	            	chance = 0.004;
+	                il_main = #weapon/-rare(1)/129-140;
+	                il_main = #armor/-rare(1)/360-380;
+                    il_main = #*/-rare(1)/129-140;
+                }
+				[oneof*]
+				{
+                	chance = 0.002;
+	                il_main = #weapon/-unique(2)/129-140;
+	                il_main = #armor/-unique(2)/360-380;
+                    il_main = #*/-unique(2)/129-140;
+	            }
+				[gold*]
+				{
+					chance = 0.125;
+					max = 22600;
+					min = 17999;
+				}
+			}
+		}
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			il_active_primary_spell = spell_metal_shards;
+			il_spell_1=spell_metal_shards;
+			il_spell_2=spell_summon_seck_mage;
+		}
+	}
+	[mind]
+	{
+        jat_cast 						= world\ai\jobs\common\job_cast.skrit
+			?rand_spell					= true
+			&spell_chances				= "0.5,                0.5"
+			&spells						= "spell_metal_shards, spell_summon_seck_mage";
+
+		actor_weapon_preference			= WP_MAGIC;
+		actor_auto_switches_to_magic	= true;
+		actor_auto_switches_to_karate	= false;
+		actor_auto_switches_to_melee	= true;
+
+		melee_engage_range = 8;
+		personal_space_range = 0.7;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+
+		jat_fidget	= world\ai\jobs\common\job_fidget.skrit
+			?social	= 0.45
+			&still	= false;
+
+	}
+}
+[t:template,n:seck_mage]
+{
+	category_name = "evil_a";
+	doc = "seck mage";
+	specializes = seck_mage_base;
+}
+[t:template,n:seck_mage_reveal]
+{
+	category_name = "evil_a";
+	doc = "seck mage reveal";
+	specializes = seck_mage_base;
+	[hidden_reveal] {}
+	[mind]
+	{
+		jat_startup = world\ai\jobs\common\job_startup_reveal.skrit
+			?invisible = true
+			&vis_delay = 1.0;
+		sight_origin_height = 1;
+		actor_auto_fidgets = false;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				single_shot = true;
+				action* = call_sfx_script("seck_reveal");
+				condition* = receive_world_message("we_enemy_spotted");
+			}
+		}
+	}
+}
+
+[t:template,n:seck_mage_high_base]
+{
+	category_name = "evil_a";
+	doc = "Seck High Mage";
+	specializes = base_seck;
+	[actor]
+	{
+		[skills]
+		{
+			strength 		=  27, 0;
+			intelligence 	=  46, 0;
+			dexterity 		=  29, 0;
+            combat_magic 	=  52, 0;
+            nature_magic 	=  15, 0;
+		}
+		drops_spellbook = false;
+	}
+	[aspect]
+	{
+		experience_value = 130000;
+		life = 1480;
+		max_life = 1480;
+        mana = 181;
+        max_mana = 181;
+		model = m_c_eam_sm_pos_1;
+		[textures] { 0=b_c_eam_sm-02; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 220;
+		damage_min = 180;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sm_fs;
+			[chore_attack]
+			{
+				chore_stances = 5;
+				skrit = select_attack;
+				[anim_files]d
+				{
+					0000 = at;
+					0001 = at-02;
+					qffg = dff;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 5;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 5;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 5;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 5;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 5;
+				skrit = select_attack;
+				[anim_files] { 00=mg; }
+			}
+		}
+		[weapon_scales]
+		{
+			as_single_melee	= 1.3, 1.3, 1.3;
+		}
+	}
+	[common]
+	{
+		screen_name="Seck High Mage";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("seck_charge");
+				condition* = receive_world_message("we_anim_sfx");
+			}
+		}
+	}
+	[defend] { defense=388; }
+   	[generator_in_object]
+	{
+		spawn_chance = 1.0;
+		child_template_name = seck_high_mage_body;
+	}
+	[inventory]
+	{
+		[pcontent]
+		{
+			[all*]
+			{
+				es_weapon_hand = st_un_seck_mage;
+			}
+		}
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			il_active_primary_spell = spell_metal_shards;
+			il_spell_1=spell_metal_shards;
+			il_spell_2=spell_summon_seck_elite_mage;
+		}
+	}
+	[mind]
+	{
+       jat_cast 						= world\ai\jobs\common\job_cast.skrit
+			?rand_spell					= true
+			&spell_chances				= "0.5,                0.5"
+			&spells						= "spell_metal_shards, spell_summon_seck_elite_mage";
+
+		actor_weapon_preference			= WP_MAGIC;
+		actor_auto_switches_to_magic	= true;
+		actor_auto_switches_to_karate	= false;
+		actor_auto_switches_to_melee	= true;
+
+		melee_engage_range = 8;
+		personal_space_range = 0.7;
+		ranged_engage_range = 14.0;
+		sight_range = 14.0;
+	}
+}
+[t:template,n:seck_mage_high]
+{
+	category_name = "evil_a";
+	doc = "seck mage_high";
+	specializes = seck_mage_high_base;
+}
+[t:template,n:seck_mage_high_reveal]
+{
+	category_name = "evil_a";
+	doc = "seck mage_high reveal";
+	specializes = seck_mage_high_base;
+	[hidden_reveal] {}
+	[mind]
+	{
+		jat_startup = world\ai\jobs\common\job_startup_reveal.skrit
+			?invisible = true
+			&vis_delay = 1.0;
+		sight_origin_height = 1;
+		actor_auto_fidgets = false;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				single_shot = true;
+				action* = call_sfx_script("seck_reveal");
+				condition* = receive_world_message("we_enemy_spotted");
+			}
+		}
+	}
+}
+[t:template,n:seck_archer_elite_base]
+{
+	category_name = "evil_a";
+	doc = "Seck Elite Archer";
+	specializes = base_seck;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	27, 0;
+			intelligence =  19, 0;
+			dexterity =  	40, 0;
+			ranged =  		45, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 69000;
+		life = 750;
+		max_life = 750;
+		mana = 26;
+		max_mana = 26;
+		model = m_c_eam_sa_pos_1;
+		[textures] { 0=b_c_eam_sa-02; }
+	}
+
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 190;
+		damage_min = 140;
+	}
+	[common] { screen_name="Seck Elite Archer"; }
+	[defend] { defense=510; }
+	[generator_in_object]
+	{
+		spawn_chance = 1.0;
+		child_template_name = seck_elite_archer_body;
+	}
+	[inventory]
+	{
+		selected_active_location = IL_ACTIVE_RANGED_WEAPON;
+		[pcontent]
+		{
+			[oneof*]
+			{
+				es_shield_hand = bw_un_seck_fin;
+			}
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.35;
+					il_main = #*/104-138;
+					il_main = #armor/405-465;
+	                il_main = #spell/45-56;
+				}
+				[oneof*]
+				{
+	            	chance = 0.004;
+	                il_main = #weapon/-rare(1)/122-149;
+	                il_main = #armor/-rare(1)/460-488;
+                    il_main = #*/-rare(1)/122-149;
+                }
+				[oneof*]
+				{
+                	chance = 0.002;
+	                il_main = #weapon/-unique(2)/122-149;
+	                il_main = #armor/-unique(2)/460-488;
+                    il_main = #*/-unique(2)/122-149;
+	            }
+				[gold*]
+				{
+					chance = 0.125;
+					max = 25990;
+					min = 22890;
+				}
+			}
+		}
+	}
+	[mind]
+	{
+		jat_brain						= world\ai\jobs\common\brain_hero.skrit
+			?actor_creates_own_party		= true
+			&actor_joins_existing_party		= true
+			&stop_flee_alive_party_size		= 1
+			&party_template					= "party_seck";
+
+		jat_fidget	= world\ai\jobs\common\job_fidget.skrit
+			?still		= false;
+
+		on_enemy_entered_ocz_flee 	= true;
+		on_enemy_entered_ocz_attack = false;
+		on_enemy_entered_icz_flee 	= true;
+		on_enemy_entered_icz_attack = false;
+		flee_count 					= 4;
+	}
+}
+[t:template,n:seck_archer_elite]
+{
+	category_name = "evil_a";
+	doc = "seck archer_elite";
+	specializes = seck_archer_elite_base;
+}
+[t:template,n:seck_archer_elite_reveal]
+{
+	category_name = "evil_a";
+	doc = "seck archer_elite reveal";
+	specializes = seck_archer_elite_base;
+	[hidden_reveal] {}
+	[mind]
+	{
+		jat_startup = world\ai\jobs\common\job_startup_reveal.skrit
+			?invisible = true
+			&vis_delay = 1.0;
+		sight_origin_height = 1;
+		actor_auto_fidgets = false;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				single_shot = true;
+				action* = call_sfx_script("seck_reveal");
+				condition* = receive_world_message("we_enemy_spotted");
+			}
+		}
+	}
+}
+[t:template,n:seck_guard_elite_base]
+{
+	category_name = "evil_a";
+	doc = "Seck Elite Guard";
+	specializes = base_seck;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	50, 0;
+			intelligence =  18, 0;
+			dexterity =  	27, 0;
+			melee =  		39, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 150000;
+		life = 1620;
+		max_life = 1620;
+		mana = 24;
+		max_mana = 24;
+		model = m_c_eam_sg_pos_1;
+		[textures] { 0=b_c_eam_sa-02; }
+	}
+
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 80;
+		damage_min = 45;
+	}
+	[common] { screen_name="Seck Elite Guard"; }
+	[defend] { defense=688; }
+   	[generator_in_object]
+	{
+		spawn_chance = 1.0;
+		child_template_name = seck_elite_guard_body;
+	}
+	[inventory]
+	{
+		selected_active_location = IL_ACTIVE_MELEE_WEAPON;
+		[pcontent]
+		{
+			[oneof*]
+			{
+				es_weapon_hand = sd_un_seck_1h_fin;
+			}
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.35;
+					il_main = #*/104-138;
+					il_main = #armor/405-465;
+	                il_main = #spell/45-56;
+				}
+				[oneof*]
+				{
+	            	chance = 0.004;
+	                il_main = #weapon/-rare(1)/139-151;
+	                il_main = #armor/-rare(1)/457-477;
+                    il_main = #*/-rare(1)/139-151;
+                }
+				[oneof*]
+				{
+                	chance = 0.002;
+	                il_main = #weapon/-unique(2)/139-151;
+	                il_main = #armor/-unique(2)/457-477;
+                    il_main = #*/-unique(2)/139-151;
+	            }
+				[gold*]
+				{
+					chance = 0.125;
+					max = 34280;
+					min = 27865;
+				}
+			}
+		}
+	}
+}
+[t:template,n:seck_guard_elite]
+{
+	category_name = "evil_a";
+	doc = "seck guard_elite";
+	specializes = seck_guard_elite_base;
+}
+[t:template,n:seck_guard_elite_reveal]
+{
+	category_name = "evil_a";
+	doc = "seck guard_elite reveal";
+	specializes = seck_guard_elite_base;
+	[hidden_reveal] {}
+	[mind]
+	{
+		jat_startup = world\ai\jobs\common\job_startup_reveal.skrit
+			?invisible = true
+			&vis_delay = 1.0;
+		sight_origin_height = 1;
+		actor_auto_fidgets = false;
+	}
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				single_shot = true;
+				action* = call_sfx_script("seck_reveal");
+				condition* = receive_world_message("we_enemy_spotted");
+			}
+		}
+	}
+}
+[t:template,n:seck_body]
+{
+	category_name = "evil_a";
+	doc = "Lightweight dead seck.";
+	specializes = non_interactive;
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("seck_warrior_flames");
+				condition* = receive_world_message("we_constructed");
+			}
+			[*]
+			{
+				action* = call_sfx_script("seck_explosion");
+				condition* = receive_world_message("we_anim_die");
+			}
+		}
+	}
+}
+[t:template,n:seck_grunt_body]
+{
+	category_name = "evil_a";
+	doc = "Lightweight dead seck grunt.";
+	specializes = seck_body;
+	[aspect]
+	{
+		model = m_c_eam_sg_pos_1;
+		[textures] { 0=b_c_eam_sg; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sk_fs;
+			[chore_default]
+			{
+				chore_stances = 0,1,2,6;
+				skrit=select_transition;
+				[anim_files] { 00=di; }
+			}
+		}
+	}
+	[self_destruct]
+	{
+		hide_time = 1.15;
+		delete_time = 5.15;
+		explode = true;
+		delete_msg = WE_INVALID;
+	}
+}
+[t:template,n:seck_archer_body]
+{
+	category_name = "evil_a";
+	doc = "Lightweight dead seck archer.";
+	specializes = seck_body;
+	[aspect]
+	{
+		model = m_c_eam_sa_pos_1;
+		[textures] { 0=b_c_eam_sa; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sk_fs;
+			[chore_default]
+			{
+				chore_stances = 0,1,2,6;
+				skrit=select_transition;
+				[anim_files] { 00=di; }
+			}
+		}
+	}
+	[self_destruct]
+	{
+		hide_time = 1.15;
+		delete_time = 5.15;
+		explode = true;
+		delete_msg = WE_INVALID;
+	}
+}
+[t:template,n:seck_mage_body]
+{
+	category_name = "evil_a";
+	doc = "Lightweight dead seck mage.";
+	specializes = seck_body;
+	[aspect]
+	{
+		model = m_c_eam_sm_pos_1;
+		[textures] { 0=b_c_eam_sm; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sm_fs;
+			[chore_default]
+			{
+				chore_stances = 5;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+		}
+	}
+	[self_destruct]
+	{
+		hide_time = 1.05;
+		delete_time = 5.05;
+		explode = true;
+		delete_msg = WE_INVALID;
+	}
+}
+[t:template,n:seck_high_mage_body]
+{
+	category_name = "evil_a";
+	doc = "Lightweight dead seck grunt.";
+	specializes = seck_body;
+	[aspect]
+	{
+		model = m_c_eam_sm_pos_1;
+		[textures] { 0=b_c_eam_sm-02; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sm_fs;
+			[chore_default]
+			{
+				chore_stances = 5;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+		}
+	}
+	[self_destruct]
+	{
+		hide_time = 1.05;
+		delete_time = 5.05;
+		explode = true;
+		delete_msg = WE_INVALID;
+	}
+}
+[t:template,n:seck_elite_guard_body]
+{
+	category_name = "evil_a";
+	doc = "Lightweight dead seck grunt.";
+	specializes = seck_body;
+	[aspect]
+	{
+		model = m_c_eam_sg_pos_1;
+		[textures] { 0=b_c_eam_sa-02; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sk_fs;
+			[chore_default]
+			{
+				chore_stances = 0,1,2,6;
+				skrit=select_transition;
+				[anim_files] { 00=di; }
+			}
+		}
+	}
+	[self_destruct]
+	{
+		hide_time = 1.15;
+		delete_time = 5.15;
+		explode = true;
+		delete_msg = WE_INVALID;
+	}
+}
+[t:template,n:seck_elite_archer_body]
+{
+	category_name = "evil_a";
+	doc = "Lightweight dead seck grunt.";
+	specializes = seck_body;
+	[aspect]
+	{
+		model = m_c_eam_sa_pos_1;
+		[textures] { 0=b_c_eam_sa-02; }
+	}
+	[body]
+	{
+		initial_chore = chore_default;
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_sk_fs;
+			[chore_default]
+			{
+				chore_stances = 0,1,2,6;
+				skrit=select_transition;
+				[anim_files] { 00=di; }
+			}
+		}
+	}
+	[self_destruct]
+	{
+		hide_time = 1.15;
+		delete_time = 5.15;
+		explode = true;
+		delete_msg = WE_INVALID;
+	}
+}

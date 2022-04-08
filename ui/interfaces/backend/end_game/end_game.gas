@@ -1,0 +1,92 @@
+[end_game]
+{
+  b interface = true;
+  b modal = true;
+	centered = dialog_box_eg_bg;
+
+	[t:button,n:button_eg_close]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = button_4;
+	  i draw_order = 5;
+		rect = 262,319,362,335;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(eg_close);
+		}
+
+		[t:text,n:text_eg_ok]
+		{
+		  f alpha = 1.000000;
+		  b common_control = false;
+			common_template = ;
+		  i draw_order = 9;
+		  i font_color = -1;
+		  i font_size = 0;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 270,320,354,334;
+			text = "OK";
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_eg_exit]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = x_button;
+	  i draw_order = 6;
+		rect = 486,134,502,150;
+		texture = b_gui_cmn_button_x_up;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+
+		[messages]
+		{
+			onbuttonpress = notify(eg_close);
+		}
+	}
+	[t:dialog_box,n:dialog_box_eg_bg]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = cpbox_wide;
+	  i draw_order = 1;
+		rect = 122,131,507,355;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:dialog_box_eg_tb_bg]
+	{
+	  f alpha = 1.000000;
+	  b common_control = true;
+		common_template = cpbox;
+	  i draw_order = 2;
+		rect = 143,145,479,309;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text_box,n:text_box_eg]
+	{
+	  f alpha = 1.000000;
+	  b center_height = true;
+	  b common_control = false;
+		common_template = ;
+	  i draw_order = 7;
+	  b fixed_location = true;
+	  b has_slider = false;
+	  i max_height = 0;
+	  i max_width = 0;
+		rect = 146,148,475,305;
+	  f scroll_rate = 0.000000;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		text = "Congratulations, you have defeated Gom, and have completed the single player game. You can continue playing, or you can import your character from your latest saved game into a multiplayer session.";
+	}	
+}

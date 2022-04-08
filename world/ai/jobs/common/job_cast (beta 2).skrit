@@ -1,0 +1,783 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_cast.skrit
+
+	Author(s)	: Bartosz Kijanka, Eric Tams
+
+	Purpose		: This is a basic cast the darn spell job.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+// properties
+
+// $$ think up a good way to have percent chance to cast a spell.
+
+property	float	cautious_chance$				= 0.00		doc = "chance to cautiously approach. NOTE: I can't this to look good. Might just not work for ranged attackers.";
+property	float	min_cautious_distance$			= -1.0		doc = "Minimum distance from the enemy for a cautious approach. (leave -1 to use spell cast range.)";
+property	float	cautious_approach_distance$		= 1.50		doc = "distance to approach target.";
+property	float	cautious_down_time$				= 2.00		doc = "Time spent waiting to approach target.";
+
+property	float	persistence$					= 1.0		doc = "chance that this monster will continue to try to attack even if the target is beyond range.";
+
+property	bool	no_moveturn$					= false		doc = "Don't allow this actor to turn or move when casting";
+property	bool	rand_spell$						= false		doc = "Randomly choose a spell from those available.";
+property	bool	check_range$					= false		doc = "Make sure the spell is in range when choosing a spell.";
+property	string	spell_chances$								doc = "Comma delimited string containing chances to cast different spells if the exist, use with rand_spell$";
+property	string	spells$										doc = "Comma delimited string containing template names coresponding to the chances in spell_chances$";
+
+property	bool	spell_by_range$					= false		doc = "choose a spell based on the range to the target";
+
+property	bool	rand_target$					= false		doc = "Randomly choose a target from those visible.";
+property	bool	use_base_duration$				= true		doc = "Use the base cast duration instead of the duration of the spcific animation.";
+property	bool	use_self_cast_anim$				= false		doc = "Use an animation when casting on self.";
+property	bool	no_switch_on_self$				= true		doc = "Don't try selecting a random spell when casting on self.";
+
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Go		m_Spell$;
+int		m_Anim$;
+
+Goid	m_Target$;
+float	m_RangeToTarget$;
+bool	cautious_attack$	= false;
+float 	cast_loop_duration$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#include "k_job_c_mcp_attack_utils" 
+#include "k_job_c_attack_utils"
+#include "k_job_c_mcp_fidget_utils" 
+
+////////////////////////////////////////////////////////////////////////////////
+// helper functions
+
+////////////////////////////////////////////////////////////////////////////////
+// get random spell.
+
+void GetSpell$( )
+{
+	////////////////////////////////////////
+	//	get random spell
+
+	m_Spell$ = NULL;
+
+	m_Mind$.TempQtColl1.Clear;
+	m_Mind$.TempQtColl1.Add( QT_SPELL );
+	m_Mind$.TempQtColl1.Add( QT_LIFE_DAMAGING );
+	
+	m_Mind$.TempGopColl1.Clear;
+
+	Go m_SpellBook$ = m_Go$.Inventory.GetEquipped( ES_SPELLBOOK );
+	if ( m_SpellBook$ != NULL )
+	{	
+		m_SpellBook$.Inventory.ListItems( m_Mind$.TempQtColl1, IL_ALL_SPELLS, m_Mind$.TempGopColl1 );
+	}
+	
+	int trys$ = 0;
+	int max_trys$ = 3;
+	
+	while ( ( m_Spell$ == NULL ) && ( trys$ < max_trys$ ) )
+	{ 
+		if ( m_Mind$.TempGopColl1.Size() > 0 )
+		{
+			if( StringTool.IsEmpty( spell_chances$ ) )
+			{
+				int temp$ = Math.RandomInt( 0 , m_Mind$.TempGopColl1.Size() - 1 );
+				m_Spell$ = m_Mind$.TempGopColl1.Get( temp$ );
+			}
+			else
+			{
+//				report.genericf("found %d spells, and %d probabilities\n",m_Mind$.TempGopColl1.Size(), StringTool.GetNumDelimitedValues( spell_chances$ ));
+				bool	found$	= false;
+				float	spell$	= Math.RandomFloat( 1 );
+				float	chance$	= 0.0;
+				string	spell_template$;
+				int 	i$		= 0;
+				int 	iend$	= Math.MinInt( m_Mind$.TempGopColl1.Size(), StringTool.GetNumDelimitedValues( spell_chances$ ) );
+			
+				while( ( i$ < iend$) && !found$ )
+				{
+					chance$ += StringTool.GetDelimitedFloat( spell_chances$, i$ );
+					if( spell$ < chance$ )
+					{
+						found$ = true;
+						spell_template$ = StringTool.GetDelimitedString( spells$, i$ );
+//						report.genericf("found spell %g, on %g with template %s\n\n",spell$, chance$, spell_template$);
+					}
+					else
+					{
+//						report.genericf("looking for spell %g, on %g\n\n",spell$, chance$);
+						i$ += 1;
+					}
+				}
+				if( found$ )
+				{
+					i$		= 0;
+					int 	iend$	= Math.MinInt( m_Mind$.TempGopColl1.Size(), StringTool.GetNumDelimitedValues( spells$ ) );
+					found$	= false;
+					while( ( i$ < iend$) && !found$ )
+					{
+						Go TempSpell$ = m_Mind$.TempGopColl1.Get( i$ );
+						if( TempSpell$ != NULL )
+						{
+							if ( StringTool.SameNoCase( TempSpell$.templatename, spell_template$ ) )
+							{
+								m_Spell$ = TempSpell$;
+								found$ = true;
+							}
+						}
+						i$ += 1;
+					}
+				}
+			}
+			
+			if( check_range$ && ( m_Spell$ != NULL ) )
+			{
+				if( !m_Mind$.IsInSpellRange( m_Target$.Go, m_Spell$ ) )
+				{
+					m_Spell$ = NULL;
+				}
+			}
+		}
+		trys$ += 1;     
+	} 
+	
+	if( m_Spell$ == NULL )
+	{
+		m_Spell$ = m_Job$.GoalModifier.Go;
+	} 
+	else if ( m_Go$.Actor.HasGenericState( m_Spell$.Magic.StateName ) ) 
+	{
+		m_Spell$ = m_Job$.GoalModifier.Go;
+	} 
+	else if ( m_Go$.Actor.HasGenericState( m_Spell$.Magic.StateName ) ) 
+	{
+		m_Spell$ = m_Job$.GoalModifier.Go;
+	} 
+
+	report.genericf( "m_Spell$ = 0x%08x (1)\n", m_Spell$ );
+
+	if( m_Spell$ == NULL )
+	{
+		report.errorf( "'%s' - job_cast picked NULL spell.  Go scid = 0x%08x (1)", m_Go$.TemplateName, m_Go$.Scid );
+	}
+
+	m_Anim$	= m_Spell$.Magic.CastSubAnimation; 	
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// get spell by range
+
+// $$ good one to move into global utils file -bk
+void SelectSpell$( )
+{
+	////////////////////////////////////////
+	//	get spell by range
+
+	m_Spell$ = NULL;
+
+	m_Mind$.TempQtColl1.Clear;
+	m_Mind$.TempQtColl1.Add( QT_SPELL );
+	m_Mind$.TempQtColl1.Add( QT_LIFE_DAMAGING );
+	
+	m_Mind$.TempGopColl1.Clear;
+
+	Go m_SpellBook$ = m_Go$.Inventory.GetEquipped( ES_SPELLBOOK );
+	if ( m_SpellBook$ != NULL )
+	{	
+		m_SpellBook$.Inventory.ListItems( m_Mind$.TempQtColl1, IL_ALL_SPELLS, m_Mind$.TempGopColl1 );
+	}
+	
+	if ( m_Mind$.TempGopColl1.Size() > 0 )
+	{
+		int		i$				= 0;
+		int		iend$			= m_Mind$.TempGopColl1.Size();
+		float	best_distance$	= 0.0;
+		go		best_spell$;
+			
+		while( i$ < iend$ )
+		{
+			Go temp_spell$ = m_Mind$.TempGopColl1.Get( i$ );
+			if( m_Mind$.IsInSpellRange( m_Target$.Go, temp_spell$ ) && temp_spell$.Magic.IsCastableOn( m_Target$.Go ) )
+			{
+				if( ( best_spell$ == NULL ) || ( best_distance$ > temp_spell$.magic.CastRange ) )
+				{
+					best_spell$ = temp_spell$;
+					best_distance$ = temp_spell$.magic.CastRange;
+				}
+			}
+			i$ += 1;	
+		}
+		m_Spell$ = best_spell$;
+	}
+
+	if( m_Spell$ == NULL )
+	{
+		m_Spell$ = m_Job$.GoalModifier.Go;
+	}
+	else if ( m_Go$.Actor.HasGenericState( m_Spell$.Magic.StateName ) ) 
+	{
+		m_Spell$ = m_Job$.GoalModifier.Go;
+	}
+	
+	report.genericf( "m_Spell$ = 0x%08x (2)\n", m_Spell$ );
+
+	if( m_Spell$ == NULL )
+	{
+		report.errorf( "'%s' - job_cast picked NULL spell.  Go scid = 0x%08x (2)", m_Go$.TemplateName, m_Go$.Scid );
+	}
+
+	report.genericf("Selected spell: %s with range: %g to toast: %s who is: %g meters away.\n",m_Spell$.templatename, m_Spell$.magic.CastRange, m_Target$.Go.templatename, m_Mind$.GetDistance( m_Target$.Go ));	
+	m_Anim$	= m_Spell$.Magic.CastSubAnimation; 	
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// get random target.
+
+void GetTarget$( )
+{
+	////////////////////////////////////////
+	//	get random spell
+	m_Mind$.TempQtColl1.Clear;
+	m_Mind$.TempQtColl1.Add( QT_ENEMY );
+	m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+	m_Mind$.TempQtColl1.Add( QT_ATTACKABLE );
+
+	m_Mind$.TempGopColl1.Clear;
+	
+	if( m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.TempGopColl1 ) )
+	{
+		if( m_Mind$.TempGopColl1.size > 0 )
+		{
+			m_Target$ = m_Mind$.TempGopColl1.Get( Math.RandomInt( m_Mind$.TempGopColl1.size - 1 ) ).Goid;
+		}
+	}
+	
+	if( !m_Target$.IsValid )
+	{
+		m_Target$ = m_Job$.GoalObject;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+	m_Spell$ 	= job$.GoalModifier.Go;
+	m_Anim$		= job$.GoalModifier.Go.Magic.CastSubAnimation;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$ = job$.GoalObject;
+
+	if ( m_Job$.Origin == AO_HUMAN )
+	{
+		m_Go$.SPlayVoiceSound( "order_cast", false);
+	}
+
+	if( ( m_Target$ != m_Go$.goid ) && no_switch_on_self$ )
+	{
+		if( rand_target$ )
+		{
+			GetTarget$();
+		}
+
+		if( spell_by_range$ )
+		{
+			SelectSpell$();
+		}
+		else if( rand_spell$ )
+		{
+			GetSpell$();
+		}
+	}
+
+	if( m_Spell$ == NULL )
+	{
+		report.errorf( "'%s' - job_cast picked NULL spell.  Go scid = 0x%08x (3)", m_Go$.TemplateName, m_Go$.Scid );
+	}
+
+	if( !m_Spell$.Magic.IsCastableOn( m_Target$.Go ) )
+	{
+		SetState Exiting$;
+	}
+	else
+	{
+		ResetPathFindingParameters$();
+		SetState( Begin$ );
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	global message handling
+trigger OnWorldMessage$( WE_KILLED             ) { SetState CleaningUpAndExiting$; }
+trigger OnWorldMessage$( WE_ENGAGED_INVALID    ) { SetState CleaningUpAndExiting$; }
+trigger OnWorldMessage$( WE_ENGAGED_KILLED     ) { SetState CleaningUpAndExiting$; }
+trigger OnWorldMessage$( WE_ENGAGED_HIT_KILLED ) { SetState CleaningUpAndExiting$; }
+trigger OnWorldMessage$( WE_MCP_INVALIDATED    ) { SetState Exiting$;              }
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Begin$
+{
+	////////////////////////////////////////////////////////////////////////////////
+	//	check standing orders
+
+	event OnEnterState$
+	{
+		bool exit$ = true;
+
+		if( m_Mind$.MovementOrders == MO_HOLD && !m_Job$.IsUserAssigned() )
+		{
+			if( m_Target$.Go == m_Go$ )
+			{
+					exit$ = false;
+					SetState RequestAction$;
+					return;
+			}
+			else if( m_Mind$.IsInSpellRange( m_Target$.Go, m_Spell$ ) )
+			{
+				if( m_Mind$.IsLosClear( m_Target$.Go ) || !m_Spell$.Magic.RequiresLineOfSight )
+				{
+					exit$ = false;
+					SetState RequestAction$;
+					return;
+				}
+			}
+		}
+		else if ( m_Mind$.CombatOrders == CO_HOLD && !m_Job$.IsUserAssigned() )
+		{
+		}
+		else
+		{
+			exit$ = false;
+			if( m_Target$ == m_Go$.Goid )
+			{
+				SetState CastOnSelf$;
+				return;
+			}
+			else
+			{
+				if( m_Spell$.Magic.RequiresLineOfSight )
+				{
+					SetState ApproachingLOSPoint$;
+					return;
+				} 
+				else
+				{
+					SetState RequestAction$;
+					return;
+				}
+			}
+		}
+
+		if( exit$ )
+		{
+			SetState Exiting$;
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state ApproachingLOSPoint$
+{
+	event OnEnterState$
+	{
+		if( m_Target$.Go == m_Go$ )
+		{
+			SetState( RequestAction$ );
+			return;
+		}
+		else if( m_Mind$.IsLosClear( m_Target$.Go ) )
+		{
+			SetState( RequestAction$ );
+			return;
+		}
+		else
+		{
+			if( AIQuery.FindClearLosPoint( m_Go$, m_Target$.Go, 25, Math.PiHalf*0.5, m_Mind$.TempPos1 ) )
+			{
+				m_RangeToTarget$ = 0;
+				eReqRetCode ret$ = MCPManager.MakeRequest( m_Go$.Goid, PL_APPROACH, m_Mind$.TempPos1, m_RangeToTarget$ );
+
+				report.ReportF(	"aimove","[%s] ApproachingLOSPoint (attack object ranged) [%s] returned [%s]\n",
+								m_Go$.TemplateName,
+								MakeSiegePosString(m_Mind$.TempPos1),
+								ToString(ret$) );
+
+				
+				if( RequestFailed(ret$) )
+				{
+					SetState( Exiting$ );
+				}
+				else
+				{
+					SetState( RequestAction$ );
+					return;
+				}
+			}
+			else
+			{
+				SetState( Exiting$ );
+			}
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastOnSelf$
+{
+	transition
+	{
+		-> CastAndFollowThrough$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> CastWithoutFireEvent$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		m_Job$.EnterAtomicState( 1.5 );
+
+		if( HaveEnoughManaToCast$( m_Go$, m_Spell$, m_Go$ ) )
+		{
+			if ( use_self_cast_anim$ )
+			{
+				MCPManager.MakeRequest( m_Go$.Goid, PL_CAST, m_Anim$ );
+			}
+			else
+			{	
+				MCPManager.MakeRequest( m_Go$.Goid, PL_CAST );
+			}
+				
+		}
+		else
+		{
+			report.reportf( "aimove", "'%s' not enough mana to cast spell.\n", m_Go$.TemplateName );
+			SetState( Exiting$ );
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state RequestAction$
+{
+	transition
+	{
+		-> RequestAction$:					OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+	event OnEnterState$
+	{
+		if( m_Job$.EndRequested() )
+		{
+			SetState( Exiting$ );
+			return;
+		}
+
+		if( HaveEnoughManaToCast$( m_Go$, m_Spell$, m_Target$.Go ) )
+		{
+			if( cautious_attack$ )
+			{
+				cautious_attack$ = false;
+				SetState DownTime$;
+				return;
+			}
+
+			eAnimStance stance$ = m_Go$.inventory.animstance;
+	 		
+	 		int num_anims$ = m_Go$.Aspect.AspectHandle.Blender.GetNumSubAnims(CHORE_MAGIC,stance$);
+				
+			if( num_anims$ < m_Anim$ )
+			{
+				m_Anim$ = 0;
+			}
+
+			cast_loop_duration$ = m_Spell$.Magic.CastReloadDelay;
+			if( use_base_duration$ )
+			{
+				cast_loop_duration$ += m_Go$.Aspect.AspectHandle.Blender.GetBaseDuration(CHORE_MAGIC,stance$);
+			}
+			else
+			{
+				cast_loop_duration$ += m_Go$.Aspect.AspectHandle.Blender.GetDuration(CHORE_MAGIC,stance$,m_Anim$);
+			}
+
+			report.reportf( "aiskrit", "%s: duration of cast: %g\n",m_Go$.TemplateName,cast_loop_duration$ );
+			
+			eReqRetCode ret$;
+			
+			float distance$ = ( min_cautious_distance$ > 0 ) ? min_cautious_distance$ : m_Spell$.Magic.CastRange;
+			
+			if( ( cautious_chance$ > Math.RandomFloat(1) ) && ( distance$ < m_Mind$.GetDistance( m_Target$.Go ) ) )
+			{
+				// $ need to approach the targets position, not the target. don't want any head to head messages since we aren't going to attack yet. -ET
+				
+				m_RangeToTarget$ = m_Mind$.GetDistance( m_Target$.Go ) - cautious_approach_distance$;
+				ret$ = MCPManager.MakeRequest(	m_Go$.Goid, 
+												PL_APPROACH, 
+												m_Target$.Go.Placement.Position, 
+												m_RangeToTarget$ );
+
+				cautious_attack$ = true;
+				m_Job$.SetTimer( m_Mind$.SensorScanPeriod );						   	
+			}
+			else
+			{
+				eReqFlag reqFlags$ = ( m_Mind$.MovementOrders == MO_HOLD && !m_Job$.IsUserAssigned() ) ? ( no_moveturn$? REQFLAG_NOMOVETURN : REQFLAG_NOMOVE ) : REQFLAG_DEFAULT;
+
+				m_RangeToTarget$ = m_Spell$.Magic.CastRange;
+				ret$ = MCPManager.MakeRequest(	m_Go$.Goid,
+												PL_CAST_ON_OBJECT,
+												cast_loop_duration$,
+												m_Anim$,
+												m_Target$,
+												m_LookAhead$, 
+												m_MaxApproachTime$,
+												m_RangeToTarget$,
+												reqFlags$ );
+	
+				report.ReportF( "aimove", "[%s] PL_CAST_ON_OBJECT [%s] returned [%s]\n",
+							 	m_Go$.TemplateName,
+								m_Target$.go.TemplateName,
+								ToString(ret$) );
+			}
+
+			if( RequestFailed(ret$) )
+			{
+				SetState( Exiting$ );
+				return;
+			}
+			else if (ret$ == REQUEST_OK_BEYOND_RANGE)
+			{
+//				report.generic("I'm too far.\n");	
+				if( persistence$ < Math.RandomFloat(1) )
+				{
+					report.reportf( "aiskrit", "%s: giving up magic attack to find a new target.\n",m_Go$.TemplateName );
+					m_Job$.MarkForDeletion( JR_OK );
+					return;;
+				}
+				
+				SetState( MovingCloser$ );
+				return;
+			}
+			else if (ret$ == REQUEST_OK_CROWDED)
+			{
+				// bail if this is a player, the player should be able to attack, not run around trying to look pretty. -ET
+				if( m_Go$.Player.Controller == PC_HUMAN )
+				{
+					SetState( MovingCloser$ );
+					return;
+				}
+				
+				// finding a new point.
+				
+				if( AIQuery.FindSpotRelativeToSource(	m_Go$,
+														m_Target$.Go,
+														false,
+														2.5,
+														4.5,
+														70,
+														70,
+														m_Mind$.PersonalSpaceRange * 2.0,
+														m_Mind$.TempPos1,
+														false ) )
+				{
+//					report.generic("I'm trying to find a new point.\n");
+					MCPManager.Flush(m_Go$.Goid, .5);
+					m_RangeToTarget$ = 1;
+					eReqRetCode ret$ = MCPManager.MakeRequest( m_Go$.Goid, PL_APPROACH, m_Mind$.TempPos1, m_RangeToTarget$ );
+					m_Job$.SetTimer( .1 );
+				}
+				else
+				{
+					SetState( MovingCloser$ );
+					return;
+				}
+			}
+			else // (ret$ == REQUEST_OK)
+			{
+				if( !cautious_attack$ )
+				{
+					SetState( ContinueAction$ );
+					return;
+				}
+			}
+		}
+		else
+		{
+			report.reportf( "aimove", "'%s' not enough mana to cast spell.\n", m_Go$.TemplateName );
+			SetState( Exiting$ );
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	 
+state ContinueAction$
+{
+	transition
+	{
+		-> CastAndFollowThrough$:	OnWorldMessage( WE_ANIM_WEAPON_FIRE );
+		-> CastWithoutFireEvent$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+	
+	trigger OnWorldMessage$( WE_MCP_FACING_LOCKEDON )
+	{
+		m_Job$.EnterAtomicState( cast_loop_duration$ );
+		SendWorldMessage( WE_REQ_CAST_CHARGE, m_Go$.goid, m_Spell$.goid );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+state DownTime$
+{
+	event OnEnterState$
+	{
+		m_Job$.LeaveAtomicState();
+
+		StartFidgetIfRequired$();
+		This.CreateTimer(1, cautious_down_time$);
+	}
+	
+	Trigger OnWorldMessage$( WE_ANIM_DONE )
+	{
+		StartFidgetIfRequired$();
+	}
+	
+	transition
+	{
+		-> RequestAction$:					OnTimer( 1 );
+		-> RequestAction$:					OnWorldMessage( WE_DAMAGED );
+		-> RequestAction$:					OnWorldMessage( WE_MCP_MUTUAL_DEPENDANCY );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastWithoutFireEvent$	// $$$ hack hack.  this should not be necessary if the animation keys were correct.  remove later. -bk
+{
+	event OnEnterState$
+	{
+		m_Spell$.Magic.SCast( m_Mind$.GetEngagedObject.GetGo );
+		SetState( CastAgain$ );
+		return;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastAndFollowThrough$
+{
+
+	transition
+	{
+		-> CastAgain$: 		OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Target$ != m_Go$.goid )
+		{
+			// only actually launch the spell if the target is still in LOS
+			if( !m_Mind$.IsLosClear( m_Target$.Go ) && m_Spell$.Magic.RequiresLineOfSight )
+			{
+				return;
+			}
+		}
+		m_Spell$.Magic.SCast( m_Mind$.GetEngagedObject.GetGo );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastAgain$
+{
+	event OnEnterState$
+	{
+		if( m_Spell$.Goid.IsValid() == false )
+		{
+			SetState Exiting$;
+		}
+		else if( m_Spell$.Magic.IsOneShot || !HaveEnoughManaToCast$( m_Go$, m_Spell$, m_Target$.Go ) )
+		{
+			SetState Exiting$;
+		}
+		else
+		{
+			if( rand_target$ )
+			{
+				GetTarget$();
+			}
+		
+			if( spell_by_range$ )
+			{
+				SelectSpell$();
+			}
+			if( rand_spell$ )
+			{
+				GetSpell$();
+			}
+			SetState Begin$;
+			return;
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CleaningUpAndExiting$
+{
+	transition
+	{
+		-> Exiting$:						OnWorldMessage( WE_ANIM_DONE );
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.LeaveAtomicState();
+		m_Job$.MarkForDeletion();
+	}
+}

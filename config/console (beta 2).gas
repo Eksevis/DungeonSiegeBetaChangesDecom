@@ -1,0 +1,3432 @@
+[console]
+{
+	// this block is for console configuration
+
+	[exec]
+	{
+		//////////////////////////////////////////////////////////////////////
+
+		// this block is for sets of commands that may be added into the
+		// console for the "exec" command. the "global" block is added by
+		// default.
+
+		// recommended: create a block that has either your name (lee) or the
+		// name of the demo that these scripts are for (gamestock).
+
+		[global]
+		{
+		/*
+			format:
+
+			[command_name]						// this is the name you use for "exec commandname"
+			{
+				command =	"					// (optional) the command to enter, as if you had
+							add krug_scout		// typed it into the console directly. note that
+							add gold:50			// quotes are required.
+							";
+
+				skrit	=	[[					// (optional) the skrit code to execute. be sure
+							GoDb.DeselectAll	// to wrap this stuff in [[ and ]] brackets
+							]];
+
+				doc = "Add a Krug scout and some gold";		// docs printed out when someone asks for help
+			}
+		*/
+
+			[ks]
+			{
+				command =	"add krug_scout";
+				doc = "Add a Krug scout";
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////
+
+		[scott]
+		{
+			[testskrit]
+			{
+				skrit = [[ report.genericf( "Test!\n" );  ]]
+				doc = "Test of Skrit command";
+			}
+
+			[testcommand]
+			{
+				command = "add krug_scout";
+				doc = "Test of regular command";
+			}
+
+			[testdel]
+			{
+				skrit =
+				[[
+					GoCloneReq cloneReq$ = MakeGoCloneReq( "dev_sword" );
+					cloneReq$.StartingPos = GoDb.GetFocusGo.Go.Placement.Position;
+					Goid newGoid$ = GoDb.SCloneGo( cloneReq$ );
+					GoDb.SMarkForDeletion( newGoid$ );
+				]];
+			}
+
+			[t1]
+			{
+				command = teleport cf_r0;
+				doc = "This is where all the bugs are";
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////
+
+		// create more blocks here...
+
+		/*
+		[blockname]
+		{
+		}
+		*/
+
+		//////////////////////////////////////////////////////////////////////
+
+        [pre_saved]
+		{
+//BT_R1
+			[pre_saved_01_teleport]
+			{
+				command = "teleport bt_r1";
+			}
+
+	        [pre_saved_01_buildparty]
+            {
+				command = "
+					add p naidi
+					add p ulora
+					add p gyorn
+					add p pack_mule
+							";
+			}
+			[pre_saved_01_hero]
+			{
+				command = "
+					stats str 3
+					stats dex 1
+					stats int 0
+					stats melee 6
+					stats uber 6
+					equip #melee/5-25
+					equip #body,f/5-20
+					give #melee/5-25
+					give #armor/5-20
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give scroll_resurrect
+                    			give gold:300
+							";
+			}
+			[pre_saved_01_member_01]
+			{
+				command = "
+					stats str 1
+					stats dex 2
+					stats int 0
+					stats ranged 2
+					stats uber 2
+					equip #ranged/5-25
+					equip #body,r/5-15
+					give #ranged/5-25
+					give #armor/5-15
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                   			give potion_health_small
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_01_member_02]
+			{
+				command = "
+					stats str 0
+					stats dex 0
+					stats int 1
+					stats nmagic 2
+					stats uber 2
+                    			equip #body,m/5-15
+                    			give #body,m/5-15
+					give spell_zap
+					give spell_flash
+					give spell_spark
+					give spell_dancing_zap
+					give spell_shock
+					give spell_iceshard
+					give spell_freak
+					give spell_hold_creature
+					give spell_summon_killer_gremal
+					give spell_charged_fist
+					give spell_transmute
+					give spell_magic_armor
+					give spell_iron_fist
+					give spell_accuracy
+					give spell_healing_hands
+					give spell_resurrect
+					give spell_healing_wind
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_mana_small
+                    			give potion_mana_small
+                    			give potion_mana_small
+                    			give potion_mana_small
+                    			give potion_mana_small
+                    			give potion_mana_small
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_01_member_03]
+			{
+				command = "
+					stats str 1
+					stats dex 0
+					stats int 0
+					stats melee 3
+					stats uber 3
+					equip #melee/5-15
+					equip #body,f/5-15
+					give #melee/5-15
+					give #armor/5-15
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give potion_health_small
+                    			give scroll_resurrect
+							";
+			}
+
+//NT_R1
+			[pre_saved_02_teleport]
+			{
+				command = "teleport nt_r1";
+			}
+
+	        [pre_saved_02_buildparty]
+            {
+				command = "
+					add p naidi
+					add p lorun
+					add p kroduk
+					add p pack_mule
+							";
+			}
+			[pre_saved_02_hero]
+			{
+				command = "
+					stats str 7
+					stats dex 3
+					stats int 1
+					stats melee 12
+					stats uber 12
+					equip #melee/20-35
+					equip #body,f/40-60
+					give #melee/20-35
+					give #body,f/40-60
+					give #boots/20-50
+					give #gloves/20-50
+					give #helm/20-50
+					give #shield/20-50
+					give #melee/20-35
+					give #armor/30-70
+					give #armor/40-70
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give scroll_resurrect
+                    			give gold:2100
+							";
+			}
+			[pre_saved_02_member_01]
+			{
+				command = "
+					stats str 2
+					stats dex 4
+					stats int 1
+					stats ranged 8
+					stats uber 8
+					equip #ranged/15-30
+					equip #body,r/10-30
+					give #ranged/15-30
+					give #body,r/10-30
+					give #boots/5-20
+					give #gloves/5-20
+					give #helm/5-20
+					give #shield/5-20
+					give #armor/5-30
+					give #armor/10-30
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_02_member_02]
+			{
+				command = "
+					stats str 0
+					stats dex 1
+					stats int 5
+					stats cmagic 7
+					stats uber 7
+                    			equip #body,m/5-20
+					give #body,m/5-25
+					give #boots/5-15
+					give #gloves/5-15
+					give #helm/5-15
+					give #staff/5-50
+					give #armor/50-50
+                    			give #body,m/5-15
+					give spell_summon_gargoyle
+					give spell_weaken
+					give spell_battle_healing
+					give spell_acid_cloud
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_02_member_03]
+			{
+				command = "
+					stats str 5
+					stats dex 2
+					stats int 0
+					stats melee 8
+					stats uber 8
+					equip #melee/10-25
+					equip #body,f/10-30
+					give #melee/10-25
+					give #body,f/10-40
+					give #boots/5-30
+					give #gloves/5-30
+					give #helm/5-30
+					give #shield/5-30
+					give #armor/5-50
+					give #armor/10-30
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give scroll_resurrect
+							";
+			}
+
+//MM_R1
+			[pre_saved_03_teleport]
+			{
+				command = "teleport mm_r1";
+			}
+
+	        [pre_saved_03_buildparty]
+            {
+				command = "
+					add p ulora
+					add p merik
+					add p rusk
+					add p pack_mule
+							";
+			}
+			[pre_saved_03_hero]
+			{
+				command = "
+					stats str 9
+					stats dex 4
+					stats int 1
+					stats melee 16
+					stats uber 16
+					equip #melee/40-50
+					equip #body,f/65-85
+					equip #body,f/65-85
+					give #melee/40-50
+					give #body,f/40-70
+					give #boots/40-70
+					give #gloves/40-70
+					give #helm/40-70
+					give #shield/40-70
+					give #armor/30-70
+					give #armor/65-85
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give scroll_resurrect
+                    			give gold:6000
+							";
+			}
+			[pre_saved_03_member_01]
+			{
+				command = "
+					stats str 3
+					stats dex 7
+					stats int 1
+					stats ranged 12
+					stats uber 12
+					equip #ranged/25-45
+					equip #body,r/17-37
+					equip #body,r/17-37
+					give #ranged/25-45
+					give #body,r/10-30
+					give #boots/10-25
+					give #gloves/10-25
+					give #helm/10-25
+					give #shield/10-25
+					give #armor/5-30
+					give #armor/17-37
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_03_member_02]
+			{
+				command = "
+					stats str 0
+					stats dex 1
+					stats int 7
+					stats nmagic 10
+					stats uber 10
+                    			equip #body,m/10-30
+					give #boots/5-15
+					give #gloves/5-15
+					give #helm/5-15
+					give #staff/5-50
+					give #armor/5-30
+                    			give #body,m/10-30
+					give spell_zap
+					give spell_flash
+					give spell_spark
+					give spell_dancing_zap
+					give spell_shock
+					give spell_iceshard
+					give spell_freak
+					give spell_hold_creature
+					give spell_summon_killer_gremal
+					give spell_charged_fist
+					give spell_transmute
+					give spell_magic_armor
+					give spell_iron_fist
+					give spell_accuracy
+					give spell_healing_hands
+					give spell_resurrect
+					give spell_healing_wind
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give potion_mana_medium
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_03_member_03]
+			{
+				command = "
+					stats str 7
+					stats dex 2
+					stats int 0
+					stats melee 11
+					stats uber 11
+					equip #melee/20-40
+					equip #body,f/46-66
+					give #melee/20-40
+					give #body,f/30-55
+					give #boots/25-50
+					give #gloves/25-50
+					give #helm/25-50
+					give #shield/25-50
+					give #armor/25-50
+					give #armor/46-66
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give potion_health_medium
+                    			give scroll_resurrect
+							";
+			}
+
+//TRAVELER CAMP
+			[pre_saved_04_teleport]
+			{
+				command = "teleport gc_r0";
+			}
+
+	        [pre_saved_04_buildparty]
+            {
+				command = "
+					add p phaedriel
+					add p lorun
+					add p kroduk
+					add p pack_mule
+							";
+			}
+			[pre_saved_04_hero]
+			{
+				command = "
+					stats str 13
+					stats dex 5
+					stats int 1
+					stats melee 21
+					stats uber 21
+					equip #melee/45-55
+					equip #body,f/89-109
+					equip #body,f/89-109
+					give #melee/40-55
+					give #body,f/70-100
+					give #boots/80-100
+					give #gloves/80-100
+					give #helm/80-100
+					give #shield/80-100
+					give #armor/80-100
+					give #armor/50-80
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+                    			give gold:18000
+							";
+			}
+			[pre_saved_04_member_01]
+			{
+				command = "
+					stats str 4
+					stats dex 10
+					stats int 2
+					stats ranged 17
+					stats uber 17
+					equip #ranged/45-60
+					equip #body,r/37-57
+					equip #body,r/37-57
+					give #ranged/45-60
+					give #body,r/30-50
+					give #boots/30-50
+					give #gloves/30-50
+					give #helm/30-50
+					give #shield/30-50
+					give #armor/35-55
+					give #armor/17-37
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_04_member_02]
+			{
+				command = "
+					stats str 1
+					stats dex 2
+					stats int 10
+					stats cmagic 15
+					stats uber 15
+                    			equip #body,m/10-35
+					give #boots/15-30
+					give #gloves/15-30
+					give #helm/15-30
+					give #staff/5-70
+					give #armor/15-30
+                    			give #body,m/10-35
+					give spell_firespray
+					give spell_mana_chant
+					give spell_battle_healing
+					give spell_spirit_armor
+                            		give spell_fireskull
+					give spell_explode_body
+					give spell_fire_ring
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_04_member_03]
+			{
+				command = "
+					stats str 10
+					stats dex 4
+					stats int 1
+					stats melee 16
+					stats uber 16
+					equip #melee/35-50
+					equip #body,f/68-88
+					give #melee/35-50
+					give #body,f/60-85
+					give #boots/65-80
+					give #gloves/65-80
+					give #helm/65-80
+					give #shield/65-80
+					give #armor/65-80
+					give #armor/68-88
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+
+//DOOR TO GI
+			[pre_saved_05_teleport]
+			{
+				command = "teleport gi_r1_pre_saved";
+			}
+
+	        [pre_saved_05_buildparty]
+            {
+				command = "
+					add p ulora
+					add p andiemus
+					add p gyorn
+					add p pack_mule
+							";
+			}
+			[pre_saved_05_hero]
+			{
+				command = "
+					stats str 18
+					stats dex 7
+					stats int 2
+					stats melee 29
+					stats uber 29
+					equip #melee/70-80
+					equip bd_ba_f_g_c_avg
+					give #body,f/140-160
+					give #boots/120-150
+					give #gloves/120-150
+					give #helm/120-150
+					give #melee/70-80
+					give #armor/150-170
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+                    			give gold:60000
+							";
+			}
+			[pre_saved_05_member_01]
+			{
+				command = "
+					stats str 6
+					stats dex 15
+					stats int 3
+					stats ranged 25
+					stats uber 25
+					equip #ranged/65-74
+					equip #body,r/75-90
+					equip #body,r/75-90
+					give #boots/50-60
+					give #gloves/50-60
+					give #helm/50-60
+    					give #ranged/65-74
+	    				give #ranged/65-74
+    					give #ranged/65-74
+					give #armor/50-60
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_05_member_02]
+			{
+				command = "
+					stats str 1
+					stats dex 3
+					stats int 16
+					stats nmagic 22
+					stats uber 22
+                    			equip #body,m/45-55
+                    			give #body,m/45-55
+                    			give #boots/10-20
+                    			give #gloves/10-20
+					give spell_lightning
+					give spell_iceblast
+					give spell_spark
+					give spell_dancing_zap
+					give spell_shock
+					give spell_iceshard
+					give spell_freak
+					give spell_hold_creature
+                    			give spell_oversight
+					give spell_summon_killer_gremal
+                    			give spell_summon_scorpion
+					give spell_anchored_shot
+					give spell_transmute
+					give spell_magic_armor
+					give spell_iron_fist
+					give spell_accuracy
+                    			give spell_focused_mind
+                    			give spell_oversight
+                    			give spell_mana_shield
+					give spell_healing_hands
+					give spell_resurrect
+					give spell_healing_wind
+                    			give spell_mana_channel
+                    			give spell_regeneration
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_05_member_03]
+			{
+				command = "
+					stats str 14
+					stats dex 6
+					stats int 2
+					stats melee 23
+					stats uber 23
+					equip #melee/55-60
+					equip #body,f/100-120
+					give #melee/55-60
+					give #armor/100-120
+					give #body,f/70-90
+					give #boots/70-90
+					give #gloves/70-90
+					give #helm/70-90
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+
+//cf_r1
+			[pre_saved_06_teleport]
+			{
+				command = "teleport cf_r1";
+			}
+
+	        [pre_saved_06_buildparty]
+            {
+				command = "
+					add p gloern
+					add p lorun
+					add p rhut
+					add p pack_mule
+							";
+			}
+			[pre_saved_06_hero]
+			{
+				command = "
+					stats str 27
+					stats dex 11
+					stats int 3
+					stats melee 43
+					stats uber 43
+					equip #melee/105-120
+					equip #body,f/220-250
+					give #body,f/220-260
+					give #body,f/220-250
+					give #melee/105-125
+					give #armor/200-230
+					give #boots/200-230
+					give #gloves/200-230
+					give #helm/115-130
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+                    			give gold:210000
+							";
+			}
+			[pre_saved_06_member_01]
+			{
+				command = "
+					stats str 9
+					stats dex 24
+					stats int 5
+					stats ranged 39
+					stats uber 39
+					equip #ranged/95-105
+					equip #body,r/140-180
+					give #body,r/140-180
+					give #ranged/95-105
+					give #armor/115-135
+					give #boots/115-130
+					give #gloves/115-125
+					give #helm/115-130
+					give #armor/115-125
+					give #armor/105-135
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_06_member_02]
+			{
+				command = "
+					stats str 3
+					stats dex 6
+					stats int 26
+					stats cmagic 36
+					stats uber 36
+                    			equip #body,m/75-95
+                    			give #body,m/75-95
+					give #armor/37-77
+					give #armor/37-77
+					give #armor/57-87
+					give #boots/35-60
+					give #gloves/35-55
+					give #helm/35-60
+					give spell_fire_ring
+					give spell_reconstitution
+					give spell_animate_dead
+					give spell_fireshot_armor
+					give spell_metal_shards
+					give spell_pestilence
+					give spell_corpse_transmutation
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_06_member_03]
+			{
+				command = "
+					stats str 23
+					stats dex 9
+					stats int 3
+					stats melee 37
+					stats uber 37
+					equip #melee/80-95
+					equip #body,f/180-210
+					give #melee/80-95
+					give #armor/180-200
+					give #armor/160-200
+					give #armor/180-210
+					give #boots/160-200
+					give #gloves/160-200
+					give #helm/160-200
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+
+//ce_r2
+			[pre_saved_07_teleport]
+			{
+				command = "teleport n:0x627f015b";
+			}
+
+	        [pre_saved_07_buildparty]
+            {
+				command = "
+					add p rhut
+					add p sikra
+					add p lord_bolingar
+					add p pack_mule
+							";
+			}
+			[pre_saved_07_hero]
+			{
+				command = "
+					stats str 32
+					stats dex 13
+					stats int 4
+					stats melee 51
+					stats uber 51
+					equip #melee/80-130
+					equip #body,f/150-290
+					give #body,f/150-290
+					give #body,f/150-280
+					give #melee/80-130
+					give #body,f/200-270
+					give #boots/200-250
+					give #gloves/200-250
+					give #helm/200-250
+					give #shield/200-250
+					give #armor/200-250
+					give #armor/150-220
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+                    			give gold:330000
+							";
+			}
+			[pre_saved_07_member_01]
+			{
+				command = "
+					stats str 11
+					stats dex 29
+					stats int 6
+					stats ranged 47
+					stats uber 47
+					equip #ranged/95-160
+					equip #body,r/80-150
+					equip #body,r/100-150
+					give #ranged/95-150
+					give #body,r/100-140
+					give #boots/100-140
+					give #gloves/100-120
+					give #helm/100-120
+					give #shield/100-120
+					give #armor/120-150
+					give #armor/87-137
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_07_member_02]
+			{
+				command = "
+					stats str 3
+					stats dex 7
+					stats int 32
+					stats nmagic 44
+					stats uber 44
+                    			equip #body,m/75-112
+                    			give #body,m/75-112
+					give #armor/57-92
+					give #boots/57-92
+					give #gloves/57-92
+					give #helm/57-92
+					give #staff/50-92
+					give #armor/57-102
+					give #armor/57-97
+					give spell_light_ray
+					give spell_iceblast
+					give spell_spark_multi
+					give spell_lightning_blast
+					give spell_shock_wave
+					give spell_iceshard
+					give spell_charm
+					give spell_draw_near
+                    			give spell_stumble
+					give spell_summon_wolf_black
+                    			give spell_summon_spiked_dweller
+                    			give spell_summon_forest_klaw
+					give spell_clean_strike
+					give spell_transmute
+					give spell_stone_skin
+					give spell_shock_armor
+					give spell_lightfoot
+                    			give spell_focused_mind
+                    			give spell_oversight
+                    			give spell_inspiration
+                    			give spell_mana_shield
+					give spell_major_heal
+					give spell_full_resurrect
+					give spell_healing_wind
+                    			give spell_mana_balance
+                    			give spell_regeneration
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_07_member_03]
+			{
+				command = "
+					stats str 28
+					stats dex 12
+					stats int 4
+					stats melee 45
+					stats uber 45
+					equip #melee/55-115
+					equip #body,f/110-230
+					give #melee/55-115
+					give #body,f/220-260
+					give #boots/200-250
+					give #gloves/200-250
+					give #helm/200-250
+					give #shield/200-250
+					give #armor/200-250
+					give #armor/100-230
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+
+//ENTRY TO LAVA CAVERNS
+			[pre_saved_08_teleport]
+			{
+				command = "teleport cd_r1_hein";
+			}
+
+	        [pre_saved_08_buildparty]
+            {
+				command = "
+					add p phaedriel
+					add p ulora
+					add p ulfgrim
+					add p pack_mule
+							";
+			}
+			[pre_saved_08_hero]
+			{
+				command = "
+					stats str 38
+					stats dex 16
+					stats int 5
+					stats melee 60
+					stats uber 60
+					equip #melee/100-155
+					equip #body,f/250-360
+					give #body,f/250-360
+					give #body,f/250-360
+					give #melee/100-155
+					give #body,f/250-500
+					give #boots/250-360
+					give #gloves/250-360
+					give #helm/250-360
+					give #shield/250-360
+					give #armor/250-500
+					give #armor/100-250
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+                    			give gold:450000
+							";
+			}
+			[pre_saved_08_member_01]
+			{
+				command = "
+					stats str 14
+					stats dex 36
+					stats int 7
+					stats ranged 59
+					stats uber 59
+					equip #ranged/110-180
+					equip #body,r/120-200
+					equip #body,r/120-200
+					give #ranged/110-180
+					give #body,r/100-200
+					give #boots/120-200
+					give #gloves/120-200
+					give #helm/120-200
+					give #shield/120-200
+					give #armor/120-170
+					give #armor/100-147
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_08_member_02]
+			{
+				command = "
+					stats str 5
+					stats dex 10
+					stats int 42
+					stats cmagic 58
+					stats uber 58
+                    			equip #body,m/95-150
+                    			give #body,m/95-150
+					give #armor/87-137
+					give #boots/97-132
+					give #gloves/97-132
+					give #helm/97-132
+					give #staff/97-132
+					give #armor/97-132
+					give #armor/57-107
+					give spell_mana_chant
+                            		give spell_fire_wall
+					give spell_metal_shards
+					give spell_corpse_transmutation
+					give spell_burst
+					give spell_incinerate
+					give spell_bombard
+					give spell_meteor_storm
+					give spell_dragon_fire
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_08_member_03]
+			{
+				command = "
+					stats str 37
+					stats dex 15
+					stats int 5
+					stats melee 58
+					stats uber 58
+					equip #melee/75-135
+					equip #body,f/150-320
+					give #melee/75-135
+					give #body,f/220-300
+					give #boots/220-300
+					give #gloves/220-300
+					give #helm/220-300
+					give #shield/220-300
+					give #armor/220-350
+					give #armor/100-300
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+
+//GOM
+			[pre_saved_09_teleport]
+			{
+				command = "teleport gom2";
+			}
+
+	        [pre_saved_09_buildparty]
+            {
+				command = "
+					add p ulora
+					add p merik
+					add p rusk
+					add p pack_mule
+							";
+			}
+			[pre_saved_09_hero]
+			{
+				command = "
+					stats str 40
+					stats dex 17
+					stats int 5
+					stats melee 63
+					stats uber 63
+					equip #melee/100-165
+					equip #body,f/250-360
+					give #body,f/250-380
+					give #body,f/250-360
+					give #melee/100-165
+					give #body,f/250-500
+					give #boots/250-360
+					give #gloves/250-360
+					give #helm/250-360
+					give #shield/250-360
+					give #armor/250-500
+					give #armor/100-250
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+                    			give gold:450000
+							";
+			}
+			[pre_saved_09_member_01]
+			{
+				command = "
+					stats str 15
+					stats dex 38
+					stats int 8
+					stats ranged 62
+					stats uber 62
+					equip #ranged/110-180
+					equip #body,r/120-200
+					give #body,r/120-240
+					give #ranged/110-180
+					give #body,r/100-200
+					give #boots/120-200
+					give #gloves/120-200
+					give #helm/120-200
+					give #shield/120-200
+					give #armor/120-200
+					give #armor/100-147
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_09_member_02]
+			{
+				command = "
+					stats str 5
+					stats dex 10
+					stats int 44
+					stats nmagic 61
+					stats uber 61
+                    			equip #body,m/95-150
+                    			give #body,m/95-150
+					give #armor/87-137
+					give #boots/97-122
+					give #gloves/97-122
+					give #helm/97-122
+					give #staff/97-122
+					give #armor/97-122
+					give #armor/57-107
+					give spell_light_ray
+					give spell_icefury
+					give spell_spark_multi
+					give spell_chain_lightning
+					give spell_shock_wave
+					give spell_iceshard
+					give spell_ambivalence
+					give spell_draw_near
+                    			give spell_stumble
+					give spell_summon_larch
+                    			give spell_summon_spiked_dweller
+                    			give spell_summon_forest_klaw
+					give spell_clean_strike
+					give spell_transmute
+					give spell_stone_skin
+					give spell_blood_and_iron
+					give spell_invincibility
+                    			give spell_frigid_armor
+                    			give spell_oversight
+                    			give spell_inspiration
+                    			give spell_shared_pain
+					give spell_major_heal
+					give spell_full_resurrect
+					give spell_party_recharge
+                    			give spell_mana_balance
+                    			give spell_nurture
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give potion_mana_large
+                    			give scroll_resurrect
+							";
+			}
+			[pre_saved_09_member_03]
+			{
+				command = "
+					stats str 39
+					stats dex 16
+					stats int 5
+					stats melee 61
+					stats uber 61
+					equip #melee/75-145
+					equip #body,f/150-340
+					give #melee/75-135
+					give #melee/75-135
+					give #melee/75-145
+					give #body,f/220-310
+					give #boots/220-310
+					give #gloves/220-310
+					give #helm/220-310
+					give #shield/220-310
+					give #armor/220-350
+					give #armor/100-300
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give potion_health_large
+                    			give scroll_resurrect
+							";
+			}
+
+		}
+
+
+
+
+		[levelup]
+		{
+			[1_f_2]
+			{
+				command =
+						"
+							give #melee/5
+							give #armor/6
+							stats str 1
+                            				stats melee 2
+						";
+				doc = "1 player, fighter, level 2.";
+			}
+
+			[1_f_4]
+			{
+				command =
+						"
+							give #melee/6
+							give #armor/12
+							stats str 2
+							stats dex 1
+                            				stats melee 4
+						";
+				doc = "1 player, fighter, level 4.";
+			}
+
+			[1_f_6]
+			{
+				command =
+						"
+							give #melee/7
+							give #armor/18
+							stats str 3
+							stats dex 2
+							stats int 1
+                            				stats melee 6
+						";
+				doc = "1 player, fighter, level 6.";
+			}
+
+			[1_f_8]
+			{
+				command =
+						"
+							give #melee/8
+							give #armor/24
+							stats str 5
+							stats dex 2
+							stats int 1
+               				stats melee 8
+						";
+				doc = "1 player, fighter, level 8.";
+			}
+
+			[1_f_10]
+			{
+				command =
+						"
+							give #melee/9
+							give #armor/30
+							stats str 6
+							stats dex 3
+							stats int 1
+                            				stats melee 10
+						";
+				doc = "1 player, fighter, level 10.";
+			}
+
+			[1_f_12]
+			{
+				command =
+						"
+							give #melee/10
+							give #armor/36
+							stats str 7
+							stats dex 4
+							stats int 1
+                           					stats melee 12
+						";
+				doc = "1 player, fighter, level 12.";
+			}
+
+			[1_f_14]
+			{
+				command =
+						"
+							give #melee/12
+							give #armor/42
+							stats str 8
+							stats dex 4
+							stats int 1
+                            				stats melee 14
+						";
+				doc = "1 player, fighter, level 14.";
+			}
+
+			[1_f_16]
+			{
+				command =
+						"
+							give #melee/13
+							give #armor/48
+							stats str 10
+							stats dex 5
+							stats int 1
+                            				stats melee 16
+						";
+				doc = "1 player, fighter, level 16.";
+			}
+        }
+		//////////////////////////////////////////////////////////////////////
+
+		[e3]
+		{
+			[hero_cr]
+			{
+				command =
+						"
+							stats str 2
+							stats dex 1
+							stats int 1
+               				stats melee 4
+               				stats ranged 4
+							equip bd_sl_f_g_c_avg
+							equip mc_g_c_m_1h_low
+	                        give potion_health_large
+						";
+				doc = "Add small party of heroes.";
+			}
+
+
+
+
+			[ulora_dm]
+			{
+				command =
+						"
+							stats str 2
+							stats dex 3
+							stats int 7
+               				stats cmagic 1
+               				stats nmagic 1
+							equip bd_bl_m_g_c_avg
+							equip st_d_o_r_avg
+                            equip bo_bo_le_f_g_c_avg
+                            give spell_fireshot
+				            equip book_glb_magic_01
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[hero_dm]
+			{
+				command =
+						"
+							stats str 7
+							stats dex 4
+							stats int 2
+               				stats melee 10
+               				stats ranged 10
+							equip #body,f/15-18
+							equip sd_g_c_gl_1h_low
+                            equip bw_g_c_c_m_4_low
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add large party of heroes.";
+			}
+
+			[ulora_exit]
+			{
+				command =
+						"
+							stats str 7
+							stats dex 3
+							stats int 9
+               				stats cmagic 4
+               				stats nmagic 4
+							equip bd_sc_m_g_c_avg
+							equip gl_gl_f_g_c_avg
+                            equip bo_bo_bl_f_g_c_avg
+                            give spell_iceshard
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[hero_ce]
+			{
+				command =
+						"
+							stats str 25
+							stats dex 8
+							stats int 3
+               				stats melee 26
+               				stats ranged 26
+							equip #body,f/-no_mod/35-50
+							equip #boots/10-25
+                            equip #bow/17-20
+                            equip #gloves/10-25
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add large party of heroes.";
+			}
+
+			[ulora_ce]
+			{
+				command =
+						"
+							stats str 14
+							stats dex 48
+							stats int 16
+               				stats cmagic 24
+               				stats nature_magic 24
+							equip bd_ro_m_g_c_034
+							equip st_g_c_s_avg
+                            equip bo_bo_sc_f_g_c_avg
+                            equip gl_gl_sc_f_g_c_avg
+                            give spell_lightning
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[party1]
+			{
+				command =
+						"
+							add begin
+							add Rusk
+							add naidi
+                            add zed
+                            add pack_mule
+							add p end
+						";
+				doc = "Add small party of heroes for before the crypts.";
+			}
+
+			[party2]
+			{
+				command =
+						"
+							add begin
+							add gloern
+							add Lord_Bolingar
+                            add Boryev
+							add p end
+						";
+				doc = "Add small party of heroes for before the castle.";
+			}
+
+
+		}
+
+
+
+
+
+
+		//////////////////////////////////////////////////////////////////////
+		[gamestock]
+		{
+			[party]
+			{
+				command =
+						"
+							add begin
+							add cf_ranger_male_strong
+							add cf_ranger_female_weak
+                            add cf_fighter_female_weak
+                            add cf_fighter_male_strong
+                            add cf_magic_male
+							add p end
+						";
+				doc = "Add small party of heroes.";
+			}
+
+
+
+
+			[partysmall]
+			{
+				command =
+						"
+							add begin
+							add temp_cf_fighter
+							add temp_cf_ranger
+							add p end
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[partybig]
+			{
+				command =
+						"
+							add begin
+							add mage_female
+							add warrior_dwarf
+							add warrior_male
+							add p end
+						";
+				doc = "Add large party of heroes.";
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////
+		[erik]
+		{
+//MAPWORLD
+
+			[melee]
+			{
+				command =
+						"
+							stats str 4
+							stats dex 1
+							stats int 0
+               				stats melee 7
+               				stats uber 7
+							equip #body,f/35-55
+							give #body,f/35-55
+							equip #melee/5-15
+							give #melee/5-15
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+						";
+				doc = "Equip Hero to Town Center level.";
+			}
+			[ranged]
+			{
+				command =
+						"
+							stats str 1
+							stats dex 4
+							stats int 0
+               				stats ranged 7
+               				stats uber 7
+							equip #body,f/35-55
+							give #body,f/35-55
+							equip #ranged/5-15
+							give #ranged/5-15
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+						";
+				doc = "Equip Hero to Town Center level.";
+			}
+			[cmagic]
+			{
+				command =
+						"
+							stats str 0
+							stats dex 1
+							stats int 5
+               				stats cmagic 7
+               				stats uber 7
+							equip #body,f/35-55
+							give #body,f/35-55
+							equip #melee/5-15
+							give #melee/5-15
+                            exec cm0
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+						";
+				doc = "Equip Hero to Town Center level.";
+			}
+			[nmagic]
+			{
+				command =
+						"
+							stats str 0
+							stats dex 1
+							stats int 5
+               				stats nmagic 7
+               				stats uber 7
+							equip #body,f/35-55
+							give #body,f/35-55
+							equip #melee/5-15
+							give #melee/5-15
+                            exec nm0
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+						";
+				doc = "Equip Hero to Town Center level.";
+			}
+
+//MULTIPLAYERWORLD TOWN LEVEL EQUIPS
+			[tc]
+			{
+				command =
+						"
+							equip #body,f/1-10
+                        	equip #melee/1-10
+                            give potion_health_small
+                            give potion_health_small
+						";
+				doc = "Equip Hero to Town Center level.";
+			}
+			[mt]
+			{
+				command =
+						"
+							stats str 7
+							stats dex 3
+							stats int 1
+               				stats melee 12
+               				stats uber 12
+							equip #body,f/35-55
+							give #body,f/35-55
+							equip #melee/5-15
+							give #melee/5-15
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Equip Hero to Town Center level.";
+			}
+			[snt]
+			{
+				command =
+						"
+							stats str 10
+							stats dex 4
+							stats int 1
+               				stats melee 16
+               				stats uber 16
+							equip #body,f/65-85
+							give #body,f/65-85
+							equip #melee/15-25
+							give #melee/15-25
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Equip Hero to Snow Town level.";
+			}
+			[oc]
+			{
+				command =
+						"
+							stats str 17
+							stats dex 7
+							stats int 2
+               				stats melee 27
+               				stats uber 27
+							equip #body,f/130-150
+							give #body,f/130-150
+							equip #melee/35-55
+							give #melee/35-55
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Equip Hero to Ocean level.";
+			}
+			[swt]
+			{
+				command =
+						"
+							stats str 19
+							stats dex 8
+							stats int 2
+               				stats melee 31
+               				stats uber 31
+							equip #body,f/150-170
+							give #body,f/150-170
+							equip #melee/45-65
+							give #melee/45-65
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Equip Hero to Swamp Town level.";
+			}
+			[des]
+			{
+				command =
+						"
+							stats str 32
+							stats dex 13
+							stats int 4
+               				stats melee 50
+               				stats uber 50
+							equip #body,f/270-290
+							give #body,f/270-290
+							equip #melee/90-110
+							give #melee/90-110
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Equip Hero to Des_R1 Quillrabe level.";
+			}
+			[ct]
+			{
+				command =
+						"
+							stats str 36
+							stats dex 15
+							stats int 5
+               				stats melee 57
+               				stats uber 57
+							equip #body,f/310-330
+							give #body,f/310-330
+							equip #melee/110-130
+							give #melee/110-130
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+						";
+				doc = "Equip Hero to Castle Town level.";
+			}
+
+//GIVE PLAYER 3 HEROES
+			[h3]
+			{
+				command =
+						"
+							add begin
+							add p farmboy
+							add p farmboy
+                            add p farmboy
+							add p end
+						";
+				doc = "Add a party of 3 base farmboys.";
+			}
+
+//NATURE MAGIC SPELLS
+			[nmall]
+			{
+				command =
+						"
+							give spell_zap
+							give spell_healing_hands
+							give spell_charged_fist
+							give spell_transmute
+							give spell_flash
+							give spell_spark
+							give spell_magic_armor
+							give spell_resurrect
+							give spell_dancing_zap
+							give spell_shock
+							give spell_iron_fist
+							give spell_summon_killer_gremal
+							give spell_hold_creature
+							give spell_iceshard
+							give spell_mana_channel
+							give spell_accuracy
+							give spell_mana_shield
+							give spell_regeneration
+							give spell_lightning
+							give spell_anchored_shot
+							give spell_summon_helper
+							give spell_oversight
+							give spell_iceblast
+							give spell_focused_mind
+							give spell_stone_skin
+							give spell_charm
+							give spell_spark_multi
+							give spell_lightfoot
+							give spell_convert
+							give spell_major_heal
+							give spell_shock_armor
+							give spell_lightning_blast
+							give spell_mind_spring
+							give spell_stumble
+							give spell_full_resurrect
+							give spell_draw_near
+							give spell_shock_wave
+							give spell_clean_strike
+							give spell_inspiration
+							give spell_convert
+							give spell_nurture
+							give spell_blood_and_iron
+							give spell_invincibility
+							give spell_mana_balance
+							give spell_light_ray
+							give spell_frigid_armor
+							give spell_shared_pain
+							give spell_icefury
+							give spell_eagle_eye
+							give spell_ambivalence
+							give spell_party_recharge
+							give spell_return_summoned
+							give spell_chain_lightning
+                            give spell_starburst
+							give spell_battle_rally
+							give spell_starburst
+							give spell_sun_ray
+                            give spell_nova_strike
+							give spell_polymorph
+							give spell_life_balance
+							give spell_undermine
+							give spell_freeze
+							give spell_meriks_windfall
+							give spell_nova_strike
+							give spell_ice_storm
+							give spell_storm
+							give spell_harmony
+							give spell_implosion
+							give spell_lightning_bolt
+							give spell_mystic_aid
+							give spell_lightning_storm
+							give spell_panic
+							give spell_kill
+							give spell_killing_fist
+						";
+				doc = "give all Nature Magic spells";
+			}
+			[nm0]
+			{
+				command =
+						"
+							give spell_zap
+							give spell_healing_hands
+							give spell_charged_fist
+							give spell_transmute
+							give spell_flash
+							give spell_spark
+							give spell_magic_armor
+							give spell_resurrect
+							give spell_dancing_zap
+							give spell_shock
+							give spell_iron_fist
+							give spell_summon_killer_gremal
+							give spell_hold_creature
+							give spell_iceshard
+							give spell_mana_channel
+							give spell_accuracy
+						";
+				doc = "give Nature Magic spells 0 to 15";
+			}
+			[nm15]
+			{
+				command =
+						"
+							give spell_mana_shield
+							give spell_regeneration
+							give spell_lightning
+							give spell_anchored_shot
+							give spell_summon_helper
+							give spell_oversight
+							give spell_iceblast
+							give spell_focused_mind
+							give spell_eagle_eye
+							give spell_stone_skin
+							give spell_charm
+						";
+				doc = "give Nature Magic spells 15 to 30";
+			}
+			[nm30]
+			{
+				command =
+						"
+							give spell_spark_multi
+							give spell_lightfoot
+							give spell_convert
+							give spell_major_heal
+							give spell_shock_armor
+							give spell_lightning_blast
+							give spell_mind_spring
+							give spell_stumble
+							give spell_full_resurrect
+							give spell_draw_near
+							give spell_shock_wave
+							give spell_clean_strike
+						";
+				doc = "give Nature Magic spells 30 to 45";
+			}
+			[nm45]
+			{
+				command =
+						"
+							give spell_inspiration
+							give spell_convert
+							give spell_nurture
+							give spell_blood_and_iron
+							give spell_invincibility
+							give spell_mana_balance
+							give spell_light_ray
+							give spell_frigid_armor
+							give spell_shared_pain
+							give spell_icefury
+							give spell_ambivalence
+							give spell_party_recharge
+							give spell_return_summoned
+						";
+				doc = "give Nature Magic spells 45 to 60.";
+			}
+			[nm60]
+			{
+				command =
+						"
+							give spell_chain_lightning
+							give spell_battle_rally
+							give spell_starburst
+							give spell_sun_ray
+							give spell_polymorph
+							give spell_life_balance
+							give spell_undermine
+							give spell_freeze
+							give spell_meriks_windfall
+							give spell_nova_strike
+							give spell_ice_storm
+							give spell_storm
+							give spell_harmony
+							give spell_implosion
+							give spell_lightning_bolt
+							give spell_mystic_aid
+							give spell_lightning_storm
+							give spell_panic
+							give spell_kill
+							give spell_killing_fist
+						";
+				doc = "give Nature Magic spells 60 to end.";
+			}
+			[nmdam]
+			{
+				command =
+						"
+							give spell_zap
+							give spell_flash
+							give spell_spark
+							give spell_dancing_zap
+							give spell_shock
+							give spell_iceshard
+							give spell_lightning
+							give spell_iceblast
+							give spell_spark_multi
+							give spell_lightning_blast
+							give spell_shock_wave
+							give spell_light_ray
+							give spell_icefury
+							give spell_chain_lightning
+							give spell_starburst
+							give spell_sun_ray
+							give spell_nova_strike
+							give spell_ice_storm
+							give spell_storm
+							give spell_implosion
+							give spell_lightning_bolt
+							give spell_lightning_storm
+							give spell_kill
+							give spell_killing_fist
+						";
+				doc = "give Nature Magic Damage spells";
+			}
+			[nmcurse]
+			{
+				command =
+						"
+							give spell_freak
+							give spell_hold_creature
+							give spell_oversight
+							give spell_charm
+							give spell_stumble
+							give spell_draw_near
+							give spell_ambivalence
+							give spell_return_summoned
+							give spell_polymorph
+							give spell_undermine
+							give spell_freeze
+							give spell_panic
+						";
+				doc = "give Nature Magic Damage spells";
+			}
+			[nmsummon]
+			{
+				command =
+						"
+							give spell_summon_killer_gremal
+							give spell_summon_scorpion
+							give spell_summon_helper
+							give spell_summon_furok
+							give spell_summon_cave_giant
+							give spell_summon_forest_klaw
+							give spell_summon_wolf_black
+							give spell_summon_spiked_dweller
+							give spell_summon_larch
+							give spell_summon_drake_green
+							give spell_summon_golem_frost
+							give spell_summon_rock_golem
+							give spell_summon_rock_beast
+						";
+				doc = "give all Nature Summon spells.";
+			}
+			[nmbuff]
+			{
+				command =
+						"
+							give spell_charged_fist
+							give spell_transmute
+							give spell_magic_armor
+							give spell_iron_fist
+							give spell_accuracy
+							give spell_mana_shield
+							give spell_anchored_shot
+							give spell_focused_mind
+							give spell_stone_skin
+							give spell_lightfoot
+							give spell_shock_armor
+							give spell_mind_spring
+							give spell_clean_strike
+							give spell_inspiration
+							give spell_convert
+							give spell_blood_and_iron
+							give spell_invincibility
+							give spell_frigid_armor
+							give spell_shared_pain
+							give spell_eagle_eye
+							give spell_battle_rally
+							give spell_meriks_windfall
+							give spell_mystic_aid
+						";
+				doc = "give Nature Magic Damage spells";
+			}
+			[nmheal]
+			{
+				command =
+						"
+							give spell_healing_hands
+							give spell_resurrect
+							give spell_healing_wind
+							give spell_mana_channel
+							give spell_regeneration
+							give spell_major_heal
+							give spell_full_resurrect
+							give spell_nurture
+							give spell_mana_balance
+							give spell_party_recharge
+							give spell_life_balance
+							give spell_harmony
+						";
+				doc = "give Nature Magic Damage spells";
+			}
+
+//COMBAT MAGIC SPELLS
+			[cmall]
+			{
+				command =
+						"
+							give spell_fireshot
+							give spell_rip_mana
+							give spell_acid_gas
+							give spell_burn_body
+							give spell_leech_life
+							give spell_explosive_powder
+							give spell_firespray
+							give spell_revive
+							give spell_rage
+							give spell_summon_gargoyle
+							give spell_magic_eye
+							give spell_flame
+							give spell_soul_lance
+							give spell_weaken
+							give spell_mana_chant
+							give spell_battle_healing
+							give spell_acid_cloud
+							give spell_spirit_armor
+							give spell_fireskull
+							give spell_fireball
+							give spell_explode_body
+							give spell_triple_strike
+							give spell_death_blast
+							give spell_fire_ring
+							give spell_reconstitution
+							give spell_curse
+							give spell_fire_wall
+							give spell_flame_shield
+							give spell_animate_dead
+							give spell_fireshot_armor
+							give spell_possess
+							give spell_ogres_might
+							give spell_metal_shards
+							give spell_pain_reflux
+							give spell_pestilence
+							give spell_corpse_transmutation
+							give spell_shargs_revive
+							give spell_shadow_walk
+							give spell_firerain
+							give spell_fire_wave
+							give spell_flame_blades
+							give spell_inferno
+							give spell_bomb
+							give spell_meteor
+							give spell_firebomb
+							give spell_pillar_fire
+							give spell_burst
+							give spell_pestilence_cloud
+							give spell_malign
+							give spell_fireball_rain
+							give spell_incinerate
+							give spell_fireblast
+							give spell_fire_cyclone
+							give spell_cluster_bomb
+							give spell_blaster
+							give spell_bombard
+							give spell_meteor_storm
+							give spell_dragon_fire
+							give spell_tremor
+						";
+				doc = "give All Combat Magic spells";
+			}
+			[cm0]
+			{
+				command =
+						"
+							give spell_fireshot
+							give spell_rip_mana
+							give spell_acid_gas
+							give spell_burn_body
+							give spell_leech_life
+							give spell_explosive_powder
+							give spell_firespray
+							give spell_rage
+							give spell_summon_gargoyle
+							give spell_magic_eye
+							give spell_flame
+							give spell_soul_lance
+							give spell_weaken
+							give spell_mana_chant
+							give spell_battle_healing
+							give spell_acid_cloud
+							give spell_spirit_armor
+						";
+				doc = "give Combat Magic spells 0 to 15";
+			}
+			[cm15]
+			{
+				command =
+						"
+							give spell_fireskull
+							give spell_fireball
+							give spell_explode_body
+							give spell_triple_strike
+							give spell_death_blast
+							give spell_fire_ring
+							give spell_reconstitution
+							give spell_curse
+						";
+				doc = "give Combat Magic spells 15 to 30";
+			}
+			[cm30]
+			{
+				command =
+						"
+							give spell_fire_wall
+							give spell_flame_shield
+							give spell_animate_dead
+							give spell_fireshot_armor
+							give spell_possess
+							give spell_metal_shards
+							give spell_pain_reflux
+							give spell_pestilence
+							give spell_corpse_transmutation
+						";
+				doc = "give Combat Magic spells 30 to 45";
+			}
+			[cm45]
+			{
+				command =
+						"
+							give spell_shadow_walk
+							give spell_firerain
+							give spell_fire_wave
+							give spell_flame_blades
+							give spell_inferno
+							give spell_bomb
+							give spell_meteor
+							give spell_firebomb
+							give spell_pillar_fire
+							give spell_burst
+							give spell_pestilence_cloud
+							give spell_malign
+							give spell_fireball_rain
+							give spell_incinerate
+							give spell_fireblast
+							give spell_fire_cyclone
+							give spell_cluster_bomb
+							give spell_blaster
+							give spell_bombard
+							give spell_meteor_storm
+							give spell_dragon_fire
+							give spell_tremor
+						";
+				doc = "give Combat Magic spells 45 to end.";
+			}
+			[cmdam]
+			{
+				command =
+						"
+							give spell_fireshot
+							give spell_acid_gas
+							give spell_explosive_powder
+							give spell_firespray
+							give spell_flame
+							give spell_soul_lance
+							give spell_acid_cloud
+							give spell_fireskull
+							give spell_fireball
+							give spell_explode_body
+							give spell_death_blast
+							give spell_fire_ring
+							give spell_fire_wall
+							give spell_metal_shards
+							give spell_pestilence
+							give spell_firerain
+							give spell_fire_wave
+							give spell_flame_blades
+							give spell_inferno
+							give spell_bomb
+							give spell_meteor
+							give spell_firebomb
+							give spell_pillar_fire
+							give spell_burst
+							give spell_pestilence_cloud
+							give spell_fireball_rain
+							give spell_incinerate
+							give spell_fireblast
+							give spell_fire_cyclone
+							give spell_cluster_bomb
+							give spell_blaster
+							give spell_bombard
+							give spell_meteor_storm
+							give spell_dragon_fire
+							give spell_tremor
+						";
+				doc = "give All Combat Magic Damage spells";
+			}
+			[cmcurse]
+			{
+				command =
+						"
+							give spell_weaken
+							give spell_curse
+							give spell_possess
+							give spell_malign
+						";
+				doc = "give All Combat Magic Monster Affect spells";
+			}
+			[cmsummon]
+			{
+				command =
+						"
+							give spell_summon_gargoyle
+							give spell_magic_eye
+							give spell_summon_skeleton
+							give spell_summon_mucosa
+							give spell_summon_darkling
+							give spell_summon_skick
+							give spell_summon_troll_forest
+							give spell_summon_hell_boar
+							give spell_summon_zombie_headless
+							give spell_summon_picker
+							give spell_summon_wraith
+							give spell_summon_wraith_archer
+							give spell_summon_krug_dog_skeleton
+							give spell_summon_braak_desert
+							give spell_summon_impaler
+							give spell_summon_mucosa_predator
+							give spell_summon_lava_spirit
+							give spell_summon_drake_black
+							give spell_summon_molten_golem
+							give spell_summon_fire_elemental
+						";
+				doc = "give all Combat Summon spells.";
+			}
+			[cmbuff]
+			{
+				command =
+						"
+							give spell_rip_mana
+							give spell_burn_body
+							give spell_leech_life
+							give spell_rage
+							give spell_mana_chant
+							give spell_spirit_armor
+							give spell_triple_strike
+							give spell_flame_shield
+							give spell_fireshot_armor
+							give spell_ogres_might
+							give spell_pain_reflux
+							give spell_corpse_transmutation
+							give spell_shadow_walk
+						";
+				doc = "give All Combat Magic Buff spells";
+			}
+			[cmheal]
+			{
+				command =
+						"
+							give spell_revive
+							give spell_battle_healing
+							give spell_reconstitution
+							give spell_shargs_revive
+						";
+				doc = "give All Combat Magic Heal spells";
+			}
+			
+//SCROLLS
+			[scroll]
+			{
+				command =
+						"
+							give scroll_summon_helper
+							give scroll_transmute
+							give scroll_healing_hands
+							give scroll_resurrect
+							give scroll_healing_wind
+							give scroll_mana_channel
+							give scroll_major_heal
+							give scroll_magic_eye
+						";
+				doc = "give all scrolls.";
+			}
+
+
+			[partysmall]
+			{
+				command =
+						"
+							add begin
+							add temp_cf_fighter
+							add temp_cf_ranger
+							add p end
+						";
+				doc = "Add small party of heroes.";
+			}
+
+			[partybig]
+			{
+				command =
+						"
+							add begin
+							add mage_female
+							add warrior_dwarf
+							add warrior_male
+							add p end
+						";
+				doc = "Add large party of heroes.";
+			}
+		}		
+/////////////////////////////////////////////////////////		
+		[snooker]
+		{
+
+//MP WORLD CHARACTERS FOR MP TESTING
+
+//MINE TOWN
+			[mt_fighter]
+			{
+				command =
+						"
+							stats str 3
+							stats dex 1
+							stats int 0
+               				stats melee 7
+               				stats uber 7
+							equip #body,f/35-55
+							give #body,f/35-55
+							equip #melee/5-15
+							give #melee/5-15
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:300
+						";
+				doc = "Equip MP Player (Melee) to Crystwind (mine_town) level.";
+			}
+
+			[mt_cmage]
+			{
+				command =
+						"
+							stats str 0
+							stats dex 1
+							stats int 5
+               				stats cmagic 7
+               				stats uber 7
+							equip #body,m/35-55
+							give #body,m/35-55
+							equip #melee/5-15
+							give #melee/5-15
+                            give potion_health_large
+                            give potion_mana_large
+                            give spell_fireshot
+							give spell_summon_gargoyle
+							give spell_weaken
+							give spell_battle_healing
+							give spell_acid_cloud
+		                    give gold:300
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Crystwind (mine_town) level.";
+			}
+
+			[mt_nmage]
+			{
+				command =
+						"
+							stats str 0
+							stats dex 1
+							stats int 5
+               				stats nmagic 7
+               				stats uber 7
+							equip #body,m/35-55
+							give #body,m/35-55
+							equip #melee/5-15
+							give #melee/5-15
+                            give spell_healing_hands
+                            give potion_health_large
+                            give potion_mana_large
+                            give spell_zap
+							give spell_healing_hands
+							give spell_charged_fist
+							give spell_spark
+							give spell_magic_armor
+							give spell_resurrect
+							give spell_iron_fist
+							give spell_summon_killer_gremal
+							give spell_iceshard
+		                    give gold:300
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Crystwind (mine_town) level.";
+			}
+
+			[mt_archer]
+			{
+				command =
+						"
+							stats str 1
+							stats dex 4
+							stats int 0
+               				stats ranged 7
+               				stats uber 7
+							equip #body,r/35-55
+							give #body,r/35-55
+							equip #ranged/5-15
+							give #ranged/5-15
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:300
+						";
+				doc = "Equip MP Player (Ranged) to Crystwind (mine_town) level.";
+			}
+//SNOW TOWN
+			[snt_fighter]
+			{
+				command =
+						"
+							stats str 7
+							stats dex 2
+							stats int 0
+               				stats melee 11
+               				stats uber 11
+							equip #body,f/65-85
+							give #body,f/65-85
+							equip #melee/15-25
+							give #melee/15-25
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:2100
+						";
+				doc = "Equip MP Player (Melee) to Fallraen (snow_town) level.";
+			}
+
+			[snt_cmage]
+			{
+				command =
+						"
+							stats str 0
+							stats dex 1
+							stats int 8
+               				stats cmagic 11
+               				stats uber 11
+							equip #body,m/65-85
+							give #body,m/65-85
+							equip #melee/15-25
+							give #melee/15-25
+                            give potion_health_large
+                            give potion_mana_large
+                            give spell_fireshot
+							give spell_rip_mana
+							give spell_mana_chant
+							give spell_acid_cloud
+							give spell_fireball
+							give spell_triple_strike
+							give spell_death_blast
+							give spell_curse
+		                    give gold:2100
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Fallraen (snow_town) level.";
+			}
+
+			[snt_nmage]
+			{
+				command =
+						"
+							stats str 0
+							stats dex 1
+							stats int 8
+               				stats nmagic 11
+               				stats uber 11
+							equip #body,m/65-85
+							give #body,m/65-85
+							equip #melee/15-25
+							give #melee/15-25
+                            give potion_health_large
+                            give potion_mana_large
+ 							give spell_healing_hands
+							give spell_charged_fist
+							give spell_dancing_zap
+							give spell_iceshard
+                            give spell_mana_shield
+							give spell_regeneration
+							give spell_lightning
+							give spell_anchored_shot
+							give spell_oversight
+							give spell_iceblast
+							give spell_stone_skin
+		                    give gold:2100
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Fallraen (snow_town) level.";
+			}
+
+			[snt_archer]
+			{
+				command =
+						"
+							stats str 2
+							stats dex 6
+							stats int 1
+               				stats ranged 11
+               				stats uber 11
+							equip #body,r/65-85
+							give #body,r/65-85
+							equip #ranged/15-25
+							give #ranged/15-25
+                            give potion_health_large
+                            give potion_mana_large
+		                    give gold:2100
+						";
+				doc = "Equip MP Player (Ranged) to Fallraen (snow_town) level.";
+			}
+//OCEAN
+			[oc_fighter]
+			{
+				command =
+						"
+							stats str 12
+							stats dex 5
+							stats int 1
+               				stats melee 20
+               				stats uber 20
+							equip #body,f/130-150
+							give #body,f/130-150
+							equip #melee/35-55
+							give #melee/35-55
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:18000
+						";
+				doc = "Equip MP Player (Melee) to Meren (ocean) level.";
+			}
+
+			[oc_cmage]
+			{
+				command =
+						"
+							stats str 1
+							stats dex 3
+							stats int 14
+               				stats cmagic 20
+               				stats uber 20
+							equip #body,m/130-150
+							give #body,m/130-150
+							equip #melee/35-55
+							give #melee/35-55
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+							give spell_firespray
+							give spell_mana_chant
+							give spell_battle_healing
+							give spell_spirit_armor
+                            give spell_fireskull
+							give spell_explode_body
+							give spell_fire_ring
+		                    give gold:18000
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Meren (ocean) level.";
+			}
+
+			[oc_nmage]
+			{
+				command =
+						"
+							stats str 1
+							stats dex 3
+							stats int 14
+               				stats nmagic 20
+               				stats uber 20
+							equip #body,m/130-150
+							give #body,m/130-150
+							equip #melee/35-55
+							give #melee/35-55
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+							give spell_healing_hands
+							give spell_transmute
+							give spell_flash
+							give spell_resurrect
+							give spell_hold_creature
+							give spell_mana_channel
+							give spell_accuracy
+                            give spell_mana_shield
+							give spell_lightning
+							give spell_anchored_shot
+							give spell_focused_mind
+							give spell_eagle_eye
+		                    give gold:18000
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Meren (ocean) level.";
+			}
+
+			[oc_archer]
+			{
+				command =
+						"
+							stats str 5
+							stats dex 12
+							stats int 2
+               				stats ranged 20
+               				stats uber 20
+							equip #body,r/130-150
+							give #body,r/130-150
+							equip #ranged/35-55
+							give #ranged/35-55
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:18000
+						";
+				doc = "Equip MP Player (Ranged) to Meren (ocean) level.";
+			}
+//SWAMP TOWN
+			[swt_fighter]
+			{
+				command =
+						"
+					stats str 17
+					stats dex 7
+					stats int 2
+               				stats melee 28
+               				stats uber 28
+					equip #body,f/150-170
+					give #body,f/150-170
+					equip #melee/45-65
+					give #melee/45-65
+                            		give potion_health_large
+                            		give potion_health_large
+                            		give potion_health_large
+                            		give potion_health_large
+		                    	give gold:60000
+						";
+				doc = "Equip MP Player (Melee) to Lang (swamp_town) level.";
+			}
+
+			[swt_cmage]
+			{
+				command =
+						"
+					stats str 2
+					stats dex 5
+					stats int 20
+               				stats cmagic 28
+               				stats uber 28
+					equip #body,m/150-170
+					give #body,m/150-170
+					equip #melee/45-65
+					give #melee/45-65
+                            		give potion_health_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+					give spell_fire_ring
+					give spell_reconstitution
+					give spell_animate_dead
+					give spell_fireshot_armor
+					give spell_metal_shards
+					give spell_pestilence
+					give spell_corpse_transmutation
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Lang (swamp_town) level.";
+			}
+
+			[swt_nmage]
+			{
+				command =
+						"
+					stats str 2
+					stats dex 5
+					stats int 20
+               				stats nmagic 28
+               				stats uber 28
+					equip #body,m/150-170
+					give #body,m/150-170
+					equip #melee/45-65
+					give #melee/45-65
+                            		give potion_health_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+					give spell_resurrect
+					give spell_shock
+					give spell_charm
+                            		give spell_spark_multi
+					give spell_major_heal
+					give spell_lightning_blast
+					give spell_full_resurrect
+					give spell_draw_near
+					give spell_shock_wave
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Lang (swamp_town) level.";
+			}
+
+			[swt_archer]
+			{
+				command =
+						"
+							stats str 7
+							stats dex 17
+							stats int 3
+               				stats ranged 28
+               				stats uber 28
+							equip #body,r/150-170
+							give #body,r/150-170
+							equip #ranged/45-65
+							give #ranged/45-65
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Ranged) to Lang (swamp_town) level.";
+			}
+//FD_R1
+			[fd_fighter]
+			{
+				command =
+						"
+							stats str 21
+							stats dex 9
+							stats int 3
+               				stats melee 34
+               				stats uber 34
+							equip #body,f/150-170
+							give #body,f/150-170
+							equip #melee/45-65
+							give #melee/45-65
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Melee) to Of to Fury Den (fd_r1) level.";
+			}
+
+			[swt_cmage]
+			{
+				command =
+						"
+					stats str 3
+					stats dex 6
+					stats int 24
+               				stats cmagic 34
+               				stats uber 34
+					equip #body,m/150-170
+					give #body,m/150-170
+					equip #melee/45-65
+					give #melee/45-65
+                            		give potion_health_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+					give spell_fire_ring
+					give spell_reconstitution
+					give spell_animate_dead
+					give spell_fireshot_armor
+					give spell_metal_shards
+					give spell_pestilence
+					give spell_corpse_transmutation
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Of to Fury Den (fd_r1) level.";
+			}
+
+			[swt_nmage]
+			{
+				command =
+						"
+							stats str 3
+							stats dex 6
+							stats int 24
+               				stats nmagic 34
+               				stats uber 34
+							equip #body,m/150-170
+							give #body,m/150-170
+							equip #melee/45-65
+							give #melee/45-65
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+                            give potion_mana_large
+							give spell_resurrect
+							give spell_shock
+							give spell_charm
+                            give spell_spark_multi
+							give spell_major_heal
+							give spell_lightning_blast
+							give spell_full_resurrect
+							give spell_draw_near
+							give spell_shock_wave
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Of to Fury Den (fd_r1) level.";
+			}
+
+			[swt_archer]
+			{
+				command =
+						"
+							stats str 8
+							stats dex 21
+							stats int 4
+               				stats ranged 34
+               				stats uber 34
+							equip #body,r/150-170
+							give #body,r/150-170
+							equip #ranged/45-65
+							give #ranged/45-65
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Ranged) to Of to Fury Den (fd_r1) level.";
+			}
+//GRS_DRY_HARD_R1
+			[grs_fighter]
+			{
+				command =
+						"
+							stats str 26
+							stats dex 11
+							stats int 3
+               				stats melee 42
+               				stats uber 42
+							equip #body,f/150-170
+							give #body,f/150-170
+							equip #melee/45-65
+							give #melee/45-65
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Melee) to Of to Fury Den (fd_r1) level.";
+			}
+
+			[grs_cmage]
+			{
+				command =
+						"
+							stats str 3
+							stats dex 7
+							stats int 30
+               				stats cmagic 42
+               				stats uber 42
+							equip #body,m/150-170
+							give #body,m/150-170
+							equip #melee/45-65
+							give #melee/45-65
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+                            give potion_mana_large
+							give spell_fire_ring
+							give spell_reconstitution
+							give spell_animate_dead
+							give spell_fireshot_armor
+							give spell_metal_shards
+							give spell_pestilence
+							give spell_corpse_transmutation
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Of to Fury Den (fd_r1) level.";
+			}
+
+			[grs_nmage]
+			{
+				command =
+						"
+							stats str 3
+							stats dex 7
+							stats int 30
+               				stats nmagic 42
+               				stats uber 42
+							equip #body,m/150-170
+							give #body,m/150-170
+							equip #melee/45-65
+							give #melee/45-65
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+                            give potion_mana_large
+							give spell_resurrect
+							give spell_shock
+							give spell_charm
+                            give spell_spark_multi
+							give spell_major_heal
+							give spell_lightning_blast
+							give spell_full_resurrect
+							give spell_draw_near
+							give spell_shock_wave
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Of to Fury Den (fd_r1) level.";
+			}
+
+			[grs_archer]
+			{
+				command =
+						"
+							stats str 10
+							stats dex 26
+							stats int 5
+               				stats ranged 42
+               				stats uber 42
+							equip #body,r/150-170
+							give #body,r/150-170
+							equip #ranged/45-65
+							give #ranged/45-65
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:60000
+						";
+				doc = "Equip MP Player (Ranged) to Of to Fury Den (fd_r1) level.";
+			}
+//DES_R1
+			[des_fighter]
+			{
+				command =
+						"
+							stats str 28
+							stats dex 12
+							stats int 4
+               				stats melee 45
+               				stats uber 45
+							equip #body,f/270-290
+							give #body,f/270-290
+							equip #melee/90-110
+							give #melee/90-110
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:210000
+						";
+				doc = "Equip MP Player (Melee) to Quillrabe (des_r1) level.";
+			}
+
+			[des_cmage]
+			{
+				command =
+						"
+							stats str 4
+							stats dex 8
+							stats int 32
+               				stats cmagic 45
+               				stats uber 45
+							equip #body,m/270-290
+							give #body,m/270-290
+							equip #melee/90-110
+							give #melee/90-110
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+                            give potion_mana_large
+                            give potion_mana_large
+ 							give spell_battle_healing
+							give spell_triple_strike
+                            give spell_fire_wall
+							give spell_pain_reflux
+                            give spell_shadow_walk
+							give spell_meteor
+							give spell_incinerate
+							give spell_fire_cyclone
+							give spell_cluster_bomb
+							give spell_blaster
+		                    give gold:210000
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Quillrabe (des_r1) level.";
+			}
+
+			[des_nmage]
+			{
+				command =
+						"
+							stats str 4
+							stats dex 8
+							stats int 32
+               				stats nmagic 45
+               				stats uber 45
+							equip #body,m/270-290
+							give #body,m/270-290
+							equip #melee/90-110
+							give #melee/90-110
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_mana_large
+                            give potion_mana_large
+                            give potion_mana_large
+                            give potion_mana_large
+							give spell_healing_hands
+							give spell_mana_channel
+                            give spell_inspiration
+							give spell_blood_and_iron
+							give spell_invincibility
+							give spell_light_ray
+							give spell_icefury
+							give spell_party_recharge
+							give spell_return_summoned
+		                    give gold:210000
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Quillrabe (des_r1) level.";
+			}
+
+			[des_archer]
+			{
+				command =
+						"
+							stats str 11
+							stats dex 27
+							stats int 5
+               				stats ranged 45
+               				stats uber 45
+							equip #body,r/270-290
+							give #body,r/270-290
+							equip #ranged/90-110
+							give #ranged/90-110
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:210000
+						";
+				doc = "Equip MP Player (Ranged) to Quillrabe (des_r1) level.";
+			}
+//CASTLE_TOWN
+			[ct_fighter]
+			{
+				command =
+						"
+							stats str 31
+							stats dex 13
+							stats int 4
+               				stats melee 49
+               				stats uber 49
+							equip #body,f/310-330
+							give #body,f/310-330
+							equip #melee/110-130
+							give #melee/110-130
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:330000
+						";
+				doc = "Equip MP Player (Melee) to Hiroth (castle_town) level.";
+			}
+
+			[ct_cmage]
+			{
+				command =
+						"
+					stats str 4
+					stats dex 8
+					stats int 35
+               				stats cmagic 49
+               				stats uber 49
+					equip #body,m/310-330
+					give #body,m/310-330
+					equip #melee/110-130
+					give #melee/110-130
+                            		give potion_health_large
+                            		give potion_health_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+ 					give spell_mana_chant
+                            		give spell_fire_wall
+					give spell_metal_shards
+					give spell_corpse_transmutation
+					give spell_burst
+					give spell_incinerate
+					give spell_bombard
+					give spell_meteor_storm
+					give spell_dragon_fire
+		                    give gold:330000
+						";
+				doc = "Equip MP Player (Cmagic Caster) to Hiroth (castle_town) level.";
+			}
+
+			[ct_nmage]
+			{
+				command =
+						"
+					stats str 4
+					stats dex 8
+					stats int 35
+               				stats nmagic 49
+               				stats uber 49
+					equip #body,m/310-330
+					give #body,m/310-330
+					equip #melee/110-130
+					give #melee/110-130
+                            		give potion_health_large
+                            		give potion_health_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give potion_mana_large
+                            		give spell_mana_shield
+					give spell_major_heal
+					give spell_clean_strike
+					give spell_convert
+					give spell_mana_balance
+					give spell_light_ray
+					give spell_frigid_armor
+					give spell_ambivalence
+					give spell_party_recharge
+		                    give gold:330000
+						";
+				doc = "Equip MP Player (Nmagic Caster) to Hiroth (castle_town) level.";
+			}
+
+			[ct_archer]
+			{
+				command =
+						"
+							stats str 12
+							stats dex 30
+							stats int 6
+               				stats ranged 49
+               				stats uber 49
+							equip #body,r/310-330
+							give #body,r/310-330
+							equip #ranged/110-130
+							give #ranged/110-130
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+                            give potion_health_large
+		                    give gold:330000
+						";
+				doc = "Equip MP Player (Ranged) to Hiroth (castle_town) level.";
+			}
+		}
+	}
+}

@@ -1,0 +1,412 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  elevator_instant_4s_1c.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+// This is a CRAZY elevator. Don't try this one at home kids... On second thought no one should use this
+// ever, it is just that crazy... :) On third thought this should be used every where because it is such a pain
+// in the butt to get working. On fourth thought... Oh wait, I can't think anymore. Making this has turned my
+// brain into a lump of green putty...
+
+// Now the serious usage comments... :)
+// This elevator is for instantly moving characters across long distances, make sure that connect nodes are long, and that
+// the frustum size is small enough that you won't cause a major hitch on the server when it pops to the new location.
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool			_server_only$					= true;
+property string			_doc$							= "4-state, 1-connection instant elevator";
+property string			_required_component$			= "placement";
+
+// exported properties
+
+// elevator
+property SiegeId		elevator_node$						= 0						doc = "Node used for transition";
+property int			elevator_door_location1_level1$		= 1						doc = "Elevator Door used for connection at location 1 level 1";
+property int			elevator_door_location1_level2$		= 1						doc = "Elevator Door used for connection at location 1 level 2";
+property int			elevator_door_location2_level1$		= 1						doc = "Elevator Door used for connection at location 2 level 1";
+property int			elevator_door_location2_level2$		= 1						doc = "Elevator Door used for connection at location 2 level 2";
+property float			duration_location1_moving_to_lv1$	= 10					doc = "Length (in seconds) of transition, When moving to level 1 at location 1";
+property float			duration_location1_moving_to_lv2$	= 2						doc = "Length (in seconds) of transition, When moving to level 2 at location 1";
+property float			duration_location2_moving_to_lv1$	= 10					doc = "Length (in seconds) of transition, When moving to level 1 at location 2";
+property float			duration_location2_moving_to_lv2$	= 2						doc = "Length (in seconds) of transition, When moving to level 2 at location 2";
+
+// elevator2
+property SiegeId		e2_elevator_node$					= 0						doc = "e2_Node used for transition";
+property int			e2_elevator_door_location1_level1$	= 1						doc = "e2_Elevator Door used for connection at location 1 level 1";
+property int			e2_elevator_door_location1_level2$	= 1						doc = "e2_Elevator Door used for connection at location 1 level 2";
+property int			e2_elevator_door_location2_level1$	= 1						doc = "e2_Elevator Door used for connection at location 2 level 1";
+property int			e2_elevator_door_location2_level2$	= 1						doc = "e2_Elevator Door used for connection at location 2 level 2";
+
+// location 1 info
+property SiegeId		connect_node_location1$				= 0						doc = "Node used for connection at location 1";
+property int			connect_door_location1_level1$		= 0						doc = "Door used for connection with elevator_node at location 1 level 1";
+property int			connect_door_location1_level2$		= 0						doc = "Door used for connection with elevator_node at location 1 level 2";
+property int			e2_connect_door_location1_level1$	= 0						doc = "Door used for connection with e2_elevator_node at location 1 level 1";
+property int			e2_connect_door_location1_level2$	= 0						doc = "Door used for connection with e2_elevator_node at location 1 level 2";
+
+// location 2 info
+property SiegeId		connect_node_location2$				= 0						doc = "Node used for connection at location 2";
+property int			connect_door_location2_level1$		= 0						doc = "Door used for connection with elevator_node at location 2 level 1";
+property int			connect_door_location2_level2$		= 0						doc = "Door used for connection with elevator_node at location 2 level 2";
+property int			e2_connect_door_location2_level1$	= 0						doc = "Door used for connection with e2_elevator_node at location 2 level 1";
+property int			e2_connect_door_location2_level2$	= 0						doc = "Door used for connection with e2_elevator_node at location 2 level 2";
+
+// location 1 messages.
+
+property eWorldEvent	location1_moving_to_lv1_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When moving to level 1 at location 1";
+property scid      		location1_moving_to_lv1_Scid$								doc = "Scid to send to. When moving to level 1 at location 1";
+property float			location1_moving_to_lv1_Delay$		= -1.0					doc = "Delay before sending message. When moving to level 1 at location 1";
+
+property eWorldEvent	location1_moving_to_lv2_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When moving to level 2 at location 1";
+property scid      		location1_moving_to_lv2_Scid$								doc = "Scid to send to. When moving to level 2 at location 1";
+property float			location1_moving_to_lv2_Delay$		= -1.0					doc = "Delay before sending message. When moving to level 2 at location 1";
+
+property eWorldEvent	location1_arrived_at_lv1_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When arrived at level 1 at location 1";
+property scid      		location1_arrived_at_lv1_Scid$								doc = "Scid to send to. When arrived at level 1 at location 1";
+property float			location1_arrived_at_lv1_Delay$		= -1.0					doc = "Delay before sending message. When arrived at level 1 at location 1";
+
+property eWorldEvent	location1_arrived_at_lv2_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When arrived at level 2 at location 1";
+property scid      		location1_arrived_at_lv2_Scid$								doc = "Scid to send to. When arrived at level 2 at location 1";
+property float			location1_arrived_at_lv2_Delay$		= -1.0					doc = "Delay before sending message. When arrived at level 2 at location 1";
+
+// location 2 messages.
+
+property eWorldEvent	location2_moving_to_lv1_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When moving to level 1 at location 1";
+property scid      		location2_moving_to_lv1_Scid$								doc = "Scid to send to. When moving to level 1 at location 1";
+property float			location2_moving_to_lv1_Delay$		= -1.0					doc = "Delay before sending message. When moving to level 1 at location 1";
+
+property eWorldEvent	location2_moving_to_lv2_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When moving to level 2 at location 1";
+property scid      		location2_moving_to_lv2_Scid$								doc = "Scid to send to. When moving to level 2 at location 1";
+property float			location2_moving_to_lv2_Delay$		= -1.0					doc = "Delay before sending message. When moving to level 2 at location 1";
+
+property eWorldEvent	location2_arrived_at_lv1_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When arrived at level 1 at location 1";
+property scid      		location2_arrived_at_lv1_Scid$								doc = "Scid to send to. When arrived at level 1 at location 1";
+property float			location2_arrived_at_lv1_Delay$		= -1.0					doc = "Delay before sending message. When arrived at level 1 at location 1";
+
+property eWorldEvent	location2_arrived_at_lv2_Message$	= WE_REQ_ACTIVATE		doc = "Message to Send. When arrived at level 2 at location 1";
+property scid      		location2_arrived_at_lv2_Scid$								doc = "Scid to send to. When arrived at level 2 at location 1";
+property float			location2_arrived_at_lv2_Delay$		= -1.0					doc = "Delay before sending message. When arrived at level 2 at location 1";
+
+property bool			location1_level1_connectpaths$		= true					doc = "Connect pathing information at level1 of location 1";
+property bool			location1_level2_connectpaths$		= false					doc = "Connect pathing information at level2 of location 1";
+property bool			location2_level1_connectpaths$		= true					doc = "Connect pathing information at level1 of location 2";
+property bool			location2_level2_connectpaths$		= false					doc = "Connect pathing information at level2 of location 2";
+
+property bool			e2_location1_level1_connectpaths$	= true					doc = "Connect pathing information at level1 of location 1";
+property bool			e2_location1_level2_connectpaths$	= false					doc = "Connect pathing information at level2 of location 1";
+property bool			e2_location2_level1_connectpaths$	= true					doc = "Connect pathing information at level1 of location 2";
+property bool			e2_location2_level2_connectpaths$	= false					doc = "Connect pathing information at level2 of location 2";
+
+property eAxisHint		location1_moving_to_lv1_hint$		= AH_NONE				doc = "location 1 Transition from level 2 to level 1 rotation hint (AH_NONE,AH_XAXIS_POSITIVE,AH_XAXIS_NEGATIVE,AH_YAXIS_POSITIVE,AH_YAXIS_NEGATIVE,AH_ZAXIS_POSITIVE,AH_ZAXIS_NEGATIVE)";
+property eAxisHint		location1_moving_to_lv2_hint$		= AH_NONE				doc = "location 1 Transition from level 1 to level 2 rotation hint";
+property eAxisHint		location2_moving_to_lv1_hint$		= AH_NONE				doc = "location 2 Transition from level 2 to level 1 rotation hint";
+property eAxisHint		location2_moving_to_lv2_hint$		= AH_NONE				doc = "location 2 Transition from level 1 to level 2 rotation hint";
+
+property string			up_effect$							= "hub_plate_up"		doc = "name of the SiegeFX effect to play while transitioning up.";
+property string			down_effect$						= "hub_plate_down"		doc = "name of the SiegeFX effect to play while transitioning down.";
+
+property string			Material$													doc = "Material of the elevator, if blank no sounds are played.";
+
+int		transitions_complete$  = 0;
+float	mcp_lag$ = 0.5;
+owner                                                   = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Waiting$
+{
+	trigger OnGoHandleMessage$( WE_REQ_ACTIVATE )
+	{
+		if( WorldTerrain.IsNodalPathingConnected( elevator_node$, connect_node_location1$ ) )
+		{
+			SetState Location1_start$;
+		} else if( WorldTerrain.IsNodalPathingConnected( elevator_node$, connect_node_location2$ ) ) {
+			SetState Location2_start$;
+		}
+	}
+}
+
+state Location1_start$
+{
+	event OnEnterState$
+	{
+		// msg stuff
+		TTMessages msg$ = MakeTTMessages();
+			
+		if ( location1_moving_to_lv2_Scid$.IsValid() && location1_moving_to_lv2_Scid$.getgoid.isvalid() )
+		{
+			msg$.BeginEvent = location1_moving_to_lv2_Message$;
+			msg$.BeginSendTo = location1_moving_to_lv2_Scid$;
+			msg$.BeginDelay = (location1_moving_to_lv2_Delay$ < 0.0)?mcp_lag$:location1_moving_to_lv2_Delay$;
+		}
+		
+		if ( location1_arrived_at_lv2_Scid$.IsValid() && location1_arrived_at_lv2_Scid$.getgoid.isvalid() )
+    	{
+			msg$.EndEvent = location1_arrived_at_lv2_Message$;
+			msg$.EndSendTo = location1_arrived_at_lv2_Scid$;
+			msg$.EndDelay = (location1_arrived_at_lv2_Delay$ < 0.0)?mcp_lag$:location1_arrived_at_lv2_Delay$;
+   		}
+		
+		// transition the second elevator
+		WorldTerrain.SRequestNodeTransition( e2_elevator_node$, e2_elevator_door_location2_level2$,
+												 connect_node_location2$, e2_connect_door_location2_level2$,
+												 duration_location1_moving_to_lv2$, location2_moving_to_lv2_hint$, owner.Go.Goid,
+												 e2_location2_level2_connectpaths$, true );
+		
+		// transition from the bottom to the top of the shaft at location 1
+		WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_location1_level2$,
+												 connect_node_location1$, connect_door_location1_level2$,
+												 duration_location1_moving_to_lv2$, location1_moving_to_lv2_hint$, owner.Go.Goid,
+												 location1_level2_connectpaths$, true, msg$ );
+		
+		if ( !StringTool.IsEmpty( Material$ ) )
+    	{
+			owner.Go.PlayMaterialSound( "moving_1", Material$, true);
+    	}
+		
+		SetState Location1_ascending$;
+	}
+}
+
+state Location1_ascending$
+{
+	event OnGoHandleMessage$( eWorldEvent event$, WorldMessage /*msg$*/ )
+	{
+		if( event$ == WE_TERRAIN_TRANSITION_DONE )
+		{
+			transitions_complete$ += 1;
+			if( transitions_complete$ == 2 )
+			{
+				SetState Location2_descending$;
+			}
+		}
+	}
+	
+	event OnEnterState$
+	{
+		SiegeFx.SRunScript( up_effect$, owner.goid, owner.goid, "", owner.goid, WE_REQ_ACTIVATE );
+		
+		transitions_complete$  = 0;
+	}
+	
+	event OnExitState$
+	{
+		//pop node to new position. top of level 2 shaft
+		WorldTerrain.SRequestNodeConnection( e2_elevator_node$, e2_elevator_door_location1_level2$,
+												 connect_node_location1$, e2_connect_door_location1_level2$, false, true );
+	
+		//pop node to new position. top of level 2 shaft
+		WorldTerrain.SRequestNodeConnection( elevator_node$, elevator_door_location2_level2$,
+												 connect_node_location2$, connect_door_location2_level2$, false, true );
+	}
+}
+
+state Location1_descending$
+{
+	event OnGoHandleMessage$( eWorldEvent event$, WorldMessage /*msg$*/ )
+	{
+		if( event$ == WE_TERRAIN_TRANSITION_DONE )
+		{
+			transitions_complete$ += 1;
+			if( transitions_complete$ == 2 )
+			{
+				if ( !StringTool.IsEmpty( Material$ ) )
+		        {
+					owner.Go.PlayMaterialSound( "level_1", Material$, true);
+		        }
+		
+				SetState Waiting$;
+			}
+		}
+	}
+	
+	Trigger OnGoHandleMessage$( WE_GO_TIMER_DONE )
+	{
+		// msg stuff
+		TTMessages msg$ = MakeTTMessages();
+			
+		if ( location1_moving_to_lv1_Scid$.IsValid() && location1_moving_to_lv1_Scid$.getgoid.isvalid() )
+		{
+			msg$.BeginEvent = location1_moving_to_lv1_Message$;
+			msg$.BeginSendTo = location1_moving_to_lv1_Scid$;
+			msg$.BeginDelay = (location1_moving_to_lv1_Delay$ < 0.0)?mcp_lag$:location1_moving_to_lv1_Delay$;
+		}
+		
+		if ( location1_arrived_at_lv1_Scid$.IsValid() && location1_arrived_at_lv1_Scid$.getgoid.isvalid() )
+    	{
+			msg$.EndEvent = location1_arrived_at_lv1_Message$;
+			msg$.EndSendTo = location1_arrived_at_lv1_Scid$;
+			msg$.EndDelay = (location1_arrived_at_lv1_Delay$ < 0.0)?mcp_lag$:location1_arrived_at_lv1_Delay$;
+   		}
+		
+		
+		// transition from the top to the bottom of the shaft at location 2
+		WorldTerrain.SRequestNodeTransition( e2_elevator_node$, e2_elevator_door_location2_level1$,
+												 connect_node_location2$, e2_connect_door_location2_level1$,
+												 duration_location1_moving_to_lv1$, location2_moving_to_lv1_hint$, owner.Go.Goid,
+												 e2_location2_level1_connectpaths$, true );
+		
+		// transition from the top to the bottom of the shaft at location 1
+		WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_location1_level1$,
+												 connect_node_location1$, connect_door_location1_level1$,
+												 duration_location1_moving_to_lv1$, location1_moving_to_lv1_hint$, owner.Go.Goid,
+												 location1_level1_connectpaths$, true, msg$ );
+		
+		SiegeFx.SRunScript( down_effect$, owner.goid, owner.goid, "", owner.goid, WE_REQ_ACTIVATE );
+	}
+	
+	event OnEnterState$
+	{
+		transitions_complete$  = 0;
+		
+		PostWorldMessage( WE_GO_TIMER_DONE, owner.Goid, owner.Goid, 0 );
+	}
+}
+
+state Location2_start$
+{
+	event OnEnterState$
+	{
+		// msg stuff
+		TTMessages msg$ = MakeTTMessages();
+			
+		if ( location2_moving_to_lv2_Scid$.IsValid() && location2_moving_to_lv2_Scid$.getgoid.isvalid() )
+		{
+			msg$.BeginEvent = location2_moving_to_lv2_Message$;
+			msg$.BeginSendTo = location2_moving_to_lv2_Scid$;
+			msg$.BeginDelay = (location2_moving_to_lv2_Delay$ < 0.0)?mcp_lag$:location2_moving_to_lv2_Delay$;
+		}
+		
+		if ( location2_arrived_at_lv2_Scid$.IsValid() && location2_arrived_at_lv2_Scid$.getgoid.isvalid() )
+    	{
+			msg$.EndEvent = location2_arrived_at_lv2_Message$;
+			msg$.EndSendTo = location2_arrived_at_lv2_Scid$;
+			msg$.EndDelay = (location2_arrived_at_lv2_Delay$ < 0.0)?mcp_lag$:location2_arrived_at_lv2_Delay$;
+   		}
+		
+		// transition from the bottom to the top of the shaft at location 1
+		WorldTerrain.SRequestNodeTransition( e2_elevator_node$, e2_elevator_door_location1_level2$,
+												 connect_node_location1$, e2_connect_door_location1_level2$,
+												 duration_location2_moving_to_lv2$, location1_moving_to_lv2_hint$, owner.Go.Goid,
+												 e2_location1_level2_connectpaths$, true );
+		
+		// transition from the bottom to the top of the shaft at location 2
+		WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_location2_level2$,
+												 connect_node_location2$, connect_door_location2_level2$,
+												 duration_location2_moving_to_lv2$, location2_moving_to_lv2_hint$, owner.Go.Goid,
+												 location2_level2_connectpaths$, true, msg$ );
+		if ( !StringTool.IsEmpty( Material$ ) )
+    	{
+			owner.Go.PlayMaterialSound( "moving_2", Material$, true);
+    	}
+        	
+		SetState Location2_ascending$;
+	}
+}
+
+state Location2_ascending$
+{
+	event OnGoHandleMessage$( eWorldEvent event$, WorldMessage /*msg$*/ )
+	{
+		if( event$ == WE_TERRAIN_TRANSITION_DONE )
+		{
+			transitions_complete$ += 1;
+			if( transitions_complete$ == 2 )
+			{
+				SetState Location1_descending$;
+			}
+		}
+	}
+	
+	event OnEnterState$
+	{
+		SiegeFx.SRunScript( up_effect$, owner.goid, owner.goid, "", owner.goid, WE_REQ_ACTIVATE );
+		
+		transitions_complete$  = 0;
+	}
+	
+	event OnExitState$
+	{
+		//pop node to new position. top of level 2 shaft
+		WorldTerrain.SRequestNodeConnection( e2_elevator_node$, e2_elevator_door_location2_level2$,
+												 connect_node_location2$, e2_connect_door_location2_level2$, false, true );
+	
+		//pop node to new position. top of level 1 shaft
+		WorldTerrain.SRequestNodeConnection( elevator_node$, elevator_door_location1_level2$,
+												 connect_node_location1$, connect_door_location1_level2$, false, true );
+	}
+}
+
+state Location2_descending$
+{
+	event OnGoHandleMessage$( eWorldEvent event$, WorldMessage /*msg$*/ )
+	{
+		if( event$ == WE_TERRAIN_TRANSITION_DONE )
+		{
+			transitions_complete$ += 1;
+			if( transitions_complete$ == 2 )
+			{
+				if ( !StringTool.IsEmpty( Material$ ) )
+		        {
+					owner.Go.PlayMaterialSound( "level_2", Material$, true);
+		        }
+				
+				SetState Waiting$;
+			}
+		}
+	}
+	
+	Trigger OnGoHandleMessage$( WE_GO_TIMER_DONE )
+	{
+		// msg stuff
+		TTMessages msg$ = MakeTTMessages();
+			
+		if ( location2_moving_to_lv1_Scid$.IsValid() && location2_moving_to_lv1_Scid$.getgoid.isvalid() )
+		{
+			msg$.BeginEvent = location2_moving_to_lv1_Message$;
+			msg$.BeginSendTo = location2_moving_to_lv1_Scid$;
+			msg$.BeginDelay = (location2_moving_to_lv1_Delay$ < 0.0)?mcp_lag$:location2_moving_to_lv1_Delay$;
+		}
+		
+		if ( location2_arrived_at_lv1_Scid$.IsValid() && location2_arrived_at_lv1_Scid$.getgoid.isvalid() )
+    	{
+			msg$.EndEvent = location2_arrived_at_lv1_Message$;
+			msg$.EndSendTo = location2_arrived_at_lv1_Scid$;
+			msg$.EndDelay = (location2_arrived_at_lv1_Delay$ < 0.0)?mcp_lag$:location2_arrived_at_lv1_Delay$;
+   		}
+		
+		// transition from the top to the bottom of the shaft at location 1
+		WorldTerrain.SRequestNodeTransition( e2_elevator_node$, e2_elevator_door_location1_level1$,
+												 connect_node_location1$, e2_connect_door_location1_level1$,
+												 duration_location2_moving_to_lv1$, location1_moving_to_lv1_hint$, owner.Go.Goid,
+												 e2_location1_level1_connectpaths$, true );
+												 
+		// transition from the top to the bottom of the shaft at location 2
+		WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_door_location2_level1$,
+												 connect_node_location2$, connect_door_location2_level1$,
+												 duration_location2_moving_to_lv1$, location2_moving_to_lv1_hint$, owner.Go.Goid,
+												 location2_level1_connectpaths$, true, msg$ );
+	
+		SiegeFx.SRunScript( down_effect$, owner.goid, owner.goid, "", owner.goid, WE_REQ_ACTIVATE );
+	}
+	
+	event OnEnterState$
+	{
+		transitions_complete$  = 0;
+	
+		PostWorldMessage( WE_GO_TIMER_DONE, owner.Goid, owner.Goid, 0 );
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////
+

@@ -1,0 +1,71 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: k_job_c_mcp_fidget_utils
+
+	Author(s)	: biddle
+
+	Purpose		: This file contains shared fidget queuing functions
+				  used by AI skrits that need to fidget
+
+	Requirements  : There must be an m_Job$ and m_Go$ defined in the 
+				    skrit that includes these utilities
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+//----------------------
+// shared helper
+//----------------------
+void __QueueFidget$()
+{
+	eAnimStance stance$ = m_Go$.inventory.animstance;
+	int subanim$ = m_Go$.Aspect.AspectHandle.Blender.GetNumSubAnims(CHORE_FIDGET,stance$);
+	subanim$ = Math.RandomInt(0, Math.MaxInt( 0, subanim$-1 ) ) ;
+	MCPManager.MakeRequest( m_Go$.Goid, PL_FIDGET, subanim$);
+}
+
+
+//==================================================================
+void InterruptAndStartFidget$()
+{
+	MCPManager.Flush(m_Go$.Goid);
+	__QueueFidget$();
+}
+
+//==================================================================
+bool InterruptAndStartFidgetIfRequired$()
+{
+	bool ret$ = false;
+	if( (m_Go$.Aspect.AspectHandle.BlenderIsIdle()) ||
+		(m_Go$.Aspect.AspectHandle.NextChore != CHORE_FIDGET) || 
+	    (m_Go$.Aspect.AspectHandle.NextStance != m_Go$.inventory.animstance)) 
+  	{
+		MCPManager.Flush(m_Go$.Goid);
+		__QueueFidget$();
+		ret$ = true;
+	}
+	return ret$;
+}
+
+
+//==================================================================
+bool StartFidgetIfRequired$()
+{
+	// Returns TRUE if a new fidget was started  
+	bool ret$ = false;
+	if( (m_Go$.Aspect.AspectHandle.BlenderIsIdle()) ||
+		(m_Go$.Aspect.AspectHandle.NextChore != CHORE_FIDGET) || 
+	    (m_Go$.Aspect.AspectHandle.NextStance != m_Go$.inventory.animstance)) 
+  	{
+		__QueueFidget$();
+		ret$ = true;
+	}
+	return ret$;
+}
+
+

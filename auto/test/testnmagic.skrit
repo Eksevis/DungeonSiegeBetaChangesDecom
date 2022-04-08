@@ -1,0 +1,345 @@
+// purpose: Test NMagic ...  BW  9/13/2001
+
+/* use cmd line args - skritbot=auto\test\testNMagic  skrit_retry=true  map=KillBarrel   teleport=start    demo=true 
+                       skritbot=auto\test\testNMagic   map=Halo_test_map  teleport=demotele  
+	use NMagic weapon - killing fist    / note that 1st try of lightning bolt did NOT destroy the barrel!! 
+	check for nmagic experience increase upon barrel breaking
+	
+*/
+
+//////////////////////////////////////////////////////////////////////////////
+
+owner = GoSkritComponent;
+
+#include "LogOut.skrit"
+
+//  string			cBarrel$   =   "Barrel";
+goActor			m_Actor$;
+go				m_Barrel$;
+property float	period$	=   0.08			doc = "Sample period, in seconds.";
+bool			bResponse$;
+float			fNM_Skill$, fActMana$, fR_Mana$ = 200.00;
+bool            BExiting$ = false;
+
+Go				m_Go$;
+string          m_statement$, sSpell$ = "spell_lightning_bolt";  // for log output
+goid			m_BarrelGoID$;
+
+startup state S$ trigger OnBotHandleMessage$( WE_WORLD_STATE_TRANSITION_DONE )
+{
+	if ( (WorldState.CurrentState == WS_SP_INGAME) || (WorldState.CurrentState == WS_MP_INGAME) )
+	{
+		myinit$(__NAME__);
+		
+		setstate SInGame2$;
+	}
+}
+
+state SInGame2$
+{
+	goMind		m_Mind$;
+	goInventory m_GO_Inv$;
+	GoAspect	m_Aspect$;
+	bool		bAskedForBarrel$ = false;   // track requests for finding the barrel ...
+	bool		bAskedForSpell$    = false;      // track requests for finding the bow ...
+	Go			m_Spell$;
+	int			i$;
+	
+ 	FInGame$ at ( 5 frames )
+	{
+		Go			temp$;
+
+		Go party$ = Server.GetScreenParty();
+		string      sTemp$;
+
+		debug.AssertF(party$ != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+		
+		m_Go$ = party$.Children.Get( 0 );
+		if ( m_Go$ == NULL  )
+		{
+//			report.generic("HERO returned NULL\n");
+			logout$(nFAIL$, "SETUP", "Could not find Screen Party [essential]");
+		}
+		else
+		{
+			m_Mind$ = m_Go$.Mind;
+//			report.genericF("in skrit %s\n", __NAME__);
+			debug.AssertF(m_Mind$ != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+
+			m_GO_Inv$ = m_Go$.Inventory;    // Get  goinventory
+			debug.AssertF(m_GO_Inv$ != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+
+			m_Aspect$ = m_Go$.Aspect;
+			debug.AssertF(m_Aspect$ != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+			fActMana$ = m_Aspect$.CurrentMana;      // vs fR_Mana$
+			StringTool.AssignF(m_statement$, "Raising MAX mana level from %f to %f so that spell may be used", fActMana$, fR_Mana$ * 2.0 + 1.0);
+			logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			m_Aspect$.RCSetMaxMana(fR_Mana$ * 2.0 + 1.0 );
+			
+//							StringTool.AssignF(m_statement$, "max Mana is now %f", m_Aspect$.MaxMana);  // commented out to keep output terse
+//							logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			m_Aspect$.RCSetCurrentMana(fR_Mana$ * 2.0);  
+			fActMana$ = m_Aspect$.CurrentMana;
+			StringTool.AssignF(m_statement$, "after GoAspect.RCSetCurrentMana() : Mana is now %f",  fActMana$);  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+			logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			// ensure actor has sufficient  mana level to use the spell!
+			if (fActMana$ < fR_Mana$)
+			{
+				rules.ChangeMana(m_Go$.goid, fR_Mana$);		// rules.ChangeMana				
+				StringTool.AssignF(m_statement$, "after rules.ChangeMana() : Mana is now %f",  m_Aspect$.CurrentMana );  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+				logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			}
+
+
+			m_Actor$  = m_Go$.Actor;
+			debug.AssertF(m_Actor$  != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+
+			fNM_Skill$ = m_Actor$.GetSkillLevel( "Nature Magic" );
+//			report.genericF("Nature Magic skill starts at %f\n", fNM_Skill$);
+			StringTool.AssignF(m_statement$, "Nature Magic skill starts at %f", fNM_Skill$);
+			logout$(nINFO$, "ATTRIBUTES", m_statement$);
+
+	 		//I want to make this look at all nearby items, and choose the most powerful one.
+	 		//After picking it up, it's time to run away.  Get the loot and run!
+	 		
+	 		m_Mind$.TempGopColl1.Clear;
+			bResponse$ = AIQuery.GetOccupantsInSphere(m_Go$.Placement.Position, 100.0, m_Mind$.TempGopColl1);
+			debug.AssertF(bResponse$, "state SInGame2 %s line %d", __NAME__, __LINE__);
+	 		
+	 		i$ = 0;
+		
+	 		//I need to get a list of all visible, and locate the barrel - attack it if found.
+//			Report.genericF("Looking for %i objects in the vicinity... ", m_Mind$.TempGopColl1.Size() );
+		
+	 		while (! (bAskedForBarrel$ && bAskedForSpell$) )    // i$ < m_Mind$.TempGopColl1.Size() )
+	 		{
+	 			temp$ = m_Mind$.TempGopColl1.Get( i$ );
+				debug.AssertF(temp$  != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+//				Report.genericF("%i: on temp go %i\n", i$, MakeInt(temp$.GoID) );
+
+				sTemp$ = temp$.TemplateName;
+//				Report.genericF("%i: found item %s\n", i$, sTemp$);
+		
+	 			if ( sTemp$ ~= sSpell$ )    // "spell_killing_fist" )  // scid == 0x0010000? => AV using getVisible() )  // Spell
+	 			{
+					if (! bAskedForSpell$)
+					{
+//						report.generic("Spell was found ");
+						m_Spell$ = temp$;
+		 				// Go run and get it
+						bAskedForSpell$ = true;  // ask only once 
+					}
+				}
+	 			if ( sTemp$ == "barrel_glb")   // temp$.scid == 0x00100002 )  // barrel
+	 			{
+//					report.generic("Barrel was found ");
+					if ( ! bAskedForBarrel$)
+					{
+						m_Barrel$ = temp$; // .Aspect;
+						m_BarrelGoID$ = temp$.goid;
+ 				
+						bAskedForBarrel$ = true;  // ask only once 
+					}
+	 			}
+				if (i$ == (m_Mind$.TempGopColl1.Size() - 1) ) 
+				{
+//					i$ = 0;     // yes
+					break;
+				}
+				else 
+				{
+		 			i$ += 1;   // continue in loop
+				}
+	 		}
+ 		}
+//	m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, AO_HUMAN, m_Spell$.Placement.Position ) ); // was m_Go$...  not needed - already there
+	 	m_Mind$.SDoJob( MakeJobReq( JAT_GET,  JQ_ACTION, QP_FRONT_FINISH, AO_HUMAN, m_Spell$.Goid, es_any ) );
+//		m_Mind$.SDoJob( MakeJobReq( JAT_EQUIP, JQ_ACTION, QP_FRONT, AO_HUMAN, m_Spell$.Goid, es_spellbook ) );  // AVs !
+//		report.generic("- Job created: pick up this Spell.\n");
+
+		StringTool.AssignF(m_statement$, "Job created: pick up the %s spell", sSpell$);		
+		logout$(nINFO$, "AUTOMATION", m_statement$);
+		
+		i$ = 0;           // prepare to count firings of TakeSample$
+		setstate Wait$;
+	}
+}
+
+////////////////////////////////////////
+//	Wait$
+state Wait$
+{
+	transition -> TakeSample$ :  OnTimer( 1 );
+
+	event OnEnterState$
+	{
+		if ( (WorldState.CurrentState == WS_SP_OUTRO ) || (WorldState.CurrentState == WS_MP_SESSION_LOST ) )
+		{	
+			BExiting$ = true;
+		}
+		else
+		{
+			this.CreateTimer( 1, period$ );
+			i$ += 1;
+		}
+	}
+}
+
+////////////////////////////////////////
+//	TakeSample$
+state TakeSample$	
+{
+	bool			bGaveOrderToAttack$ = false;
+	bool			bSelectSpell$ = false, bTransferSpell$ = false;
+	Go              weapon$;
+//	Go				pSpellBook$;
+	Job				m_Job$;
+
+	event OnEnterState$
+	{
+		if (m_Spell$ != NULL)
+		{
+			if (! bSelectSpell$)
+			{
+				bSelectSpell$ = true;
+				weapon$ = m_GO_Inv$.GetEquipped( ES_WEAPON_HAND );
+				if (weapon$ != NULL)
+				{
+	//				m_Go$.Inventory.RSUnequip( ES_WEAPON_HAND, AO_HUMAN );
+					m_GO_Inv$.RSRemove( weapon$, true );
+					logout$(nINFO$, "ATTRIBUTES", "Unequipped default melee weapon : knife");
+				}
+
+	//			m_Go$.Inventory.RSEquip( ES_SPELLBOOK, m_Spell$.Goid, AO_HUMAN );
+				
+	//			m_Go$.Inventory.RSSetLocation(m_Spell$, il_active_primary_spell, true );
+	//			pSpellBook$ = m_GO_Inv$.GetEquipped( ES_SPELLBOOK );    // m_GO_Inv$.GetActiveSpellBook();;
+				setstate Wait$;	// re-evaluate in period$ secs.
+			}
+			else
+			{
+				if (! bTransferSpell$)
+				{
+					bTransferSpell$ = true;
+					m_GO_Inv$.RSTransfer(m_Spell$, m_GO_Inv$.GetEquipped( ES_SPELLBOOK ), il_spell_1, AO_HUMAN, true );  // il_active_primary_spell   il_spell_1
+					m_Mind$.SetActorWeaponPreference(WP_MAGIC);
+
+		//			report.generic("Job created: Select Spell as default weapon.\n");
+					StringTool.AssignF(m_statement$, "Job created: Select %s Spell as default weapon", sSpell$);	
+					logout$(nINFO$, "AUTOMATION", 	m_statement$);
+				}
+				weapon$ = m_GO_Inv$.GetItem(il_active_primary_spell);
+				if (weapon$  != NULL)
+				{
+					if (weapon$.goid ==  m_Spell$.Goid)
+					{  
+		//				m_Mind$.FrontActionJAT = JAT_CAST_POSITION;  // cannot write to a read-only property!
+						if (! bGaveOrderToAttack$)
+						{
+							bGaveOrderToAttack$ = true;
+							// Go run and get it
+//		 					m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, AO_HUMAN, m_Barrel$.Placement.Position ) ); // was m_Go$...  not needed - already there
+//								m_Mind$.SDoJob( MakeJobReq( JAT_CAST, JQ_ACTION, QP_FRONT_FINISH, AO_HUMAN, m_BarrelGoID$, m_Spell$.Goid ) ); // _POSITION
+							m_Job$ = m_Mind$.SDoJob( MakeJobReq( JAT_CAST, JQ_ACTION, QP_FRONT, AO_REFLEX, m_BarrelGoID$, m_Spell$.Goid ) ); // _POSITION   _FINISH
+	//						report.generic("Job created: attack this barrel with Spell.\n");
+							Stringtool.AssignF(m_statement$, "Job created: attack the barrel %d with the %s Spell", makeInt(m_BarrelGoID$) , sSpell$);
+							logout$(nINFO$, "AUTOMATION", m_statement$);
+
+							setstate Wait$;		// re-evaluate in period$ secs.
+						}
+					}
+					else
+					{ 
+	//					report.generic("Spell is not the default weapon.\n");
+					}
+				}
+				else
+				{
+					debug.AssertF(weapon$  != NULL, "state TakeSample$ %s line %d", __NAME__, __LINE__);
+				}
+			}
+		}
+		else
+		{
+			StringTool.AssignF(m_statement$, "The %s Spell was not found!", sSpell$);	
+			logout$(nINFO$, "AUTOMATION", m_statement$);
+			setstate Ext$;
+		}
+		fNM_Skill$ = m_Actor$.GetSkillLevel( "Nature Magic" );
+//		report.genericF("\t%f sec timer fired: Nature Magic skill is now at %f\n", period$, fNM_Skill$);
+		debug.AssertF(m_Barrel$  != NULL, "state TakeSample$ %s line %d", __NAME__, __LINE__);
+
+		if (m_Barrel$ != NULL)
+		{
+			if ( m_Barrel$.goid.isvalid )   // Aspect.LifeState != ls_Alive_Conscious) 
+			{
+				if (m_Barrel$.goid.go.Aspect.LifeState != ls_Alive_Conscious) // broken?  
+				{
+					Stringtool.AssignF(m_statement$, "Barrel %d is now broken!", makeint(m_BarrelGoID$));
+					logout$(nINFO$, "AUTOMATION", m_statement$);
+					BExiting$ = true;
+				}
+				else
+				{
+//									Stringtool.AssignF(m_statement$, "Barrel %d is still healthy!", makeint(m_BarrelGoID$));
+//									logout$(nINFO$, "AUTOMATION", m_statement$);
+				}
+			}
+			else
+			{
+//								Stringtool.AssignF(m_statement$, "Barrel %d is no longer valid!", makeint(m_BarrelGoID$) );
+				Stringtool.AssignF(m_statement$, "Barrel %d is now broken!", makeint(m_BarrelGoID$) );
+				logout$(nINFO$, "AUTOMATION", m_statement$);
+				BExiting$ = true;
+			}
+		}
+		else
+		{
+//			report.generic("Exiting as barrel was not found!\n");
+			BExiting$ = true;
+		}
+		// last chance to guarantee completion, ready or not, within 14 seconds
+		if (WorldTime.Time > 14.0)
+		{
+			logout$(nINFO$, "AUTOMATION", "exiting because TIME exceeds 14.0 seconds");
+			BExiting$ = true;
+		}
+		if (BExiting$)
+		{
+			setstate Ext$;
+		}
+		else
+		{
+			setstate Wait$;		// re-evaluate in period$ secs.			
+		}
+	}
+}
+
+
+state Ext$
+{
+	event OnEnterState$
+	{
+//		int numofevents$ = m_Aspect$.GetNumberOfEvents(ANIMEVENT_FIRE_WEAPON);
+//		int numofevents$ = owner.GetNumberOfEvents(ANIMEVENT_FIRE_WEAPON);
+
+	    fNM_Skill$	= m_Actor$.GetSkillLevel( "Nature Magic" );
+		StringTool.AssignF(m_statement$, "Nature Magic skill actual %f expected %f", fNM_Skill$, 0.142857);
+		if ( math.abs(fNM_Skill$ - 0.142857) < 0.05)
+		{
+//			report.generic("PASS Nature Magic points accrue test case ");
+			
+			logout$(nPASS$, "ATTRIBUTES", m_statement$);
+		}
+		else
+		{
+//			report.generic("FAIL Nature Magic points accrue test case ");
+			logout$(nFAIL$, "ATTRIBUTES", m_statement$);
+		}
+//		report.genericF(" | %i weapon firings\n", numofevents$);
+
+		mydeinit$(__NAME__);
+		bResponse$ = GpConsole.Execute( "exit\n");          // out of here
+		debug.AssertF(bResponse$, "state TakeSample$ %s line %d", __NAME__, __LINE__);		
+	}
+}

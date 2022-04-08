@@ -1,0 +1,45 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_attack_torso.skrit
+
+	Author(s)	: Eric Tams
+
+	Purpose		: Attack job for the robo_suit torso.
+
+	(C)opyright 2000 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+
+
+#include "k_job_c_attack_utils"
+
+
+startup state Startup$
+{
+}
+
+event OnJobInit$( Job job$ )
+{
+	m_Job$	= job$;
+	m_Go$	= job$.GetGo;
+	m_Mind$	= job$.GetGo.GetMind;
+
+	Go weapon$ 	= m_Job$.GoalModifier.Go;
+	Go target$  = m_Job$.GoalObject.Go;
+	
+	MCPManager.MakeRequest( m_Go$.Goid, PL_PLAYANIM, chore_attack , 0, 0 );
+	SetState Wait$;
+}
+
+State Wait$
+{
+}

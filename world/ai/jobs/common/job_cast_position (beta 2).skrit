@@ -1,0 +1,196 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_cast_position.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: This is a basic cast the darn spell at a position.
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Goid	m_Spell$;
+int		m_Anim$;
+float 	cast_loop_duration$;
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.GetGo;
+	m_Mind$		= job$.GetGo.GetMind;
+	m_Body$		= job$.GetGo.GetBody;
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Spell$ 	= job$.GoalModifier;
+	m_Anim$		= job$.GoalModifier.Go.Magic.CastSubAnimation;
+
+	if ( m_Job$.Origin == AO_HUMAN )
+	{
+		m_Go$.SPlayVoiceSound( "order_cast", false);
+	}
+
+	SetState( Approaching$ );
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	global messgae handling
+trigger OnWorldMessage$( WE_KILLED )			{	SetState Exiting$; }
+trigger OnWorldMessage$( WE_MCP_INVALIDATED )	{	SetState Exiting$; }
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Approaching$
+{
+
+	event OnEnterState$
+	{
+		if( m_Spell$.Go.Magic.EvaluateManaCost( m_Go$, NULL ) <= m_Go$.Aspect.CurrentMana )
+		{
+			eAnimStance stance$ = m_Go$.inventory.animstance;
+	 		cast_loop_duration$ = m_Spell$.Go.Magic.CastReloadDelay;
+			cast_loop_duration$ += m_Go$.Aspect.AspectHandle.Blender.GetBaseDuration(CHORE_MAGIC,stance$);
+
+			report.reportf( "aiskrit", "%s: duration of cast: %g\n",m_Go$.TemplateName,cast_loop_duration$ );
+			
+			int num_anims$ = m_Go$.Aspect.AspectHandle.Blender.GetNumSubAnims(CHORE_MAGIC,stance$);
+					
+			if( num_anims$ < m_Anim$ )
+			{
+				m_Anim$ = 0;
+			}
+
+			eReqRetCode ret$ = MCPManager.MakeRequest(
+													m_Go$.Goid,
+													PL_CAST_ON_POSITION,
+													cast_loop_duration$,
+													m_Anim$,
+													m_Job$.GoalPosition,
+													m_Spell$.Go.Magic.CastRange
+													);
+
+			report.ReportF("aimove","[%s] PL_CAST_ON_POSITION [%s] returned [%s]\n",
+			 	m_Go$.TemplateName,
+				MakeSiegePosString(m_Job$.GoalPosition),
+				ToString(ret$) );
+
+			if (RequestFailed(ret$))
+			{
+				SetState( Exiting$ );
+			}
+			else 
+			{
+				SetState( Gesturing$ );
+			}
+		}
+		else
+		{
+			 SetState( Exiting$ );
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Gesturing$
+{
+
+	transition
+	{
+		-> Exiting$:				OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );
+		-> Exiting$:				OnWorldMessage( WE_MCP_INVALIDATED );
+		-> CastWithoutFireEvent$:	OnWorldMessage( WE_ANIM_DONE );
+	}
+
+	trigger OnWorldMessage$( WE_MCP_SECTION_COMPLETED )
+	{
+		m_Job$.EnterAtomicState( cast_loop_duration$ );
+		SendWorldMessage( WE_REQ_CAST_CHARGE, m_Go$.goid, m_Spell$ );
+	}
+
+	trigger OnWorldMessage$( WE_ANIM_WEAPON_FIRE )
+	{
+		m_Spell$.Go.GetMagic.SCast( m_Job$.GoalPosition );
+		SetState( FollowThrough$ );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state CastWithoutFireEvent$
+{
+	event OnEnterState$
+	{
+//		report.warningf("$$$$ The casting anim for [%s] has no FIRE event\n",m_Go$.TemplateName);
+
+		m_Spell$.Go.GetMagic.SCast( m_Job$.GoalPosition );
+
+		SetState( Exiting$ );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state FollowThrough$
+{
+
+	transition
+	{
+		-> Exiting$:				OnWorldMessage( WE_ANIM_DONE );
+	}
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+/*
+state CastAgain$
+{
+	event OnEnterState$
+	{
+		if( m_Spell$.Go.Magic.IsOneShot || (m_Spell$.Go.Magic.EvaluateManaCost( m_Go$, NULL ) > m_Go$.Aspect.CurrentMana) )
+		{
+			SetState( Exiting$ );
+		}
+		else
+		{
+			SetState( Approaching$ );
+		}
+	}
+}
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion();
+	}
+}

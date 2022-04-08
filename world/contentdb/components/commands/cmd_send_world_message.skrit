@@ -1,0 +1,141 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		:	cmd_send_world_message.skrit
+
+	Author(s)	: 	Bartosz Kijanka
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// exported properties
+property string _doc$ 					= "send a WorldMessage to an object";
+property string _required_component$ 	= "placement";
+
+property Scid next_scid$ 				doc = "Scid of next command in sequence, 0 to terminate";
+
+owner = GoSkritComponent;
+
+////////////////////////////////////////
+//	queue control
+
+property eWorldEvent send_message$						doc = "Message to Send.";
+
+property Scid sendToScid$				   		   		doc = "Object to send message to";
+property bool sendDelayed$ 					= false		doc = "Set to true is this message send is to be delayed";
+property float sendDelayTime$ 				= 0			doc = "Duration of delay before sending message";
+
+property int intData1$						= 0			doc = "Optional message param";
+property bool useIntData1$ 					= false		doc = "Set to pass int optional message param in message data1.";
+
+property Scid scidData1$   					= 0			doc = "Optional message param";
+property bool useScidData1$ 				= false		doc = "Set to pass Scid optional message param in message data1.";
+property bool translateScidData1ToGoid$ 	= false		doc = "When passing scidData1 to data1 of the message, translate it to a Goid.";
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+{
+	if( e$ == WE_REQ_ACTIVATE )
+	{
+		////////////////////////////////////////
+		//	send the message
+
+		int data$ = 0;
+		if( useIntData1$ )
+		{
+			data$ = intData1$;
+		}
+		else if( useScidData1$ )
+		{
+			if( translateScidData1ToGoid$ )
+			{
+				Goid translatedGoid$ = GoDb.FindGoidByScid( scidData1$ );
+				data$ = MakeInt( translatedGoid$ );
+			}
+			else
+			{
+				data$ = MakeInt( scidData1$ );
+			}
+		}
+		else
+		{
+			data$ = msg$.Data1;
+		}
+
+		if( sendDelayed$ )
+		{
+			PostWorldMessage( send_message$, owner.Goid, sendToScid$, data$, sendDelayTime$ );
+		}
+		else
+		{
+			SendWorldMessage( send_message$, owner.Goid, sendToScid$, data$ );
+		}
+
+		////////////////////////////////////////
+		//	activate next command in chain
+
+		Goid nextGoid$ = GoDb.FindGoidByScid( next_scid$ );
+
+		if ( nextGoid$.IsValid )
+		{
+			SendWorldMessage( WE_REQ_ACTIVATE, owner.Goid, nextGoid$, msg$.Data1 );
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+event OnGoDrawDebugHud$
+{
+	////////////////////////////////////////
+	//	check validity of next command
+
+	Goid nextGoid$ = GoDb.FindGoidByScid( next_scid$ );
+
+	if( nextGoid$.IsValid )
+	{
+		if ( !nextGoid$.Go.IsCommand )
+		{
+			World.DrawDebugSphere( owner.go.Placement.Position,
+										 5.0,
+										 0xFFFF0000,
+										 "" );
+
+			World.DrawDebugSphere( owner.go.Placement.Position,
+										 5.5,
+										 0xFFFF0000,
+										 "next_command NOT a command" );
+			return;
+		}
+	}
+
+	if ( nextGoid$.IsValid )
+	{
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 nextGoid$.go.Placement.Position,
+									 0xFFFFCC66, "next" );
+	}
+
+	Goid sendGoid$ = GoDb.FindGoidByScid( sendToScid$ );
+	
+	if( sendGoid$.IsValid )
+	{
+		string label$;
+		stringtool.AssignF( label$, "send message '%s'", ToString( send_message$ ) );
+		World.DrawDebugLinkedTerrainPoints(	owner.go.Placement.Position,
+											sendGoid$.go.Placement.Position,
+											0xFF00FF00, 
+											label$ );
+	} 
+}
+
+//////////////////////////////////////////////////////////////////////////////

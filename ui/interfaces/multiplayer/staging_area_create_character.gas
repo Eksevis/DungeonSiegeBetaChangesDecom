@@ -1,0 +1,447 @@
+[staging_area_create_character]
+{
+	interface = true;
+
+	[t:text,n:title]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_14p_copperplate-light;
+		justify = left;
+		rect = 44,76,200,92;
+		text = "Create New Character";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:text,n:character_name_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 60,168,234,184;
+		text = "Enter Hero Name";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:name_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 60,188,234,212;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:edit_box,n:staging_char_name_edit_box]
+	{
+		alpha = 1.000000;
+		clear_select = false;
+		common_control = false;
+		common_template = ;
+		draw_order = 6;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		max_string_size = 14;
+		permanent_focus = false;
+		rect = 64,192,230,208;
+		text = ;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		excluded_chars = [["<>:/\|?*.]];
+		max_pixels = 155;
+		has_pixel_limit = true;
+		[prompt] { texture=b_gui_fe_m_single_prompt; width=1; }
+		[messages]
+		{
+			oneditselect = notify(staging_create_character_ok);
+		}
+	}
+
+	[t:dialog_box,n:character_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 270,110,530,290;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:listener,n:listener]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 15;
+		font_type = ;
+		rect = 270,110,530,290;
+		text = ;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:dialog_box,n:appearance_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 566,110,740,290;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:text,n:character_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 602,128,704,144;
+		text = "Character";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_prev_character]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = left;		
+		draw_order = 18;
+		rect = 586,128,602,144;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { onbuttonpress=notify(previous_character); }
+	}
+	[t:button,n:button_next_character]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = right;		
+		draw_order = 18;
+		rect = 704,128,720,144;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { onbuttonpress=notify(next_character); }
+	}
+	[t:text,n:head_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 602,154,704,170;
+		text = "Head";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_prev_head]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = left;		
+		draw_order = 18;
+		rect = 586,154,602,170;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_prev_head); }
+	}
+	[t:button,n:button_next_head]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = right;		
+		draw_order = 18;
+		rect = 704,154,720,170;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_next_head); }
+	}
+	[t:text,n:face_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 602,180,704,196;
+		text = "Skin";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_prev_face]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = left;		
+		draw_order = 18;
+		rect = 586,180,602,196;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_prev_face); }
+	}
+	[t:button,n:button_next_face]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = right;		
+		draw_order = 18;
+		rect = 704,180,720,196;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_next_face); }
+	}
+	[t:text,n:hair_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 602,206,704,222;
+		text = "Hair";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_prev_hair]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = left;		
+		draw_order = 18;
+		rect = 586,206,602,222;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_prev_hair); }
+	}
+	[t:button,n:button_next_hair]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = right;		
+		draw_order = 18;
+		rect = 704,206,720,222;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_next_hair); }
+	}
+	[t:text,n:shirt_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 602,232,704,248;
+		text = "Shirt";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_prev_shirt]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = left;		
+		draw_order = 18;
+		rect = 586,232,602,248;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_prev_shirt); }
+	}
+	[t:button,n:button_next_shirt]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = right;		
+		draw_order = 18;
+		rect = 704,232,720,248;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { onbuttonpress=notify(char_next_shirt); }
+	}
+	[t:text,n:pants_text]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 602,258,704,274;
+		text = "Pants";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		disable_color = 0x99555555;
+		wrap_mode = clamp;
+	}
+	[t:button,n:button_prev_pants]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = left;		
+		draw_order = 18;
+		rect = 586,258,602,274;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_prev_pants); }
+	}
+	[t:button,n:button_next_pants]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = right;		
+		draw_order = 18;
+		rect = 704,258,720,274;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(char_next_pants); }
+	}
+
+	[t:button,n:staging_create_character_ok]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;		
+		draw_order = 18;
+		rect = 252,308,392,324;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(staging_create_character_ok) & playsound(s_e_frontend_tiny_button); }
+		[t:text,n:ok_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Accept";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:button,n:staging_create_character_cancel]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;		
+		draw_order = 18;
+		rect = 408,308,548,324;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { onbuttonpress=notify(staging_create_character_cancel) & playsound(s_e_frontend_tiny_button); }
+		[t:text,n:cancel_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Cancel";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+
+	[t:button,n:staging_import_character]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;		
+		draw_order = 18;
+		rect = 500,76,740,92;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages] { onbuttonpress=notify(staging_import_character); }
+		[t:text,n:staging_import_character_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Import From Single Player...";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+
+}

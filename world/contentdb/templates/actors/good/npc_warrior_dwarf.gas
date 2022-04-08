@@ -1,0 +1,65 @@
+[t:template,n:warrior_dwarf]
+{
+	specializes	= base_dwarf;
+	doc			= "test dwarf";
+    category_name = "character";
+
+	actor:portrait_icon = b_gui_ig_i_ic_c_df;
+
+	[actor]
+	{
+		can_level_up         = true;
+		race                 = human;
+
+		[skills]
+		{
+			strength =  10, 0;
+			intelligence =  10, 0;
+			dexterity =  10, 0;
+		}
+	}
+
+	aspect:textures:0	= b_c_gan_df_skin_01;
+	aspect:textures:1	= b_c_pos_a1_005;
+	aspect:mana_recovery_unit   = 1.0;
+	aspect:mana_recovery_period = 10.0;
+
+
+	inventory:grid_width	= 4;
+	inventory:grid_height	= 13;
+
+	[inventory]
+	{
+		[equipment]
+		{
+			es_chest = temp_bd_sc_r_g_o_fin;
+			es_feet = bo_gr_ba_f_g_c_avg;
+			es_forearms = gl_gl_sc_f_g_c_avg;
+			es_head = he_un_fu_pl_f_d_c_fin;
+			es_weapon_hand = hm_g_o_2h1m_avg;
+		}
+		[other]
+		{
+			il_active_melee_weapon = hm_g_o_2h1m_fun;
+			il_main = ax_g_o_1h2b_avg;
+			il_main = he_un_fu_pl_f_g_c_avg;
+			il_main = temp_bd_br_f_g_c_str;
+			il_main = test_sh_m_g_c_r_s_fin;
+			il_main = temp_bd_sl_r_g_o_mag;
+			il_main = temp_bd_br_m_g_c_mag;
+		}
+	}
+
+	[mind]
+	{
+		melee_engage_range  = 1.9;
+		ranged_engage_range = 9.0;
+		sight_range         = 12.0;
+	}
+
+	[physics]
+	{
+		fire_effect = human_physics_fire;
+	}
+
+}

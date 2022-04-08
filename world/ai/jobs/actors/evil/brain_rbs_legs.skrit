@@ -1,0 +1,326 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	brain_rbs_legs.skrit
+
+	Author(s)	: 	Eric Tams
+
+	Purpose		:	Customized brain for the Goblin robo suit
+	
+	Expected Behavior	: The Robo suit will be sitting under the ground. When
+						The character enters the room he will rise from the floor.
+						When he sees the character he will power up and begin to 
+						attack. The robo-suit will fight the characters until he 
+						reaches a certain life ratio he will then back up into 
+						some tessla coils where he will be healed. 
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+Goid	m_Target$;
+Goid	torso$;
+Goid	lightning$;
+Goid	flamethrower$;
+Goid	minigun$;
+
+float	approach_distance_min$;
+float	approach_distance_max$;
+
+////////////////////////////////////////////////////////////////////////////////
+void CheckBodyParts$( void )
+{
+	if( lightning$.IsValid() )
+	{
+		if ( m_Go$.Aspect.LifeRatio <= 0.5 )
+		{
+			GoDb.SMarkGoAndChildrenForDeletion( lightning$ ); 
+			if( lightning$.Go.Aspect.AspectHandle.Parent == torso$.Go.Aspect.AspectHandle )
+			{
+				torso$.Go.Aspect.AspectHandle.DetachChild( lightning$.Go.Aspect.AspectHandle );
+			}
+			Physics.ExplodeGoWithDamage( lightning$, lightning$, lightning$ );		
+		}
+	}
+	
+	if( flamethrower$.IsValid() )
+	{
+		if ( m_Go$.Aspect.LifeRatio <= 0.35 )
+		{
+			GoDb.SMarkGoAndChildrenForDeletion( flamethrower$ ); 
+			if( flamethrower$.Go.Aspect.AspectHandle.Parent == torso$.Go.Aspect.AspectHandle )
+			{
+				torso$.Go.Aspect.AspectHandle.DetachChild( flamethrower$.Go.Aspect.AspectHandle );
+			}
+			Physics.ExplodeGoWithDamage( flamethrower$, flamethrower$, flamethrower$ );
+			if( torso$.IsValid )
+			{
+				Siegefx.SRunScript("robosuit_flamethrower_sparks",torso$,torso$,"",torso$, WE_DAMAGED );
+			}
+		}
+	}
+	
+	if( minigun$.IsValid() )
+	{
+		if ( m_Go$.Aspect.LifeRatio <= 0.2 )
+		{
+			GoDb.SMarkGoAndChildrenForDeletion( minigun$ ); 
+			if( minigun$.Go.Aspect.AspectHandle.Parent == torso$.Go.Aspect.AspectHandle )
+			{
+				torso$.Go.Aspect.AspectHandle.DetachChild( minigun$.Go.Aspect.AspectHandle );
+			}
+			Physics.ExplodeGoWithDamage( minigun$, minigun$, minigun$ );
+			if( torso$.IsValid )
+			{
+				Siegefx.SRunScript("robosuit_minigun_sparks",torso$,torso$,"",torso$, WE_DAMAGED );
+			}
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+startup state STARTUP$
+{
+	event OnEnterState$
+	{
+		GoDb.PreloadCloneSource( m_Go$, "goblin_robo_suit_torso_01" );
+		GoDb.PreloadCloneSource( m_Go$, "goblin_robo_suit_minigun" );
+		GoDb.PreloadCloneSource( m_Go$, "goblin_robo_suit_flamethrower" );
+		GoDb.PreloadCloneSource( m_Go$, "goblin_robo_suit_lightning" );
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+
+
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$					= job$;
+	m_Go$					= job$.Go;
+	m_Mind$					= job$.Go.Mind;
+	m_Target$				= Goid.invalidgoid;
+	torso$ 					= Goid.InvalidGoid;                
+	lightning$				= Goid.InvalidGoid;            
+	flamethrower$			= Goid.InvalidGoid;         	
+	minigun$				= Goid.InvalidGoid;
+	approach_distance_min$	= 3.0;
+	approach_distance_max$	= 5.0;
+	
+	//m_Go$.Aspect.SSetIsVisible( false );
+}
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+	
+	SetState Waiting$;
+}
+
+State Waiting$
+{
+	transition
+	{
+		-> Spawnkids$:	OnWorldMessage( WE_REQ_ACTIVATE );
+		-> Spawnkids$:	OnWorldMessage( WE_DAMAGED );
+	}
+	
+	event OnEnterState$
+	{
+			
+		int kids$ = m_Go$.Aspect.AspectHandle.NumberOfChildren;
+		
+		if( kids$ > 0 )
+		{
+			int i$ = 0;
+			while( i$ < kids$ )
+			{
+				Goid Kid$ = m_Go$.Aspect.AspectHandle.GetChild(i$).Goid;
+				
+				int kids2$ = Kid$.Go.Aspect.AspectHandle.NumberOfChildren;
+				int j$ = 0;
+				while( j$ < kids2$ )
+				{
+					Goid Kid2$ = Kid$.Go.Aspect.AspectHandle.GetChild(j$).Goid;
+					report.Genericf("Trying to extra kid: %s\n",Kid2$.Go.templatename);
+					GoDb.SMarkGoAndChildrenForDeletion( Kid2$ );
+					j$ += 1;
+				}
+				report.Genericf("Trying to extra kid: %s\n",Kid$.Go.templatename);
+				GoDb.SMarkGoAndChildrenForDeletion( Kid$ );
+				Kid$.Go.Aspect.AspectHandle.DetachAllChildren();
+				i$ += 1;
+			}
+			m_Go$.Aspect.AspectHandle.DetachAllChildren();
+			SetState Spawnkids$;
+		}
+	}
+}
+
+
+State Spawnkids$
+{
+	event OnEnterState$
+	{
+		GoCloneReq cloneReq1$ = MakeGoCloneReq( m_Go$.Goid, "goblin_robo_suit_torso_01" );
+		SiegePos SpawnPos1$ = m_Go$.placement.position;
+		cloneReq1$.StartingPos	= SpawnPos1$;
+		cloneReq1$.SnapToTerrain = true;
+	    torso$	= GoDb.SCloneGo( cloneReq1$ );
+	
+		GoCloneReq cloneReq2$ = MakeGoCloneReq( m_Go$.Goid, "goblin_robo_suit_minigun" );
+		SiegePos SpawnPos2$ = m_Go$.placement.position;
+		cloneReq2$.StartingPos	= SpawnPos2$;
+		cloneReq2$.SnapToTerrain = true;
+	    minigun$	= GoDb.SCloneGo( cloneReq2$ );
+	
+		GoCloneReq cloneReq3$ = MakeGoCloneReq( m_Go$.Goid, "goblin_robo_suit_flamethrower" );
+		SiegePos SpawnPos3$ = m_Go$.placement.position;
+		cloneReq3$.StartingPos	= SpawnPos3$;
+		cloneReq3$.SnapToTerrain = true;
+	    flamethrower$	= GoDb.SCloneGo( cloneReq3$ );
+	
+		GoCloneReq cloneReq4$ = MakeGoCloneReq( m_Go$.Goid, "goblin_robo_suit_lightning" );
+		SiegePos SpawnPos4$ = m_Go$.placement.position;
+		cloneReq4$.StartingPos	= SpawnPos4$;
+		cloneReq4$.SnapToTerrain = true;
+	    lightning$	= GoDb.SCloneGo( cloneReq4$ );
+	
+	
+		if( torso$.IsValid )
+		{
+			m_Go$.Aspect.AspectHandle.AttachRigidLinkedChild( torso$.Go.Aspect.AspectHandle, "Bip01_Spine", "Torso_Root" );
+			if( minigun$.IsValid )
+			{
+				torso$.Go.Aspect.AspectHandle.AttachRigidLinkedChild( minigun$.Go.Aspect.AspectHandle, "L_shoulder_attach_bone", "L_shoulder_attach_bone" );
+			}
+			if( flamethrower$.IsValid )
+			{
+				torso$.Go.Aspect.AspectHandle.AttachRigidLinkedChild( flamethrower$.Go.Aspect.AspectHandle, "R_shoulder_attach_bone", "R_shoulder_attach_bone" );
+			}
+			if( lightning$.IsValid )
+			{
+				torso$.Go.Aspect.AspectHandle.AttachRigidLinkedChild( lightning$.Go.Aspect.AspectHandle, "lightninggun_attach_bone", "lightninggun_attach_bone" );
+			}
+		}
+		SetState Moving$;	
+	}
+}
+
+event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{
+	if( e$ == WE_KILLED ) 	
+	{
+		if( minigun$.IsValid() )
+		{
+			GoDb.SMarkGoAndChildrenForDeletion( minigun$ ); 
+			Physics.ExplodeGoWithDamage( minigun$, minigun$, minigun$ );
+		}
+		
+		if( flamethrower$.IsValid() )
+		{
+			GoDb.SMarkGoAndChildrenForDeletion( flamethrower$ );
+			Physics.ExplodeGoWithDamage( flamethrower$, flamethrower$, flamethrower$ );
+		}
+		
+		if( lightning$.IsValid() )
+		{
+			GoDb.SMarkGoAndChildrenForDeletion( lightning$ );
+			Physics.ExplodeGoWithDamage( lightning$, lightning$, lightning$ );
+		}
+		
+		if( torso$.IsValid() )
+		{
+			GoDb.SMarkGoAndChildrenForDeletion( torso$ );
+			Physics.ExplodeGoWithDamage( torso$, torso$, torso$ );
+		}
+		
+		m_Go$.Aspect.AspectHandle.DetachAllChildren();
+		SetState Dying$;
+		
+	
+	} else if( e$ == WE_EXPLODED )
+	{
+	} 
+}
+
+state Dying$
+{
+}
+
+state Moving$
+{
+	trigger OnWorldMessage$( WE_DAMAGED )
+	{
+		CheckBodyParts$();
+	}
+	
+	transition
+	{
+		-> Arrived$:	OnWorldMessage( WE_MCP_SECTION_COMPLETED );
+		-> Arrived$:    OnWorldMessage( WE_ANIM_DONE );
+		-> Arrived$:	OnWorldMessage( WE_REQ_JOB_END );
+		-> Arrived$:	OnWorldMessage( WE_MCP_DEPENDANCY_BROKEN );	// path blockage
+		-> Moving$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnEnterState$
+	{	
+		if( m_Mind$.AliveEnemiesVisible() && (Math.RandomFloat(1) < 0.20) )
+		{	
+			CheckBodyParts$();
+			
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+			
+			Go temp_go$ = m_Mind$.GetClosestVisible( m_Mind$.TempQtColl1 );
+			
+			if ( temp_go$ != NULL )
+			{
+				m_Target$ = temp_go$.Goid;
+			} else {
+				m_Job$.SetTimer( 0.01 + m_Mind$.SensorScanPeriod );
+				return;
+			}
+
+			JobReq req$;
+			
+			if( AIQuery.FindSpotRelativeToSource( m_Target$.Go ,approach_distance_min$,approach_distance_max$, 10.0, m_Mind$.TempPos1 ) ) 
+			{
+				req$ = MakeJobReq( JAT_MOVE, JQ_ACTION, QP_CLEAR, AO_COMMAND, m_Mind$.TempPos1 );
+			} else {
+				req$ = MakeJobReq( JAT_MOVE, JQ_ACTION, QP_CLEAR, AO_COMMAND, m_Target$.Go.placement.position );
+				req$.Float1 = Math.RandomFloat(approach_distance_min$, approach_distance_max$);	
+			}
+			
+//			report.Generic("moving somewhere new.\n");
+			m_Mind$.SDoJob( req$ );
+		} else {
+			m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+		}
+	}
+}
+
+state Arrived$
+{
+	transition
+	{
+		-> Moving$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+	}
+
+	event OnEnterState$
+	{
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+	}
+}

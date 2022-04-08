@@ -1,0 +1,201 @@
+[t:template,n:base_stone_glb]
+{
+	category_name = "quest";
+	doc = "stone base template";
+	specializes = treasure;
+	[aspect]
+	{
+		[voice]
+		{
+			[put_down] { * = s_e_gui_put_down_jewelry; }
+		}
+	}
+	[common]
+	{
+		auto_expiration_class = never;
+	}
+	[gui] { can_sell = false; }
+}
+[t:template,n:stone_glb_crystwind_01]
+{
+	doc = "townstone_crystwind";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-crystwind;
+	}
+	[common]
+	{
+		screen_name = "Crystwind Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-crystwind;
+	}
+}
+[t:template,n:stone_glb_elddim_01]
+{
+	doc = "townstone_elddim";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-elddim;
+	}
+	[common]
+	{
+		screen_name = "Elddim Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-elddim;
+	}
+}
+[t:template,n:stone_glb_fallraen_01]
+{
+	doc = "townstone_fallraen";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-fallraen;
+	}
+	[common]
+	{
+		screen_name = "Fallraen Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-fallraen;
+	}
+}
+[t:template,n:stone_glb_gavel_01]
+{
+	doc = "gavel_hovart";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-hammer;
+	}
+	[common]
+	{
+		screen_name = "Gavel of Convening";
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_it_stone-hammer;
+		inventory_width = 1;
+	}
+}
+[t:template,n:stone_glb_grescal_01]
+{
+	doc = "townstone_grescal";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-grescal;
+	}
+	[common]
+	{
+		screen_name = "Grescal Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-grescal;
+	}
+}
+[t:template,n:stone_glb_hiroth_01]
+{
+	doc = "townstone_hiroth";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-hiroth;
+	}
+	[common]
+	{
+		screen_name = "Hiroth Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-hiroth;
+	}
+}
+[t:template,n:stone_glb_lang_01]
+{
+	doc = "townstone_lang";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-lang;
+	}
+	[common]
+	{
+		screen_name = "Lang Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-lang;
+	}
+}
+[t:template,n:stone_glb_meren_01]
+{
+	doc = "townstone_meren";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-meren;
+	}
+	[common]
+	{
+		screen_name = "Meren Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-meren;
+	}
+}
+[t:template,n:stone_glb_quillrabe_01]
+{
+	doc = "townstone_quillrabe";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_stone-quillrabe;
+	}
+	[common]
+	{
+		screen_name = "Quillrabe Stone";
+	}
+	[gui]
+	{
+		inventory_icon = b_gui_ig_i_it_stone-quillrabe;
+	}
+}
+[t:template,n:tenstone_glb]
+{
+	category_name = "treasure";
+	doc = "tenstone";
+	specializes = base_stone_glb;
+	[aspect]
+	{
+		model = m_i_glb_tenstone;
+	}
+	[common]
+	{
+		screen_name = "Tenstone";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "tenstone_decay" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		inventory_height = 2;
+		inventory_icon = b_gui_ig_i_it_tenstone;
+		inventory_width = 2;
+	}
+}

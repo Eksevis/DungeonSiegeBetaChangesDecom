@@ -1,0 +1,491 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  on_off_lever.skrit
+// Author(s):  Eric Tams, Uncle Ernsie
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//
+// Scid Bits Key
+// 0 = changed.
+// 1 = Done.  true = Done
+// 2 & 3 = State. 1 0 = closed, 0 0 = opening, 0 1 = open, 1 1 = closing
+// 4 = active
+//
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool   _server_only$        	= true;
+property string _doc$                	= "Lever which as a re-use delay which can send messages when turned on/off.";
+property string _required_component$ 	= "placement";
+
+// exported properties
+property bool        start_anim_close$      = true              doc = "Play the close anim on startup.";
+property bool        initially_usable$      = true              doc = "If false you cannot use untill sending an activate.";
+property bool        initially_active$  	= true             	doc = "Won't send messages untill it gets an activate if false.";
+property bool        one_shot$          	= false            	doc = "When true you can only use the lever once.";
+property float  	 reset_time$			= 3			    	doc = "Time it takes before you can use lever in on state. -1 requires an activate.";
+property float       reset_time_2$          = 3                 doc = "Time it take before you can use the lever in off state. -1 requires an activate.";
+property float		 required_level$		= -1.0				doc = "Required level to use this object. -1 for no req.";
+//----Messaging
+property scid        On_Scid$                          			doc = "Scid to send message to when lever is on.";
+property eWorldEvent On_Message$			= WE_REQ_ACTIVATE   doc = "Message to send when lever is on, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       On_Message_Delay$                     		doc = "Message delay when lever is on.";
+property scid        Off_Scid$                          		doc = "Scid to send message to when lever is off.";
+property eWorldEvent Off_Message$  			= WE_REQ_DEACTIVATE	doc = "Message to send when lever is off, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       Off_Message_Delay$                     	doc = "Message delay when lever is off.";
+property scid        On_Scid_2$                          		doc = "Additional Scid to send message to when lever is on.";
+property eWorldEvent On_Message_2$   		= WE_REQ_ACTIVATE   doc = "Additional Message to send when lever is on, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       On_Message_Delay_2$                     	doc = "AdditionalMessage delay when lever is on.";
+property scid        Off_Scid_2$                          		doc = "Additional Scid to send message to when lever is off.";
+property eWorldEvent Off_Message_2$  		= WE_REQ_DEACTIVATE doc = "Additional Message to send when lever is off, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       Off_Message_Delay_2$                     	doc = "Additional Message delay when lever is off.";
+property scid        On_Scid_3$                          		doc = "Additional Scid to send message to when lever is on.";
+property eWorldEvent On_Message_3$   		= WE_REQ_ACTIVATE   doc = "Additional Message to send when lever is on, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       On_Message_Delay_3$                     	doc = "Additional Message delay when lever is on.";
+property scid        Off_Scid_3$                          		doc = "Additional Scid to send message to when lever is off.";
+property eWorldEvent Off_Message_3$  		= WE_REQ_DEACTIVATE doc = "Additional Message to send when lever is off, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       Off_Message_Delay_3$                     	doc = "Additional Message delay when lever is off.";
+property scid        On_Scid_4$                          		doc = "Additional Scid to send message to when lever is on.";
+property eWorldEvent On_Message_4$   		= WE_REQ_ACTIVATE   doc = "Additional Message to send when lever is on, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       On_Message_Delay_4$                     	doc = "Additional Message delay when lever is on.";
+property scid        Off_Scid_4$                          		doc = "Additional Scid to send message to when lever is off.";
+property eWorldEvent Off_Message_4$  		= WE_REQ_DEACTIVATE doc = "Additional Message to send when lever is off, ***LEVERS CAN ONLY SEND WE_REQ_ACTIVATE/DEACTIVE and WE_TRIGGER_ACTIVATE/DEACTIVE FOR MULTIPLAYER***";
+property float       Off_Message_Delay_4$                     	doc = "Additional Message delay when lever is off.";
+
+owner = GoSkritComponent;
+
+//////////////////////////////////////////////////////////////////////////////
+// global state
+
+event OnGoDrawDebugHud$
+{
+	if ( On_Scid$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugLinkedTerrainPoints(  owner.go.Placement.Position,
+											 On_Scid$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "On1: %s (%f) to %s\n\n\n\n\n\n\n", ToString(On_Message$), On_Message_Delay$, On_Scid$.go.TemplateName ) );
+	}
+    if ( Off_Scid$.getgoid.isvalid() )
+    {
+		World.DrawDebugLinkedTerrainPoints( owner.go.Placement.Position,
+											 Off_Scid$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "Off1: %s (%f) to %s\n\n\n\n\n\n", ToString(Off_Message$),Off_Message_Delay$, Off_Scid$.go.TemplateName ) );
+    }
+	if ( On_Scid_2$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugLinkedTerrainPoints( owner.go.Placement.Position,
+											 On_Scid_2$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "On2: %s (%f) to %s\n\n\n\n\n", ToString(On_Message_2$),On_Message_Delay_2$, On_Scid_2$.go.TemplateName ) );
+	}
+    if ( Off_Scid_2$.getgoid.isvalid() )
+    {
+		World.DrawDebugLinkedTerrainPoints( owner.go.Placement.Position,
+											 Off_Scid_2$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "Off2: %s (%f) to %s\n\n\n\n", ToString(Off_Message_2$),Off_Message_Delay_2$, Off_Scid_2$.go.TemplateName ) );
+    }
+    if ( On_Scid_3$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugLinkedTerrainPoints( owner.go.Placement.Position,
+											 On_Scid_3$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "On3: %s (%f) to %s\n\n\n", ToString(On_Message_3$),On_Message_Delay_3$, On_Scid_3$.go.TemplateName ) );
+	}
+    if ( Off_Scid_3$.getgoid.isvalid() )
+    {
+		World.DrawDebugLinkedTerrainPoints( owner.go.Placement.Position,
+											 Off_Scid_3$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "Off3: %s (%f) to %s\n\n", ToString(Off_Message_3$),Off_Message_Delay_3$, Off_Scid_3$.go.TemplateName ) );
+    }
+    if ( On_Scid_4$.getgoid.isvalid() )
+    {
+
+		World.DrawDebugLinkedTerrainPoints( owner.go.Placement.Position,
+											 On_Scid_4$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "On4: %s (%f) to %s\n", ToString(On_Message_4$),On_Message_Delay_4$, On_Scid_4$.go.TemplateName ) );
+	}
+    if ( Off_Scid_4$.getgoid.isvalid() )
+    {
+		World.DrawDebugLinkedTerrainPoints( owner.go.Placement.Position,
+											 Off_Scid_4$.go.Placement.Position,
+		                                     MakeColor( 0.0, 1.0, 0.0 ),
+		                                     Debug.Format( "Off4: %s (%f) to %s", ToString(Off_Message_4$),Off_Message_Delay_4$, Off_Scid_4$.go.TemplateName ) );
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void TransitionTo2$
+{
+	// Request animation
+	MCPManager.MakeRequest( owner.getgoid, PL_OPEN);
+
+	//Play Sound
+	owner.Go.PlayMaterialSound( "lever_start", "generic", true);
+
+	if ( Godb.GetScidBit( owner.scid, 4 ) )
+    {
+	   	//Post Lever-On World Message
+		if ( On_Scid$.IsValid() && On_Scid$.getgoid.isvalid() )
+	    {
+	        SPostWorldMessage( On_Message$, owner.Goid, On_Scid$, On_Message_Delay$ );
+		}
+		if ( On_Scid_2$.IsValid() && On_Scid_2$.getgoid.isvalid() )
+	    {
+	       	SPostWorldMessage( On_Message_2$, owner.Goid, On_Scid_2$, On_Message_Delay_2$ );
+		}
+		if ( On_Scid_3$.IsValid() && On_Scid_3$.getgoid.isvalid() )
+	    {
+	        SPostWorldMessage( On_Message_3$, owner.Goid, On_Scid_3$, On_Message_Delay_3$ );
+		}
+		if ( On_Scid_4$.IsValid() && On_Scid_4$.getgoid.isvalid() )
+	    {
+	        SPostWorldMessage( On_Message_4$, owner.Goid, On_Scid_4$, On_Message_Delay_4$ );
+		}
+	}
+}
+
+void TransitionTo1$
+{
+	//Request animation
+	MCPManager.MakeRequest( owner.getgoid, PL_CLOSE);
+
+	//Play Sound
+	owner.Go.PlayMaterialSound( "lever_end", "generic", true);
+
+	if( Godb.GetScidBit( owner.scid, 4 ) )
+    {		
+	    //Post Lever-Off World Message
+		if ( Off_Scid$.getgoid.isvalid() )
+	    {
+	        SPostWorldMessage( Off_Message$, owner.Goid, Off_Scid$, Off_Message_Delay$ );
+		}
+		if ( Off_Scid_2$.getgoid.isvalid() )
+	    {
+	        SPostWorldMessage( Off_Message_2$, owner.Goid, Off_Scid_2$, Off_Message_Delay_2$ );
+		}
+		if ( Off_Scid_3$.getgoid.isvalid() )
+	    {
+	        SPostWorldMessage( Off_Message_3$, owner.Goid, Off_Scid_3$, Off_Message_Delay_3$ );
+		}
+		if ( Off_Scid_4$.getgoid.isvalid() )
+	    {
+			SPostWorldMessage( Off_Message_4$, owner.Goid, Off_Scid_4$, Off_Message_Delay_4$ );
+		}
+	}
+}
+
+void SetUseable$( Bool Useable$ )
+{
+	Owner.Go.Aspect.SSetIsSelectable( Useable$ );
+	Owner.Go.Aspect.SSetIsUsable( Useable$ );
+}
+
+trigger OnGoHandleMessage$( WE_REQ_DEACTIVATE )
+{
+	Godb.SetScidBit( owner.scid, 4, false );
+	SetUseable$( false );
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// local states
+
+startup state WaitForSetup$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if( e$ == WE_ENTERED_WORLD )
+		{
+           	if( owner.Go.HasBody )
+			{ 		
+				int bits$ = Godb.GetScidBits( owner.scid );
+		
+				if( bits$ == 0 ) // nothing has changed. In the default state.
+				{
+					if( start_anim_close$ )
+					{
+						MCPManager.MakeRequest( owner.goid, PL_PLAYANIM, CHORE_CLOSE, 0, 1);
+					}
+	
+					#only( game )
+	    			[[
+	                	if (!initially_usable$)
+	                	{
+	                	    SetUseable$( false );
+						}
+	                	else
+	                	{
+							SetState Wait1$;
+						}
+					]]
+				}
+				else if ( Godb.GetScidBit( owner.scid, 1 ) ) // Done.
+				{
+					SetState Done$;
+					return;
+				}
+				else
+				{
+					if( Godb.GetScidBit( owner.scid, 4 ) )
+					{
+						SetUseable$( true );
+					}
+					else
+					{
+						SetUseable$( false );
+					}
+					if ( Godb.GetScidBit( owner.scid, 2 ) ) // Put the lever back in the state it was in when streamed out.
+					{
+						if ( Godb.GetScidBit( owner.scid, 3 ) )
+						{
+							if( start_anim_close$ )
+							{
+								MCPManager.MakeRequest( owner.goid, PL_PLAYANIM, CHORE_CLOSE, 0, 1);
+							}
+							SetState Pos1$;
+						}
+						else
+						{
+							MCPManager.MakeRequest( owner.goid, PL_PLAYANIM, CHORE_OPEN, 0, 1);
+							SetState Wait2$;
+						}
+					}
+					else
+					{
+						if ( Godb.GetScidBit( owner.scid, 3 ) )
+						{
+							MCPManager.MakeRequest( owner.goid, PL_PLAYANIM, CHORE_OPEN, 0, 1);
+							SetState Pos2$;
+						}
+						else
+						{
+							if( start_anim_close$ )
+							{
+								MCPManager.MakeRequest( owner.goid, PL_PLAYANIM, CHORE_CLOSE, 0, 1);
+							}
+							SetState Wait1$;
+						}
+					}
+				}
+			}
+			else
+			{
+				#only( game )
+    			[[
+					SetState Exit$;
+                ]]
+			}
+		}
+		if( e$ == WE_REQ_ACTIVATE )
+		{
+            SetUseable$( true );
+            SetState Wait1$;
+		}
+    }
+    event OnExitState$
+    {
+    	int bits$ = Godb.GetScidBits( owner.scid );
+    	if( ( bits$ == 0 ) && initially_active$ )
+    	{
+    		Godb.SetScidBit( owner.scid, 4, true );
+    	}
+    	Godb.SetScidBit( owner.scid, 0, true );
+    }
+}
+
+State Wait1$
+{
+	trigger OnGoHandleMessage$( WE_REQ_ACTIVATE )
+	{
+		Godb.SetScidBit( owner.scid, 4, true );
+		SetUseable$( true );
+	}
+
+	event OnEnterState$
+    {
+		Godb.SetScidBit( owner.scid, 2, false );
+		Godb.SetScidBit( owner.scid, 3, false );
+	}
+	event OnExitState$
+	{
+		SetUseable$( false );
+	}
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_USE )
+		{
+			if ( required_level$ > 0.0 )
+			{
+				Goid user$ = msg$.SendFrom;
+				
+				if( user$.IsValid )
+				{
+					if( user$.Go.HasActor )
+					{
+						if( user$.Go.Actor.GetSkillLevel( "Uber" ) < required_level$ )
+						{
+							Report.SScreen( user$.Go.Player.MachineId, Report.Translate( owner.go.getmessage( "low_level" ) ) );
+							return;
+						}
+					}
+				}
+			}
+			TransitionTo2$;
+			SetState Pos2$;
+		}
+	}
+}
+
+State Pos2$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+        if( ( e$ == WE_REQ_ACTIVATE ) )
+       	{
+       		if( !Godb.GetScidBit( owner.scid, 4 ) )
+       		{ 
+       			SetUseable$( true );
+     			Godb.SetScidBit( owner.scid, 4, true );
+     		} 
+     		else if ( reset_time$ < 0 )
+     		{
+     			SetState Wait2$;
+     		}
+       	}
+    }
+
+	event OnEnterState$
+	{
+    	Godb.SetScidBit( owner.scid, 2, false );
+		Godb.SetScidBit( owner.scid, 3, true );
+		
+		SetUseable$( false );
+		
+		if( (reset_time$ >= 0))
+		{
+			This.CreateTimer(1, reset_time$);
+        }
+	}
+	event OnExitState$
+	{
+		SetUseable$( true );
+	}
+   	transition -> Wait2$: OnTimer( 1 );
+}
+
+State Wait2$
+{
+	trigger OnGoHandleMessage$( WE_REQ_ACTIVATE )
+	{
+		Godb.SetScidBit( owner.scid, 4, true );
+		SetUseable$( true );
+	}
+	
+	event OnEnterState$
+	{
+		if (One_Shot$)
+        {
+            SetState Done$;
+		}
+		else
+		{
+			Godb.SetScidBit( owner.scid, 2, true );
+			Godb.SetScidBit( owner.scid, 3, false );
+        }
+    }
+    event OnExitState$
+	{
+		SetUseable$( false );
+	}
+    event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_USE )
+		{
+			if ( required_level$ > 0.0 )
+			{
+				Goid user$ = msg$.SendFrom;
+				
+				if( user$.IsValid )
+				{
+					if( user$.Go.HasActor )
+					{
+						if( user$.Go.Actor.GetSkillLevel( "Uber" ) < required_level$ )
+						{
+							Report.SScreen( user$.Go.Player.MachineId, Report.Translate( owner.go.getmessage( "low_level" ) ) );
+							return;
+						}
+					}
+				}
+			}
+			TransitionTo1$;
+			SetState Pos1$;
+		}
+	}
+}
+
+State Pos1$
+{
+	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+        if( ( e$ == WE_REQ_ACTIVATE ) )
+       	{
+       		if( !Godb.GetScidBit( owner.scid, 4 ) )
+       		{ 
+       			SetUseable$( true );
+     			Godb.SetScidBit( owner.scid, 4, true );
+     		} 
+     		else if ( reset_time_2$ < 0 )
+     		{
+     			SetState Wait1$;
+     		}
+       	}
+    }
+	event OnEnterState$
+	{
+		Godb.SetScidBit( owner.scid, 2, true );
+		Godb.SetScidBit( owner.scid, 3, true );
+		
+		SetUseable$( false );
+		
+		//Transition after reset delay
+		if( (reset_time_2$ >= 0))
+		{
+			This.CreateTimer(1, reset_time_2$);
+        }
+	}
+   	event OnExitState$
+	{
+		SetUseable$( true );
+	}
+   	transition -> Wait1$: OnTimer( 1 );
+}
+
+State Done$
+{
+    event OnEnterState$
+    {
+		Godb.SetScidBit( owner.scid, 2, false );
+		SetUseable$( false );
+    }
+}
+
+State Exit$
+{
+}
+//////////////////////////////////////////////////////////////////////////////

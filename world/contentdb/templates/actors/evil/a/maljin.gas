@@ -1,0 +1,637 @@
+[t:template,n:base_maljin]
+{
+	category_name = "evil_d";
+	doc = "base_maljin";
+	specializes = actor_evil;
+	[aspect]
+	{
+		[voice]
+		{
+			[die]			{ * = s_e_die_lava_imp;		}
+			[enemy_spotted]	{ * = s_e_call_maljin_SED;	}
+		}
+	}
+	[body]
+	{
+        avg_move_velocity = 5.000000;
+		avg_move_velocity = 6.000000;
+		[bone_translator]
+		{
+			body_anterior 	= bip01_head;
+			body_mid 		= bip01_spine2;
+			body_posterior 	= bip01_pelvis;
+			kill_bone 		= bip01_spine2;
+			shield_bone 	= Bip01_L_Hand;
+			weapon_bone 	= Bip01_R_Hand;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_ml_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+					03 = at-04;
+					04 = at-05;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00 = dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00 = di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dff;
+					01 = dff-02;
+				}
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					slep = dfs;
+					wake = dfs;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00 = rl; }
+			}
+		}
+	}
+	[mind]
+	{
+		jat_fidget = world\ai\jobs\common\job_fidget.skrit
+			?social 			= 0.45
+			&approach_distance	= 2
+			&still				= false;
+	}
+	[physics]
+	{
+		explode_when_killed = true;
+		break_effect = fairy_explosion;
+	}
+}
+[t:template,n:maljin_melee]
+{
+	category_name = "evil_d";
+	doc = "maljin melee";
+	specializes = base_maljin;
+	[actor]
+	{
+		[skills]
+		{
+			strength = 		37, 0;
+			intelligence = 	12, 0;
+			dexterity = 	16, 0;
+			melee =  		40, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 87000;
+		life = 920;
+		max_life = 920;
+		mana = 14;
+		max_mana = 14;
+		model = m_c_edm_li_pos_2;
+		scale_base = 1.4;
+		[textures] { 0 = b_c_edm_li-02; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 200;
+		damage_min = 160;
+	}
+	[common]
+	{
+		screen_name = "Maljin Stalker";
+		membership	= party_maljin_ranged, monster;
+	}
+	[defend] { defense = 500; }
+	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.35;
+					il_main = #*/89-138;
+	                il_main = #spell/115-328;
+				}
+				[gold*]
+				{
+					chance = 0.125;
+					max = 284;
+					min = 51;
+				}
+			}
+         }
+	}
+	[mind]
+	{
+		jat_brain						 = world\ai\jobs\common\brain_hero.skrit
+			?actor_joins_existing_party		 = true;
+
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10;
+	}
+}
+[t:template,n:base_maljin_ranged]
+{
+	category_name = "evil_d";
+	doc = "base_maljin_02";
+	specializes = actor_evil;
+	[aspect]
+	{
+		[voice]
+		{
+			[die]	{ * = s_e_die_lava_imp; }
+		}
+	}
+	[body]
+	{
+        min_move_velocity = 5.000000;
+		avg_move_velocity = 6.000000;
+		[bone_translator]
+		{
+			body_anterior 	= bip01_head;
+			body_mid 		= bip01_spine2;
+			body_posterior 	= bip01_pelvis;
+			kill_bone 		= bip01_spine2;
+			shield_bone 	= Bip01_L_Hand;
+			weapon_bone 	= Bip01_R_Hand;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_ml_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+					03 = at-04;
+					04 = at-05;
+				}
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = mg;
+					01 = mg-02;
+					02 = mg-06;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00 = dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00 = di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dff;
+					01 = dff-02;
+				}
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					slep = dfs;
+					wake = dfs;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00 = rl; }
+			}
+		}
+	}
+	[mind]
+	{
+		jat_cast 						= world\ai\jobs\common\job_cast.skrit
+			?rand_spell					= true;
+
+		actor_weapon_preference			= WP_MAGIC;
+		actor_auto_switches_to_magic	= true;
+		actor_auto_switches_to_karate	= false;
+		actor_auto_switches_to_melee	= false;
+
+	}
+	[physics]
+	{
+		explode_when_killed = true;
+		break_effect = fairy_explosion;
+	}
+}
+[t:template,n:maljin_ranged]
+{
+	category_name = "evil_d";
+	doc = "maljin ranged";
+	specializes = base_maljin_ranged;
+	[actor]
+	{
+		[skills]
+		{
+			strength = 		37, 0;
+			intelligence = 	12, 0;
+			dexterity = 	16, 0;
+			melee =  		40, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 87000;
+		life = 920;
+		max_life = 920;
+		mana = 14;
+		max_mana = 14;
+		model = m_c_edm_li_pos_3;
+		scale_base = 1.4;
+		[textures] { 0 = b_c_edm_li-03; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 200;
+		damage_min = 160;
+	}
+	[common]
+	{
+		screen_name = "Maljin Jolt";
+		membership	= party_maljin_ranged, monster;
+	}
+	[defend] { defense = 500; }
+	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.35;
+					il_main = #*/89-138;
+	                il_main = #spell/115-328;
+				}
+				[gold*]
+				{
+					chance = 0.125;
+					max = 284;
+					min = 51;
+				}
+			}
+        }
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			il_active_primary_spell=spell_maljin_spike_01;
+			il_spell_1 = spell_maljin_spike_01;
+			il_spell_2 = spell_maljin_spike_02;
+			il_spell_3 = spell_maljin_spike_03;
+		}
+	}
+	[mind]
+	{
+		jat_brain						 = world\ai\jobs\common\brain_hero.skrit
+			?actor_joins_existing_party		= true
+			&actor_creates_own_party		= true
+			&party_template					= party_maljin_ranged;
+
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10;
+	}
+}
+[t:template,n:base_maljin_magic]
+{
+	category_name = "evil_d";
+	doc = "base_maljin_magic";
+	specializes = actor_evil;
+	[aspect]
+	{
+		[voice]
+		{
+			[die]	{ * = s_e_die_lava_imp; }
+		}
+	}
+	[body]
+	{
+        min_move_velocity = 5.000000;
+		avg_move_velocity = 6.000000;
+		[bone_translator]
+		{
+			body_anterior 	= bip01_head;
+			body_mid 		= bip01_spine2;
+			body_posterior 	= bip01_pelvis;
+			kill_bone 		= bip01_spine2;
+			shield_bone 	= Bip01_L_Hand;
+			weapon_bone 	= Bip01_R_Hand;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_ml_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+					03 = at-04;
+					04 = at-05;
+				}
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = mg-03;
+					01 = mg-04;
+					02 = mg-05;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00 = dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00 = di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dff;
+					01 = dff-02;
+				}
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					slep = dfs;
+					wake = dfs;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00 = rl; }
+			}
+		}
+	}
+	[mind]
+	{
+		jat_cast 						= world\ai\jobs\common\job_cast.skrit
+			?rand_spell					= true;
+
+		on_enemy_entered_ocz_flee 	= true;
+		on_enemy_entered_ocz_attack = false;
+		on_enemy_entered_icz_flee 	= true;
+		on_enemy_entered_icz_attack = false;
+		flee_count 					= 3;
+
+		actor_weapon_preference			= WP_MAGIC;
+		actor_auto_switches_to_magic	= true;
+		actor_auto_switches_to_karate	= false;
+		actor_auto_switches_to_melee	= false;
+
+		jat_fidget = world\ai\jobs\common\job_fidget.skrit
+			?curious 		= 0.65
+			&interest		= interest
+			&still			= false;
+	}
+	[physics]
+	{
+		explode_when_killed = true;
+		break_effect = fairy_explosion;
+	}
+}
+[t:template,n:maljin_magic]
+{
+	category_name = "evil_d";
+	doc = "maljin magic";
+	specializes = base_maljin_magic;
+	[actor]
+	{
+		[skills]
+		{
+			strength = 		37, 0;
+			intelligence = 	12, 0;
+			dexterity = 	16, 0;
+			melee =  		40, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 87000;
+		life = 920;
+		max_life = 920;
+		mana = 14;
+		max_mana = 14;
+		model = m_c_edm_li_pos_4;
+		scale_base = 1.4;
+		[textures] { 0 = b_c_edm_li-04; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 200;
+		damage_min = 160;
+	}
+	[common]
+	{
+		screen_name = "Maljin Phantom";
+	}
+	[defend] { defense = 500; }
+	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.35;
+					il_main = #*/89-138;
+	                il_main = #spell/115-328;
+				}
+				[gold*]
+				{
+					chance = 0.125;
+					max = 284;
+					min = 51;
+				}
+			}
+        }
+        selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			il_active_primary_spell=spell_maljin_ball_01;
+			il_spell_1 = spell_maljin_ball_01;
+			il_spell_2 = spell_maljin_ball_02;
+			il_spell_3 = spell_maljin_ball_03;
+		}
+	}
+	[mind]
+	{
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10;
+	}
+}
+[t:template,n:maljin_melee_boss_01]
+{
+	category_name = "evil_d";
+	doc = "maljin melee";
+	specializes = base_maljin;
+	[actor]
+	{
+		[skills]
+		{
+			strength = 		37, 0;
+			intelligence = 	12, 0;
+			dexterity = 	16, 0;
+			melee =  		40, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 87000;
+		life = 920;
+		max_life = 920;
+		mana = 14;
+		max_mana = 14;
+		model = m_c_edm_li_pos_4;
+		scale_base = 1.4;
+		[textures] { 0 = b_c_edm_li-05; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 200;
+		damage_min = 160;
+	}
+	[common]
+	{
+		screen_name = "Maljin Assassin";
+		membership=monster,party_maljin_ranged,immune_charm,immune_control,immune_freeze,immune_polymorph,immune_align_change,immune_explode;
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action* = call_sfx_script("unique_ray_red");
+
+			}
+
+		}
+	}
+	[defend] { defense = 500; }
+	[inventory]
+	{
+    	[pcontent]
+		{
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.35;
+					il_main = #*/89-138;
+	                il_main = #spell/115-328;
+				}
+				[gold*]
+				{
+					chance = 0.125;
+					max = 284;
+					min = 51;
+				}
+			}
+         }
+	}
+	[mind]
+	{
+		jat_fidget = world\ai\jobs\common\job_fidget.skrit
+			?social 			= 0.45
+			&friend_template	= false
+			&friends			= party_maljin_ranged
+			&approach_distance	= 2
+			&still				= false;
+
+		jat_brain							 = world\ai\jobs\common\brain_hero.skrit
+			?actor_creates_own_party			= true
+			&form_party_on_friend_entered_ICZ	= true
+			&form_party_on_friend_entered_OCZ	= true
+			&party_template						= "party_maljin_ranged";
+
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10.0;
+		sight_range = 10;
+	}
+}

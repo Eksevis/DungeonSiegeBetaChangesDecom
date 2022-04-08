@@ -1,0 +1,376 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_summon_random.skrit
+// Author(s):  Rick Saenz, Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//
+// This Skrit summons a random helper. The helper is defined in a pcontent block
+// In the spell.
+//
+// The Normal Go version Must Create and drop the Pcontent, since Omni Go's can't
+// have an inventory. Then it will create the Omni version.
+// 
+//////////////////////////////////////////////////////////////////////////////
+
+property string effect_script$		= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string end_script$			= ""	doc = "Name of the SiegeFx script that will be providing the visual when un_summoning.";
+property string script_params$		= ""   	doc = "Parameters to send to SiegeFx script";
+property string state_name$			= "summoned"			doc = "Name of effect to use as a generic state and as a screen name.";
+property string description$		= ""	doc = "Description of enchantment being applied";
+property string caster_description$	= ""	doc = "Description of enchantment being applied to the caster";
+property float	spawn_radius$		= -1.0	doc = "Name of effect to use as a generic state and as a screen name on the caster.";
+property bool	monster_summon$		= false	doc	= "Is a monster casting this spell?";
+
+owner = GoSkritComponent;
+
+int starting_pos$;
+
+Goid summoned_goid$;
+Goid caster$;
+Goid target$;
+Goid new_point$;
+float summon_duration$;
+
+trigger OnGoHandleCcMessage$( WE_KILLED )
+{
+	SetState CleanUp$;
+}
+
+trigger OnGoHandleMessage$( WE_WORLD_STATE_TRANSITION_DONE )
+{
+	if( summoned_goid$.IsValid )
+	{
+		if( WorldState.CurrentState == WS_SP_NIS )
+		{
+			summoned_goid$.Go.Mind.SetMayAttack( false );
+			summoned_goid$.Go.Mind.SetMayBeAttacked( false );
+			summoned_goid$.go.Mind.SDoJob( MakeJobReq( JAT_STOP, JQ_ACTION, QP_CLEAR, AO_COMMAND ));
+		}
+		else
+		{
+			summoned_goid$.Go.Mind.SetMayAttack( true );
+			summoned_goid$.Go.Mind.SetMayBeAttacked( true );
+		}
+	}
+}
+			
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+
+			////////////////////
+			// Normal Go
+			
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+			new_point$ = Goid.InvalidGoid;
+
+			if( !target$.isvalid || !caster$.isvalid )
+			{
+				SetState Abort$;
+				return;
+			}
+			
+			if( caster$.Go.Actor.HasGenericState( owner.Go.Magic.CasterStateName ) )
+			{
+				SetState Abort$;
+				return;
+			}
+
+			if( spawn_radius$ > 0.0 )
+			{
+				if( AIQuery.FindSpotRelativeToSource( target$.Go, 
+														spawn_radius$ * 0.66, 
+														spawn_radius$ * 1.33, 
+														2.0, 
+														caster$.Go.Mind.TempPos1 ) )
+	   			{
+	   				// make a new point to summon at
+					GoCloneReq cloneReq$ = MakeGoCloneReq( "point" );
+					cloneReq$.StartingPos	= caster$.Go.Mind.TempPos1;
+                	cloneReq$.SnapToTerrain = true;         
+           			new_point$	= GoDb.SCloneGo( cloneReq$ );
+           			target$ = new_point$;                   
+	   			} else {
+	   				// make a new point to summon at
+					GoCloneReq cloneReq$ = MakeGoCloneReq( "point" );
+					cloneReq$.StartingPos	= target$.Go.Placement.Position;
+                	cloneReq$.SnapToTerrain = true;
+           			new_point$	= GoDb.SCloneGo( cloneReq$ );
+           			target$ = new_point$;
+	   			}	
+			}
+			This.CreateTimer( 2, 0 );
+		} else if( e$ == WE_REQ_ACTIVATE ) {
+			
+			////////////////////
+			// Omni Go
+			
+			caster$ = msg$.GetSendFrom();
+			summoned_goid$ = MakeGoid( msg$.GetData1() );
+			
+			if( !target$.IsValid || !summoned_goid$.Isvalid )
+			{
+				SetState CleanUp$;
+				return;
+			}
+			
+			// buff the summoned guy up.
+			owner.go.magic.SApplyEnchantments( summoned_goid$, caster$ );
+			
+			if(!monster_summon$)
+			{
+				// Setup where experience will go from who this actor damages
+				summoned_goid$.Go.aspect.SetExperienceBenefactor( caster$ );
+				summoned_goid$.Go.aspect.SetExperienceBenefactorSkill( owner.go.magic.skillclass );
+			}
+
+			if( caster$.IsValid )
+			{
+				// set the right playerID so the creature will attack in a multiplayer competative game.
+				summoned_goid$.Go.SsetPlayer( caster$.Go.PlayerID );
+			}
+			
+			// Make this go have the same membership as the caster
+			summoned_goid$.Go.Common.CopyMembership( caster$ );	
+		
+			// watch out pet, so if he dies we can control a new pet.
+			GoDb.StartWatching( owner.Goid, summoned_goid$);
+		
+			summon_duration$ = owner.Go.Magic.EvaluateEffectDuration(summoned_goid$.Go, caster$.Go);
+		
+			// Wait a second before assigning the new job
+			
+			this.CreateTimer( 1, 0 );
+		}
+	}
+
+	transition -> SummonGo$ : OnGoHandleMessage( WE_SPELL_SYNC_MID );
+	transition -> Stay$ : OnTimer( 1 );
+	
+	Trigger OnTimer$( 2 )
+	{
+		if( target$.isvalid && caster$.isvalid )
+		{
+			// Copy the reference to the starting position into SiegeFx persistant storage
+			starting_pos$ = SiegeFx.AddVariable( target$.go.placement.position, owner.goid );
+
+			// Start the visual
+			SiegeFx.SRunScript( effect_script$, target$, caster$, script_params$, owner.Goid, WE_REQ_ACTIVATE );
+		
+			summon_duration$ = owner.Go.Magic.EvaluateEffectDuration(caster$.Go, caster$.Go);
+			caster$.Go.Actor.SAddGenericState( owner.Go.Magic.CasterStateName, caster_description$, summon_duration$ + 2.0, caster$, owner.goid, owner.go.magic.GetMagicLevel( caster$.go ) );
+		}
+		else
+		{
+			SetState Abort$;
+		}
+	}
+}
+
+
+state SummonGo$
+{
+	////////////////////
+	// Normal Go
+	
+	event OnEnterState$
+	{
+		if(caster$.IsValid)
+		{
+			if( Owner.go.Parent != NULL )
+			{
+				// Create new game objects as specified in delayed_pcontent block
+				owner.go.inventory.AddDelayedPcontent();
+			
+				Go summoned_go$ = owner.go.children.get( 0 );
+				
+				owner.go.inventory.RSRemove( summoned_go$, false );
+				summoned_go$.placement.SSetposition( SiegeFx.GetVariable( starting_pos$, owner.goid ), true );
+				
+				summoned_goid$ = summoned_go$.goid;
+				
+				if(!monster_summon$)
+				{
+					// Now match the alignment to whatever the caster is 
+					summoned_goid$.Go.actor.ssetalignment( caster$.Go.actor.alignment );
+				}
+				
+				// create Omni version of the spell.
+				GoCloneReq cloneReq$ = MakeGoCloneReq( Owner.go.Parent.Goid, owner.goid );
+				cloneReq$.Omni = true;
+				Goid new_spell$ = GoDb.SCloneGo( cloneReq$ );
+				
+				// send Omni version an Activate to get it started.
+				PostWorldMessage( WE_REQ_ACTIVATE, caster$, new_spell$, MakeInt( summoned_goid$ ), 0 );
+			}	
+		}
+		// delete normal version of the spell.
+		SetState Finished$;
+	}	
+}			 
+
+state Stay$
+{
+	////////////////////
+	// Omni Go
+	
+	event OnEnterState$
+	{
+		if( !caster$.IsValid )
+		{
+			SetState CleanUp$;
+			return;
+		}
+		
+		if (summoned_goid$.IsValid)
+		{
+			if(!monster_summon$)
+			{
+				// make summoned goid our friend
+				if( summoned_goid$.Go.Mind.UnderstandsJob( JAT_GUARD ) )
+				{
+					summoned_goid$.Go.Mind.SDoJob( MakeJobReq( JAT_GUARD, JQ_ACTION, QP_BACK, AO_REFLEX, caster$ ) );
+				}
+				
+				// we want to be able to see the dude's health
+				summoned_goid$.Go.Actor.SetCanShowHealth( true );
+			}
+			summoned_goid$.Go.Actor.SAddGenericState( state_name$, description$, summon_duration$, caster$, owner.goid, owner.go.magic.GetMagicLevel( caster$.go ) );
+			caster$.Go.Actor.SRemoveGenericState( owner.Go.Magic.CasterStateName );	
+			caster$.Go.Actor.SAddGenericState( owner.Go.Magic.CasterStateName, caster_description$, summon_duration$, caster$, owner.goid, owner.go.magic.GetMagicLevel( caster$.go ) );		
+
+			this.CreateTimer( 1, summon_duration$ );
+		}
+	}
+	transition -> CleanUp$: OnTimer( 2 );
+	trigger OnGoHandleMessage$( WE_SPELL_EXPIRATION_TIMER_RESET )
+	{
+		if( summoned_goid$.isvalid) 
+		{
+			if ( end_script$ != "" ) {
+				SiegeFx.SRunScript( end_script$, summoned_goid$, summoned_goid$, script_params$, owner.Goid, WE_DAMAGED );
+			}		
+		}
+		this.CreateTimer( 2, .1 );
+	}
+	
+	trigger OnTimer$ ( 1 )
+	{
+		if( summoned_goid$.isvalid) 
+		{
+			if ( end_script$ != "" ) {
+				SiegeFx.SRunScript( end_script$, summoned_goid$, summoned_goid$, script_params$, owner.Goid, WE_DAMAGED );
+			}		
+		}
+		this.CreateTimer( 2, .1 );
+	}
+}
+
+state CleanUp$
+{
+	////////////////////
+	// Omni Go
+	
+	transition -> FinishedOmni$: OnTimer( 1 );
+	
+	event OnEnterState$
+	{
+		if( caster$.IsValid )
+		{
+			caster$.Go.Actor.SRemoveGenericState( owner.Go.Magic.CasterStateName );	
+		}
+			
+		if( summoned_goid$.Go != NULL) 
+		{
+			if(!monster_summon$)
+			{
+				summoned_goid$.Go.Aspect.ClearExperienceBenefactor();
+				// we dont want to be able to see the dude's health
+				summoned_goid$.Go.Actor.SetCanShowHealth( false );
+			}
+
+			summoned_goid$.Go.Actor.SRemoveGenericState( state_name$ );		
+			 
+			GoDb.StopWatching( owner.Goid, summoned_goid$);
+			
+			if( ( WorldState.CurrentState == WS_SP_NIS ) || !summoned_goid$.Go.IsInAnyWorldFrustum )
+			{
+				GoDb.SMarkGoAndChildrenForDeletion( summoned_goid$ );
+			}
+			else
+			{
+				Rules.DamageGo( summoned_goid$, summoned_goid$, summoned_goid$, summoned_goid$.Go.Aspect.MaxLife * 3.0, true, true );
+			}
+		}
+		this.CreateTimer( 1, 0 );
+	}
+}
+	
+state Finished$
+{
+	////////////////////
+	// Normal Go
+	
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+	
+		if( new_point$.IsValid() )
+		{
+			PostWorldMessage( WE_REQ_DELETE, new_point$, new_point$, 1 );
+		}
+		
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, owner.Goid, 1 );
+	}
+}
+
+state FinishedOmni$
+{
+	////////////////////
+	// Omni Go
+	
+	event OnEnterState$
+	{
+		if( summoned_goid$.isvalid) 
+		{
+			if( summoned_goid$.Go.IsInAnyWorldFrustum )
+			{
+				Physics.ExplodeGoWithDamage( summoned_goid$, summoned_goid$, summoned_goid$ );
+			}	
+			GoDb.SMarkGoAndChildrenForDeletion( summoned_goid$ );
+		}
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, owner.Goid, 1 );
+	}
+}
+
+
+
+state Abort$
+{
+	////////////////////
+	// Normal Go
+	
+	event OnEnterState$
+	{
+		// Refund the players mana
+		Rules.ChangeMana( caster$, owner.go.getmagic.manacost );
+
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+
+		if( new_point$.IsValid() )
+		{
+			PostWorldMessage( WE_REQ_DELETE, new_point$, new_point$, 1 );
+		}
+		
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, owner.Goid, 1 );
+	}
+}

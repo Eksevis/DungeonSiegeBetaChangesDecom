@@ -1,0 +1,502 @@
+///////////////////////////////////////////////////////////////////////
+//
+// tooltips.gas
+//
+// Contains static rollover help for all UI windows.
+//
+///////////////////////////////////////////////////////////////////////
+
+
+[tooltips]
+{
+	default_tooltip_gui = gui_tooltip;
+
+///////////////////////////////////////////////////////////////////////
+// Frontend
+
+[multiplayer_provider]
+{
+	help_textbox = frontend_help;
+	[help]
+	{
+		button_lan = "Host or join a game across a local area network";
+		button_internet = "Host or join a game on the Internet using an Internet Protocol (IP) address";
+		button_matchmaker = "Host or join a game on the Internet using Microsoft's free matchmaking service";	
+		button_sp_back = "Back to the Main Menu";
+	}
+}
+
+[main_menu]
+{
+	help_textbox = frontend_help;
+	[help]
+	{
+		button_single_player = "Enter the Kingdom of Ehb (single player campaign)";
+		button_multi_player = "Enter the Worlds of Dungeon Siege (network campaigns)";
+		button_options = "Configure the video, audio, controls, and game settings";
+		button_continue = "Resume the most recently saved single player campaign";
+		button_about = "View the Dungeon Siege version and product support ID";
+		button_exit = "Exit to Windows";
+	}
+}
+
+[single_player]
+{
+	help_textbox = frontend_help;
+	[help]
+	{
+		button_start_new_game = "Begin a new campaign";
+		button_load_game = "Resume a previous campaign";
+		button_sp_back = "Back to the Main Menu";
+	}
+}
+
+[load_game]
+{
+	help_textbox = frontend_help;
+	[help]
+	{
+		load_game_listbox = "Select the campaign to resume";
+	}
+}
+
+[difficulty_menu]
+{
+	help_textbox = frontend_help;
+	[help]
+	{
+		button_easy = "Enemies are significantly less challenging. You can adjust this at any time through Options.";
+		button_medium = "Enemies are tuned for optimum gameplay. You can adjust this at any time through Options.";
+		button_hard = "Enemies are significantly more challenging. You can adjust this at any time through Options.";
+	}
+}
+
+///////////////////////////////////////////////////////////////////////
+// Options
+
+[options_video]
+{
+	[tips]
+	{
+		combo_screen_res = "Select the screen resolution and color depth";
+		combo_shadows = "Select the detail level of shadows.";
+		button_texture_filtering = "Select the detail level of textures";
+		slider_gamma = "Adjust the brightness of Dungeon Siege";
+		slider_objectdetail = "Set the quality of ornamental objects";
+		button_defaults = "Restore the default video settings";
+
+		button_ok = "Press to accept settings";
+		button_cancel = "Press to cancel settings";
+	}
+}
+
+[options_audio]
+{
+	tip_textbox = gui_tooltip;
+	[tips]
+	{
+		button_sound = "Turn all sounds and music on or off";
+		slider_mastervolume = "Set the overall volume of sounds and music";
+		slider_musicvolume = "Set the volume of music";
+		slider_sfxvolume = "Set the volume of sound effects";
+		slider_ambientvolume = "Set the volume of ambient sounds";		
+		slider_voicevolume = "Set the volume of character voices";
+		button_defaults = "Restore the default audio settings";
+
+		button_ok = "Press to accept settings";
+		button_cancel = "Press to cancel settings";
+		button_eax = "Turn enhanced sounds on or off";
+	}
+}
+
+[options_input]
+{
+	tip_textbox = gui_tooltip;
+	[tips]
+	{
+//		button_mouse_interface = "Select the mouse button used to move, attack, and pick up items";
+		button_inverse_camera_x = "Invert the horizontal camera controls";
+		button_inverse_y_camera = "Invert the vertical camera controls";		
+		button_screen_edge_tracking = "Set whether the camera pans when the mouse is moved to the screen edge";
+		slider_camera_sensitivity = "Set the camera panning rate";
+		slider_mouse_sensitivity = "Set the mouse pointer speed";
+		button_bindings = "Customize the keyboard settings";
+		button_defaults = "Restore the default input settings";
+
+		button_ok = "Press to accept settings";
+		button_cancel = "Press to cancel settings";
+	}
+}
+
+[options_bindings]
+{
+	tip_textbox = gui_tooltip;
+	[tips]
+	{
+		button_defaults = "Restore the default hotkey settings";
+
+		button_ok = "Press to accept settings";
+		button_cancel = "Press to cancel settings";
+	}
+}
+
+[options_game]
+{
+	tip_textbox = gui_tooltip;
+	[tips]
+	{
+		button_framerate = "Turn the frame rate display on or off";
+		button_showtooltips = "Turn detailed rollover information on or off";
+		slider_gamespeed = "Increase or decrease the passage of time";
+		slider_textscroll = "Set the scroll rate of on-screen dialog text";
+		slider_maxtext = "Set the amount of dialog text displayed";
+		button_defaults = "Restore the default game settings";
+		button_tutorial_tips = "Turn the tutorial tips on or off";
+		button_difficulty = "Adjust the game's difficulty";
+		button_dismemberment = "Turn dismemberment on or off";
+		button_blood_color = "Adjust the blood settings";
+		button_priority_boost = "Sets Dungeon Siege to highest priority in Windows. See ReadMe for details.";
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////
+// Multiplayer
+
+[lan_game_menu]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		lan_player_name_edit_box = "Type your player name";
+		lan_games_list = "Select the game to join";
+//		games_sort_button = "Sort by game name"
+//		player_sort_button = "Sort games by player name"
+//		ping_sort_button = "Sort games by ping time (connection quality)"
+		button_join = "Join a game";
+		button_host = "Host a game";
+	}
+}
+
+[internet_game_menu]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		internet_player_name_edit_box = "Type your player name";		
+		ip_edit_box = "Type the IP address of the game you want to join or select one from the History list below.";
+		button_connect = "Join a game at the selected IP address";
+		button_host = "Host a game from your own IP address";
+		button_remove = "Delete the selected address from your history list";
+	}
+}
+
+[zonematch]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		button_sign_in = "Sign in to ZoneMatch";
+		button_sign_off = "Sign off of your account";
+		button_account_options = "Sign in and set Chat options";
+		tab_view_friends = "View your list of friends";
+		tab_view_chat = "View the list of people you can chat with";
+		button_zonematch_exit = "Exit ZoneMatch";
+		match_chat_edit_box = "Type messages here, and then press Enter to send";
+		button_chat_leave = "Leave the current chat room";
+//		tab_messages = "View messages from your friends";
+	}
+}
+
+[zonematch_news]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		tab_news = "View news about Dungeon Siege";
+		tab_games = "View a list of games you can join";
+		tab_chat = "View the chat rooms you can join";
+	}
+}
+
+[zonematch_games]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		tab_news = "View news about Dungeon Siege";
+		tab_games = "View a list of games you can join";
+		tab_chat = "View the chat rooms you can join";
+		zonematch_button_join = "Join the selected game";
+		zonematch_button_host = "Host a new game";
+		zonematch_button_games_refresh = "Refresh the Games list";
+		zonematch_button_game_details = "Display additional information for the selected game";
+	}
+}
+
+[zonematch_game_details]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		tab_news = "View news about Dungeon Siege";
+		tab_games = "View a list of games you can join";
+		tab_chat = "View the chat rooms you can join";
+		zonematch_game_details_button_join = "Join this game";
+		zonematch_game_details_refresh = "Refresh the details for this game";
+		zonematch_game_details_back = "Return to the game listing";
+	}
+}
+
+[zonematch_chat]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		tab_news = "View news about Dungeon Siege";
+		tab_games = "View a list of games you can join";
+		tab_chat = "View the chat rooms you can join";
+		button_join_chatroom = "Join the selected chat room";
+		button_create_chatroom = "Create a new chat room";
+		button_refresh_chatroom_list = "Refresh the Chat Rooms list";
+//		button_channel = "Sort games by channel";
+//		button_users = "Sort games by users";
+//		button_topic = "Sort games by topic";
+	}
+}
+
+[zonematch_account_settings]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		tab_account = "View options for your account";
+		tab_friends = "Adjust friends list options for your account";
+		tab_ignored = "Modify list of ignored users for your account";
+		button_ok = "Accept the changes made to your account settings";
+		button_sign_off = "Sign off of your account";
+		button_change_password = "Change the password for your account";
+		button_create_new_account = "Create a new ZoneMatch account";
+	}
+}
+
+[zonematch_friends_settings]
+{
+	help_textbox = multiplayer_help;
+	[text]
+	{
+		disable_friends_for_account = "Check to disable all friends messaging for your account";
+		disable_friends_in_game = "Check to disable friends communication while in game";
+		checkbox_ask_before_add = "Require your authorization before people add you as a friend";
+	}
+
+	[help]
+	{
+		tab_account = "View options for your account";
+		tab_friends = "Adjust friends list options for your account";
+		tab_ignored = "Modify list of ignored users for your account";
+		button_ok = "Accept the changes made to your account settings";
+		disable_friends_for_account = @disable_friends_for_account;
+		disable_friends_for_account_text = @disable_friends_for_account;
+		disable_friends_in_game = @disable_friends_in_game;
+		disable_friends_in_game_text = @disable_friends_in_game;
+		checkbox_ask_before_add = @checkbox_ask_before_add;
+		checkbox_ask_before_add_text = @checkbox_ask_before_add;
+	}
+}
+
+[zonematch_ignored_settings]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		tab_account = "View options for your account";
+		tab_friends = "Adjust friends list options for your account";
+		tab_ignored = "Modify list of ignored users for your account";
+		button_ok = "Accept the changes made to your account settings";
+	}
+}
+
+[staging_area]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		button_map_settings = "View and change the Map Settings";
+		button_game_settings = "View and change the Game Settings";
+		staging_area_chat_editbox = "Type messages here, and then press Enter to send";
+		staging_checkbox_ready = "Click when you are ready to start the game";
+		checkbox_ready_text = "Click when you are ready to start the game";
+		staging_area_button_start_game = "Click to start the game";
+		staging_area_button_leave_game = "Click to leave the game";
+		staging_game_settings_listbox = "These are settings for the game, as configured by the host";
+	}
+}
+
+[end_game_summary]
+{
+	help_textbox = help_summary;	
+	[help]
+	{
+		end_game_chat_editbox = "Type messages here, and then press Enter to send";		
+		end_game_return_to_staging = "Return to the Staging Area for another game";
+		end_game_close = "Close the Game Summary screen and return to the Main Menu";
+	}
+}
+
+[staging_area_players]
+{
+	help_textbox = multiplayer_help;
+
+	// shared help text between multiple windows
+	[text]
+	{
+		status_ingame = "This player is currently in-game";
+		player_ready = "Indicates this player is ready to begin the game";
+		player_zone = "This player is currently signed in to a ZoneMatch account";
+		player_ping = "Indicates the connection speed between you and this player";
+		select_team_sign = "Left-click this shield to select the next team. Right-click to select the previous team";
+		select_start_location = "Select your starting location";
+		select_character = "Select your character. You must select a character before you can start the game.";
+	}
+
+	[help]
+	{
+		player1_ingame = @status_ingame;
+		player2_ingame = @status_ingame;
+		player3_ingame = @status_ingame;
+		player4_ingame = @status_ingame;
+		player5_ingame = @status_ingame;
+		player6_ingame = @status_ingame;
+		player7_ingame = @status_ingame;
+		player8_ingame = @status_ingame;
+		
+		player1_ready = @player_ready;
+		player2_ready = @player_ready;
+		player3_ready = @player_ready;
+		player4_ready = @player_ready;
+		player5_ready = @player_ready;
+		player6_ready = @player_ready;
+		player7_ready = @player_ready;
+		player8_ready = @player_ready;
+		
+		player1_zone = @player_zone;
+		player2_zone = @player_zone;
+		player3_zone = @player_zone;
+		player4_zone = @player_zone;
+		player5_zone = @player_zone;
+		player6_zone = @player_zone;
+		player7_zone = @player_zone;
+		player8_zone = @player_zone;
+		
+		player1_ping = @player_ping;
+		player2_ping = @player_ping;
+		player3_ping = @player_ping;
+		player4_ping = @player_ping;
+		player5_ping = @player_ping;
+		player6_ping = @player_ping;
+		player7_ping = @player_ping;
+		player8_ping = @player_ping;
+		
+		team1_sign = @select_team_sign;
+		team2_sign = @select_team_sign;
+		team3_sign = @select_team_sign;
+		team4_sign = @select_team_sign;
+		team5_sign = @select_team_sign;
+		team6_sign = @select_team_sign;
+		team7_sign = @select_team_sign;
+		team8_sign = @select_team_sign;
+		
+		combo_start_locations1 = @select_start_location;
+		combo_start_locations2 = @select_start_location;
+		combo_start_locations3 = @select_start_location;
+		combo_start_locations4 = @select_start_location;
+		combo_start_locations5 = @select_start_location;
+		combo_start_locations6 = @select_start_location;
+		combo_start_locations7 = @select_start_location;
+		combo_start_locations8 = @select_start_location;
+
+		button_select_char1 = @select_character;
+		button_select_char2 = @select_character;
+		button_select_char3 = @select_character;
+		button_select_char4 = @select_character;
+		button_select_char5 = @select_character;
+		button_select_char6 = @select_character;
+		button_select_char7 = @select_character;
+		button_select_char8 = @select_character;
+	}
+}
+
+[staging_area_map_settings]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		staging_button_accept_map = "Use the selected map";
+		staging_button_cancel_map = "Cancel your selection";
+		map_world_background = "Select the World difficulty. These Worlds have minimum level requirements.";
+	}
+}
+
+[staging_area_game_settings]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		player_limit_background = "Select the number of players";
+		game_type_background = "Select the type of game to play";
+		difficulty_background = "Select the difficulty level of the game";
+		time_limit_background = "Set the time limit for the game";
+		tab_allow_imports_yes = "Allow players to import characters from saved games";		
+		tab_allow_imports_no = "Do not allow players to import characters from saved games";
+
+		characters_drop_background = "Select which items characters drop when they die in combat";
+		character_respawn_background = "Select whether characters respawn after they die";
+		staging_button_accept_game = "Accept these settings";
+		staging_button_cancel_game = "Cancel these settings";
+
+		checkbox_enable_teamplay = "When Team Play is enabled, players can join Teams";
+		checkbox_enable_teamplay_text = "When Team Play is enabled, players can join Teams.";
+
+		checkbox_enable_pvp = "When Player versus Player (PvP) is enabled, players can attack other players. Players cannot attack Teammates.";
+		checkbox_enable_pvp_text = "When Player versus Player (PvP) is enabled, players can attack other players. Players cannot attack Teammates.";
+
+		checkbox_allow_start_selection = "When enabled, players can choose their own starting locations.";
+		checkbox_allow_start_selection_text = "When enabled, players can choose their own starting locations.";		
+
+		checkbox_allow_character_imports = "When enabled, players can import characters from saved single-player games.";
+		checkbox_allow_character_imports_text = "When enabled, players can import characters from saved single-player games.";
+
+		checkbox_allow_player_pausing = "Allow all players to be able to pause the game";
+		checkbox_allow_player_pausing_text = "Allow all players to be able to pause the game";
+
+		checkbox_allow_player_joining = "Allow other players to join the game if it is already in progress";
+		checkbox_allow_player_joining_text = "Allow other players to join the game if it is already in progress";
+
+		checkbox_allow_new_characters = "If enabled, players can only use brand new characters in this game.";
+		checkbox_allow_new_characters_text = "If enabled, players can only use brand new characters in this game.";
+
+		staging_button_change_password = "Click to edit, enable, or disable the password for this game.";
+	}
+}
+
+[staging_area_create_character]
+{
+	help_textbox = multiplayer_help;
+	[help]
+	{
+		character_background = "Hold down the mouse button and move the mouse to rotate your character";
+		character_text = "Click the arrows to select your hero";
+		head_text = "Click the arrows to select your hero's head";
+		face_text = "Click the arrows to select your hero's face";
+		hair_text = "Click the arrows to select your hero's hair";
+		shirt_text = "Click the arrows to select your hero's shirt";
+		pants_text = "Click the arrows to select your hero's pants";
+		staging_character_ok = "Save your hero and return to the main screen";
+		staging_char_name_edit_box = "Type your hero's name";				
+		staging_character_cancel = "Return to the previous screen without saving changes";
+	}
+}
+
+
+} // end tooltips

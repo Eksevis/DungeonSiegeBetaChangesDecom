@@ -1,0 +1,136 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_chain_attack.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//
+// Attack multiple enemies in a chain. Currently only supports lightning
+//
+//////////////////////////////////////////////////////////////////////////////
+
+property string effect_script$	= ""	doc = "Name of the SiegeFx script that will be providing the visual.";
+property string script_params$	= ""   	doc = "Parameters to send to SiegeFx script";
+property string attack_script$	= ""   	doc = "Name of the SiegeFx script that will be providing the visual.";
+property float	radius$			= 15.0	doc = "Radius of the effect";
+property int	jumps$			= 4		doc = "";
+property float	dur$			= 1.0	doc = "How long the effect plays.";
+property float  falloff$		= 0.90  doc = "Damage falloff. EX: falloff of .9 gives: 1, .9, .81, .729, .6561, etc...";
+
+owner = GoSkritComponent;
+
+#include "k_inc_spl_utils"
+
+Goid	target$;
+Goid	caster$;
+int		hit$;
+
+////////////////////////////////////////
+//	State Machine
+			
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+			
+			PackLightning$( dur$ );
+			
+			if( target$.isvalid && caster$.isvalid )
+			{
+				if (effect_script$ != "" )
+				{
+					SiegeFx.SRunScript( effect_script$, target$, caster$, params$, owner.Goid, e$ );
+				}
+				
+				Goid last_hit$ = target$;
+				hit$ = 1;
+				float damage_ratio$ = 1.0;
+				
+				if ( target$.Go.Hasmind )
+				{
+					//Get stuff to shoot at
+					target$.Go.Mind.TempGopColl1.Clear;
+					target$.Go.Mind.GetOccupantsInSphere( radius$, target$.Go.Mind.TempGopColl1 );
+					
+					int i$ = 0;
+					Go temp$;
+					while( (i$ < target$.Go.Mind.TempGopColl1.Size()) && (hit$ <= jumps$))
+					{
+						temp$ = target$.Go.Mind.TempGopColl1.Get( i$ );
+						
+						if( temp$ == NULL )
+						{
+							i$ += 1;
+							continue;
+						}
+						
+						if( !temp$.HasAspect )
+						{
+							i$ += 1;
+							continue;
+						}
+						
+						//Only shoot stuff that we can cast the spell on.
+						if( !owner.Go.Magic.IsCastableOn( temp$, false ) || !temp$.Aspect.IsSelectable )
+						{
+							i$ += 1;
+							continue;
+						}
+						
+						hit$ += 1;
+						
+						if (attack_script$ != "" )
+						{
+							damage_ratio$ *= falloff$;
+							PackChainLightning$( dur$, damage_ratio$ );
+							SiegeFx.SRunScript( attack_script$, temp$.goid, last_hit$, params$, owner.Goid, e$ );
+							last_hit$ = temp$.goid;
+						}
+				        i$ += 1;
+				    }	
+				} else {
+					// This didn't have a mind. Must have been a barrel or something.
+					// do the same stuff as before, but use the casters mind to figure out who to hit.	
+					caster$.Go.Mind.TempGopColl1.Clear;
+					caster$.Go.Mind.GetOccupantsInSphere( radius$, caster$.Go.Mind.TempGopColl1 );
+					
+					int i$ = 0;
+					Go temp$;
+					while( (i$ < caster$.Go.Mind.TempGopColl1.Size()) && (hit$ <= jumps$))
+					{
+						temp$ = caster$.Go.Mind.TempGopColl1.Get( i$ );
+						if( owner.Go.Magic.IsCastableOn( temp$, false ) && temp$.Aspect.IsSelectable )
+						{
+							hit$ += 1;
+							
+							if (attack_script$ != "" )
+							{
+								damage_ratio$ *= falloff$;
+								PackChainLightning$( dur$, damage_ratio$ );
+								SiegeFx.SRunScript( attack_script$, temp$.goid, last_hit$, params$, owner.Goid, e$ );
+								last_hit$ = temp$.goid;
+							}
+						}
+				        i$ += 1;
+				    }
+				}
+			}
+		} 
+	}
+}
+
+
+state Finish$
+{
+	event OnEnterState$
+	{
+		
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, owner.Goid, 2 + Math.Ceil(dur$) );
+	}
+}

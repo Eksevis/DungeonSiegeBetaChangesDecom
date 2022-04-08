@@ -1,0 +1,111 @@
+// Animation Skrit: select_walk
+//
+// History:
+//		VERSION 1.0:	Initial implementation
+//		VERSION 1.1		Marked as not persistent
+//
+// Notes:
+//		This walk pays attention to the speedbias parameter
+//
+
+property int MAJORVERSION$ = 1;
+property int MINORVERSION$ = 1;
+property bool _PERSIST$ = false;
+
+owner = Aspect;
+
+/////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+/////////////////////////////////////////////////////////////////////////////
+// States
+
+//----------------------------
+
+startup state LoopForever$ 
+{
+	event OnStartChore$ ( int /*subanim$*/, int /*flags$*/ )
+	{
+		owner.blender.ResetTimeWarp();
+
+		// try to chose the best anim for how fast we are moving.
+		// also want to adjust for how big we are.
+		
+		float desired_animation_speed$ = owner.goid.go.follower.CurrentVelocity * owner.goid.go.aspect.RenderScale;
+		
+		eAnimStance stance$ = owner.Goid.Go.inventory.animstance;
+		
+		int i$ = 0;
+		int iend$ = owner.blender.GetNumSubAnims(CHORE_WALK,stance$);
+		int best_anim$ = 0;
+		float error$ = Math.Abs( desired_animation_speed$ - owner.blender.GetScalarVelocity( CHORE_WALK, stance$, 0) );
+		
+		while( i$ < iend$ )
+		{
+			float new_error$ = Math.Abs( desired_animation_speed$ - owner.blender.GetScalarVelocity( CHORE_WALK, stance$, i$) );
+//			report.genericf( "Velocity: %g AnimVelocity: %g Error: %g\n" ,desired_animation_speed$, owner.blender.GetScalarVelocity( CHORE_WALK, stance$, i$), new_error$ );
+			if( new_error$ < error$ )
+			{
+				error$ = new_error$;
+				best_anim$ = i$;
+			}
+			i$ += 1;
+		}
+		
+		int bg$ = owner.blender.OpenBlendGroup();
+		owner.blender.AddAnimToBlendGroup(best_anim$,1);
+		owner.blender.CloseBlendGroup();
+		owner.blender.SetBlendGroupWeight(bg$,1);
+	}
+
+	event OnUpdate$( float delta_t$ )
+	{
+
+		// Velocity is stored in the Aspect, yet RenderScale is stored in the GoAspect!
+		float animated_v$ = owner.CurrentVelocity * owner.goid.go.aspect.RenderScale;
+		float follower_v$ = owner.goid.go.follower.CurrentVelocity;
+/*
+		if (follower_v$ <= 0.01)
+		{
+			Report.errorf("[SELECT_WALK] The follower velocity for [%s] is [%f]\n",owner.DebugName,follower_v$);
+		}
+*/
+		if ((animated_v$>0.01) && (follower_v$>0.01))
+		{
+			delta_t$ = delta_t$ * follower_v$/animated_v$;
+		}
+ 	 	int events$ = owner.UpdateBlender(delta_t$);
+
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_1)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid, owner.goid,  1, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_2)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid, owner.goid,  2, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_3)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid, owner.goid,  3, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SFX_4)) {
+			PostWorldMessage( WE_ANIM_SFX, owner.goid, owner.goid,  4, 0 );
+		}
+ 		if (AnimEventBitTest(events$,ANIMEVENT_LEFT_FOOT_DOWN)) {
+			PostWorldMessage( WE_ANIM_OTHER, owner.goid, owner.goid, 'lfdn', 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_RIGHT_FOOT_DOWN)) {
+			PostWorldMessage( WE_ANIM_OTHER, owner.goid, owner.goid, 'rfdn', 0 );
+		}
+ 		if (AnimEventBitTest(events$,ANIMEVENT_FIRE_WEAPON)) {
+			PostWorldMessage( WE_ANIM_WEAPON_FIRE, owner.goid, owner.goid, owner.CurrentReqBlock, 0 );
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_HIDE_MESH)) {
+			owner.SetHideMeshFlag(true);
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_SHOW_MESH)) {
+			owner.SetHideMeshFlag(false);
+		}
+		if (AnimEventBitTest(events$,ANIMEVENT_FINISH)) {
+			PostWorldMessage( WE_ANIM_LOOPED, owner.goid, owner.goid, owner.CurrentReqBlock, 0 );
+		}
+	}
+
+}

@@ -1,0 +1,320 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  elevator_2s_3c_1n.skrit
+// Author(s):  James Loe, David Tomandl, Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool			_server_only$					= true;
+property string			_doc$							= "2-state, 3-connection, 1-node elevator";
+property string			_required_component$			= "placement";
+
+// exported properties
+property SiegeId		elevator_node$					= 0						doc = "Node used for transition";
+property int			elevator_connect1_door_level1$	= 0						doc = "Door used for connection with connect1_node at level 1";
+property int			elevator_connect1_door_level2$	= 0						doc = "Door used for connection with connect1_node at level 2";
+property int			elevator_connect2_door_level1$	= 0						doc = "Door used for connection with connect2_node at level 1";
+property int			elevator_connect2_door_level2$	= 0						doc = "Door used for connection with connect2_node at level 2";
+property int			elevator_connect3_door_level1$	= 0						doc = "Door used for connection with connect3_node at level 1";
+property int			elevator_connect3_door_level2$	= 0						doc = "Door used for connection with connect3_node at level 2";
+															
+property SiegeId		connect1_node$					= 0						doc = "Node used for stable connection";
+property int			connect1_door_level1$			= 0						doc = "Door used for connection with elevator_node at level 1";
+property int			connect1_door_level2$			= 0						doc = "Door used for connection with elevator_node at level 2";
+
+property SiegeId		connect2_node_level1$			= 0						doc = "Node used for connection 2 at level 1";
+property int			connect2_door_level1$			= 0						doc = "Door used for connection 2 with elevator_node at level 1";
+
+property SiegeId		connect2_node_level2$			= 0						doc = "Node used for connection 2 at level 2";
+property int			connect2_door_level2$			= 0						doc = "Door used for connection 2 with elevator_node at level 2";
+
+property SiegeId		connect3_node_level1$			= 0						doc = "Node used for connection 3 at level 1";
+property int			connect3_door_level1$			= 0						doc = "Door used for connection 3 with elevator_node at level 1";
+
+property SiegeId		connect3_node_level2$			= 0						doc = "Node used for connection 3 at level 2";
+property int			connect3_door_level2$			= 0						doc = "Door used for connection 3 with elevator_node at level 2";
+
+property float			duration$						= 0						doc = "Length (in seconds) of transition";
+
+property bool           oneshot_nowait$         		= false                 doc = "Set to true you want 'waitfortrigger = false' to happen only once.";
+property bool			level1_waitfortrigger$			= true					doc = "Wait for activated message before continuing to level 2";
+property bool			level2_waitfortrigger$			= true					doc = "Wait for activated message before continuing to level 1";
+
+property bool			level1_connectpaths$			= true					doc = "Connect pathing information on level 1";
+property bool			level2_connectpaths$			= true					doc = "Connect pathing information on level 2";
+
+property eAxisHint		level1_trans2_hint$				= AH_NONE				doc = "Transition from level 1 to level 2 rotation hint (AH_NONE,AH_XAXIS_POSITIVE,AH_XAXIS_NEGATIVE,AH_YAXIS_POSITIVE,AH_YAXIS_NEGATIVE,AH_ZAXIS_POSITIVE,AH_ZAXIS_NEGATIVE)";
+property eAxisHint		level2_trans1_hint$				= AH_NONE				doc = "Transition from level 2 to level 1 rotation hint";
+
+property eWorldEvent	Level1_Message$					= WE_REQ_ACTIVATE		doc = "Trans1 World Message to Send.";
+property scid      		Level1_Scid$											doc = "Scid of External Object during first transition.";
+property float			Level1_Message_Delay$			= -1.0					doc = "Delay before sending message. -1 to use default MCP lag";
+
+property eWorldEvent	Level2_Message$					= WE_REQ_ACTIVATE 		doc = "Trans2 World Message to Send.";
+property scid      		Level2_Scid$											doc = "Scid of External Trigger during second transition.";
+property float			Level2_Message_Delay$			= -1.0					doc = "Delay before sending message. -1 to use default MCP lag";
+
+property eWorldEvent	Moving1_Message$				= WE_REQ_ACTIVATE		doc = "Up World Message to Send.";
+property scid      		Moving1_Scid$											doc = "Scid of External Trigger during up position.";
+property float			Moving1_Message_Delay$			= -1.0					doc = "Delay before sending message. -1 to use default MCP lag";
+
+property eWorldEvent	Moving2_Message$				= WE_REQ_ACTIVATE	 	doc = "Down World Message to Send.";
+property scid			Moving2_Scid$											doc = "Scid of External Trigger during down position.";
+property float			Moving2_Message_Delay$			= -1.0					doc = "Delay before sending message. -1 to use default MCP lag";
+
+property string			Material$												doc = "Material of the elevator, if blank no sounds are played.";
+
+bool                    bPermanentDeactivate$           = false;
+owner                                                   = GoSkritComponent;
+float mcp_lag$ = 0.5;
+
+//////////////////////////////////////////////////////////////////////////////
+
+trigger OnGoDrawDebugHud$
+{
+	Goid goid1$ = Level1_Scid$.Goid;
+	Goid goid2$ = Moving1_Scid$.Goid;
+	Goid goid3$ = Level2_Scid$.Goid;
+	Goid goid4$ = Moving2_Scid$.Goid;
+
+	if( goid1$.IsValid )
+	{
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 goid1$.go.Placement.Position,
+									 MakeColor( 0, 1.0, 0, 0.5 ),
+									 ToString( Level1_Message$ ) );
+	}
+
+	if( goid2$.IsValid )
+	{
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 goid2$.go.Placement.Position,
+									 MakeColor( 1.0, 1.0, 0, 0.5 ),
+									 ToString( Moving1_Message$ ) );
+	}
+
+	if( goid3$.IsValid )
+	{
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 goid3$.go.Placement.Position,
+									 MakeColor( 0, 1.0, 0, 0.5 ),
+									 ToString( Level2_Message$ ) );
+	}
+
+	if( goid4$.IsValid )
+	{
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 goid4$.go.Placement.Position,
+									 MakeColor( 1.0, 1.0, 0, 0.5 ),
+									 ToString( Moving2_Message$ ) );
+	}
+}
+
+trigger OnGoHandleMessage$( WE_REQ_DEACTIVATE )
+{
+	bPermanentDeactivate$	= true;
+	SetState Deactivated$;
+}
+
+state Deactivated$
+{
+}
+
+startup state wait$
+{
+	transition -> L1_Wait$: OnGoHandleMessage( WE_ENTERED_WORLD );
+}
+
+state L1_Wait$
+{
+	transition
+	{
+		-> L1_Moving$: OnGoHandleMessage( WE_REQ_ACTIVATE );
+	}                                                       
+                                                            
+	event OnEnterState$                                     
+	{                                                       
+		if( level1_waitfortrigger$ == false )
+		{
+			#only( game )
+          	[[
+				SetState L1_Moving$;
+
+                if (oneshot_nowait$)
+                {
+                    level1_waitfortrigger$ = true;
+				}
+			]]
+        }
+	}
+
+	event OnExitState$
+	{
+		if( !bPermanentDeactivate$ )
+		{
+			TTMessages msg$ = MakeTTMessages(); 
+			
+			if ( Moving1_Scid$.IsValid() && Moving1_Scid$.getgoid.isvalid() )
+			{
+				float delay$ = Moving1_Message_Delay$;
+				if ( delay$ < 0.0 )
+				{
+					delay$ = mcp_lag$;
+				}
+				
+				msg$.BeginEvent = Moving1_Message$;
+				msg$.BeginSendTo = Moving1_Scid$;
+				msg$.BeginDelay = delay$;
+			}
+			
+			if ( Level2_Scid$.IsValid() && Level2_Scid$.getgoid.isvalid() )
+        	{
+				float delay$ = Level2_Message_Delay$;
+				if ( delay$ < 0.0 )
+				{
+					delay$ = mcp_lag$;
+				}
+				
+				msg$.EndEvent = Level2_Message$;
+				msg$.EndSendTo = Level2_Scid$;
+				msg$.EndDelay = delay$;
+       		}
+       		
+       		WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_connect1_door_level2$,
+												 connect1_node$, connect1_door_level2$,
+												 duration$, level1_trans2_hint$, owner.Go.Goid,
+												 level2_connectpaths$, true, msg$ );
+		
+			if ( !StringTool.IsEmpty( Material$ ) )
+        	{
+				owner.Go.PlayMaterialSound( "moving_1", Material$, true);
+        	}
+		}
+	}
+}
+
+state L1_Moving$
+{
+	transition -> L2_Wait$: OnGoHandleMessage( WE_TERRAIN_TRANSITION_DONE ) =
+	{
+		if( connect2_node_level2$ != 0 )
+		{
+			WorldTerrain.SRequestNodeConnection( elevator_node$, elevator_connect2_door_level2$,
+												 connect2_node_level2$, connect2_door_level2$,
+												 level2_connectpaths$, true );
+		}
+		if( connect3_node_level2$ != 0 )
+		{
+			WorldTerrain.SRequestNodeConnection( elevator_node$, elevator_connect3_door_level2$,
+												 connect3_node_level2$, connect3_door_level2$,
+												 level2_connectpaths$, true );
+		}
+		if ( !StringTool.IsEmpty( Material$ ) )
+        {
+			owner.Go.PlayMaterialSound( "level_2", Material$, true);
+        }
+	}
+}
+
+state L2_Wait$
+{
+	transition
+	{
+		-> L2_Moving$: OnGoHandleMessage( WE_REQ_ACTIVATE );
+	}                                                       
+                                                            
+	event OnEnterState$                                     
+	{                                                       
+		if( level2_waitfortrigger$ == false )
+		{
+			#only( game )
+          	[[
+				SetState L2_Moving$;
+
+                if (oneshot_nowait$)
+                {
+                    level2_waitfortrigger$ = true;
+				}
+			]]
+		}
+	}
+
+	event OnExitState$
+	{
+		if( !bPermanentDeactivate$ )
+		{
+			TTMessages msg$ = MakeTTMessages(); 
+			
+			if ( Moving2_Scid$.IsValid() && Moving2_Scid$.getgoid.isvalid() )
+			{
+				float delay$ = Moving2_Message_Delay$;
+				if ( delay$ < 0.0 )
+				{
+					delay$ = mcp_lag$;
+				}
+				
+				msg$.BeginEvent = Moving2_Message$;
+				msg$.BeginSendTo = Moving2_Scid$;
+				msg$.BeginDelay = delay$;
+			}
+			
+			if ( Level1_Scid$.IsValid() && Level1_Scid$.getgoid.isvalid() )
+        	{
+				float delay$ = Level1_Message_Delay$;
+				if ( delay$ < 0.0 )
+				{
+					delay$ = mcp_lag$;
+				}
+				
+				msg$.EndEvent = Level1_Message$;
+				msg$.EndSendTo = Level1_Scid$;
+				msg$.EndDelay = delay$;
+			}
+			
+			WorldTerrain.SRequestNodeTransition( elevator_node$, elevator_connect1_door_level1$,
+												 connect1_node$, connect1_door_level1$,
+												 duration$, level2_trans1_hint$, owner.Go.Goid,
+												 level1_connectpaths$, true, msg$ );
+		
+			if ( !StringTool.IsEmpty( Material$ ) )
+        	{
+				owner.Go.PlayMaterialSound( "moving_2", Material$, true);
+        	}
+		}
+	}
+}
+
+state L2_Moving$
+{
+	transition -> L1_Wait$: OnGoHandleMessage( WE_TERRAIN_TRANSITION_DONE ) =
+	{
+		if( connect2_node_level1$ != 0 )
+		{
+			WorldTerrain.SRequestNodeConnection( elevator_node$, elevator_connect2_door_level1$,
+												 connect2_node_level1$, connect2_door_level1$,
+												 level1_connectpaths$, true );
+		}
+
+		if( connect3_node_level1$ != 0 )
+		{
+			WorldTerrain.SRequestNodeConnection( elevator_node$, elevator_connect3_door_level1$,
+												 connect3_node_level1$, connect3_door_level1$,
+												 level1_connectpaths$, true );
+		}
+		if ( !StringTool.IsEmpty( Material$ ) )
+        {
+			owner.Go.PlayMaterialSound( "level_1", Material$, true);
+        }
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+

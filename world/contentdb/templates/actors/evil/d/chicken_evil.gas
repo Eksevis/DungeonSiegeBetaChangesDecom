@@ -1,0 +1,180 @@
+[t:template,n:base_chicken_evil]
+{
+	doc = "Base template for all ambient chickens.";
+	specializes = actor_evil;
+	[aspect]
+	{
+		model = m_c_na_ckn_pos_1;
+		[voice]
+		{
+			[die]
+			{
+				  * = s_e_die_chicken;
+			}
+		}
+	}
+	[body]
+	{
+		avg_move_velocity = 3.000000;
+		[bone_translator]
+		{
+			body_anterior = bone03;
+			body_mid = bone02;
+			body_posterior = bone06;
+			kill_bone = bone02;
+			shield_bone = bone02;
+			weapon_bone = bone03;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_ckn_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=mg; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+					02 = dsf-03;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[common] { screen_name="Big Chicken"; }
+	[mind]
+	{
+		actor_weapon_preference			= WP_MAGIC;
+		actor_auto_switches_to_magic	= true;
+		actor_auto_switches_to_karate	= false;
+		actor_auto_switches_to_melee	= false;
+
+		melee_engage_range = 12;
+		personal_space_range = 0.7;
+		ranged_engage_range = 13.0;
+		sight_range = 14.0;
+	}
+}
+
+[t:template,n:chicken_red_super]
+{
+	category_name = "ambients";
+	doc = "chicken_red";
+	specializes = base_chicken_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	4,  0;
+			intelligence =  6,  0;
+			dexterity =  	12, 0;
+			ranged =  		12, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 6040;
+		life = 30000;
+		max_life = 30000;
+		mana = 100;
+		max_mana = 100;
+		[textures] { 0=b_c_na_ckn_red; }
+	}
+	[attack]
+	{
+		damage_max = 305;
+		damage_min = 295;
+	}
+	/*[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_red");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}*/
+	[physics]
+	{
+		break_effect = feathers_red;
+		explode_when_killed = true;
+	}
+}
+[t:template,n:chicken_white_super]
+{
+	category_name = "ambients";
+	doc = "chicken_white";
+	specializes = base_chicken_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	4,  0;
+			intelligence =  6,  0;
+			dexterity =  	12, 0;
+			ranged =  		12, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 6040;
+		life = 30000;
+		max_life = 30000;
+		mana = 100;
+		max_mana = 100;
+		[textures] { 0=b_c_na_ckn_white; }
+	}
+	[attack]
+	{
+		damage_max = 305;
+		damage_min = 295;
+	}
+	/*[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_white");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}*/
+	[physics]
+	{
+		break_effect = feathers_white;
+		explode_when_killed = true;
+	}
+}

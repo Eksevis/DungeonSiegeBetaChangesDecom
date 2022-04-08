@@ -1,0 +1,5732 @@
+//////////////////////////////////////////////////////////////////////////////
+// dev objects
+
+[dev,t:template,n:test_marker]
+{
+	specializes = test;
+	doc = [test_marker];
+
+	gizmo:		model				= m_i_glb_object-trigger;
+	gizmo:		texture				= ;
+	gizmo:		diffuse_color		= 1.000000,0.000000,1.000000;
+	gizmo:		scale				= 0.25;
+
+	[test_marker]  {  }
+}
+
+[dev,t:template,n:test_timer]
+{
+	specializes = test;
+	doc = [test_timer];
+
+	gizmo:		model				= m_i_glb_object-trigger;
+	gizmo:		texture				= ;
+	gizmo:		diffuse_color		= 1.000000,0.500000,1.000000;
+
+	[test_timer]  {  }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// test	objects
+
+[dev,t:template,n:test_gauntlet_magic]
+{
+	specializes	= base_glove;
+	doc	= "[TEST] Leather Gauntlets	(Type 1, magic) [TEST]";
+
+	common:		screen_name			= "[TEST] Magic Leather Gauntlets [TEST]";
+	common:		is_pcontent_allowed	= false;
+
+	gui:		inventory_icon		= b_gui_ig_i_a_gntl_001;
+	defend:		defense				= 0.05;
+	defend:		armor_style			= 001;
+	defend:		armor_type			= type1;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_strength;
+				value				= 10.0;
+				description			= gauntlet_type1_lthr strength modification;
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+
+			[*]	{
+				alteration			= alter_max_life;
+				description			= gauntlet_type1_lthr max_life;
+				value				= 100.0;
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+
+		}
+	}
+}
+
+[dev,t:template,n:test_rake_magic]
+{
+	specializes	= base_staff;
+
+	common:		screen_name					= "Rake";
+	common:		is_pcontent_allowed	= false;
+
+	aspect:		model						= m_w_misc_rake;
+	gui:		inventory_icon				= b_gui_ig_i_w_mi_rake;
+	gui:		inventory_width				= 1;
+	gui:		inventory_height			= 4;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_strength;
+				value				= 10.0;
+				description			= rake strength	modification;
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+			[*]	{
+				alteration			= alter_max_life;
+				description			= rake max_life;
+				value				= 100.0;
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+
+			[*]	{
+				alteration			= alter_life;
+				description			= rake healing;
+				value				= 10;
+
+				duration			= #infinite;
+				frequency			=  0.005;
+			}
+
+			[*]	{
+				alteration			= alter_max_mana;
+				description			= rake max_mana;
+				value				= 100.0;
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+
+			[*]	{
+				alteration			= alter_mana;
+				description			= rake mana	replenish;
+				value				= 10;
+
+				duration			= #infinite;
+				frequency			=  0.005;
+			}
+
+		}
+	}
+}
+
+[dev,t:template,n:test_shovel_magic]
+{
+	specializes	= base_staff;
+
+	common:		screen_name					= "Shovel";
+	common:		is_pcontent_allowed	= false;
+
+	aspect:		model						= m_w_misc_shovel;
+	gui:		inventory_icon				= b_gui_ig_i_w_mi_shovel;
+	gui:		inventory_width				= 1;
+	gui:		inventory_height			= 4;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_strength;
+				value				= 10.0;
+				description			= strength modification;
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+		}
+	}
+}
+[dev,t:template,n:grenade_test]
+{
+	doc = "[TEST] Tasty Pineapple";
+	specializes = ammo;
+	[aspect]
+	{
+		is_selectable = FALSE;
+		life = 15;
+		max_life = 15;
+		model = m_w_arw_001;
+	}
+	[attack]
+	{
+		attack_class = ac_arrow;
+		is_projectile = TRUE;
+		skill_class = ranged;
+	}
+	[common]
+	{
+		is_pcontent_allowed = FALSE;
+		screen_name = "Pineapple";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script(smoke_trail2);
+				action* = call_sfx_script(grenade_sparks);
+				condition* = receive_world_message(we_weapon_launched);
+			}
+		}
+	}
+	[physics]
+	{
+		angular_velocity = 0,0,20;
+		break_effect = grenade_explosion;
+		elasticity = 0.925;
+		explode_if_hit_go		= true;
+		explode_if_hit_terrain	= true;
+		explosion_magnitude = 3.5;
+		fire_resistance = 1;
+	}
+}
+[dev,t:template,n:grenade_launcher_test]
+{
+	doc = "[TEST] Grenade Launcher";
+	specializes = weapon_ranged;
+	[aspect] { model=m_w_bow_021; }
+	[attack]
+	{
+		ammo_template = grenade_test;
+		attack_class = ac_bow;
+		attack_range = 20;
+		damage_max = 4;
+		damage_min = 2;
+		is_projectile = TRUE;
+		is_two_handed = TRUE;
+		reload_delay = 1;
+		skill_class = ranged;
+	}
+	[common]
+	{
+		is_pcontent_allowed = FALSE;
+		screen_name = "grenade launcher";
+	}
+	[gui]
+	{
+		active_icon = b_gui_ig_i_ic_w_bow_hum-hunter;
+		equip_slot = es_shield_hand;
+		inventory_height = 4;
+		inventory_icon = b_gui_ig_i_w_bow_043;
+		inventory_width = 1;
+	}
+	[physics] { velocity=14; }
+}
+
+[dev,t:template,n:test_potion_mana_channel]
+{
+	specializes	= potion;
+
+	[aspect]
+	{
+		[textures]
+		{
+			0 =	b_i_glb_bottle-red;
+		}
+	}
+
+	[common]
+	{
+		screen_name					= "[TEST] Potion of Mana Channel [TEST]";
+		is_pcontent_allowed	= false;
+
+		[template_triggers]
+		{
+			[*]
+			{
+				condition* = receive_world_message("we_constructed");
+				action*	   = call_sfx_script("indicator_magic");
+			}
+		}
+	}
+
+	potion:inventory_icon_2	= b_gui_ig_i_it_potion-health;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]	{
+				alteration			= alter_mana;
+				effect_script		= mana_trail;
+				description			= mana channel;
+				is_source_transfer	= true;
+				is_target_transfer	= false;
+
+				value				= 1	+ 5.5*(#nature_magic+1);
+				max_value			= 11 + 5.5*(#nature_magic+1);
+				duration			= #int + (1+2.5*(#nature_magic+1));
+				frequency			= 0.10;
+				transfer_efficiency	= ((#int/100.0)+(#mana_recovery_unit/#mana_recovery_period)) * (#nature_magic+1);
+
+				is_enhancement		= true;
+				is_permanent		= true;
+			}
+
+		}
+	}
+}
+
+//////////////////////////////////
+// test	spells
+
+[dev,t:template,n:test_spell_marsh]
+{
+	specializes	= base_spell_dark;
+	doc			= "[TEST] spell testing template [TEST]";
+
+	aspect:		gold_value			= 604;
+
+	[attack]
+	{
+		damage_min				= 10;
+		damage_max				= 20;
+		area_damage_radius		= 1;
+	}
+
+	[common]
+	{
+		screen_name		= "[TEST] testing spell [TEST]";
+		is_pcontent_allowed	= false;
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action*	= call_sfx_script("spell_test");
+				condition* = receive_world_message("we_req_cast");
+			}
+		}
+	}
+
+	gui:active_icon		 = b_gui_ig_i_ic_w_mag_fire-ball;
+
+	[magic]
+	{
+		requires_line_of_sight	= true;
+		is_one_shot				= false;
+		required_level			= 0;
+		max_level				= 10;
+
+		mana_cost	= 1;
+		cast_range	= 10;
+		cast_reload_delay	= 3;
+		speed_bias	= 1;
+	}
+}
+
+[dev,t:template,n:test_imbue]
+{
+	  category_name = "magic";
+	  doc = "test one use scroll fireshot";
+	  specializes = base_spell_dark;
+	[aspect]
+	{
+		  gold_value = 25;
+	}
+	[attack]
+	{
+		  damage_max = 4;
+		  damage_min = 3;
+	}
+	[common]
+	{
+		is_pcontent_allowed = false;
+		  description = "A globe of fire is hurled at the Enemy";
+		  screen_name = "[TEST] OneShotFireshot [TEST]";
+		[template_triggers]
+		{
+			[*]
+			{
+				  action* = call_sfx_script("fireshot");
+				  condition* = receive_world_message("we_req_cast");
+			}
+			[*]
+			{
+				  action* = call_sfx_script( "combat_spell_sparkle" );
+				  condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+	[gui]
+	{
+		  active_icon = b_gui_ig_i_ic_sp_fs;
+	}
+	[magic]
+	{
+		  one_use = true;
+		  attack_damage_modifier_max = (#magic);
+		  attack_damage_modifier_min = (#magic*0.85);
+		  cast_range = 10;
+		  cast_reload_delay = 1;
+		  is_one_shot = false;
+		  mana_cost = 2;
+		  mana_cost_modifier = (#magic+1.2);
+		  max_level = 17;
+		  requires_line_of_sight = true;
+		  speed_bias = 1;
+		  target_type_flags = tt_conscious_enemy | tt_unconscious_enemy | tt_breakable | tt_terrain;
+		  usage_context_flags = uc_offensive;
+	}
+	[spell_default] {}
+}
+///////////////////////////////////
+
+///////////////////////////////////
+// Test Spellbook
+[dev,t:template,n:test_lore_book]
+{
+	specializes			= treasure;
+	doc					= "test lore book";
+    category_name       = "treasure";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		is_lorebook	= true;
+		lore_key = lore_1;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "[TEST] Lore Book [TEST]";
+		is_pcontent_allowed = false;
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+}
+
+
+//////////////////////////////////
+// test	actor for hireling brain -mm
+[dev,t:template,n:test_hireling_male_01]
+{
+	specializes	= base_farmboy;
+	doc			= "test_hireling_male_01 (for testing purposes only - do not place in map)";
+
+	common:screen_name		= "[TEMP] Hireling Male 01 [TEMP]";
+
+	aspect:textures:0		= b_c_gah_fb_skin_02;
+	aspect:textures:1		= b_c_pos_a1_002;
+
+	actor:can_level_up		= true;
+
+	[mind]
+	{
+		inner_comfort_zone_range	= 3;
+		outer_comfort_zone_range	= 8;
+
+		on_enemy_spotted_attack				= false;
+
+		on_enemy_entered_ocz_flee	= true;
+		//actor_attacks_others_in_icz		= false;
+
+		actor_auto_picks_up_items					= true;
+	}
+}
+/////////////////////////////////////////////
+// dev objects for quickly adding via console
+
+// axe //
+[dev,t:template,n:dev_axe]
+{
+	specializes	= base_axe;
+	doc			= "[TEST OBJECT] dev_axe";
+
+	common:		screen_name		= "dev_axe (1 handed)";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_axe_023;
+
+	[attack]
+	{
+		damage_min				= 1;
+		damage_max				= 1;
+		attack_range			= 0.5;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_axe_035;
+		active_icon				= b_gui_ig_i_ic_ax_1h1b;
+		inventory_width			= 1;
+		inventory_height		= 2;
+	}
+
+	aspect:		gold_value					 = 1;
+}
+
+[dev,t:template,n:dev_axe_2h]
+{
+	specializes	= base_axe;
+	doc			= "[TEST OBJECT] dev_axe_2h";
+
+	common:		screen_name		= "dev_axe (2 handed)";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_axe_025;
+	aspect:		gold_value		= 110;
+
+	[attack]
+	{
+		damage_min				= 8;
+		damage_max				= 12;
+		attack_range			= 0.5;
+		is_two_handed			= true;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_axe_037;
+		active_icon				= b_gui_ig_i_ic_ax_2h2b;
+		inventory_width			= 2;
+		inventory_height		= 3;
+	}
+}
+
+// bow //
+[dev,t:template,n:dev_bow]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] dev_bow";
+
+	common:		screen_name		= "dev_bow";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 15;
+		damage_max		= 11;
+		damage_min		= 4;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width		= 1;
+		inventory_height		= 4;
+	}
+}
+
+// misc	//
+[dev,t:template,n:dev_tsd]
+{
+	specializes	= non_interactive_blocking;
+	doc	= "Test	object for TSD testing";
+
+	common:screen_name	= "[TEST] TSD Test Object [TEST]";
+
+	aspect:model		= m_i_glb_tsd-test;
+	aspect:textures:0	= b_i_glb_tsd-test-static;
+	aspect:textures:1	= b_i_glb_tsd-test-dynamic;
+}
+
+// staff //
+[dev,t:template,n:dev_staff]
+{
+	specializes	= base_staff;
+	doc			= "[TEST OBJECT] dev_staff";
+
+	aspect:		model			= m_w_stf_017;
+
+	[common]
+	{
+		screen_name		= "dev_staff";
+		is_pcontent_allowed	= false;
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "staff_magic" );
+				condition* = receive_world_message("we_equipped");
+			}
+
+			[*]
+			{
+				action* = call_sfx_script( "indicator_magic" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+	[attack]
+	{
+		damage_min				= 1;
+		damage_max				= 1;
+		attack_range			= 1;
+		reload_delay			= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_stf_035;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+}
+
+// sword //
+[dev,t:template,n:dev_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] dev_sword";
+
+	common:		screen_name		= "dev_sword (1 handed)";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_swd_013;
+
+	attack:		damage_min		= 2;
+	attack:		damage_max		= 3;
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_012;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+}
+
+[dev,t:template,n:dev_undroppable_sword]
+{
+	specializes = dev_sword;
+	doc			= "[TEST OBJECT] dev_undroppable_sword";
+
+	common:		screen_name		= "dev_undroppable_sword ( 1 handed )";
+
+	gui:is_droppable = false;
+}
+
+[dev,t:template,n:dev_super_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] dev_super_sword";
+
+	common:		screen_name		= "dev_super_sword (1 handed)";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_swd_013;
+
+	attack:		damage_min		= 20;
+	attack:		damage_max		= 50;
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_012;
+		inventory_width			= 1;
+		inventory_height		= 3;
+		equip_requirements		= strength:5,nature magic:10;
+	}
+
+	[pcontent]
+	{
+		[c_fin]
+		{
+			equip_requirements = dexterity:5,melee:15;
+		}
+	}
+}
+
+[dev,t:template,n:dev_sword_2h]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] dev_sword_2h";
+
+	common:		screen_name		= "dev_sword (2 handed)";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_swd_017;
+	aspect:		gold_value		= 150;
+
+	[attack]
+	{
+		damage_min				= 2;
+		damage_max				= 5;
+		attack_range			= 0.5;
+		is_two_handed			= true;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_030;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+
+}
+
+// ARMOR //
+[dev,t:template,n:dev_armor]
+{
+	specializes	= base_body_armor_plate;
+	doc			= "[TEST OBJECT] dev_armor";
+
+	common:		screen_name	= "dev_armor, plate mail (type a5)";
+	common:is_pcontent_allowed	= false;
+
+	[defend]
+	{
+		defense				= 10;
+		armor_style			= 012;
+		armor_type			= a5;
+	}
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_pos_a5_012;
+		inventory_width		= 2;
+		inventory_height	= 3;
+	}
+}
+
+[dev,t:template,n:dev_boots]
+{
+	specializes	= base_boot;
+	doc			= "[TEST OBJECT] dev_boots";
+
+	common:		screen_name			= "dev_boots, full plate (type 1)";
+	common:is_pcontent_allowed	= false;
+
+	gui:		inventory_icon		= b_gui_ig_i_a_boot_009;
+	gui:		inventory_width		= 1;
+	gui:		inventory_height	= 2;
+	defend:		defense				= 7;
+	defend:		armor_style			= 009;
+	defend:		armor_type			= type1;
+
+	aspect:		gold_value			= 45;
+}
+
+[dev,t:template,n:dev_gauntlets]
+{
+	specializes	= base_glove;
+	doc			= "[TEST OBJECT] dev_gauntlets";
+
+	common:		screen_name			= "dev_gauntlets, leather (type 1)";
+	common:is_pcontent_allowed		= false;
+
+	gui:		inventory_icon		= b_gui_ig_i_a_gntl_001;
+	defend:		defense				= 1.0;
+	defend:		armor_style			= 001;
+	defend:		armor_type			= type1;
+
+	aspect:		gold_value			= 5;
+}
+
+[dev,t:template,n:dev_helmet]
+{
+	specializes	= base_helm;
+	doc			= "[TEST OBJECT] dev_helmet";
+
+	common:		screen_name			= "dev_helmet, horned (type 5)";
+	common:is_pcontent_allowed		= false;
+
+	gui:		inventory_icon		= b_gui_ig_i_a_hlmt_005;
+	defend:		defense				= 6.0;
+	defend:		armor_style			= 005;
+	defend:		armor_type			= type5;
+
+	aspect:		gold_value			= 80;
+}
+
+[dev,t:template,n:dev_shield]
+{
+	specializes	= base_shield;
+	doc			= "[TEST OBJECT] dev_shield";
+
+	aspect:model		= m_a_shd_10;
+	aspect:textures:0	= b_a_shd_014;
+
+	common:		screen_name			= "dev_shield, rusted buckler";
+	common:is_pcontent_allowed		= false;
+
+	gui:		inventory_icon		= b_gui_ig_i_a_shd_014;
+	gui:		inventory_width		= 2;
+	gui:		inventory_height	= 2;
+
+	defend:		defense				= 5;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+[dev,t:template,n:test_tree_mana]
+{
+	specializes	= actor_ambient;
+	doc	= "test_tree_mana";
+
+	common:screen_name	= "mana tree";
+
+	[actor]
+	{
+		[skills]
+		{
+			* =	intelligence,	5, 5, 10;
+			* =	nature magic, 	5, 5, 10;
+		}
+	}
+
+	[aspect]
+	{
+		max_mana		= 1000;
+		mana			= 1000;
+
+		mana_recovery_unit	 = 5.0;
+		mana_recovery_period = 5.0;
+
+		is_collidable	 = true;
+		is_selectable	 = true;
+
+		model			 = m_i_glb_tree-03;
+		scale_multiplier = 0.4;
+		textures:0		 = b_i_cav_gems-03-static;
+	}
+
+	[mind]
+	{
+		jat_brain				= world\ai\jobs\common\brain_mana_plant.skrit;
+	}
+
+	[body]
+	{
+		initial_chore		   = chore_default;
+
+		[chore_dictionary]
+		{
+			chore_prefix	   = "a_i_glb";
+
+			[chore_default]
+			{
+				skrit		   = infinite_loop;
+				anim_files:	00 = "tree-03-sway";
+			}
+		}
+	}
+
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+
+		[other]
+		{
+			il_active_primary_spell	= spell_mana_channel;
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// death and decay testing
+
+[dev,t:template,n:test_krug]
+{
+	doc	= "[TEST] Krug	that decays	after dying";
+	specializes	= base_krug;
+
+	aspect:expired_template_name   = test_krug_decay_fresh;
+	aspect:life_state			   = ls_alive_conscious;
+	aspect:life					   = 1;
+	aspect:max_life				   = 1;
+	common:forced_expiration_class = dead;
+	common:auto_expiration_class   = normal;
+
+	[inventory]
+	{
+		[pcontent]
+		{
+			[oneof*]
+			{
+				es_weapon_hand = #club/1-2;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_krug_decay_fresh]
+{
+	doc	= "[TEST] Fresh meat type krug";
+	specializes	= non_interactive;
+
+	aspect:expired_template_name   = test_krug_decay_bones;
+	aspect:life_state			   = ls_decay_fresh;
+	aspect:model				   = m_c_eam_kg_pos_1;
+	//aspect:textures:0			   = b_i_glb_crystal-red;
+	[common]
+	{
+		forced_expiration_class = decay_fresh;
+		auto_expiration_class   = decay_fresh;
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("corpse_flies");
+				condition* = receive_world_message("we_constructed");
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_krug_decay_bones]
+{
+	doc	= "[TEST] Bones from a	dead krug";
+	specializes	= test_krug_decay_fresh;
+
+	aspect:expired_template_name   = test_krug_decay_dust;
+	aspect:life_state			   = ls_decay_bones;
+	aspect:model				   = m_i_csl_corpse-dry-01;
+	//aspect:textures:0			   = b_i_glb_bones-red;
+	common:forced_expiration_class = decay_fresh;
+	common:auto_expiration_class   = decay_fresh;
+}
+
+[dev,t:template,n:test_krug_decay_dust]
+{
+	doc	= "[TEST] Fresh meat type krug";
+	specializes	= test_krug_decay_bones;
+
+	aspect:expired_template_name   = ;
+	aspect:model				   = m_i_cav_body-dust-01;
+	aspect:life_state			   = ls_decay_dust;
+	[common]
+	{
+		forced_expiration_class = decay_dust;
+	 	auto_expiration_class   = decay_dust;
+	 	[template_triggers] { }
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// test	shields
+
+[dev,t:template,n:test_sh_w_g_c_r_s_fun]
+{
+	specializes	= base_shield;
+	doc			= "[TEST] shield_sh_w_g_c_r_s_fun";
+
+	aspect:model			= m_a_shd_19;
+	aspect:textures:0		= b_a_shd_077;
+
+	common:screen_name		= "need_name";
+	common:is_pcontent_allowed	= false;
+
+	defend:defense			= 2;
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_shd_077;
+		inventory_width		= 2;
+		inventory_height	= 2;
+	}
+}
+
+[dev,t:template,n:test_sh_w_g_c_r_m_fun]
+{
+	specializes	= base_shield;
+	doc			= "[TEST] shield_sh_w_g_c_r_M_fun";
+
+	aspect:model			= m_a_shd_20;
+	aspect:textures:0		= b_a_shd_080;
+
+	common:screen_name		= "need_name";
+	common:is_pcontent_allowed	= false;
+
+	defend:defense			= 2;
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_shd_080;
+		inventory_width		= 2;
+		inventory_height	= 2;
+	}
+}
+
+[dev,t:template,n:test_sh_w_g_c_r_m_fin]
+{
+	specializes	= base_shield;
+	doc			= "[TEST] shield_sh_w_g_c_r_m_fin";
+
+	aspect:model			= m_a_shd_20;
+	aspect:textures:0		= b_a_shd_082;
+
+	common:screen_name		= "need_name";
+	common:is_pcontent_allowed	= false;
+
+	defend:defense			= 2;
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_shd_082;
+		inventory_width		= 2;
+		inventory_height	= 2;
+	}
+}
+
+[dev,t:template,n:test_sh_w_g_c_h_m_mag]
+{
+	specializes	= base_shield;
+	doc			= "[TEST] shield_sh_w_g_c_h_m_mag";
+
+	aspect:model			= m_a_shd_21;
+	aspect:textures:0		= b_a_shd_083;
+
+	common:screen_name		= "need_name";
+	common:is_pcontent_allowed	= false;
+
+	defend:defense			= 2;
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_shd_083;
+		inventory_width		= 2;
+		inventory_height	= 2;
+	}
+}
+
+[dev,t:template,n:test_sh_w_g_c_k_m_mag]
+{
+	specializes	= base_shield;
+	doc			= "[TEST] shield_sh_w_g_c_k_m_mag";
+
+	aspect:model			= m_a_shd_13;
+	aspect:textures:0		= b_a_shd_084;
+
+	common:screen_name		= "need_name";
+	common:is_pcontent_allowed	= false;
+
+	defend:defense			= 2;
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_shd_084;
+		inventory_width		= 2;
+		inventory_height	= 3;
+	}
+}
+
+[dev,t:template,n:test_sh_w_g_c_t_m_mag]
+{
+	specializes	= base_shield;
+	doc			= "[TEST] shield_sh_w_g_c_t_m_mag";
+
+	aspect:model			= m_a_shd_22;
+	aspect:textures:0		= b_a_shd_085;
+
+	common:screen_name		= "need_name";
+	common:is_pcontent_allowed	= false;
+
+	defend:defense			= 2;
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_shd_085;
+		inventory_width		= 2;
+		inventory_height	= 3;
+	}
+}
+
+[dev,t:template,n:test_sh_m_g_c_r_s_fin]
+{
+	specializes	= base_shield;
+	doc			= "[TEST] shield_sh_m_g_c_r_s_fin";
+
+	aspect:model			= m_a_shd_19;
+	aspect:textures:0		= b_a_shd_079;
+
+	common:screen_name			= "need_name";
+	common:is_pcontent_allowed	= false;
+
+	defend:defense			= 2;
+
+	[gui]
+	{
+		inventory_icon		= b_gui_ig_i_a_shd_079;
+		inventory_width		= 2;
+		inventory_height	= 2;
+	}
+}
+
+[dev,t:template,n:test_sd_g_c_bl_1h_avg_strength]
+{
+	specializes	= base_sword;
+	doc			= "[TEST] Magical full blade - adds strength";
+
+	common:		screen_name			= "[TEST] Full Blade of Strength";
+	common:is_pcontent_allowed	= false;
+
+	common:		is_pcontent_allowed	= false;
+	aspect:		model				= m_w_swd_014;
+	gui:		inventory_icon		= b_gui_ig_i_w_swd_013;
+	gui:		inventory_width		= 1;
+	gui:		inventory_height	= 4;
+
+	attack:		damage_min			= 1;
+	attack:		damage_max			= 5;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_strength;
+				value				= 10.0;
+				description			= sd_g_c_bl_1h_avg_strength	strength mod;
+
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_sd_g_c_st_2h_mag]
+{
+	specializes	= base_sword;
+	doc			= "[TEST] Great Steel TEMP";
+
+	common:		screen_name					= "[TEST] Great Steel TEMP";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model						= m_w_swd_017;
+	gui:		inventory_icon				= b_gui_ig_i_w_swd_030;
+	gui:		inventory_width				= 1;
+	gui:		inventory_height			= 4;
+
+	attack:		damage_min			= 2;
+	attack:		damage_max			= 5;
+	attack:attack_range				= 0.5;
+	attack:is_two_handed			= true;
+
+	aspect:		gold_value					 = 150;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// pcontent	testing
+
+[dev,t:template,n:test_random_farmboy]
+{
+	specializes	= base_farmboy;
+	doc	= "[TEST] Farmboy with	parameterized content";
+
+	[inventory]
+	{
+		// $ disable these - we	want ALL parameterized content,	no defaults!
+		[equipment]	 {	}
+		[other]	 {	}
+
+		[pcontent]
+		{
+			[oneof*]
+			{
+				es_weapon_hand = dev_axe;
+				es_weapon_hand = dev_sword;
+				es_weapon_hand = dev_axe_2h;
+				es_weapon_hand = dev_staff;
+
+				[all*]
+				{
+					chance = 0.4;
+					es_forearms	= test_gauntlet_magic;
+					es_weapon_hand = test_shovel_magic;
+				}
+			}
+
+			[all*]
+			{
+				min	= 0;
+				max	= 2;
+				il_main	= test_potion_mana_channel;
+			}
+
+			[gold*]
+			{
+				min	= 100;
+				max	= 300;
+				chance = 0.5;
+			}
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//	burned object testing
+[dev,t:template,n:test_charred_krug_scout]
+{
+	doc	= "[TEST] krug	scout";
+	specializes	= base_krug;
+	category_name =	"test";
+
+	common:screen_name = "Krug Scout";
+
+	[actor]
+	{
+		[skills]
+		{
+			* =	strength, 5, 0;
+			* =	intelligence, 3, 0;
+			* =	dexterity, 4, 0;
+		}
+	}
+
+	attack:damage_min			  =	1;
+	attack:damage_max			  =	2;
+
+	[aspect]
+	{
+		selection_indicator_scale =	0.85;
+		experience_value		  =	12;
+		life					  =	4;
+		max_life				  =	4;
+
+		[textures]
+		{
+			0 =	b_i_glb_charred;
+		}
+
+	}
+
+	mind:on_enemy_spotted_alert_friends		= true;
+
+	[inventory]
+	{
+		// $ disable these - we	want ALL parameterized content,	no defaults!
+		[equipment]	 {	}
+		[other]	 {	}
+
+		[pcontent]
+		{
+			[oneof*]
+			{
+				es_weapon_hand = cb_g_c_r_1h_avg;
+				es_weapon_hand = cb_g_d_r_1h_avg;
+				es_weapon_hand = cb_g_c_r_1h_low;
+				chance = 0.9;
+			}
+
+			[oneof*]
+			{
+					[all*]
+					{
+						il_main	= #melee/1-2;
+						chance = 0.05;
+					}
+					[all*]
+					{
+						il_main	= #melee/2-3.5;
+						chance = 0.025;
+					}
+					[all*]
+					{
+						il_main	= #ranged/1-2.5;
+						chance = 0.05;
+					}
+					[all*]
+					{
+						[gold*]
+							{
+								min	= 2;
+								max	= 5;
+								chance = 0.125;
+							}
+					}
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_charred_droog_grunt]
+{
+	specializes = base_droog;
+	doc = "[TEST] droog grunt";
+	category_name = "test";
+
+	common:screen_name = "Droog Grunt";
+
+	[attack]
+	{
+		damage_min 			= 1;
+		damage_max          = 2;
+		attack_range        = 1;
+		reload_delay       = 1;
+	}
+
+	[aspect]
+	{
+		experience_value	= 12;
+		life				= 7;
+		max_life			= 7;
+
+		textures:0			= b_i_glb_charred;
+	}
+
+	defend:defense			= 1;
+}
+
+[dev,t:template,n:test_charred_log_cav_01]
+{
+	specializes = non_interactive_blocking;
+	doc = "[TEST] cav_log_branch_thin";
+	category_name = "test";
+
+	aspect:model 		= m_i_glb_log-04;
+	aspect:textures:0	= b_i_glb_charred;
+
+}
+
+[dev,t:template,n:test_charred_log_cav_02]
+{
+	specializes = non_interactive_blocking;
+	doc = "[TEST] cav_log_trunk";
+	category_name = "test";
+
+	aspect:model 		= m_i_glb_log-05;
+	aspect:textures:0	= b_i_glb_charred;
+}
+
+[dev,t:template,n:test_charred_log_cav_03]
+{
+	specializes = non_interactive_blocking;
+	doc = "[TEST] cav_log_branch_thick";
+	category_name = "test";
+
+	aspect:model 		= m_i_glb_log-06;
+	aspect:textures:0	= b_i_glb_charred;
+}
+
+[dev,t:template,n:test_charred_altar_csl_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "[TEST] altar_stone_ornate";
+	category_name       = "test";
+
+	aspect:model 		= m_i_csl_altar-01;
+	aspect:textures:0	= b_i_glb_charred;
+}
+
+[dev,t:template,n:test_charred_bench_csl_broken_01]
+{
+	specializes 		= non_interactive_blocking;
+	doc 				= "[TEST] bench_broken_wood";
+	category_name       = "test";
+
+	aspect:model 		= m_i_csl_bench-broken-01;
+	aspect:textures:0	= b_i_glb_charred;
+}
+
+///////////////////////////////////////////////////////////////
+// sword tests for Lee -MM 01.17.01
+// these will actually be done using pcontent
+[dev,t:template,n:test_sd_un_g_c_sd_1h_mag]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] ";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Frost Sword";
+		is_pcontent_allowed	= false;
+
+		[template_triggers]
+		{
+
+			[*]
+			{
+				action* = call_sfx_script( "weapon_blue_fire" );
+				condition* = receive_world_message("we_equipped");
+			}
+		}
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+}
+[dev,t:template,n:test_flaming_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] firebrand";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Cauterizer";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_fire_7_re;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_ice_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] icebrand";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Frostbite";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_ice_7_wh;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_poison_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] poisonous sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "New SUV smell sword";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_gas_7_gr;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_electric_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] shocking sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Cattle Prod";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_zap_7_wh;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_claw_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] claw sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test ofclaws weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_dualblad_20_lre;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_accuracy_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] accuracy sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test ofaccuracy weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_unispiral_20_lbl;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_unbridled_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] unbridled sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test oftheunbridled weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= oftheunbridled_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_deception_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] deception sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test ofdeception weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_glow_15_lre;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_parasite_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] parasite sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test oftheparasite weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_glow_15_lbl;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect1_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect1 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect1 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= stat_constellation_20_lbl;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_effect2_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect2 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect2 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect2_weapon;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_effect3_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect3 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect3 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_mace_15_re;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_effect4_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect4 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect4 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_charge_15_lbl;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_effect5_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect5 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect5 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect5_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect6_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect6 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect6 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= steal_drip_15_ye;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect6s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect6s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect6s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect6s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect7_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect7 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect7 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam-arm_flyoff_17_gr;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect7s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect7s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect7s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect7s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect8_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect8 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect8 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam-arm_flyoff_15_or;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect8s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect8s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect8s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect8s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect9_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect9 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect9 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= stat_glitter_15_wh;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect9s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect9s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect9s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect9s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect10_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect10 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect10 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_streamout_15_lbl;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect10s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect10s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect10s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect10s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect11_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect11 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect11 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= stat_backforth_17_lpu-lbl;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect11s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect11s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect11s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect11s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect12_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect12 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect12 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= stat_loops_20_lpu;
+			}
+		}
+	}
+}[dev,t:template,n:test_effect12s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect12s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect12s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect12s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect13_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect13 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect13 weapon (the RuthSaber)";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_saber_15_lor;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect13s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect13s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect13s weapon (the RuthSaber)";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect13s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect14_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect14 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect14 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam_whip_15_lpu;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect14s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect14s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect14s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect14s_weapon;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_effect15_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect15 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect15 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= dam-steal_vorpel_20_lpi;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect15s_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] effect15s sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test effect15s weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= effect15s_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_sparkle_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] sparkle sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test sparkle weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= sparkle_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_sparkle2_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] sparkle2 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test sparkle2 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= sparkle2_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_glow_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] glow sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test glow weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= glow_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_glow2_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] glow2 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test glow2 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= glow2_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_glow3_sword]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] glow3 sword";
+
+	aspect:		model			= m_w_swd_038;
+
+	attack:		damage_min		= 15;
+	attack:		damage_max		= 20;
+
+	[common]
+	{
+		screen_name		= "Test glow3 weapon";
+		is_pcontent_allowed	= false;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_069;
+		inventory_width			= 1;
+		inventory_height		= 3;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_melee_damage_max;
+				value				= 10.0;
+				description			= +10 maximum damage;
+				duration			= #infinite;
+				is_single_instance	= false;
+				effect_script_equip	= glow3_weapon;
+			}
+		}
+	}
+}
+[dev,t:template,n:test_effect_bow1]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] effect_bow1";
+	
+	common:screen_name		= "Test effect_bow1";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 12;
+		damage_max			= 20;
+		damage_min			= 30;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_ranged;
+				value				= 1;
+				description			= "Adds 1 to Ranged Skill";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+				effect_script_hit	= effect_bow1;
+			}
+		}
+	}
+	[physics]
+	{
+		velocity = 10;
+	}
+}
+[dev,t:template,n:test_effect_bow2]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] effect_bow2";
+	
+	common:screen_name		= "Test effect_bow2";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 12;
+		damage_max			= 20;
+		damage_min			= 30;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_ranged;
+				value				= 1;
+				description			= "Adds 1 to Ranged Skill";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+				effect_script_hit	= effect_bow2;
+			}
+		}
+	}
+	[physics]
+	{
+		velocity = 10;
+	}
+}
+[dev,t:template,n:test_effect_bow3]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] effect_bow3";
+	
+	common:screen_name		= "Test effect_bow3";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 12;
+		damage_max			= 20;
+		damage_min			= 30;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_ranged;
+				value				= 1;
+				description			= "Adds 1 to Ranged Skill";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+				effect_script_hit	= effect_bow3;
+			}
+		}
+	}
+	[physics]
+	{
+		velocity = 10;
+	}
+}
+[dev,t:template,n:test_effect_bow4]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] effect_bow4";
+	
+	common:screen_name		= "Test effect_bow4";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 12;
+		damage_max			= 20;
+		damage_min			= 30;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_ranged;
+				value				= 1;
+				description			= "Adds 1 to Ranged Skill";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+				effect_script_hit	= effect_bow4;
+			}
+		}
+	}
+	[physics]
+	{
+		velocity = 10;
+	}
+}
+[dev,t:template,n:test_effect_bow5]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] effect_bow5";
+	
+	common:screen_name		= "Test effect_bow5";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 12;
+		damage_max			= 20;
+		damage_min			= 30;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_ranged;
+				value				= 1;
+				description			= "Adds 1 to Ranged Skill";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+				effect_script_hit	= effect_bow5;
+			}
+		}
+	}
+	[physics]
+	{
+		velocity = 10;
+	}
+}
+[dev,t:template,n:test_effect_bow6]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] effect_bow6";
+	
+	common:screen_name		= "Test effect_bow6";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 12;
+		damage_max			= 20;
+		damage_min			= 30;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_ranged;
+				value				= 1;
+				description			= "Adds 1 to Ranged Skill";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+				effect_script_hit	= effect_bow6;
+			}
+		}
+	}
+	[physics]
+	{
+		velocity = 10;
+	}
+}
+[dev,t:template,n:test_sd_un_g_c_sd_1h_str]
+{
+	specializes	= base_sword;
+	doc			= "[TEST OBJECT] ";
+
+	common:		screen_name		= "[TEST] sd_un_g_c_sd_1h_str [TEST]";
+	common:		is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_swd_037;
+
+	attack:		damage_min		= 10;
+	attack:		damage_max		= 15;
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_swd_070;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+}
+
+///////////////////////////////////////////////////////////////
+// Test Enchanted Shield
+
+[dev,t:template,n:test_enchanted_shield]
+{
+	specializes	= base_shield;
+	doc			= "[TEST OBJECT] test_enchanted_shield";
+
+	aspect:model		= m_a_shd_10;
+	aspect:textures:0	= b_a_shd_014;
+
+	common:		screen_name			= "enchanted shield";
+	common:is_pcontent_allowed		= false;
+
+	gui:		inventory_icon		= b_gui_ig_i_a_shd_014;
+	gui:		inventory_width		= 2;
+	gui:		inventory_height	= 2;
+
+	defend:		defense				= 10;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_strength;
+				value				= 10.0;
+				description			= +10 strength;
+				duration			= #infinite;
+				is_single_instance	= false;
+			}
+		}
+	}	
+}
+[dev,t:template,n:test_enchanted_shield2]
+{
+	specializes	= base_shield;
+	doc			= "[TEST OBJECT] test_enchanted_shield2";
+
+	aspect:model		= m_a_shd_10;
+	aspect:textures:0	= b_a_shd_014;
+
+	common:		screen_name			= "enchanted shield2";
+	common:is_pcontent_allowed		= false;
+
+	gui:		inventory_icon		= b_gui_ig_i_a_shd_014;
+	gui:		inventory_width		= 2;
+	gui:		inventory_height	= 2;
+
+	defend:		defense				= 10;
+
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_ARMOR;
+				value				= 3;
+				description			= "+3 to Armor";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+			}
+		}
+	}
+}
+
+
+
+///////////////////////////////////////////////////////////////
+// object testing
+
+
+//////////////////////////////////////////////////////////
+// temp characters for captured for battle (for gamestock)
+[dev,t:template,n:temp_cf_fighter]
+{
+	doc = "[TEST] temp dude for cf_r1 fight";
+	specializes = base_farmboy;
+	[actor]
+	{
+        can_level_up = false;
+		portrait_icon=b_gui_ig_i_ic_c_fb_blonde;
+		[skills]
+		{
+			strength =		10, 0, 10;
+			intelligence=	3, 0, 10;
+			dexterity=		5, 0, 10;
+            melee= 			16,  0;
+		}
+
+	}
+	[aspect]
+	{
+		model = m_c_gah_fb_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_01;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[common] { screen_name="Fighter"; }
+}
+
+[dev,t:template,n:temp_cf_ranger]
+{
+	doc = "[TEST] temp dude for cf_r1 fight";
+	specializes = base_farmboy;
+	[actor]
+	{
+        can_level_up = false;
+		portrait_icon=b_gui_ig_i_ic_c_fb_blonde;
+		[skills]
+		{
+			strength=		5, 0, 10;
+			intelligence=	3, 0, 10;
+			dexterity=		10, 0, 10;
+            ranged= 			20,  0;
+		}
+
+	}
+	[aspect]
+	{
+		model = m_c_gah_fb_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_01;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[common] { screen_name="Ranger"; }
+}
+
+[dev,t:template,n:cf_ranger_male_strong]
+{
+	doc = "[TEST] temp dude for cf_r1 fight";
+	specializes = base_farmboy;
+	[actor]
+	{
+        can_level_up = false;
+		portrait_icon=b_gui_ig_i_ic_c_fb_05;
+		[skills]
+		{
+			strength=		3, 0, 10;
+			intelligence=	3, 0, 10;
+			dexterity=		9, 0, 10;
+            ranged= 		20,  0;
+		}
+
+	}
+	[aspect]
+	{
+
+   		life = 98;
+		max_life = 98;
+   		mana = 41;
+		max_mana = 41;
+
+
+		model = m_c_gah_fb_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_024;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[common] { screen_name="Raun"; }
+    [inventory]
+	{
+		[equipment]
+		{
+
+			 es_shield_hand	= bw_g_o_s_m_r_avg;
+             es_feet 		= bo_bo_sl_f_g_c_avg;
+             es_chest 		= bd_un_br_f_d_c_str;
+   		}
+	}
+
+}
+
+
+
+[dev,t:template,n:cf_ranger_female_weak]
+{
+	doc = "[TEST] temp dudet for cf_r1 fight";
+	specializes = base_farmgirl;
+	[actor]
+	{
+        can_level_up = false;
+		portrait_icon=b_gui_ig_i_ic_c_fg_a_03;
+		[skills]
+		{
+			strength=		0, 0, 10;
+			intelligence=	0, 0, 10;
+			dexterity=		0, 0, 10;
+            ranged= 		2,  0;
+		}
+
+	}
+	[aspect]
+	{
+
+   		life = 38;
+		max_life = 38;
+   		mana = 41;
+  		max_mana = 41;
+
+
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_04;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[common] { screen_name="Koroe"; }
+    [inventory]
+	{
+		[equipment]
+		{
+			 es_shield_hand	= bw_g_c_c_m_4_avg;
+             es_feet 		= bo_bo_sl_f_g_c_avg;
+             es_chest 		= bd_ch_f_g_c_fun;
+   		}
+	}
+
+}
+
+[dev,t:template,n:cf_fighter_female_weak]
+{
+	doc = "[TEST] temp dude for cf_r1 fight";
+	specializes = base_farmgirl;
+	[actor]
+	{
+        can_level_up = false;
+		portrait_icon=b_gui_ig_i_ic_c_fg_b_02;
+		[skills]
+		{
+			strength=		0, 0, 10;
+			intelligence=	1, 0, 10;
+			dexterity=		1, 0, 10;
+            melee=	 		1,  0;
+		}
+
+	}
+	[aspect]
+	{
+
+		life = 38;
+		max_life = 38;
+   		mana = 41;
+  		max_mana = 41;
+
+
+		model = m_c_gah_fg_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fg_skin_015;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[common] { screen_name="Brahi"; }
+    [inventory]
+	{
+		[equipment]
+		{
+			 es_shield_hand	= temp_sh_w_g_c_k_l_mag;
+	 	     es_weapon_hand = sd_un_g_1h_wing;
+             es_feet 		= bo_gr_fp_f_g_c_avg;
+             es_chest 		= bd_pl_r_g_c_fin;
+             es_forearms    = gl_ga_sc_f_g_c_avg;
+   		}
+	}
+
+}
+
+
+
+[dev,t:template,n:cf_magic_male]
+{
+	doc = "[TEST] temp dude for cf_r1 fight";
+	specializes = base_farmboy;
+	[actor]
+	{
+        can_level_up = false;
+		portrait_icon=b_gui_ig_i_ic_c_fb_02;
+		[skills]
+		{
+			strength=		0, 0, 10;
+			intelligence=	9, 0, 10;
+			dexterity=		1, 0, 10;
+            combat_magic=	15, 0;
+            nature_magic=	15, 0;
+		}
+
+	}
+	[aspect]
+	{
+		life = 38;
+		max_life = 38;
+   		mana = 191;
+  		max_mana = 191;
+
+		model = m_c_gah_fb_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_02;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[common] { screen_name="Yolum"; }
+    [inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_fireball_storm; }
+
+		[equipment]
+		{
+			 es_weapon_hand	= st_un_b_wing;
+             es_feet 		= bo_bo_sl_f_g_c_avg;
+             es_chest 		= bd_ro_m_g_c_str;
+             es_head        = he_ca_ro_mongol;
+   		}
+	}
+
+}
+
+[dev,t:template,n:dev_merchant]
+{
+	doc = "[TEST] test dude for pcontent inventory store stuff";
+	specializes = base_npc_bk;
+
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_bs_son;
+	}
+
+	[common]
+	{
+		screen_name="Dev Merchant";
+	}
+
+	[conversation]
+	{
+		[conversations] { *=conversation_shopkeep; }
+	}
+
+	[inventory]
+	{
+		[store_pcontent]
+		{
+			full_ratio = 0.8;
+
+			[armor]
+			{
+				full_ratio = 0.5;
+
+                [all*]
+				{
+                    min = 2;
+					max = 4;
+					il_main = #armor/1-10;
+                }
+				[all*]
+				{
+                    min = 3;
+					max = 6;
+					il_main = #armor/10-20;
+                }
+				[all*]
+				{
+                    min = 3;
+					max = 5;
+					il_main = #armor/20-30;
+                }
+			}
+
+			[weapons]
+			{
+				[all*]
+				{
+                    min = 2;
+					max = 4;
+					il_main = #melee/3-6.5;
+                }
+				[all*]
+				{
+                    min = 3;
+					max = 6;
+					il_main = #melee/6.5-7.5;
+                }
+				[all*]
+				{
+                    min = 3;
+					max = 5;
+					il_main = #melee/7.5-11.5;
+                }
+				[all*]
+				{
+                    min = 1;
+					max = 3;
+					il_main = #ranged/1-2.5;
+                }
+				[all*]
+				{
+                    min = 2;
+					max = 4;
+					il_main = #ranged/2.5-3.5;
+                }
+				[all*]
+				{
+                    min = 2;
+					max = 4;
+					il_main = #ranged/3.5-6;
+                }
+			}
+		}
+	}
+
+	[store]
+	{
+		[item_restock]
+		{
+			potion_health_small = 5;
+			potion_mana_large = 10;
+		}
+	}
+
+	[mind] { jat_talk=world\ai\jobs\common\job_talk.skrit; }
+}
+
+
+[dev,t:template,n:krug_speedy]
+{
+	category_name = "evil_a";
+	doc = "[TEST] fast test krug";
+	specializes = base_krug;
+   	[actor]
+	{
+		[skills]
+		{
+			strength =  16, 0;
+			intelligence =  9, 0;
+			dexterity =  12, 0;
+			melee =  6,  0;
+		}
+	}
+
+	[aspect]
+	{
+		experience_value = 113;
+		life = 26;
+		material = steel_monster;
+		max_life = 26;
+		selection_indicator_scale = 0.85;
+		scale_base = 1.20;
+		[textures] { 0=b_c_eam_kc; }
+	}
+	[attack]
+	{
+		damage_max = 8;
+		damage_min = 4;
+	}
+	[common] { screen_name="Krug Commander"; }
+	[defend] { defense=18; }
+	[inventory]
+	{
+		[equipment] { es_weapon_hand=#axe/-no_mod/10; }
+		[pcontent]
+		{
+			[gold*]
+			{
+				chance = 0.2;
+				max = 59;
+				min = 16;
+			}
+			[oneof*]
+			{
+				chance = 0.25;
+				il_main = #weapon/7-12;
+				il_main = #*/7-12;
+				il_main = #armor/15-24;
+				il_main = potion_mana_small;
+				il_main = potion_health_small;
+			}
+		}
+
+	}
+
+
+
+	[mind] { on_enemy_spotted_alert_friends=true; }
+	[body]
+	{
+		avg_move_velocity = 6.0000;	// was 1.54
+	}
+
+	[physics]
+	{
+		break_sound = s_e_meat_explosion;
+		explosion_magnitude = 1.5;
+		[break_particulate]
+		{
+			frag_glb_krug_commander_01 = 1;
+			frag_glb_krug_commander_02 = 1;
+			frag_glb_krug_commander_03 = 1;
+			frag_glb_krug_commander_04 = 1;
+			frag_glb_krug_commander_05 = 1;
+			frag_glb_krug_commander_06 = 1;
+			frag_glb_krug_commander_07 = 1;
+			frag_glb_krug_commander_08 = 1;
+		}
+	}
+
+}
+
+[dev,t:template,n:test_random_object]
+{
+	specializes 	= base_random_object;
+	doc				= "[test] random object creator";
+   	category_name	= "special";
+
+	[inventory]
+	{
+		[delayed_pcontent]
+		{
+            [oneof*]
+			{
+				[all*]
+				{
+					chance	= 0.16;
+	                il_main = cow_brown;
+				}
+				[all*]
+				{
+					chance	= 0.16;
+	                il_main = cow_black_white;
+				}
+				[all*]
+				{
+					chance	= 0.16;
+	                il_main = deer_fawn;
+				}
+				[all*]
+				{
+					chance	= 0.16;
+					il_main = dog;
+				}
+				[all*]
+				{
+					chance	= 0.16;
+					il_main = mule;
+				}
+				[all*]
+				{
+					chance	= 0.2;
+	                il_main = pig;
+				}
+			}
+		}
+	}
+}
+
+[dev,t:template,n:test_bones_in_a_box]
+{
+	specializes		= base_container_stone;
+	doc				= "[TEST] box_stone";
+    category_name   = "test";
+
+    common: screen_name = "Monument";
+
+	aspect:model	= m_i_cav_container-01;
+
+    [generator_object_pcontent] { }
+
+	[generator_in_object]
+	{
+		child_template_name = "container_cav_break_01";
+	}
+
+	[inventory]
+	{
+		[delayed_pcontent]
+		{
+			[oneof*]
+			{
+				[all*]
+               	{
+                    il_main = #*/4;
+		            chance = 0.25;
+   				}
+   				[all*]
+               	{
+                    il_main = skeleton;
+		            chance = 0.5;
+   				}
+   			}
+		}
+	}
+	[physics]
+	{
+		[break_particulate]
+		{
+		frag_glb_stone_07	= 2;
+		frag_glb_stone_08	= 2;
+		frag_glb_stone_09	= 3;
+		frag_glb_stone_10	= 4;
+		}
+	}
+}
+
+[dev,t:template,n:resurrect_test]
+{
+	doc = "[TEST] temp dude for skull resurect testing";
+	specializes = base_farmboy;
+	[actor]
+	{
+		can_be_picked_up = true;
+        can_level_up = false;
+		portrait_icon=b_gui_ig_i_ic_c_fb_02;
+		[skills]
+		{
+			strength=		0, 0, 10;
+			intelligence=	9, 0, 10;
+			dexterity=		1, 0, 10;
+            combat_magic=	15, 0;
+            nature_magic=	15, 0;
+		}
+
+	}
+	[aspect]
+	{
+		life = 38;
+		max_life = 38;
+   		mana = 191;
+  		max_mana = 191;
+
+		model = m_c_gah_fb_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_02;
+			1 = b_c_pos_a1_002;
+		}
+	}
+	[common] { screen_name="Spanky"; }
+    [inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_fireball_storm; }
+
+		[equipment]
+		{
+   		}
+	}
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_ic_c_sk_g;
+		//active_icon = b_gui_ig_i_ic_c_sk_g;
+		equip_slot 		= es_none;
+		inventory_width = 1;
+		inventory_height = 1;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////
+
+[dev,t:template,n:dev_chicken]
+{
+	category_name = "test";
+	doc = "[TEST] chicken_white";
+	specializes = base_chicken;
+	[aspect]
+	{
+		[textures] { 0=b_c_na_ckn_white; }
+	}
+	[actor]
+	{
+		alignment = aa_good;
+	}
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("feathers_flap_white");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[physics]
+	{
+		break_effect = feathers_white;
+		explode_when_killed = true;
+	}
+}
+
+[dev,t:template,n:skeleton_good_test]
+{
+	doc = "[TEST] temp dude for skeleton_good testing";
+	specializes = base_skeleton_good;
+	[actor]
+	{
+		can_level_up = TRUE;
+		race = human;
+	}
+    [common]
+    {
+    	membership = hero;
+    	screen_name="Boner";
+    }
+	[conversation]
+	{
+	}
+	[aspect]
+	{
+		life_recovery_unit		= 1;
+        life_recovery_period	= 4;
+
+		mana_recovery_unit		= 1;
+		mana_recovery_period	= 3;
+
+		life = 38;
+		max_life = 38;
+   		mana = 191;
+  		max_mana = 191;
+	}
+	[inventory]
+	{
+		grid_height = 13;
+		grid_width = 4;
+	}
+	[water_effects] {}
+	[store]
+	{
+	}
+	[mind]
+	{
+		actor_auto_defends_others = true;
+		jat_brain 	= world\ai\jobs\common\brain_hero.skrit;
+		jat_listen 	= world\ai\jobs\common\job_listen.skrit;
+	}
+}
+
+[dev,t:template,n:master_caster]
+{
+	category_name = "test";
+	doc = "[TEST] Super Casting Monster Test";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  15, 0;
+			intelligence =  8, 0;
+			dexterity =  13, 0;
+			combat_magic =  255,  0;
+			nature_magic =  255,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 74;
+		life = 14;
+		max_life = 14;
+		mana = 9999;
+		max_mana = 9999;
+		mana_recovery_unit = 100;
+		mana_recovery_period = 1;
+		model = m_c_edm_dg_pos_1;
+		[voice]
+		{
+			[die]
+			{
+				* = s_e_die_darkling;
+			}
+			[hit_critical]
+			{
+				* = s_e_hit_darkling;
+			}
+			[hit_glance]
+			{
+				* = s_e_hit_darkling;
+			}
+			[hit_solid]
+			{
+				* = s_e_hit_darkling;
+			}
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 10;
+		damage_min = 5;
+	}
+	[body]
+	{
+		avg_move_velocity = 4;
+		[bone_translator]
+		{
+			body_anterior = Bip01_Head;
+			body_mid = Bip01_Spine;
+			body_posterior = Bip01_Pelvis;
+			kill_bone = Bip01_Pelvis;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			initial_chore = chore_none;
+			chore_prefix = a_c_edm_dg_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=mg; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=mg; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_darkling_spark; }
+	}
+
+	[common]
+	{
+		screen_name="Super Caster";
+	}
+    [mind]
+	{
+		actor_auto_switches_to_magic = true;
+		melee_engage_range = 2;
+		personal_space_range = 0.7;
+		on_enemy_entered_ocz_attack = true;
+		ranged_engage_range = 13.0;
+		sight_range = 13.0;
+	}
+}
+
+[dev,t:template,n:droog_ambusher]
+{
+	category_name = "test";
+	doc = "[test] droog ambusher";
+	specializes = base_droog;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  	13, 0;
+			intelligence =  	14, 0;
+			dexterity =  	18, 0;
+			ranged =  	10, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 140;
+		life = 30;
+		max_life = 30;
+		mana = 28;
+		max_mana = 28;
+		scale_base = 0.85;
+		[textures] { 0=b_c_eam_dga; }
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 16;
+		damage_min = 10;
+	}
+	body:avg_move_velocity = 4.000000;
+	[common] { screen_name="Droog Ambusher"; }
+	[defend] { defense=32; }
+	[inventory]
+	{
+		selected_active_location = IL_ACTIVE_RANGED_WEAPON;
+    	[pcontent]
+		{
+			[oneof*] { es_shield_hand=bw_g_c_c_s_4_avg; }
+			[oneof*]
+			{
+				[all*]
+				{
+				chance = 0.25;
+				il_main = #*/9-15;
+				il_main = #armor/15-65;
+                il_main = #nmagic/5-24;
+                il_main = #cmagic/5-24;
+				}
+				[gold*]
+				{
+					chance = 0.125;
+					max = 184;
+					min = 51;
+				}
+			}
+		}
+	}
+	[mind]
+	{
+		flee_count = 1000;
+		flee_distance = 10.0;
+		on_enemy_entered_ocz_flee       = true;
+
+		actor_auto_switches_to_melee         = true;
+		actor_auto_switches_to_ranged        = true;
+		actor_auto_uses_stored_items		 = true;
+
+		actor_weapon_preference				 = WP_RANGED;
+
+		inner_comfort_zone_range        = 2;
+		outer_comfort_zone_range        = 7.0;
+		melee_engage_range 				= 2;
+		ranged_engage_range 			= 12.0;
+		sight_range 					= 12.0;
+	}
+}
+[dev,t:template,n:test_magic_eye]
+{
+	category_name = "test";
+	doc = "[TEST] magic_eye";
+	specializes = actor_evil;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  11, 0;
+			intelligence =  7, 0;
+			dexterity =  2, 0;
+            combat_magic =  4,  0;
+		}
+	}
+	[aspect]
+	{
+		life = 15;
+        max_life = 15;
+        mana = 14;
+        max_mana = 14;
+		model = m_c_edm_rt_pos_1;
+		selection_indicator_scale = 0.2;
+		scale_base = 0.2;
+	}
+	[body]
+	{
+		avg_move_velocity = 5.0;
+		[bone_translator]
+		{
+			body_anterior = Bone01;
+			body_mid = Bone01;
+			body_posterior = Bone01;
+			kill_bone = Bone01;
+			shield_bone = Bone01;
+			weapon_bone = Bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_rt_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=dff; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=dfs; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+		}
+	}
+	[common]
+	{
+		screen_name="Pun's magic Eye";
+	}
+    [defend] { defense=8; }
+    [inventory]
+	{
+		is_pack_only = true;
+		grid_height = 13;
+		grid_width = 4;
+	}
+    [mind] {}
+    [physics]
+	{
+		explode_when_killed = true;
+		explosion_magnitude = 1.0;
+		[break_particulate]
+		{
+			frag_glb_rector_01 = 1;
+			frag_glb_rector_02 = 1;
+			frag_glb_rector_03 = 1;
+			frag_glb_rector_04 = 1;
+			frag_glb_rector_05 = 1;
+		}
+	}
+}
+[dev,t:template,n:wolf_gray_pack]
+{
+	category_name = "test";
+	doc = "[TEST] wolf_gray";
+	specializes = base_wolf;
+	[actor]
+	{
+		[skills]
+		{
+			strength =  4, 0;
+			intelligence =  1, 0;
+			dexterity =  5, 0;
+            melee =  2,  0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 39;
+		life = 7;
+        max_life = 7;
+        mana = 2;
+        max_mana = 2;
+        textures:0 = b_c_edm_wf;
+        scale_base = 0.65;
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 6;
+		damage_min = 3;
+	}
+
+	[defend] { defense=6; }
+	[common] { screen_name="Gray Wolf"; }
+	[mind]
+	{
+		jat_attack_object_melee = world\ai\jobs\actors\evil\job_attack_object_melee_pack.skrit;
+		flee_count = 1000;
+	}
+}
+
+[dev,t:template,n:dwarf_worker_test]
+{
+	category_name = "test";
+	doc = "[TEST] dwarf_worker_test";
+	specializes = base_dwarf;
+    [defend] { defense=66; }
+	[aspect]
+	{
+		expired_template_name   = dead_dwarf_worker;
+		life = 20;
+		max_life = 20;
+		mana = 1;
+        max_mana = 1;
+		is_selectable = false;
+
+		[textures]
+		{
+			0 = b_c_gan_df_skin_03;
+			1 = b_c_pos_a1_006;
+		}
+	}
+	[common]
+	{
+		screen_name = "Dwarf Worker";
+
+		forced_expiration_class = dead;
+		auto_expiration_class   = normal;
+	}
+}
+
+
+
+
+[dev,t:template,n:test_cbook_01]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Combat Spells 1";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_active_primary_spell=spell_fury_zap_0;
+			il_spell_1 = spell_fireshot;
+			il_spell_2 = spell_rip_mana;
+			il_spell_3 = spell_leech_life;
+			il_spell_4 = spell_burn_body;
+			il_spell_5 = spell_firespray;
+			il_spell_6 = spell_rage;
+			il_spell_7 = spell_summon_gargoyle;
+			il_spell_8 = spell_flame;
+			il_spell_9 = spell_weaken;
+			il_spell_10 = spell_mana_chant;
+			il_spell_11 = spell_heal;
+			il_spell_12 = spell_acid_cloud;
+		}
+	}
+}
+
+[dev,t:template,n:test_cbook_02]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Combat Spells 2";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_spirit_armor;
+			il_spell_2 = spell_fireskull;
+			il_spell_3 = spell_confusion;
+			il_spell_4 = spell_fireball;
+			il_spell_5 = spell_explode_body;
+			il_spell_6 = spell_triple_strike;
+			il_spell_7 = spell_death_blast;
+			il_spell_8 = spell_fire_ring;
+			il_spell_9 = spell_heal_group;
+			il_spell_10 = spell_curse;
+			il_spell_11 = spell_fire_wall;
+			il_spell_12 = spell_flame_shield;
+		}
+	}
+}
+
+[dev,t:template,n:test_cbook_03]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Combat Spells 3";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_animate_dead;
+			il_spell_2 = spell_fireshot_armor;
+			il_spell_3 = spell_possess;
+			il_spell_4 = spell_iron_fist_party;
+			il_spell_5 = spell_metal_shards;
+			il_spell_6 = spell_reflect_damage;
+			il_spell_7 = spell_pestilence;
+			il_spell_8 = spell_redeem_body;
+			il_spell_9 = spell_shadow_walk;
+			il_spell_10 = spell_firerain;
+			il_spell_11 = spell_fire_wave;
+			il_spell_12 = spell_flame_blades;
+		}
+	}
+}
+
+[dev,t:template,n:test_cbook_04]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Combat Spells 4";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_inferno;
+			il_spell_2 = spell_bomb;
+			il_spell_3 = spell_meteor;
+			il_spell_4 = spell_pillar_fire;
+			il_spell_5 = spell_pop;
+			il_spell_6 = spell_pestilence_cloud;
+			il_spell_7 = spell_fireball_rain;
+			il_spell_8 = spell_incinerate;
+			il_spell_9 = spell_fire_cyclone;
+			il_spell_10 = spell_cluster_bomb;
+			il_spell_11 = spell_meteor_storm;
+			il_spell_12 = spell_tremor;
+		}
+	}
+}
+
+[dev,t:template,n:test_nbook_01]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Nature Spells 1";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_zap;
+			il_spell_2 = spell_healing_hands;
+			il_spell_3 = spell_spark;
+			il_spell_4 = spell_magic_armor;
+			il_spell_5 = spell_resurrect;
+			il_spell_6 = spell_shock;
+			il_spell_7 = spell_iron_fist;
+			il_spell_8 = spell_summon_killer_gremal;
+			il_spell_9 = spell_healing_wind;
+			il_spell_10 = spell_hold_creature;
+			il_spell_11 = spell_iceshard;
+			il_spell_12 = spell_mana_channel;
+		}
+	}
+}
+
+[dev,t:template,n:test_nbook_02]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Nature Spells 2";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_accuracy;
+			il_spell_2 = spell_charged_staff;
+			il_spell_3 = spell_mana_shield;
+			il_spell_4 = spell_regeneration;
+			il_spell_5 = spell_lightning;
+			il_spell_6 = spell_summon_helper;
+			il_spell_7 = spell_oversight;
+			il_spell_8 = spell_mana_extract;
+			il_spell_9 = spell_iceblast;
+			il_spell_10 = spell_intelligence;
+			il_spell_11 = spell_magic_armor_party;
+			il_spell_12 = spell_charm;
+		}
+	}
+}
+
+[dev,t:template,n:test_nbook_03]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Nature Spells 3";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_spark_multi;
+			il_spell_2 = spell_dexterity;
+			il_spell_3 = spell_heal;
+			il_spell_4 = spell_shock_armor;
+			il_spell_5 = spell_imbue_mana;
+			il_spell_6 = spell_lightning_blast;
+			il_spell_7 = spell_intelligence_party;
+			il_spell_8 = spell_stumble;
+			il_spell_9 = spell_draw;
+			il_spell_10 = spell_shock_wave;
+			il_spell_11 = spell_clean_strike;
+			il_spell_12 = spell_major_heal_group;
+		}
+	}
+}
+
+[dev,t:template,n:test_nbook_04]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Nature Spells 4";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_iron_fist_party;
+			il_spell_2 = spell_invincibility;
+			il_spell_3 = spell_light_ray;
+			il_spell_4 = spell_freeze_armor;
+			il_spell_5 = spell_sympathy_damage;
+			il_spell_6 = spell_icefury;
+			il_spell_7 = spell_recharge_party;
+			il_spell_8 = spell_return_summoned;
+			il_spell_9 = spell_chain_lightning;
+			il_spell_10 = spell_clean_strike_party;
+			il_spell_11 = spell_sun_ray;
+			il_spell_12 = spell_polymorph;
+		}
+	}
+}
+
+[dev,t:template,n:test_nbook_05]
+{
+	specializes			= treasure;
+	doc				= "[TEST] book_magic_sm_symbol";
+    category_name       = "test";
+
+    aspect:gold_value   = 40;
+	aspect:model		= m_i_glb_book-magic;
+	aspect:voice:put_down:* = s_e_gui_put_down_book;
+
+	[gui]
+	{
+		inventory_icon	= b_gui_ig_i_it_magic-book;
+		equip_slot 		= es_spellbook;
+		inventory_width = 1;
+		inventory_height = 2;
+	}
+
+	[common]
+	{
+		screen_name	= "Nature Spells 5";
+
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script( "item_ring" );
+				condition* = receive_world_message("we_dropped");
+			}
+		}
+	}
+
+		[inventory]
+	{
+		[other]
+		{
+			il_spell_1 = spell_undermine;
+			il_spell_2 = spell_stats_boost_party;
+			il_spell_3 = spell_icestorm;
+			il_spell_4 = spell_storm;
+			il_spell_5 = spell_duplicate;
+			il_spell_6 = spell_implosion;
+			il_spell_7 = spell_lightning_bolt;
+			il_spell_8 = spell_stats_boost_party_big;
+			il_spell_9 = spell_life_balance;
+			il_spell_10 = spell_lightning_storm;
+			il_spell_11 = spell_kill;
+			il_spell_12 = spell_killing_fist;
+		}
+	}
+}
+
+[dev,t:template,n:test_spells_pack_mule]
+{
+	category_name = "test";
+	doc = "[TEST] pack_mule";
+	specializes = actor_good;
+	[actor]
+	{
+		can_level_up = true;
+		[skills]
+		{
+			strength =  11, 0;
+			intelligence =  3, 0;
+			dexterity =  8, 0;
+		}
+		portrait_icon = b_gui_ig_i_ic_na_pack_mule;
+	}
+	[aspect]
+	{
+		life_recovery_unit	 = 1;
+        life_recovery_period = 5;
+
+		mana_recovery_unit   = 1;
+		mana_recovery_period = 10;
+
+		model = m_c_na_pm_pos_1;
+		megamap_icon = <aspect_mesh>;
+		gold_value = 200;
+		[voice]
+		{
+			[die]			{ * = s_e_die_packmule; }
+		}
+	}
+	[attack]
+	{
+		attack_range = 0.5;
+		damage_max = 3;
+		damage_min = 7;
+	}
+	[body]
+	{
+		avg_move_velocity = 4.550000;
+		[bone_translator]
+		{
+			body_anterior = bone21_neck_top;
+			body_mid = bone32_load;
+			body_posterior = bone47_pelvis;
+			kill_bone = bone01_root;
+			shield_bone = bone41_sack_l;
+			weapon_bone = bone37_sack_r;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_na_pm_fs;
+			[chore_attack]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files] { 00=at; }
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					atak=at;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+					02 = dsf-03;
+					03 = dsf-04;
+					04 = dsf-05;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = select_walk;
+				[anim_files] { 00=rl; }
+			}
+		}
+	}
+	[common]
+	{
+		membership = hero;
+		screen_name="Pack Mule";
+    	auto_expiration_class = never;
+		forced_expiration_class = never;
+/*		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("mule_dung");
+				condition* = receive_world_message("we_constructed");
+			}
+		}  */
+	}
+    [defend] { defense=12; }
+	[inventory]
+	{
+		grid_height = 13;
+		grid_width = 12;
+		is_pack_only = true;
+		[ranges]
+		{
+			0.33 = m_c_na_pm_pos_2;
+			0.66 = m_c_na_pm_pos_3;
+			1.00 = m_c_na_pm_pos_4;
+		}
+		[other]
+		{
+			il_main = test_cbook_01;
+			il_main = test_cbook_02;
+			il_main = test_cbook_03;
+			il_main = test_cbook_04;
+			il_main = test_nbook_01;
+			il_main = test_nbook_02;
+			il_main = test_nbook_03;
+			il_main = test_nbook_04;
+			il_main = test_nbook_05;
+		}
+	}
+	[mind]
+	{
+		jat_attack_object_melee			= world\ai\jobs\common\job_attack_object_melee.skrit
+			?face_reverse				= true;
+		jat_drink = ; // This job is unassigned because mules can't (currently) drink
+		on_enemy_spotted_attack = true;
+		//actor_attacks_others_in_icz = false;
+		on_enemy_entered_ocz_flee = true;
+		inner_comfort_zone_range = 6;
+		outer_comfort_zone_range = 8;
+		personal_space_range = 0.7;
+		melee_engage_range = 1;
+		ranged_engage_range = 2;
+		sight_range = 10;
+	}
+}
+
+[dev,t:template,n:dev_dragon_slayer]
+{
+	specializes	= base_bow;
+	doc			= "[TEST OBJECT] dragon_slayer";
+
+	common:		screen_name		= "dragon slayer";
+	common:is_pcontent_allowed	= false;
+
+	aspect:		model			= m_w_bow_017;
+	aspect:		gold_value		= 10;
+
+	[attack]
+	{
+		attack_range		= 25;
+		damage_max			= 20;
+		damage_min			= 30;
+		reload_delay 		= 0;
+	}
+
+	[gui]
+	{
+		inventory_icon			= b_gui_ig_i_w_bow_052;
+		inventory_width			= 1;
+		inventory_height		= 4;
+	}
+	[magic]
+	{
+		[enchantments]
+		{
+			[*]
+			{
+				alteration			= alter_damage_bonus_to_type;
+				monster_type		= dragon;
+				value				= 5000;
+				description			= "50 times damage to Dragons";
+				duration			= #infinite;
+				is_permanent		= true;
+				is_single_instance	= false;
+			}
+		}
+	}
+	[physics]
+	{
+		velocity = 20;
+	}
+}
+
+[dev,t:template,n:krug_thief]
+{
+	category_name = "test";
+	doc = "[TEST] krug that steals and runs";
+	specializes = base_krug;
+   	[actor]
+	{
+		[skills]
+		{
+			strength =  14, 0;
+			intelligence =  9, 0;
+			dexterity =  18, 0;
+			melee =  6,  0;
+		}
+	}
+
+	[aspect]
+	{
+		experience_value = 1013;
+		life = 26;
+		material = steel_monster;
+		max_life = 26;
+		selection_indicator_scale = 0.85;
+		scale_base = 0.75;
+		[textures] { 0=b_c_eam_kc; }
+	}
+	[attack]
+	{
+		damage_max = 8;
+		damage_min = 4;
+	}
+	[common] { screen_name="Krug Thief"; }
+	[defend] { defense=1; }
+	[inventory]
+	{
+		[equipment] { es_weapon_hand=#axe/-no_mod/2-5; }
+		[pcontent]
+		{
+			[gold*]
+			{
+				chance = 0.5;
+				max = 359;
+				min = 16;
+			}
+			[oneof*]
+			{
+				chance = 0.25;
+				il_main = #weapon/7-12;
+				il_main = #*/7-12;
+				il_main = #armor/15-24;
+				il_main = potion_mana_small;
+				il_main = potion_health_small;
+			}
+		}
+
+	}
+
+	[mind]
+	{
+		flee_count = 1000;
+		actor_auto_picks_up_items = true;
+		jat_brain = world\ai\jobs\common\brain_thief.skrit;
+		on_alert_projectile_near_missed_attack = true;
+		on_alert_projectile_near_missed_flee = false;
+		on_enemy_spotted_alert_friends = true;
+		on_engaged_lost_consciousness_abort_attack = false;
+		on_life_ratio_low_flee = true;
+	}
+	[body]
+	{
+		avg_move_velocity = 2.5000;	// was 1.54
+	}
+
+	[physics]
+	{
+		break_sound = s_e_meat_explosion;
+		explosion_magnitude = 1.0;
+		[break_particulate]
+		{
+			frag_glb_krug_commander_01 = 2;
+//			frag_glb_krug_commander_02 = 10;
+//			frag_glb_krug_commander_03 = 10;
+//			frag_glb_krug_commander_04 = 10;
+//			frag_glb_krug_commander_05 = 10;
+//			frag_glb_krug_commander_06 = 10;
+//			frag_glb_krug_commander_07 = 10;
+//			frag_glb_krug_commander_08 = 10;
+		}
+	}
+
+}
+
+[dev,t:template,n:krug_shaman_flee]
+{
+	  category_name = "test";
+	  doc = "[test] fleeing krug shaman";
+	  specializes = krug_shaman_base;
+	[actor]
+	{
+		[skills]
+		{
+			  combat_magic = 2, 0;
+			  dexterity = 4, 0;
+			  intelligence = 8, 0;
+			  melee = 1, 0;
+			  strength = 8, 0;
+		}
+	}
+	[aspect]
+	{
+		  experience_value = 16;
+		  life = 19;
+		  mana = 81;
+		  max_life = 19;
+		  max_mana = 81;
+	}
+	[attack]
+	{
+		  damage_max = 12;
+		  damage_min = 8;
+	}
+	[body]
+	{
+		  avg_move_velocity = 1.66;
+		  max_move_velocity = 4.0;
+	}
+	[common]
+	{
+		  screen_name = "Krug Shaman: Speedy da fleeing machine";
+	}
+	[defend]
+	{
+		  defense = 22;
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			  il_active_primary_spell   = spell_fireshot;
+			  il_active_secondary_spell = spell_resurrect_monster;
+		}
+	}
+	[mind]
+	{
+		on_enemy_entered_ocz_flee            = true;
+		on_life_ratio_low_flee               = true;
+
+		jat_flee_from_object				= world\ai\jobs\common\job_flee_from_object.skrit
+			?run_chance						= 1.0;
+		flee_distance						= 10.0;
+		flee_count							= 5;
+	}
+}
+
+[dev,t:template,n:krug_shaman_heal]
+{
+	  category_name = "test";
+	  doc = "[test] healing krug shaman";
+	  specializes = krug_shaman_base;
+	[actor]
+	{
+		[skills]
+		{
+			  combat_magic = 2, 0;
+			  dexterity = 4, 0;
+			  intelligence = 8, 0;
+			  melee = 1, 0;
+			  strength = 8, 0;
+		}
+	}
+	[aspect]
+	{
+		  experience_value = 16;
+		  life = 19;
+		  mana = 81;
+		  max_life = 19;
+		  max_mana = 81;
+	}
+	[attack]
+	{
+		  damage_max = 12;
+		  damage_min = 8;
+	}
+	[body]
+	{
+		  avg_move_velocity = 1.66;
+	}
+	[common]
+	{
+		  screen_name = "Krug Shaman: Sponge-O da Healing machine";
+	}
+	[defend]
+	{
+		  defense = 22;
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			  il_active_primary_spell = spell_fireshot;
+			  il_active_secondary_spell = spell_resurrect_monster;
+			  il_spell_1 = spell_healing_potion_monster;
+		}
+	}
+	[mind]
+	{
+		actor_auto_heals_self_life = true;
+		actor_auto_uses_stored_items = true;
+		actor_life_ratio_low_threshold = 0.25;
+	}
+}
+
+[dev,t:template,n:krug_shaman_miniboss]
+{
+	  category_name = "test";
+	  doc = "[test] miniboss krug shaman";
+	  specializes = krug_shaman_base;
+	[actor]
+	{
+		[skills]
+		{
+			  combat_magic = 8, 0;
+			  dexterity = 8, 0;
+			  intelligence = 8, 0;
+			  melee = 8, 0;
+			  strength = 8, 0;
+		}
+	}
+	[aspect]
+	{
+		  experience_value = 16;
+		  life = 3;
+		  mana = 800;
+		  max_life = 3;
+		  max_mana = 800;
+		  scale_base = 1.7;
+	}
+	[attack]
+	{
+		  damage_max = 12;
+		  damage_min = 8;
+	}
+	[body]
+	{
+		  avg_move_velocity = 2.1;
+	}
+	[common]
+	{
+		screen_name = "Krug Shaman: Gigantor the killing machine!!";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("unique_light_red");
+				action* = call_sfx_script("unique_ray_red");
+				condition* = receive_world_message("we_constructed");
+			}  	
+		}
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("coil_explosion");
+				condition* = receive_world_message("we_killed");
+			}  	
+		}
+	}
+	[defend]
+	{
+		  defense = 1;
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			  il_active_primary_spell = spell_firespray;
+			  il_active_secondary_spell = spell_resurrect_monster;
+		}
+	}
+}
+
+[dev,t:template,n:krug_shaman_drink]
+{
+	  category_name = "test";
+	  doc = "[test] drinking krug shaman";
+	  specializes = krug_shaman_base;
+	[actor]
+	{
+		[skills]
+		{
+			  combat_magic = 2, 0;
+			  dexterity = 4, 0;
+			  intelligence = 8, 0;
+			  melee = 1, 0;
+			  strength = 8, 0;
+		}
+	}
+	[aspect]
+	{
+		  experience_value = 16;
+		  life = 19;
+		  mana = 81;
+		  max_life = 19;
+		  max_mana = 81;
+	}
+	[attack]
+	{
+		  damage_max = 12;
+		  damage_min = 8;
+	}
+	[body]
+	{
+		  avg_move_velocity = 1.66;
+	}
+	[common]
+	{
+		  screen_name = "Krug Shaman: Lush da Drinking machine";
+	}
+	[defend]
+	{
+		  defense = 22;
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			  il_active_primary_spell = spell_fireshot;
+			  il_active_secondary_spell = spell_resurrect_monster;
+
+			  il_main = potion_health_large;
+		}
+	}
+	[mind]
+	{
+		actor_auto_heals_self_life = true;
+		actor_auto_uses_stored_items = true;
+		actor_life_ratio_low_threshold = 0.25;
+	}
+}
+
+[dev,t:template,n:krug_shaman_flee_heal]
+{
+	  category_name = "test";
+	  doc = "[test] flee/heal krug shaman";
+	  specializes = krug_shaman_base;
+	[actor]
+	{
+		[skills]
+		{
+			  combat_magic = 2, 0;
+			  dexterity = 4, 0;
+			  intelligence = 8, 0;
+			  melee = 1, 0;
+			  strength = 8, 0;
+		}
+	}
+	[aspect]
+	{
+		  experience_value = 16;
+		  life = 19;
+		  mana = 81;
+		  max_life = 19;
+		  max_mana = 81;
+	}
+	[attack]
+	{
+		  damage_max = 12;
+		  damage_min = 8;
+	}
+	[body]
+	{
+		  avg_move_velocity = 2.66;
+	}
+	[common]
+	{
+		  screen_name = "Krug Shaman: Winkie da Flee/heal dude";
+	}
+	[defend]
+	{
+		  defense = 22;
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other]
+		{
+			il_active_primary_spell = spell_fireshot;
+			 
+			il_spell_1 = spell_healing_hands_monster;
+		}
+	}
+	[mind]
+	{
+		jat_brain							= world\ai\jobs\common\brain_hero.skrit
+			?heal_life_after_flee			= true;
+		on_life_ratio_low_flee              = true;
+		actor_life_ratio_low_threshold		= 0.5;
+//		actor_auto_uses_stored_items 		= true;
+	}
+}
+
+
+[dev,t:template,n:barrel_trapped]
+{
+	specializes					= base_container_barrel;
+	doc							= "[test] traped barrel";
+	category_name				= "test";
+
+	aspect:model				= m_i_glb_barrel;
+	[attack]
+	{
+		damage_min				= 10;
+		damage_max				= 20;
+	}
+	[physics]
+	{
+		fire_resistance			= 1.0;
+		fire_burn_threshold		= 5;
+	}
+	[generator_in_object]
+	{
+		child_template_name		= "barrel_glb_break";
+	}
+	[trapped]
+	{
+		trap					= trp_generator;
+	}
+	[inventory]
+	{
+		[pcontent]
+		{
+			[oneof*]
+			{
+				[all*]
+				{
+					il_main	= potion_mana_small;
+					chance = 0.12;
+				}
+				[all*]
+				{
+					il_main	= potion_health_small;
+					chance = 0.12;
+				}
+			}
+			[gold*]
+			{
+				min	= 2;
+				max	= 8;
+				chance = 0.1;
+			}
+		}
+	}
+}
+[dev,t:template,n:barrel_trapped_star]
+{
+	specializes					= base_container_barrel;
+	doc							= "[test] star traped barrel";
+	category_name				= "test";
+
+	aspect:model				= m_i_glb_barrel;
+	[attack]
+	{
+		damage_min				= 10;
+		damage_max				= 20;
+	}
+	[physics]
+	{
+		fire_resistance			= 1.0;
+		fire_burn_threshold		= 5;
+	}
+	[generator_in_object]
+	{
+		child_template_name		= "barrel_glb_break";
+	}
+	[trapped]
+	{
+		trap					= trp_generator_star;
+	}
+	[inventory]
+	{
+		[pcontent]
+		{
+			[oneof*]
+			{
+				[all*]
+				{
+					il_main	= potion_mana_small;
+					chance = 0.12;
+				}
+				[all*]
+				{
+					il_main	= potion_health_small;
+					chance = 0.12;
+				}
+			}
+			[gold*]
+			{
+				min	= 2;
+				max	= 8;
+				chance = 0.1;
+			}
+		}
+	}
+}
+
+[dev,t:template,n:chest_trapped]
+{
+	category_name = "test";
+	doc = "[test] traped chest_wood_ornate";
+	specializes = base_chest;
+	
+	[attack]
+	{
+		damage_min				= 10;
+		damage_max				= 20;
+	}
+	[aspect] 
+	{ 
+		model=m_i_glb_chest; 
+		material = steel;
+	}
+	[body]
+	{
+		[chore_dictionary]
+		{
+			chore_prefix = a_i_glb;
+			[chore_open]
+			{
+				skrit = transition;
+				[anim_files] { 00=chest-open; }
+			}
+		}
+	}
+	[common] { screen_name="Ornate Chest"; }
+	[trapped]
+	{
+		trap					= trp_generator_flames;
+		fire_event				= WE_REQ_USE;
+	}
+	[inventory]
+	{
+		[pcontent]
+		{
+			[oneof*]
+			{
+				[oneof*]
+				{
+					chance = 0.3;
+					il_main = #weapon/10-12;
+					il_main = #armor/12-18;
+				}
+				[gold*]
+				{
+					chance = 0.2;
+					max = 40;
+					min = 16;
+				}
+				[oneof*]
+				{
+					chance = 0.2;
+					il_main = potion_mana_small;
+					il_main = potion_health_small;
+				}
+			}
+		}
+	}
+}
+
+/////////// particle monsters
+
+[dev,t:template,n:particle_gargoyle]
+{
+	category_name = "test";
+	doc = "[test] gargoyle";
+	specializes = base_gargoyle;
+	[aspect]
+	{
+        experience_value = 38;
+		scale_base = 3.0;
+		textures:0	= b_c_edm_ga-02;
+		life = 35;
+		max_life = 35;
+		Mana = 10;
+   		max_mana = 10;
+   		voice:die:	* = s_e_explode_rockbeast;
+   		voice:attack:	* = s_e_attack_gargoyle_large;
+   		force_no_render = true;
+	}
+	[body]
+	{
+		avg_move_velocity = 4.990000;
+		[bone_translator]
+		{
+			body_anterior = bone01;
+			body_mid = bone01;
+			body_posterior = bone01;
+			kill_bone = bone01;
+			shield_bone = bone01;
+			weapon_bone = bone01;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_edm_ga_fs;
+			[chore_magic]
+			{
+				chore_stances = 0;
+				skrit = select_attack;
+				[anim_files]
+				{
+                    00 = mg-02;
+                    qffg = dff-02;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds-02; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files] { 00=dfs-02; }
+			}
+			[chore_misc]
+			{
+				chore_stances = 0;
+				skrit = select_transition;
+				[anim_files]
+				{
+					slep = ds-02;
+					wake = rv-02;
+				}
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0;
+				skrit = select_fidget;
+				[anim_files] { 00=dff-02; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0;
+				skrit = basic_walk;
+				[anim_files] { 00=fl-02; }
+			}
+		}
+	}
+   	[defend] { defense=40; }
+
+	[mind]
+	{
+		jat_startup = world\ai\jobs\common\job_startup_reveal.skrit;
+
+    	actor_weapon_preference       = wp_magic;
+		actor_auto_switches_to_magic  = true;
+		actor_auto_switches_to_karate = false;
+		actor_auto_switches_to_melee  = false;
+		actor_auto_switches_to_ranged = false;
+		actor_auto_fidgets            = false;
+
+		melee_engage_range 		= 11;
+		personal_space_range 	= 1.0;
+		ranged_engage_range 	= 11.0;
+		sight_range 			= 11.0;
+	}
+}
+
+[dev,t:template,n:archon]
+{
+	category_name = "test";
+	doc = "[test] archon";
+	specializes = particle_gargoyle;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("archon_balls");
+				action* = call_sfx_script("archon_lines");
+				condition* = receive_world_message("we_constructed");
+			}
+		}
+		screen_name="Archon";
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_archon_zap; }
+	}
+	[physics]
+	{
+		break_effect = archon_explosion;
+		[break_particulate]
+		{
+		}
+	}
+}
+[dev,t:template,n:angel]
+{
+	category_name = "test";
+	doc = "[test] Angel";
+	specializes = particle_gargoyle;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("angel_balls");
+				action* = call_sfx_script("angel_lines");
+				condition* = receive_world_message("we_constructed");
+			}
+		}
+		screen_name="Angel";
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_angel_zap; }
+	}
+	[physics]
+	{
+		break_effect = angel_explosion;
+		[break_particulate]
+		{
+		}
+	}
+}
+[dev,t:template,n:arch_angel]
+{
+	category_name = "test";
+	doc = "[test] Arch Angel";
+	specializes = particle_gargoyle;
+
+	[common]
+	{
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("arch_angel_balls");
+				action* = call_sfx_script("arch_angel_lines");
+				condition* = receive_world_message("we_constructed");
+			}
+		}
+		screen_name="Arch Angel";
+	}
+	[inventory]
+	{
+		selected_active_location = il_active_primary_spell;
+		[other] { il_active_primary_spell=spell_arch_angel_zap; }
+	}
+	[physics]
+	{
+		break_effect = arch_angel_explosion;
+		[break_particulate]
+		{
+		}
+	}
+}

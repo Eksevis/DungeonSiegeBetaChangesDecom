@@ -1,0 +1,107 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  camera_stomp.skrit
+// Author(s):  Scott Bilas
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+// reserved tags
+property bool		_server_only$			= false;
+property string		_doc$					= "Big monster stomping camera effect";
+
+// exported properties
+property float		magnitude_x$			= 0.0				doc = "Magnitude of x stomp";
+property float		magnitude_y$			= 1.0				doc = "Magnitude of y stomp";
+property float		magnitude_z$			= 0.0				doc = "Magnitude of z stomp";
+property float		duration$				= 0.3				doc = "Duration for effect to last in seconds (0 for infinite)";
+property float		frequency$				= 3.0				doc = "Frequency of sine wave to apply to stomp per effect run";
+property bool		camera_space$			= false				doc = "Shake in camera space, otherwise shake in object (node) space";
+property bool		self_destruct$			= false				doc = "Self-destruct on algorithm completion";
+property goid		epicenter$									doc = "Goid of the object causing the stomp.";
+property float		falloff$				= 12.0				doc = "after this distance the magnitude starts to falloff, also determines how quickly stomp falls off with distance.";
+
+owner = GoSkritComponent;
+
+// globals
+float time$;
+
+//////////////////////////////////////////////////////////////////////////////
+
+startup state Wait$
+{
+	transition -> Play$: OnGoHandleMessage( WE_REQ_ACTIVATE ) =
+	{
+		time$ = 0;
+		if ( duration$ > 0 )
+		{
+			PostWorldMessage( self_destruct$ ? WE_REQ_DELETE : WE_REQ_DEACTIVATE, owner.Goid, owner.Goid, duration$ );
+		}
+	}
+}
+
+state Play$
+{
+	transition -> Wait$: OnGoHandleMessage( WE_REQ_DEACTIVATE );
+
+	event OnGoUpdate$( float deltaTime$ )
+	{
+		if ( deltaTime$ == 0 )
+		{
+			return;
+		}
+
+		time$ += deltaTime$;
+
+		float t$ = (duration$ == 0)
+				 ? 1.0
+				 : time$ / duration$;
+		float mult$ = (1 - t$) * Math.Abs( Math.Sin( t$ * Math.Pi * frequency$ ) );
+		
+		
+		if( epicenter$.IsValid )
+		{
+			Go party$ = Server.ScreenParty;
+			if( party$ != NULL )
+			{
+				// clamp the falloff to 1.0 we can falloff any quicker then that.
+				falloff$ = Math.MaxFloat( 1.0, falloff$ );
+				
+				// get the distance between the epicenter and the camera stop object.
+				// $$$ need to get the position of the camera, or the focused of the camera.
+				float distance$ = AIQuery.GetDistance( party$.Placement.Position, epicenter$.Go.Placement.Position );
+				float dampen$ = 2.0 - ( distance$ / falloff$ );
+				
+//				report.genericf("dampen %g\n", dampen$);
+				
+				dampen$ = Math.MaxFloat( 0.0, Math.MinFloat( 1.0, dampen$ ) );
+//				report.genericf("I have a valid center %s, I am %g meters away from it, and I'm dampening by %g\n", epicenter$.go.templatename, distance$, dampen$);
+				
+				mult$ *= Dampen$;
+			}
+		}
+		
+		Vector v$ = MakeVector( magnitude_x$ * mult$,
+								magnitude_y$ * mult$,
+								magnitude_z$ * mult$ );
+
+		if ( camera_space$ )
+		{
+			CameraAgent.SubmitCameraOffset( v$ );
+		}
+		else
+		{
+			SiegePos pos$ = SiegePos.Copy( owner.Go.Placement.Position );
+			pos$.Pos = v$;
+			CameraAgent.SubmitCameraOffset( pos$ );
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

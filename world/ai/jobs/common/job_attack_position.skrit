@@ -1,0 +1,99 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: job_attack_position.skrit
+
+	Author(s)	: Bartosz Kijanka
+
+	Purpose		: This is a generic attack a position job.  This will simply 
+				  give control to the appropriate job based on what weapon 
+				  or spell the client has currently selected.
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job /*job$*/ )
+{
+}
+
+
+event OnJobInit$( Job job$ )
+{
+	Go		m_Go$;
+	GoMind	m_Mind$;
+	Job		m_Job$;
+
+	m_Job$	= job$;
+	m_Go$	= job$.GetGo;
+	m_Mind$	= job$.GetGo.GetMind;
+
+	// simply switch to perform appropriate attack
+
+	Go weapon$ 	= m_Job$.GoalModifier.Go;
+	if( weapon$ == NULL )
+	{
+		// if no weapon was specified, use selected weapon
+		weapon$ = m_Go$.Inventory.SelectedItem;
+		if( weapon$ == NULL )
+		{
+			m_Job$.MarkForDeletion( JR_FAILED_BAD_PARAMS );
+			return;
+		}
+	}
+
+	eJobAbstractType jat$;
+	jat$ = JAT_NONE;
+
+	if( weapon$.IsRangedWeapon )
+	{
+		jat$ = JAT_ATTACK_POSITION_RANGED;
+	}
+	// Attack with any active offensive magic we have
+	else if( weapon$.IsSpell && AIQuery.Is( m_Go$, weapon$, QT_LIFE_DAMAGING ) )
+	{
+		jat$ = JAT_CAST_POSITION;
+	}
+
+	if( jat$ != JAT_NONE )
+	{
+		Job newJob$ = m_Mind$.SDoJob( MakeJobReq( jat$, JQ_ACTION, QP_FRONT, m_Job$.GetOrigin, m_Job$.GoalPosition, weapon$.Goid ) );
+		if( newJob$ != NULL )
+		{
+			newJob$.TakesOver( job$ );
+		}
+		else
+		{
+			newJob$ = m_Mind$.SDoJob( MakeJobReq( jat$, JQ_ACTION, QP_BACK, m_Job$.GetOrigin, m_Job$.GoalPosition, weapon$.Goid ) );
+			if( newJob$ != NULL )
+			{
+				newJob$.TakesOver( job$ );
+			}
+			else
+			{
+				report.warningf( "Job %s for actor %s failed to assign another attack.\n", ToString( m_Job$.GetJobAbstractType() ), m_Go$.GetTemplateName );
+			}
+		}
+		m_Job$.MarkForDeletion( JR_OK );
+		return;
+	}
+	else
+	{
+		// couldn't do attack with current weapons
+		// $$$ error message here
+	}
+	m_Job$.MarkForDeletion( JR_FAILED );
+}
+
+

@@ -1,0 +1,117 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	brain_robo-suit.skrit
+
+	Author(s)	: 	Eric Tams
+
+	Purpose		:	Customized brain for the Goblin robo suit
+	
+	Expected Behavior	: The Robo suit will be sitting under the ground. When
+						The character enters the room he will rise from the floor.
+						When he sees the character he will power up and begin to 
+						attack. The robo-suit will fight the characters until he 
+						reaches a certain life ratio he will then back up into 
+						some tessla coils where he will be healed. 
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+
+Go		m_Go$;
+GoMind	m_Mind$;
+Job		m_Job$;
+Goid	m_Target$;
+Go		m_Spell$;	// ptr OK as spell won't change during execution of job
+float	m_Switch_Target$;
+
+////////////////////////////////////////////////////////////////////////////////
+
+startup state STARTUP$
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$				= job$;
+	m_Go$				= job$.Go;
+	m_Mind$				= job$.Go.Mind;
+	m_Target$			= Goid.invalidgoid;
+	m_Spell$ 			= m_Go$.Inventory.GetItem( il_active_primary_spell );
+	m_Switch_Target$	= 0.8;
+}
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+	
+	SetState RequestAction$;
+}
+
+event OnWorldMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+{
+	if( e$ == WE_KILLED ) 
+	{
+		SetState Dying$;
+	}
+}
+
+state Dying$
+{
+}
+
+state RequestAction$
+{
+	trigger OnWorldMessage$( WE_ANIM_SFX )
+	{
+		if( m_Target$.IsValid )
+		{
+			m_Spell$.Magic.SCast( m_Target$.Go );
+		}
+		// Report.generic("Woo Hoo\n");
+	}
+	
+	trigger OnWorldMessage$( WE_JOB_TIMER_DONE )
+	{
+		if( !m_Target$.IsValid || ( Math.RandomFloat(1) < m_Switch_Target$ ) )
+		{
+			SetState RequestAction$;
+			Return;
+		}
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+	}
+	
+	event OnEnterState$
+	{
+		if( m_Mind$.AliveEnemiesVisible() )
+		{	
+			Go temp_go$ = NULL;
+			
+			m_Mind$.GetEnemiesInSphere( 10, m_Mind$.TempGopColl1 );
+	
+			if ( m_Mind$.TempGopColl1.Size() > 0 )
+			{
+				temp_go$ = m_Mind$.TempGopColl1.Get( math.RandomInt( m_Mind$.TempGopColl1.Size() - 1) );
+    		}
+			
+			if ( temp_go$ != NULL )
+			{
+				m_Target$ = temp_go$.Goid;
+			} else {
+				m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+				return;
+			}
+
+			m_Mind$.SDoJob( MakeJobReq( JAT_ATTACK_OBJECT, JQ_ACTION, QP_CLEAR, AO_REFLEX, m_Target$, Goid.InvalidGoid ));
+        }
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+	}
+}

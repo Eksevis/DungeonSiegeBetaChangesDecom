@@ -1,0 +1,202 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	job_talk_trella.skrit
+
+	Author(s)	: 	David Tomandl, Eric Tams, Chad Queen, Bartosz Kijanka
+
+	Purpose		: 	Custom talk job for Trella in multiplayer world, she
+					should give a reward after the rune quest is finished.
+
+	Each time she selects a conversation, she checks to see if you have
+	"quest_crystwind" active, and has different things to say based on the result.
+
+	Currently, she says her quest_complete stuff if you have
+	
+	Completed the quest OR
+	Have the rune in your party's inventory OR
+	She has already rewarded you for bringing her the rune
+	
+	You get the reward if
+	
+	You are carrying the rune AND
+	You have not been rewarded yet
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+Go		m_Go$;
+GoMind	m_Mind$;
+GoBody  m_Body$;
+Job		m_Job$;
+Goid	m_Target$;
+
+#include "k_job_c_mcp_fidget_utils"
+#include "k_job_c_talk_utils"
+
+startup state STARTUP$
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+	m_Body$		= job$.Go.Body;
+}
+
+event OnJobInit$( Job job$ )
+{
+	OnJobInitPointers$( job$ );
+
+	m_Target$	= job$.GoalObject;
+
+	SetState Talk$;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//	blab blab away... pretend you're Lee on coffee
+state Talk$
+{
+	transition
+	{
+		-> Exiting$:	OnWorldMessage( WE_REQ_TALK_END ) = 
+		{
+			StartFidgetIfRequired$();
+		}
+		-> Exiting$:	OnWorldMessage( WE_ANIM_DONE ) =
+		{
+			StartFidgetIfRequired$();
+		}
+	}
+
+	event OnEnterState$
+	{
+		#only( game )
+		[[
+			// See header for plaintext version of this logic  --DT
+			if ( GameAuditor.GetDb.GetBool( "d_0x00c00349" ) )
+			{
+				m_Go$.GetConversation.RSSelectConversation( "zconversation_directions" );
+				GameAuditor.GetDb.SetBool( "d_0x00c00349", false );
+			}
+			else if ((( Goid.InValidGoid != UIPartyManager.DoesActivePartyHaveTemplate( "trella_rune", m_Target$ ) ) && ( !Victory.IsQuestActive( "quest_trella_rune" )) ) || ( GameAuditor.GetDb.GetBool( "trella_gave_reward_upper" )))
+			{
+				if (( Goid.InValidGoid != UIPartyManager.DoesActivePartyHaveTemplate( "trella_rune", m_Target$ ) ) && ( !GameAuditor.GetDb.GetBool( "trella_gave_reward_upper" )) && ( GameAuditor.GetDb.GetBool( "talked_to_trella_with_rune" )))
+				{
+					// delete the rune from inventory
+					
+					goid temp_rune$ = UIPartyManager.DoesActivePartyHaveTemplate( "trella_rune", m_Target$ );
+					temp_rune$.Go.Parent.Mind.SDoJob( MakeJobReq( JAT_DROP, JQ_ACTION, QP_FRONT, AO_REFLEX, temp_rune$ ) );
+					PostWorldMessage( WE_REQ_DELETE, temp_rune$, temp_rune$, .1 );
+					
+					// reward the player
+					
+					if( m_Target$.IsValid() ) 
+					{	
+						GameAuditor.GetDb.SetBool( "trella_gave_reward_upper", true );
+						
+						SiegePos SpawnPos$;
+						
+						GoCloneReq cloneReq$ = MakeGoCloneReq( "stone_glb_crystwind_01" );
+						
+						SpawnPos$ = m_Target$.go.placement.position;
+						cloneReq$.StartingPos = SpawnPos$;
+					    
+						If( m_Target$.Go.Hasmind )
+						{
+							if( AIQuery.FindSpotRelativeToSource( m_Target$.Go, 1, 1.5, 2.0, m_Target$.Go.Mind.TempPos1 ) )
+					   		{
+					   			cloneReq$.StartingPos = m_Target$.Go.Mind.TempPos1;
+					   		}
+					   	}	
+						cloneReq$.SnapToTerrain = true;
+				        GoDb.SCloneGo( cloneReq$ );
+					}
+				}
+				
+				GameAuditor.GetDb.SetBool( "talked_to_trella_with_rune", true );
+				if ( Victory.IsQuestActive( "quest_crystwind" ) ) {
+					m_Go$.GetConversation.RSSelectConversation( "conversation_trella_with_rune_crystwind" );
+				}
+				else {
+					m_Go$.GetConversation.RSSelectConversation( "conversation_trella_with_rune" );
+				}
+			}
+			else if (( Goid.InValidGoid != UIPartyManager.DoesActivePartyHaveTemplate( "trella_rune", m_Target$ ) ) || ( Victory.IsQuestCompleted( "quest_trella_rune" )))
+			{
+				if (( Goid.InValidGoid != UIPartyManager.DoesActivePartyHaveTemplate( "trella_rune", m_Target$ ) ) && ( !GameAuditor.GetDb.GetBool( "trella_gave_reward" )) )
+				{
+					// delete the rune from inventory
+					
+					goid temp_rune$ = UIPartyManager.DoesActivePartyHaveTemplate( "trella_rune", m_Target$ );
+					temp_rune$.Go.Parent.Mind.SDoJob( MakeJobReq( JAT_DROP, JQ_ACTION, QP_FRONT, AO_REFLEX, temp_rune$ ) );
+					PostWorldMessage( WE_REQ_DELETE, temp_rune$, temp_rune$, .1 );
+					
+					// reward the player
+					
+					if( m_Target$.IsValid() ) 
+					{	
+						GameAuditor.GetDb.SetBool( "trella_gave_reward", true );
+						
+						SiegePos SpawnPos$;
+						
+						GoCloneReq cloneReq$ = MakeGoCloneReq( "stone_glb_crystwind_01" );
+						
+						SpawnPos$ = m_Target$.go.placement.position;
+						cloneReq$.StartingPos = SpawnPos$;
+					    
+						If( m_Target$.Go.Hasmind )
+						{
+							if( AIQuery.FindSpotRelativeToSource( m_Target$.Go, 1, 1.5, 2.0, m_Target$.Go.Mind.TempPos1 ) )
+					   		{
+					   			cloneReq$.StartingPos = m_Target$.Go.Mind.TempPos1;
+					   		}
+					   	}	
+						cloneReq$.SnapToTerrain = true;
+				        GoDb.SCloneGo( cloneReq$ );
+					}
+				}
+				
+				if ( Victory.IsQuestActive( "quest_crystwind" ) ) {
+					m_Go$.GetConversation.RSSelectConversation( "conversation_trella_quest_complete_crystwind" );
+				}
+				else {
+					m_Go$.GetConversation.RSSelectConversation( "conversation_trella_quest_complete" );
+				}
+			}
+			else if ( Victory.IsQuestActive( "quest_crystwind" ) )
+			{
+				m_Go$.GetConversation.RSSelectConversation( "conversation_trella_crystwind" );
+			}
+			else if ( GameAuditor.GetDb.GetBool( "turn_world_red" ) ) {
+				m_Go$.GetConversation.RSSelectConversation( "conversation_trella_red" );
+			} 
+			else 
+			{
+				m_Go$.GetConversation.RSSelectConversation( "conversation_trella" );
+			}
+		]]		
+
+		TryAnim$('talk');
+		m_Go$.GetConversation.RSActivateDialogue();
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	finish blabbing
+state Exiting$
+{
+	event OnEnterState$
+	{
+		m_Job$.MarkForDeletion();
+	}
+}

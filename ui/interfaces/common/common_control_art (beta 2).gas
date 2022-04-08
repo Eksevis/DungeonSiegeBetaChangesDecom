@@ -1,0 +1,163 @@
+[common_control_art]
+{
+	button_down_down 	= b_gui_cmn_button_down_down;
+	button_left_down	= b_gui_cmn_button_left_down;
+	button_up_down		= b_gui_cmn_button_up_down;
+	button_right_down	= b_gui_cmn_button_right_down;
+
+	button_down_hov		= b_gui_cmn_button_down_hov;
+	button_left_hov		= b_gui_cmn_button_left_hov;
+	button_up_hov		= b_gui_cmn_button_up_hov;
+	button_right_hov	= b_gui_cmn_button_right_hov;
+
+	button_down_up		= b_gui_cmn_button_down_up;
+	button_right_up		= b_gui_cmn_button_right_up;
+	button_left_up		= b_gui_cmn_button_left_up;
+	button_up_up		= b_gui_cmn_button_up_up;
+
+	header_background	= b_gui_cmn_header_bg;
+	header_icon_down	= b_gui_cmn_header_icon_down;
+	header_icon_up		= b_gui_cmn_header_icon_up;
+	header_seperator	= b_gui_cmn_header_seperator;
+
+	slider_button_up_top			= b_gui_cmn_slider_button_up_top;
+	slider_button_up_mid			= b_gui_cmn_slider_button_up_mid;
+	slider_button_up_bottom			= b_gui_cmn_slider_button_up_bottom;
+	slider_background				= b_gui_cmn_slider_bg;
+	slider_background_horizontal	= b_gui_cmn_slider_bg_horizontal;
+
+	slider_track_left				= b_gui_cmn_track_lt_side;
+	slider_track_right				= b_gui_cmn_track_rt_side;
+	slider_track_center				= b_gui_cmn_track_center;
+	slider_tracK_button				= b_gui_cmn_track_button_up;
+	
+	generic_listreport_selection	= b_gui_cmn_slider_selection;
+	generic_listreport_background	= b_gui_cmn_listreport_tiled_bg;
+	generic_chatbox_background		= b_gui_cmn_chatbox_bg;
+
+	listreport_selection			= b_gui_cmn_selection;
+	selection						= b_gui_cmn_selection;
+
+	x_button_up						= b_gui_cmn_button_x_up;
+	x_button_down					= b_gui_cmn_button_x_down;
+	x_button_hov					= b_gui_cmn_button_x_hov;
+
+	cpbox_bottom_left_corner	= b_gui_cmn_cpbox_ll; 
+	cpbox_bottom_right_corner	= b_gui_cmn_cpbox_lr;
+	cpbox_bottom_side			= b_gui_cmn_cpbox_bot;
+	cpbox_left_side				= b_gui_cmn_cpbox_l;
+	cpbox_right_side			= b_gui_cmn_cpbox_r;
+	cpbox_top_left_corner		= b_gui_cmn_cpbox_ul;
+	cpbox_top_right_corner		= b_gui_cmn_cpbox_ur;
+	cpbox_top_side				= b_gui_cmn_cpbox_top;
+	cpbox_fill					= b_gui_cmn_box_alpha_154;
+	
+	cpbox_wide_bottom_left_corner	= b_gui_cmn_cpbox2_ll; 
+	cpbox_wide_bottom_right_corner	= b_gui_cmn_cpbox2_lr;
+	cpbox_wide_bottom_side			= b_gui_cmn_cpbox2_bot;
+	cpbox_wide_left_side			= b_gui_cmn_cpbox2_l;
+	cpbox_wide_right_side			= b_gui_cmn_cpbox2_r;
+	cpbox_wide_top_left_corner		= b_gui_cmn_cpbox2_ul;
+	cpbox_wide_top_right_corner		= b_gui_cmn_cpbox2_ur;
+	cpbox_wide_top_side				= b_gui_cmn_cpbox2_top;
+
+	cpbox_thin_bottom_left_corner	= b_gui_cmn_cpbox3_ll; 
+	cpbox_thin_bottom_right_corner	= b_gui_cmn_cpbox3_lr;
+	cpbox_thin_bottom_side			= b_gui_cmn_cpbox3_bot;
+	cpbox_thin_left_side			= b_gui_cmn_cpbox3_l;
+	cpbox_thin_right_side			= b_gui_cmn_cpbox3_r;
+	cpbox_thin_top_left_corner		= b_gui_cmn_cpbox3_ul;
+	cpbox_thin_top_right_corner		= b_gui_cmn_cpbox3_ur;
+	cpbox_thin_top_side				= b_gui_cmn_cpbox3_top;
+
+	cpbox_thin_dark_bottom_left_corner	= b_gui_cmn_cpbox4_ll; 
+	cpbox_thin_dark_bottom_right_corner	= b_gui_cmn_cpbox4_lr;
+	cpbox_thin_dark_bottom_side			= b_gui_cmn_cpbox4_bot;
+	cpbox_thin_dark_left_side			= b_gui_cmn_cpbox4_l;
+	cpbox_thin_dark_right_side			= b_gui_cmn_cpbox4_r;
+	cpbox_thin_dark_top_left_corner		= b_gui_cmn_cpbox4_ul;
+	cpbox_thin_dark_top_right_corner	= b_gui_cmn_cpbox4_ur;
+	cpbox_thin_dark_top_side			= b_gui_cmn_cpbox4_top;
+	cpbox_thin_dark_fill				= b_gui_cmn_box_alpha_255;
+	
+	jbox_bottom_left_corner		= b_gui_cmn_jbox_ll; 
+	jbox_bottom_right_corner	= b_gui_cmn_jbox_lr;
+	jbox_bottom_side			= b_gui_cmn_jbox_bot;
+	jbox_left_side				= b_gui_cmn_jbox_l;
+	jbox_right_side				= b_gui_cmn_jbox_r;
+	jbox_top_left_corner		= b_gui_cmn_jbox_ul;
+	jbox_top_right_corner		= b_gui_cmn_jbox_ur;
+	jbox_top_side				= b_gui_cmn_jbox_top;
+	jbox_fill					= b_gui_cmn_jbox_fill;
+
+	woodbox_bottom_side				= b_gui_cmn_brd_01_bot;
+	woodbox_left_side				= b_gui_cmn_brd_01_l;
+	woodbox_bottom_left_corner		= b_gui_cmn_brd_01_ll;
+	woodbox_bottom_right_corner		= b_gui_cmn_brd_01_lr;
+	woodbox_right_side				= b_gui_cmn_brd_01_r;
+	woodbox_top_side				= b_gui_cmn_brd_01_top;
+	woodbox_top_left_corner			= b_gui_cmn_brd_01_ul;
+	woodbox_top_right_corner		= b_gui_cmn_brd_01_ur;
+
+	button4_center_down	= b_gui_cmn_button4_center_dwn;
+	button4_center_up	= b_gui_cmn_button4_center_up;
+	button4_center_hov	= b_gui_cmn_button4_center_hov;
+
+	button4_left_down	= b_gui_cmn_button4_lt_dwn;
+	button4_left_up		= b_gui_cmn_button4_lt_up;
+	button4_left_hov	= b_gui_cmn_button4_lt_hov;
+
+	button4_right_down	= b_gui_cmn_button4_rt_dwn;
+	button4_right_up	= b_gui_cmn_button4_rt_up;
+	button4_right_hov	= b_gui_cmn_button4_rt_hov;	
+
+	button5_center_down	= b_gui_cmn_button5_center_dwn;
+	button5_center_up	= b_gui_cmn_button5_center_up;
+	button5_center_hov	= b_gui_cmn_button5_center_hov;
+
+	button5_left_down	= b_gui_cmn_button5_lt_dwn;
+	button5_left_up		= b_gui_cmn_button5_lt_up;
+	button5_left_hov	= b_gui_cmn_button5_lt_hov;
+
+	button5_right_down	= b_gui_cmn_button5_rt_dwn;
+	button5_right_up	= b_gui_cmn_button5_rt_up;
+	button5_right_hov	= b_gui_cmn_button5_rt_hov;	
+
+	button_soundoff_down = b_gui_cmn_button_soundoff_down;
+	button_soundoff_up	 = b_gui_cmn_button_soundoff_up;
+	button_soundoff_hov	 = b_gui_cmn_button_soundoff_hov;
+
+	button_soundon_down	= b_gui_cmn_button_soundon_down;
+	button_soundon_up	= b_gui_cmn_button_soundon_up;
+	button_soundon_hov	= b_gui_cmn_button_soundon_hov;
+	button_sound_slash	= b_gui_ig_mnu_red_slash;
+
+	button_replay_up	= b_gui_cmn_button_replay_up;
+	button_replay_down	= b_gui_cmn_button_replay_down;
+	button_replay_hov	= b_gui_cmn_button_replay_hov;
+	button_replay_dis	= b_gui_cmn_button_replay_dis;
+
+	button_dbldwn_up	= b_gui_cmn_button_dbldwn_up;
+	button_dbldwn_down	= b_gui_cmn_button_dbldwn_dwn;
+	button_dbldwn_hov	= b_gui_cmn_button_dbldwn_hov;
+
+	button_dblup_up		= b_gui_cmn_button_dblup_up;
+	button_dblup_down	= b_gui_cmn_button_dblup_dwn;
+	button_dblup_hov	= b_gui_cmn_button_dblup_hov;
+
+	button_smallx_up	= b_gui_cmn_button_smallx_up;
+	button_smallx_down	= b_gui_cmn_button_smallx_dwn;
+	button_smallx_hov	= b_gui_cmn_button_smallx_hov;
+
+	button_stop_up		= b_gui_cmn_button_stop_up;
+	button_stop_down	= b_gui_cmn_button_stop_dwn;
+	button_stop_hov		= b_gui_cmn_button_stop_hov; 
+	
+	generic_textbox_background = b_gui_cmn_textbox_bg;
+
+	radio_crystal_off_up	= b_gui_cmn_crystal_off_up;
+	radio_crystal_off_down	= b_gui_cmn_crystal_off_dwn;
+	radio_crystal_off_hov	= b_gui_cmn_crystal_off_hov;	
+	radio_crystal_on_up		= b_gui_cmn_crystal_on_up;
+	radio_crystal_mid		= b_gui_cmn_crystal_mid;
+}

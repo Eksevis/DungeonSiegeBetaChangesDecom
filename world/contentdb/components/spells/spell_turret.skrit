@@ -1,0 +1,220 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_turret.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2001 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//
+// Shoot at random enemies in radius of spell.
+//
+// The normal Go portion of this spell simply creates an Omni Go and 
+// gives it the correct damage values.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+property string charge_effect$	= ""	doc = "Name of the SiegeFx script that will be centered on the caster.";
+property string effect_script$	= ""	doc = "Name of the SiegeFx script that will attack the target.";
+property string script_params$	= ""   	doc = "Parameters to send to SiegeFx script";
+property float  initial_delay$	= 0.0	doc = "Time before shooting.";
+property float  shot_rate$		= 4.0	doc = "Time between shots.";
+property float	radius$			= 15.0	doc = "Radius of the effect, centered on the caster.";
+property string description$	= ""	doc = "Description of enchantment being applied";
+property bool 	require_still$	= false	doc = "Require the caster to stay still without getting hit to continue attack?";
+property float	lightning_dur$	= -1.0	doc = "If this is positive then will pack lightning damage into the params for the effect.";
+
+owner = GoSkritComponent;
+#include "k_inc_spl_utils"
+
+Goid target$;
+Goid caster$;
+float spell_duration$;
+SFxSID	active_effect$ = 0;
+
+////////////////////////////////////////
+//	State Machine
+			
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) {
+		
+			/////////////////////////////
+			// Normal Go
+		
+			caster$ = msg$.GetSendFrom();
+			
+			if( Owner.go.Parent != NULL )
+			{
+				// Create an Omni version of the spell.
+				GoCloneReq cloneReq$ = MakeGoCloneReq( Owner.go.Parent.Goid, owner.goid );
+				cloneReq$.Omni = true;
+				Goid new_spell$ = GoDb.SCloneGo( cloneReq$ );
+				
+				// Send a message to the omni version of the Spell to get it started.
+				PostWorldMessage( WE_REQ_ACTIVATE, caster$, new_spell$, msg$.GetData1(), 0 );
+			}
+			
+			// Delete Normal version of the spell.
+			SetState Finished$;
+			
+		} else if ( e$ == WE_REQ_ACTIVATE ) {
+			
+			/////////////////////////////
+			// Omni Go
+			
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+			
+			if( !target$.IsValid || !caster$.Isvalid )
+			{
+				SetState RestoreState$;
+				return;
+			}
+			
+			spell_duration$ = owner.Go.Magic.EvaluateEffectDuration(caster$.Go, target$.Go);
+			
+			if( caster$.Go.Actor.HasGenericState( owner.Go.Magic.StateName ) && ( owner.Go.Magic.StateName != "" ) ) {
+				SetState Abort$;
+			} else {
+			
+				// If we are attacking with lightning pack the damage into the params to send to the script;
+				if( lightning_dur$ > 0 )
+				{
+					PackLightning$( lightning_dur$ );
+				}
+				
+				if( charge_effect$ != "" )
+				{
+					active_effect$ = SiegeFx.SRunScript( charge_effect$, caster$, caster$, script_params$, owner.Goid, WE_REQ_CAST );
+				}
+			
+				if( owner.Go.Magic.StateName != "" )
+				{
+					// Add the effected state so this can only happen once
+					caster$.Go.Actor.SAddGenericState( owner.Go.Magic.StateName, description$, spell_duration$, caster$, owner.goid, owner.go.magic.GetMagicLevel( caster$.go ) );
+				}
+						
+				GoDb.StartWatching( owner.Goid, caster$);
+				
+				this.CreateTimer( 1, initial_delay$ );
+			}
+		}
+	}
+	event OnGoHandleCcMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if ( ( e$ == WE_KILLED ) || ( ( require_still$ ) && (( e$ == WE_DAMAGED ) || ( e$ == WE_MIND_PROCESSING_NEW_JOB )))) {
+			if (active_effect$ != 0)
+			{
+				SiegeFx.StopScript( active_effect$ );
+			}
+			SetState RestoreState$;
+		}
+	}
+	
+	transition -> Shooting$: OnTimer( 1 );
+	
+}
+
+state Shooting$
+{
+	/////////////////////////////
+	// Omni Go
+	
+	trigger OnTimer$( 1 )
+	{
+		if( caster$.isvalid )
+		{
+			// Choose a random target for the spell.
+			caster$.Go.Mind.TempGopColl1.Clear;
+			caster$.Go.Mind.GetEnemiesInSphere( radius$, caster$.Go.Mind.TempGopColl1 );
+			if ( caster$.Go.Mind.TempGopColl1.Size() > 0 )
+			{
+				int temp$ = Math.RandomInt( 0 , caster$.Go.Mind.TempGopColl1.Size() - 1 );
+				Go rand_target$ = caster$.Go.Mind.TempGopColl1.Get( temp$ );
+				
+				// Start the visual
+				SiegeFx.SRunScript( effect_script$, rand_target$.goid, caster$, params$, owner.Goid, WE_UNKNOWN );
+			}
+			
+		    this.CreateTimer( 1, shot_rate$ );
+		} else {
+			SetState Finished$;
+		}
+	}
+	
+	trigger OnTimer$( 2 )
+	{
+		SetState RestoreState$;
+	}
+	
+	event OnEnterState$
+	{
+		this.CreateTimer( 2, spell_duration$ );
+		this.CreateTimer( 1, shot_rate$ );
+	}
+	event OnGoHandleCcMessage$( eWorldEvent e$, WorldMessage /*msg$*/ )
+	{
+		if ( ( e$ == WE_KILLED ) || ( ( require_still$ ) && (( e$ == WE_DAMAGED ) || ( e$ == WE_MIND_PROCESSING_NEW_JOB )))) {
+			if (active_effect$ != 0)
+			{
+				SiegeFx.StopScript( active_effect$ );
+			}
+			SetState RestoreState$;
+		}
+	}
+}
+
+state RestoreState$
+{
+	/////////////////////////////
+	// Omni Go
+	
+	event OnEnterState$
+	{
+		// If the caster is still alive then restore his state
+		if( caster$.IsValid ) {
+			GoDb.StopWatching( owner.Goid, caster$);
+			
+			if ( owner.Go.Magic.StateName != "" ){
+				// remove the state so this can be affected again
+				caster$.Go.Actor.SRemoveGenericState( owner.Go.Magic.StateName );	
+			}
+		}
+		SetState( Finished$ );
+	}
+}
+
+state Abort$
+{
+	/////////////////////////////
+	// Omni Go
+	
+	event OnEnterState$
+	{
+		// Refund the players mana
+		Rules.ChangeMana( caster$, owner.go.getmagic.manacost );
+
+		SetState( Finished$ );
+	}
+}
+
+state Finished$
+{
+	/////////////////////////////
+	// Both Go's
+	
+	event OnEnterState$
+	{
+		// Get rid of any temporary storage
+		SiegeFx.ClearVariables( owner.goid );
+
+		// Since this skrit is the component of a spell and all spells are cloned before being executed
+		// then it is safe to destroy ourself after finishing execution
+
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, owner.Goid, 10 );
+	}
+}

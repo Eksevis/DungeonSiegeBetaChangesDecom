@@ -1,0 +1,102 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  cmd_enter_nis.skrit
+// Author(s):  Scott Bilas
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////
+// public definitions
+
+property string _doc$ = "NIS mode_enter (trigger with WE_ACTIVATED)";
+property string _required_component$ = "placement";
+
+property Scid  next_scid$          = 0			doc = "Scid of next command in sequence, 0 to terminate";
+property float widescreen_delay$   = 1.0		doc = "Delay for entering widescreen mode (0 for instant)";
+property bool  widescreen_enabled$ = true		doc = "Whether or not to enter widescreen mode";
+property float widescreen_fov$     = 80.0		doc = "Field of view (in degrees) to use for widescreen mode";
+property float widescreen_width$   = 1.0		doc = "Normalized screen width (0.0-1.0) to use for widescreen mode";
+property float widescreen_height$  = 0.75		doc = "Normalized screen height (0.0-1.0) to use for widescreen mode";
+
+property float game_speed$         = 1.0        doc = "Game speed while in NIS leaving -1 will not change the game speed.";
+
+property int   music_volume$	   = 127		doc = "Volume (0-127) that the music should be at during NIS sequence";
+property float music_fade_time$    = 1.0		doc = "Time to fade to new sound level";
+
+owner = GoSkritComponent;
+
+int m_StateChangeId$ = 0;
+int orig_speed$ = -1;
+
+//////////////////////////////////////////////////////////////////////////////
+
+trigger OnGoDrawDebugHud$
+{
+	Goid goid$ = next_scid$.Goid;
+	if ( goid$.IsValid )
+	{
+		World.DrawDebugDirectedLine( owner.go.Placement.Position,
+									 goid$.go.Placement.Position,
+									 MakeColor( 0, 1.0, 0, 0.5 ),
+									 "begin" );
+	}
+}
+
+trigger OnGoHandleMessage$( WE_REQ_ACTIVATE )
+{
+	// abort if we're already in nis mode. this can be caused by a trigger that
+	// is not set up right and is firing req_activate events every frame.
+	if ( WorldState.CurrentState == WS_SP_NIS )
+	{
+		return;
+	}
+
+	// abort if we're reloading, that screws everything up.
+	if ( WorldState.CurrentState == WS_RELOADING )
+	{
+		return;
+	}
+
+	// mess with viewport
+	if ( widescreen_enabled$ )
+	{
+		World.SetWorldViewport( widescreen_width$, widescreen_height$, widescreen_fov$, widescreen_delay$ );
+	}
+
+	// mess with sound
+	Mood.FadeMoodVolume( music_fade_time$, music_volume$ );
+
+	// set this to the current game speed
+	orig_speed$ = Math.Round( WorldOptions.GameSpeed * 1000 );
+	
+	// change game speed	
+	if( game_speed$ > 0)
+	{
+		WorldOptions.SetGameSpeed( game_speed$ );
+	}
+
+	// request state change
+	m_StateChangeId$ = WorldState.Request( WS_SP_NIS );
+}
+
+event OnGoHandleMessage$( eWorldEvent event$, WorldMessage msg$ )
+{
+	// only bother if we requested the change
+	if ( (event$ == WE_WORLD_STATE_TRANSITION_DONE) && (msg$.Data1 == m_StateChangeId$) )
+	{
+		// notify next of kin
+		Goid nextGoid$ = next_scid$.Goid;
+		if ( nextGoid$.IsValid )
+		{
+			// I am passing the original game speed through all of the camera commands. This will be restored at the end of the string.
+			SendWorldMessage( WE_REQ_ACTIVATE, owner.Goid, nextGoid$ ,orig_speed$);
+		}
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, owner.Goid, 1.0);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////

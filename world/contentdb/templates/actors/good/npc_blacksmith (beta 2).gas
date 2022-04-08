@@ -1,0 +1,600 @@
+[t:template,n:base_npc_bs]
+{
+	category_name = "npc";
+	doc = "blacksmith";
+	specializes = npc;
+	[actor]
+	{
+		portrait_icon = b_gui_ig_i_ic_c_bs;
+		[skills]
+		{
+			strength =  5, 0;
+			intelligence =  5, 0;
+			dexterity =  5, 0;
+		}
+	}
+	[aspect]
+	{
+		experience_value = 1;
+		life = 1;
+		model = m_c_gbn_bk_pos_1;
+		scale_base = 0.85;
+		[textures] { 0=b_c_gbn_bs; }
+	}
+	[attack]
+	{
+		attack_range = 1;
+		damage_max = 1;
+		damage_min = 1;
+		reload_delay = 1;
+	}
+	[body]
+	{
+		avg_move_velocity = 1;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine1;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_pelvis;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_gbn_bs_fs;
+			[chore_attack]
+			{
+				chore_stances = 0,2;
+				skrit = select_attack;
+				[anim_files] { 00=ds; }
+			}
+			[chore_default]
+			{
+				chore_stances = 0,2;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0,2;
+				skrit = select_transition;
+				[anim_files] { 00=ds; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0,2;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+				[anim_files]
+				{
+					talk = a_c_gbn_bs_fs2_dsf-02;
+				}
+			}
+			[chore_walk]
+			{
+				chore_stances = 0,2;
+				skrit = select_walk;
+				[anim_files] { 00=ds; }
+			}
+		}
+	}
+	[common]
+	{
+		screen_name="Blacksmith";
+		[template_triggers]
+		{
+			[*]
+			{
+				action* = call_sfx_script("blacksmith_hammer");
+				condition* = receive_world_message("we_anim_sfx",1);
+			}
+		}
+	}
+	[conversation]{}
+	[inventory]
+	{
+		[equipment]
+		{
+			es_shield_hand = tongs;
+			es_weapon_hand = blacksmith_hammer;
+		}
+		[other]
+		{
+			il_active_melee_weapon = blacksmith_hammer;
+		}
+	}
+	[mind]
+	{
+		actor_may_attack = false;
+        actor_may_be_attacked = false;
+		jat_talk = world\ai\jobs\common\job_talk.skrit;
+		melee_engage_range = 10;
+		personal_space_range = 0.7;
+		ranged_engage_range = 10;
+		sight_range = 10.0;
+	}
+}
+[t:template,n:merchant_blacksmith]
+{
+	category_name = "shopkeep";
+	doc = "blacksmith, bt_r1";
+	specializes = base_npc_bs;
+	[actor]	{portrait_icon = b_gui_ig_i_ic_c_blacksmith;}
+}
+[t:template,n:blacksmith_moik_stourn]
+{
+	category_name = "shopkeep";
+	doc = "blacksmith, hiroth (MP)";
+	specializes = base_npc_bs;
+	common:screen_name = "Blacksmith Moik Stourn";
+
+	[actor]	{portrait_icon = b_gui_ig_i_ic_c_blacksmith;}
+
+	[inventory]
+	{
+		[store_pcontent]
+		{
+			full_ratio = 0;
+			[armor]
+			{
+				[all*]
+				{
+					il_main = #body/247-284;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #body/285-341;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #body/342-378;
+					max = 6;
+					min = 6;
+				}
+
+
+				[all*]
+				{
+					il_main = #gloves/33-284;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #gloves/285-341;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #gloves/342-378;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #helm/33-284;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #helm/285-341;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #helm/342-378;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #boots/33-284;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #boots/285-341;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #boots/342-378;
+					max = 6;
+					min = 6;
+				}
+			}
+			[shields]
+			{
+				[all*]
+				{
+					il_main = #shield/33-284;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #shield/285-341;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #shield/342-378;
+					max = 6;
+					min = 6;
+				}
+			}
+			[weapons]
+			{
+				[all*]
+				{
+					il_main = #melee/111-127;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #melee/128-152;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #melee/153-169;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #ranged/111-127;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #ranged/128-152;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #ranged/153-169;
+					max = 6;
+					min = 6;
+				}
+			}
+		}
+	}
+    [store]
+	{
+		item_markup = 1;
+	}
+}
+[t:template,n:blacksmith_zabar_treseck]
+{
+	category_name = "shopkeep";
+	doc = "blacksmith, elddim (MP)";
+	specializes = base_npc_bs;
+	[actor]	{portrait_icon = b_gui_ig_i_ic_c_foulton;}
+	[aspect]
+	{
+		model = m_c_gbn_bk_pos_1;
+		[textures] { 0=b_c_gbn_bs-02; }
+	}
+	common:screen_name = "Blacksmith Zabar Treseck";
+	[inventory]
+	{
+		[store_pcontent]
+		{
+
+			full_ratio = 1;
+			[armor]
+			{
+				[all*]
+				{
+					il_main = #body/1-8;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #body/8-16;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #body/25-35;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #boots/1-12;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #gloves/1-12;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #helm/1-12;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #boots/25-35;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #gloves/25-35;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #helm/25-35;
+					max = 4;
+					min = 4;
+				}
+			}
+			[shields]
+			{
+				[all*]
+				{
+					il_main = #shield/1-10;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #shield/10-16;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #shield/25-35;
+					max = 4;
+					min = 4;
+				}
+
+			}
+			[weapons]
+			{
+				[all*]
+				{
+					il_main = #melee/3-8;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #melee/8-12;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #melee/17-23;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #ranged/3-8;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #ranged/8-12;
+					max = 4;
+					min = 4;
+				}
+				[all*]
+				{
+					il_main = #ranged/17-23;
+					max = 4;
+					min = 4;
+				}
+			}
+		}
+	}
+	[store]
+	{
+		item_markup = 1;
+	}
+}
+[t:template,n:merchant_blacksmith_glacern]
+{
+	category_name = "shopkeep";
+	doc = "blacksmith, nt_r1";
+	specializes = base_npc_bs;
+	[actor]	{portrait_icon = b_gui_ig_i_ic_c_foulton;}
+	[aspect]
+	{
+		model = m_c_gbn_bk_pos_1;
+		[textures] { 0=b_c_gbn_bs-02; }
+	}
+	[common] { screen_name = "Foulton"; }
+	[store] { }
+	[inventory]
+	{
+		[store_pcontent]
+		{
+			full_ratio = 0;
+			[armor]
+			{
+				[all*]
+				{
+					il_main = #body/23-40;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #body/41-79;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #body/80-110;
+					max = 6;
+					min = 6;
+				}
+
+
+				[all*]
+				{
+					il_main = #gloves/3-40;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #gloves/41-79;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #gloves/80-110;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #helm/3-40;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #helm/41-79;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #helm/80-110;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #boots/3-40;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #boots/41-79;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #boots/80-110;
+					max = 6;
+					min = 6;
+				}
+			}
+			[shields]
+			{
+				[all*]
+				{
+					il_main = #shield/3-40;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #shield/41-79;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #shield/80-110;
+					max = 6;
+					min = 6;
+				}
+			}
+			[weapons]
+			{
+				[all*]
+				{
+					il_main = #melee/14-18;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #melee/19-38;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #melee/39-52;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #ranged/14-18;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #ranged/19-38;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #ranged/39-52;
+					max = 6;
+					min = 6;
+				}
+			}
+		}
+	}
+	[store]
+	{
+		item_markup = 1;
+	}
+}
+
+

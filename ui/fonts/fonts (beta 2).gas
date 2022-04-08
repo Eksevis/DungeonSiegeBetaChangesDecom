@@ -1,0 +1,44 @@
+[t:font,n:b_gui_fnt_30p-numbers] 
+{
+	endrange = 58;
+	height = 31;
+	startrange = 48;
+	texture = b_gui_fnt_30p-numbers;
+}
+[t:font,n:b_gui_fnt_12p_copperplate-light]
+{
+	endrange = 256;
+	height = 13;
+	startrange = 32;
+	texture = b_gui_fnt_12p_copperplate-light;
+}
+[t:font,n:b_gui_fnt_14p_copperplate-light]
+{
+	endrange = 256;
+	height = 15;
+	startrange = 32;
+	texture = b_gui_fnt_14p_copperplate-light;
+}
+[t:font,n:b_gui_fnt_16p_copperplate-light]
+{
+	endrange = 256;
+	height = 17;
+	startrange = 32;
+	texture = b_gui_fnt_16p_copperplate-light;
+}
+[t:font,n:b_gui_fnt_18p_copperplate-light]
+{
+	endrange = 256;
+	height = 19;
+	startrange = 32;
+	texture = b_gui_fnt_18p_copperplate-light;
+}
+[t:font,n:b_gui_fnt_20p_copperplate-light]
+{
+	endrange = 256;
+	height = 21;
+	startrange = 32;
+	texture = b_gui_fnt_20p_copperplate-light;
+}
+
+

@@ -1,0 +1,408 @@
+[staging_area]
+{
+	interface = true;
+	
+	[t:dialog_box,n:background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox_wide;
+		draw_order = 0;
+		rect = 8,8,792,592;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:help_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 1;
+		rect = 24,530,776,576;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	
+	[t:text,n:title]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 79;
+		rect = 24,28,420,50;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		font_color = -1;
+		font_size = 22;
+		font_type = b_gui_fnt_20p_copperplate-light;
+		justify = left;
+		text = "STAGING AREA";
+		truncate = true;
+	}
+	[t:text,n:chat_title]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 79;
+		rect = 24,348,500,366;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		font_color = -1;
+		font_size = 22;
+		font_type = b_gui_fnt_14p_copperplate-light;
+		justify = left;
+		text = "Chat Window";
+	}
+	[t:text,n:game_settings_title]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 79;
+		rect = 556,348,776,366;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		font_color = -1;
+		font_size = 22;
+		font_type = b_gui_fnt_14p_copperplate-light;
+		justify = left;
+		text = "Settings Summary";
+	}
+
+	[t:dialog_box,n:players_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox_wide;
+		draw_order = 1;
+		rect = 24,60,776,340;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:chat_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 24,368,546,486;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:chat_text_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 24,490,546,514;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:dialog_box,n:game_settings_background]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox;
+		draw_order = 2;
+		rect = 556,368,776,460;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:checkbox,n:staging_checkbox_ready]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 1296;
+		rect = 584,498,600,514;
+		texture = b_gui_cmn_checkbox;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:window,n:check_texture]
+		{
+			alpha = 1.0000;
+			rect = 584,498,600,514;
+			draw_order = 2000;
+			texture = b_gui_cmn_checkbox_x;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[t:text_box,n:checkbox_ready_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = 0xff00ff00;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = left;
+			rect = 608,490,756,520;
+			text = "I'm Ready to Begin";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+			center_height = true;
+			fixed_location = true;
+		}
+		[messages]
+		{
+			oncheck = notify(staging_check_ready);
+			onuncheck = notify(staging_uncheck_ready);
+		}
+	}
+
+/*
+	[t:text,n:host_ip_address_header]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 600,368,776,384;
+		text = "IP Address";
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+	[t:text,n:host_ip_address]
+	{
+		alpha = 1.000000;
+		common_control = false;
+		common_template = ;
+		draw_order = 68;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		justify = center;
+		rect = 600,392,776,408;
+		text = ;
+		texture = none;
+		type = text;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+*/
+
+	[t:button,n:staging_area_button_leave_game]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;		
+		draw_order = 18;
+		rect = 580,470,756,486;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(staging_leave_game) & playsound(s_e_frontend_big_button); }
+		[t:text,n:button_leave_game_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Leave Game";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:button,n:staging_area_button_start_game]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;		
+		draw_order = 18;
+		rect = 580,498,756,514;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(staging_start_game) & playsound(s_e_frontend_big_button); }
+		[t:text,n:button_start_game_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = 0xff00ff00;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Start Game";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:button,n:staging_area_button_enter_game]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;		
+		draw_order = 18;
+		rect = 580,498,756,514;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		visible = false;
+		[messages] { onbuttonpress=notify(staging_enter_game); }
+		[t:text,n:button_enter_game_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Enter Game";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+
+	[t:button,n:button_map_settings]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 18;
+		rect = 446,34,606,50;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(staging_map_settings); }
+		[t:text,n:button_map_settings_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Map Settings";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:button,n:button_game_settings]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 18;
+		rect = 616,34,776,50;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(staging_game_settings); }
+		[t:text,n:button_game_settings_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 527,8,621,21;
+			text = "Game Settings";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+
+	[t:chat_box,n:staging_area_chatbox]
+	{
+		alpha = 1.000000;
+		draw_order = 8;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		rect = 28,372,526,482;
+		texture = none;
+		type = chat_box;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		scroll_down = true;
+		has_slider = true;
+		common_control = true;
+		delete_timeouts = false;
+		max_history = 100;
+		retain_scroll_position = true;
+	}
+	[t:edit_box,n:staging_area_chat_editbox]
+	{
+		alpha = 1.000000;
+		draw_order = 9;
+		font_color = -1;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		max_string_size = 256;
+		rect = 28,494,542,510;
+		texture = none;
+		type = edit_box;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[prompt]
+		{
+			draw_order = 2;
+			texture = b_gui_fe_m_single_prompt;
+			width = 1;
+		}
+		[messages] { oneditselect=notify(staging_chat_send); }
+	}
+
+	[t:listbox,n:staging_game_settings_listbox]
+	{
+		alpha = 1.00000;
+		common_control = true;
+		common_template = ;
+		draw_order = 500;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		rect = 559,371,773,457;
+		text_color = 0xffffffff;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		consumable = true;
+		[messages]
+		{
+			oncreated = setelementheight(17);
+		}
+	}
+}

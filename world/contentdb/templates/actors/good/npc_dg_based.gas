@@ -1,0 +1,518 @@
+[t:template,n:base_npc_dg]
+{
+	category_name = "character";
+	doc = "Base template for NPC's based on the Droog mesh.";
+	specializes = npc;
+	[aspect]
+	{
+		model=m_c_eam_dg_pos_1;
+	}
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_fg_blonde; }
+	[body]
+	{
+		avg_move_velocity = 2.000000;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine2;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_spine2;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_eam_dg_fs;
+			[chore_attack]
+			{
+				chore_stances = 0,1,6;
+				skrit = select_attack;
+				[anim_files]
+				{
+					0000 = at;
+					qffg = dff;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0,1,6;
+				skrit = infinite_loop;
+				[anim_files] { 00=ds; }
+			}
+			[chore_die]
+			{
+				chore_stances = 0,1,6;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0,1,6;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0,1,6;
+				skrit = select_walk;
+				[anim_files] { 00=wl; }
+			}
+			[chore_misc]
+			{
+				chore_stances = ignore;
+				skrit = select_transition;
+				[anim_files]
+				{
+					tak1 = a_c_eam_dg_fs0_dsf-04;
+                    tak2 = a_c_eam_dg_fs0_dsf-05;
+				}
+			}
+    	}
+    }
+	[mind]
+	{
+		actor_may_attack = false;
+        actor_may_be_attacked = false;
+    }
+}
+[t:template,n:nonataya]
+{
+    category_name = "shopkeep";
+	doc = "nonataya";
+	specializes = base_npc_dg;
+	[actor] { portrait_icon = b_gui_ig_i_ic_c_no; }
+	[aspect]
+	{
+		[textures] { 0 = b_c_eam_dg-04; }
+	}
+	[common] { screen_name="Nonataya"; }
+	[conversation]
+	{
+	}
+	[inventory]
+	{
+		[store_pcontent]
+		{
+			full_ratio = 0;
+			[armor]
+			{
+				[all*]
+				{
+					il_main = #body/216-252;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #body/253-310;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #body/311-347;
+					max = 6;
+					min = 6;
+				}
+
+
+				[all*]
+				{
+					il_main = #gloves/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #gloves/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #gloves/311-347;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #helm/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #helm/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #helm/311-347;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #boots/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #boots/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #boots/311-347;
+					max = 6;
+					min = 6;
+				}
+			}
+			[shields]
+			{
+				[all*]
+				{
+					il_main = #shield/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #shield/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #shield/311-347;
+					max = 6;
+					min = 6;
+				}
+			}
+			[weapons]
+			{
+				[all*]
+				{
+					il_main = #melee/98-113;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #melee/114-139;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #melee/140-155;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #ranged/98-113;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #ranged/114-139;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #ranged/140-155;
+					max = 6;
+					min = 6;
+				}
+			}
+
+			[magic]
+			{
+				[all*]
+				{
+					il_main = #spell/35-56;
+					max = 40;
+					min = 40;
+				}
+				[all*]
+				{
+					il_main = #spell/0-34;
+					max = 10;
+					min = 10;
+				}
+			}
+			[misc]
+			{
+				[all*]
+				{
+					il_main = book_glb_magic_01;
+					max = 5;
+					min = 5;
+				}
+			}
+		}
+	}
+	[store]
+	{
+		item_markup = 1;
+		[item_restock]
+		{
+			potion_health_small = 5;
+			potion_health_medium = 10;
+			potion_health_large = 15;
+			potion_mana_small = 5;
+			potion_mana_medium = 10;
+			potion_mana_large = 15;
+			potion_rejuvenation_small = 2;
+			potion_rejuvenation_medium = 2;
+			potion_rejuvenation_large = 3;
+
+			scroll_resurrect = 10;
+            spell_resurrect = 10;
+            spell_revive = 10;
+            spell_healing_hands = 10;
+		}
+	}
+}
+[t:template,n:craftsman_orelle]
+{
+    category_name = "shopkeep";
+	doc = "craftsman, quillrabe (MP)";
+	specializes = base_npc_dg;
+	[actor] { portrait_icon = b_gui_ig_i_ic_c_orellean; }
+	[aspect]
+	{
+		[textures] { 0=b_c_eam_dg-05; }
+	}
+	[common] { screen_name="Craftsman Orellean"; }
+	[conversation] { }
+	[inventory]
+	{
+		[store_pcontent]
+		{
+			full_ratio = 0;
+			[armor]
+			{
+				[all*]
+				{
+					il_main = #body/216-252;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #body/253-310;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #body/311-347;
+					max = 6;
+					min = 6;
+				}
+
+
+				[all*]
+				{
+					il_main = #gloves/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #gloves/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #gloves/311-347;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #helm/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #helm/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #helm/311-347;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #boots/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #boots/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #boots/311-347;
+					max = 6;
+					min = 6;
+				}
+			}
+			[shields]
+			{
+				[all*]
+				{
+					il_main = #shield/29-252;
+					max = 10;
+					min = 10;
+				}
+				[all*]
+				{
+					il_main = #shield/253-310;
+					max = 12;
+					min = 12;
+				}
+				[all*]
+				{
+					il_main = #shield/311-347;
+					max = 6;
+					min = 6;
+				}
+			}
+			[weapons]
+			{
+				[all*]
+				{
+					il_main = #melee/98-113;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #melee/114-139;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #melee/140-155;
+					max = 6;
+					min = 6;
+				}
+
+				[all*]
+				{
+					il_main = #ranged/98-113;
+					max = 8;
+					min = 8;
+				}
+				[all*]
+				{
+					il_main = #ranged/114-139;
+					max = 14;
+					min = 14;
+				}
+				[all*]
+				{
+					il_main = #ranged/140-155;
+					max = 6;
+					min = 6;
+				}
+			}
+		}
+	}
+    [store]
+	{
+		item_markup = 1;
+	}
+}
+[t:template,n:shaman_dreven]
+{
+    category_name = "shopkeep";
+	doc = "shaman, quillrabe (MP)";
+	specializes = base_npc_dg;
+	[actor] { portrait_icon = b_gui_ig_i_ic_c_no; }
+	[aspect]
+	{
+		[textures] { 0=b_c_eam_dg-04; }
+		is_ghost_usable = true;
+		use_range = 1.0;
+	}
+	[common] { screen_name="Shaman Drevenus"; }
+	[conversation] { }
+	[respawn_shrine] { }
+	[inventory]
+	{
+		[store_pcontent]
+		{
+			full_ratio = 0.8;
+			[magic]
+			{
+				[all*]
+				{
+					il_main = #spell/35-56;
+					max = 40;
+					min = 40;
+				}
+				[all*]
+				{
+					il_main = #spell/0-34;
+					max = 10;
+					min = 10;
+				}
+			}
+			[misc]
+			{
+				[all*]
+				{
+					il_main = book_glb_magic_01;
+					max = 5;
+					min = 5;
+				}
+			}
+		}
+	}
+	[store]
+	{
+		item_markup = 1;
+
+		[item_restock]
+		{
+			potion_health_small = 5;
+			potion_health_medium = 10;
+			potion_health_large = 15;
+			potion_mana_small = 5;
+			potion_mana_medium = 10;
+			potion_mana_large = 15;
+			potion_rejuvenation_small = 2;
+			potion_rejuvenation_medium = 2;
+			potion_rejuvenation_large = 3;
+
+			scroll_resurrect = 10;
+            spell_resurrect = 10;
+            spell_revive = 10;
+            spell_healing_hands = 10;
+		}
+	}
+}

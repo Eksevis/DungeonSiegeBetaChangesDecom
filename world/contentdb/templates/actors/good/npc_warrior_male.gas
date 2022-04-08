@@ -1,0 +1,107 @@
+[t:template,n:warrior_male]
+{
+	category_name = "character";
+	doc = "Test Warrior";
+	specializes = hero;
+	[actor] { portrait_icon=b_gui_ig_i_ic_c_fb_blonde; }
+	[aspect]
+	{
+		model = m_c_gah_fb_pos_a1;
+		[textures]
+		{
+			0 = b_c_gah_fb_skin_004;
+			1 = b_c_pos_a1_026;
+		}
+	}
+	[body]
+	{
+		armor_version = gah_fb;
+		avg_move_velocity = 4.500000;
+		initial_chore = chore_fidget;
+		[bone_translator]
+		{
+			body_anterior = bip01_head;
+			body_mid = bip01_spine2;
+			body_posterior = bip01_pelvis;
+			kill_bone = bip01_spine2;
+			shield_bone = shield_grip;
+			weapon_bone = weapon_grip;
+		}
+		[chore_dictionary]
+		{
+			chore_prefix = a_c_gah_fb_fs;
+			[chore_attack]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7;
+				skrit = select_attack;
+				[anim_files]
+				{
+					00 = at;
+					01 = at-02;
+					02 = at-03;
+					03 = at-04;
+				}
+			}
+			[chore_default]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7;
+				skrit = infinite_loop;
+				[anim_files]
+				{
+					00 = dsf;
+					01 = dsf-02;
+				}
+			}
+			[chore_die]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7;
+				skrit = select_transition;
+				[anim_files] { 00=di; }
+			}
+			[chore_fidget]
+			{
+				chore_stances = 0,1,2,3,4,5,6,7;
+				ease_in = 0.5;
+				skrit = select_fidget;
+				[anim_files] { 00=dsf; }
+			}
+			[chore_magic]
+			{
+				chore_stances = 0,5;
+				skrit = select_attack;
+				[anim_files] { 00=mg; }
+			}
+			[chore_walk]
+			{
+				chore_stances = 0,1,2,3,4,5,6;
+				skrit = select_walk;
+				[anim_files] { 05=rl; }
+			}
+		}
+	}
+	[common] { screen_name="Warok the Warrior"; }
+	[inventory]
+	{
+		[equipment]
+		{
+			es_chest = temp_bd_ba_f_g_c_fun;
+			es_feet = bo_gr_ba_f_g_c_avg;
+			es_forearms = gl_ga_fp_f_g_c_avg;
+			es_head = he_fu_pl_f_g_c_fin;
+			es_shield_hand = test_sh_w_g_c_r_m_fin;
+			es_weapon_hand = sd_g_c_st_1h_avg;
+		}
+		[other]
+		{
+			il_active_melee_weapon = st_g_c_b_avg;
+			il_main = bd_un_pl_f_g_c_avg;
+			il_main = temp_he_fu_pl_f_g_c_str;
+			il_main = bw_g_o_c_m_4_fun;
+			il_main = bw_g_c_crossbow;
+			il_main = mc_g_c_s_1h_avg;
+			il_main = sd_g_o_st_2h_avg;
+			il_main = ss_g_c_st_fun;
+			il_shield = test_sh_w_g_c_r_s_fun;
+		}
+	}
+}

@@ -1,0 +1,76 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// File     :  spell_return_summoned.skrit
+// Author(s):  Eric Tams
+//
+// Copyright © 2000 Gas Powered Games, Inc.  All rights reserved.
+//----------------------------------------------------------------------------
+//  $Revision:: $              $Date:$
+//----------------------------------------------------------------------------
+//////////////////////////////////////////////////////////////////////////////
+
+// This skrit will tell summoned creatures to go away.
+
+owner = GoSkritComponent;
+
+property string state_name$			= "summoned"			doc = "Name of effect to use as a generic state and as a screen name.";
+property float	health_per_level$	= 22.0					doc = "The caster may return any actor with health less his level times this value.";
+
+Goid 	target$;
+Goid 	caster$;
+Goid	old_spell$;
+
+startup state CastBegin$
+{
+ 	event OnGoHandleMessage$( eWorldEvent e$, WorldMessage msg$ )
+	{
+		if( e$ == WE_REQ_CAST ) 
+		{
+			target$ = MakeGoid( msg$.GetData1() );
+			caster$ = msg$.GetSendFrom();
+
+			// Check to see if the enchantment has already been cast on this go
+			if( !target$.Go.Actor.HasGenericState( state_name$ ) ) 
+			{	
+				SetState Abort$;
+				return;
+			}	
+			
+			if( target$.Go.Aspect.MaxLife > ( health_per_level$ * caster$.Go.Actor.GetSkillLevel( owner.Go.Magic.SkillClass ) ) )
+			{
+				SetState Abort$;
+				return;
+			}
+
+			old_spell$ = target$.Go.Actor.GetGenericStateSpellGoid ( state_name$ );
+		}
+	}
+	transition
+	{
+		-> Finished$:	OnGoHandleMessage( WE_SPELL_SYNC_MID ) = 
+		{
+			SendWorldMessage( WE_SPELL_EXPIRATION_TIMER_RESET, owner.Goid, old_spell$ );
+		}
+	}
+	
+}		
+
+state Abort$
+{
+	event OnEnterState$
+	{
+		// Refund the players mana
+		Rules.ChangeMana( caster$, owner.go.getmagic.manacost );
+
+		SetState( Finished$ );
+	}
+}
+
+state Finished$
+{
+	event OnEnterState$
+	{
+		// Delete this skrit
+		PostWorldMessage( WE_REQ_DELETE, owner.Goid, owner.Goid, 10 );
+	}
+}

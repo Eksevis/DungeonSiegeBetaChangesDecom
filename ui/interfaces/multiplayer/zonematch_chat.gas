@@ -1,0 +1,221 @@
+[zonematch_chat]
+{
+	interface = true;
+
+	[t:tab,n:tab_news]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 1;
+		radio_group = zonematch_tabs;
+		rect = 262,31,352,47;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[t:text,n:tab_news_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 2;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 31,1,104,15;
+			text = "News";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages]
+		{
+			oncheck = notify(zonematch_show_news);
+		}
+	}
+	[t:tab,n:tab_games]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 1;
+		radio_group = zonematch_tabs;
+		rect = 353,31,483,47;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		[messages]
+		{
+			oncheck = notify(zonematch_show_games);
+		}
+		[t:text,n:tab_games_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 2;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 159,1,232,15;
+			text = "Games List";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+	[t:tab,n:tab_chat]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 1;
+		radio_group = zonematch_tabs;
+		rect = 484,28,614,44;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		enabled = false;
+		[t:text,n:tab_chat_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 2;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 287,1,360,15;
+			text = "Chat Rooms";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages]
+		{
+			oncheck = notify(zonematch_show_chat);
+		}
+	}
+
+	[t:dialog_box,n:backgound_chat_area]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = cpbox_wide;
+		draw_order = 3;
+		rect = 24,44,616,420;
+		texture = none;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+	}
+
+	[t:listreport,n:zonematch_chatroom_list]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = ;
+		draw_order = 50;
+		element_type = text;
+		font_color = 0xffffffff;
+		font_size = 12;
+		font_type = b_gui_fnt_12p_copperplate-light;
+		rect = 27,47,612,417;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = tiled;
+		[messages]
+		{
+			onselect = notify(zonematch_join_chatroom);
+		}
+	}
+
+	[t:button,n:button_join_chatroom]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 20;
+		rect = 34,396,218,412;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[t:text,n:button_join_chatroom_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 23,301,165,315;
+			text = "Join Chat Room";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(zonematch_join_chatroom); }
+	}
+	[t:button,n:button_create_chatroom]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 20;
+		rect = 228,396,412,412;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[t:text,n:button_create_chatroom_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 23,301,165,315;
+			text = "Create Chat Room";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+		[messages] { onbuttonpress=notify(zonematch_create_chatroom); }
+	}
+	[t:button,n:button_refresh_chatroom_list]
+	{
+		alpha = 1.000000;
+		common_control = true;
+		common_template = button_4;
+		draw_order = 21;
+		rect = 422,396,606,412;
+		uvcoords = 0.000000,0.000000,1.000000,1.000000;
+		wrap_mode = clamp;
+		disable_color = 0x99555555;
+		[messages] { onbuttonpress=notify(refresh_chatroom_list); }
+		[t:text,n:button_refresh_chatroom_list_text]
+		{
+			alpha = 1.000000;
+			common_control = false;
+			common_template = ;
+			draw_order = 68;
+			font_color = -1;
+			font_size = 12;
+			font_type = b_gui_fnt_12p_copperplate-light;
+			justify = center;
+			rect = 23,277,166,290;
+			text = "Refresh List";
+			texture = none;
+			type = text;
+			uvcoords = 0.000000,0.000000,1.000000,1.000000;
+			wrap_mode = clamp;
+		}
+	}
+}

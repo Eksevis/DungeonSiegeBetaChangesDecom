@@ -1,0 +1,721 @@
+// purpose:  spellParty ...  BW  11/16/2001
+
+/* use cmd line args - skrit_retry=true  map=Halo_Test_Map teleport=start clones=farmboy  spell=spell_spark  class=nature  required_level=4  opponent=krug_dog  repeat=true   fpslog=true  skritbot=auto\test\spellParty MAXTime=60.0
+*/
+
+owner = GoSkritComponent;
+
+#include "LogOut.skrit"
+
+property float	period$	= 0.04         doc = "Sample period, in seconds.";
+
+float  f_MAXTime$ = 1700.0;
+
+Go				m_Go$, m_CloneGo$, m_Spell$, weapon$, curOpp$;
+Go				m_1$, m_2$, m_3$,m_4$, m_5$, m_6$, m_7$, m_8$;  // simulated array of 8 go's in party
+GoID			m_CloneGoId$, m_SpellGoID$, m_OpptGoID$;
+GoActor			m_Actor$;
+GoMind			m_HeroMind$, m_Mind$;
+GoInventory		m_GO_Inv$;
+GoAspect		m_Aspect$;
+string          m_statement$;  // for log output
+string			sCloneName$, sSpellTmpl$, sOpponent$;
+bool			BExiting$ = false, bResponse$, bAskedForSpell$;
+int				i$, cur_Go$;  
+SiegePos		heroPos$, CurrPos$;
+string			sMagicInst$;
+float			fR_Mana$ = 1000.0, fActMana$, f_Discrep$, fR_Life$ = 1000.0, fActLife$, fR_Skill$, fActSkill$;
+Job				m_Jobtmp$;  // for interrogating status of request to cast the spell
+bool			bSelectSpell$, bRepeatedly$;
+Go				party$;
+job				m_Job$;
+bool			bMakeNewOppt$ = false;
+
+
+startup state S$ trigger OnBotHandleMessage$( WE_WORLD_STATE_TRANSITION_DONE )
+{
+	if ( (WorldState.CurrentState == WS_SP_INGAME) || (WorldState.CurrentState == WS_MP_INGAME) )
+	{
+		myinit$(__NAME__);
+		
+		setstate SInGame2$;
+	}
+}
+
+void request_more_mana$(void)
+{
+	if (curOpp$ != NULL)
+	{
+		fR_Mana$ = m_Spell$.Magic.EvaluateManaCost(m_Go$, curOpp$) ; 
+		
+		fActMana$ = m_Aspect$.CurrentMana;      // vs fR_Mana$
+		// TakeSample$ will ensure sufficient mana for task at hand!
+/*		if (fR_Mana$ > fActMana$)
+		{
+			StringTool.AssignF(m_statement$, "Required mana is %f, compared to actual %f", fR_Mana$, fActMana$);
+			logout$(nINFO$, "SKRIT", m_statement$);	
+		}  // uncomment out to convince that all is well in the mana dept.  */
+	}	 								
+	else
+	{
+		StringTool.AssignF(m_statement$, "in function request_more_mana$ : curOpp$ is NULL !! cur go is %d",  makeint(m_Go$.goid) );
+		logout$(nINFO$, "SKRIT", m_statement$);
+	}
+	fActMana$ = m_Aspect$.CurrentMana;      // vs fR_Mana$
+	if (fActMana$ < fR_Mana$)  //  expect drop after cast due to mana cost associated with the spell!
+	{
+		m_Aspect$.RCSetCurrentMana(m_Aspect$.MaxMana);  //  fR_Mana$ * 2.0);  
+		fActMana$ = m_Aspect$.CurrentMana;
+		StringTool.AssignF(m_statement$, "after GoAspect.RCSetCurrentMana() : Mana is now %f",  fActMana$);  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+		logout$(nINFO$, "ATTRIBUTES", m_statement$);
+		// ensure actor has sufficient  mana level to use the spell!
+		if (fActMana$ < fR_Mana$)
+		{
+			rules.ChangeMana(m_Go$.goid, fR_Mana$);		// rules.ChangeMana				
+			StringTool.AssignF(m_statement$, "after rules.ChangeMana() : Mana is now %f",  m_Aspect$.CurrentMana );  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+			logout$(nINFO$, "ATTRIBUTES", m_statement$);
+		}
+	}
+	else
+	{
+		StringTool.AssignF(m_statement$, "Mana is now %f and Required Mana is %f",  fActMana$, fR_Mana$);  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+		logout$(nINFO$, "ATTRIBUTES", m_statement$);
+	}
+}
+
+void  iterGO$(int n$)
+{
+	if (n$ == 1)
+	{
+		m_Go$ = m_1$;
+	}
+	else if (n$ == 2)
+	{
+		m_Go$ = m_2$;
+	}
+	else if (n$ == 3)
+	{
+		m_Go$ = m_3$;
+	}
+	else if (n$ == 4)
+	{
+		m_Go$ = m_4$;
+	}
+	else if (n$ == 5)
+	{
+		m_Go$ = m_5$;
+	}
+	else if (n$ == 6)
+	{
+		m_Go$ = m_6$;
+	}
+	else if (n$ == 7)
+	{
+		m_Go$ = m_7$;
+	}
+	else
+	{
+		m_Go$ = m_8$;
+	}
+	m_Aspect$ = m_Go$.Aspect;			
+	debug.AssertF(m_Aspect$ != NULL, "iterGO$ %s line %d", __NAME__, __LINE__);
+
+}
+
+void check_add_oppt$()
+{
+	int j$;
+	
+	if (curOpp$ == NULL)
+	{
+		if (bMakeNewOppt$)
+		{
+			CurrPos$ = m_Go$.placement.position;
+			 // make clone req
+
+			GoCloneReq cloneReq$ = MakeGoCloneReq( sOpponent$ );
+			debug.AssertF(cloneReq$ != NULL, "check_add_oppt$ %s line %d", __NAME__, __LINE__);		
+			cloneReq$.SnapToTerrain = true;
+
+			CurrPos$.pos.SetX(CurrPos$.pos.x + 5.37);  // adjust a little
+			CurrPos$.pos.SetZ(CurrPos$.pos.z - 4.34);
+			cloneReq$.StartingPos = CurrPos$;
+
+			// get the spell directed by vb app:
+			m_OpptGoID$ = GoDb.SCloneGo( cloneReq$ );
+			debug.AssertF(m_OpptGoID$ != NULL, "check_add_oppt$ %s line %d", __NAME__, __LINE__);		
+			curOpp$ = m_OpptGoID$.go;
+
+			Stringtool.AssignF(m_statement$, "created new %s %d", sOpponent$, makeint(m_OpptGoID$) );
+			logout$(nINFO$, "AUTOMATION", m_statement$);
+		}
+	}
+	else
+	{
+		if ( m_OpptGoID$.isvalid )   // Aspect.LifeState != ls_Alive_Conscious) 
+		{
+			if ((curOpp$.Aspect.LifeState != LS_IGNORE) && (curOpp$.Aspect.LifeState != ls_Alive_Conscious) &&  (curOpp$.Aspect.LifeState != ls_Alive_unconscious)) // broken?  
+			{
+				Stringtool.AssignF(m_statement$, "%s %d is now damaged [%d]!", sOpponent$, makeint(m_OpptGoID$), curOpp$.Aspect.LifeState);
+				logout$(nINFO$, "AUTOMATION", m_statement$);
+				bMakeNewOppt$ = bRepeatedly$;
+				curOpp$ = NULL;			
+			}
+		}
+		else
+		{
+			Stringtool.AssignF(m_statement$, "%s %d is now broken!", sOpponent$, makeint(m_OpptGoID$) );
+			logout$(nINFO$, "AUTOMATION", m_statement$);
+
+			bMakeNewOppt$ = bRepeatedly$;
+			curOpp$ = NULL;
+		}
+	}
+	
+	if (curOpp$ != NULL)
+	{
+		if (i$ >= 100) // arbitrary threshold
+		{
+			j$ = 1;
+			while (j$ < 8)  // ensure adequate mana
+			{
+				iterGO$(j$);    // set new m_Go$ value
+				request_more_mana$();
+				j$ += 1;
+			}
+			m_Job$ = m_Mind$.SDoJob( MakeJobReq( JAT_CAST, JQ_ACTION, QP_FRONT, AO_REFLEX, m_OpptGoID$, m_Spell$.Goid ) ); // _POSITION   _FINISH
+		//				 					debug.AssertF(m_Job$ != NULL, "state TakeSample$ %s line %d", __NAME__, __LINE__);
+			// show status of previous job, if one exists:
+			if (m_Job$ != NULL)
+			{
+		//									StringTool.AssignF(m_statement$, "%i : current job status is now %d", i$, m_Job$.JobResult); 
+		//									logout$(nINFO$, "ATTRIBUTES", m_statement$);	
+			}
+					
+			Stringtool.AssignF(m_statement$, "Job created: attack %s %d with the Spell %s", sOpponent$, makeInt(m_OpptGoID$), sSpellTmpl$);
+			logout$(nINFO$, "AUTOMATION", m_statement$);
+			i$ = 0;
+		}
+	}
+}
+
+void add_spellToGo$()
+{
+	if (m_Go$ != NULL)
+	{
+		bool bSelect$;
+		
+		bSelect$ =	m_Go$.IsSelected();
+		if (! bSelect$)
+		{
+			bSelect$ =	m_Go$.Select();
+    
+			debug.AssertF( (m_1$ == m_Go$) || (! bSelect$), "add_spellToGo$ %s line %d", __NAME__, __LINE__);
+		}
+		m_Mind$ = m_Go$.Mind;
+		debug.AssertF(m_Mind$  != NULL, "add_spellToGo$ %s line %d", __NAME__, __LINE__);
+
+		if ( AIQuery.FindSpotRelativeToSource( m_Go$, 0.66, 1.33, 2.0, m_Mind$.TempPos1 ) )
+		{
+			CurrPos$ = m_Mind$.TempPos1;
+		} 
+		else 
+		{
+			CurrPos$ = heroPos$;
+		}
+	
+		 // make clone req
+
+		GoCloneReq cloneReq$ = MakeGoCloneReq( sSpellTmpl$ );
+		debug.AssertF(cloneReq$ != NULL, "add_spellToGo$ %s line %d", __NAME__, __LINE__);		
+		cloneReq$.StartingPos = CurrPos$;
+		cloneReq$.SnapToTerrain = true;
+
+		// get the spell directed by vb app:
+		m_SpellGoID$ = GoDb.SCloneGo( cloneReq$ );
+		debug.AssertF(m_SpellGoID$ != NULL, "add_spellToGo$ %s line %d", __NAME__, __LINE__);		
+		m_Spell$ = m_SpellGoID$.go;
+		bSelectSpell$ = false;
+	
+		StringTool.AssignF(sMagicInst$, "%s magic", config.GetString("class", "combat") );
+	
+		m_Actor$  = m_Go$.Actor;
+		debug.AssertF(m_Actor$  != NULL, "add_spellToGo$ %s line %d", __NAME__, __LINE__);
+
+		m_GO_Inv$ = m_Go$.Inventory;    // Get  goinventory
+		debug.AssertF(m_GO_Inv$ != NULL, "add_spellToGo$ %s line %d", __NAME__, __LINE__);
+
+		weapon$ = m_GO_Inv$.GetEquipped( ES_WEAPON_HAND );
+
+		if (weapon$ != NULL)
+		{
+			m_GO_Inv$.RSRemove( weapon$, true );
+			logout$(nINFO$, "ATTRIBUTES", "Unequipped default melee weapon : knife");
+		}
+
+		m_Aspect$ = m_Go$.Aspect;
+		debug.AssertF(m_Aspect$ != NULL, "add_spellToGo$ %s line %d", __NAME__, __LINE__);
+		// avoid an early death, if requested...
+		if (config.getbool("Invincible", true) )
+		{
+			m_Aspect$.SetIsInvincible( true );
+			logout$(nINFO$, "AUTOMATION", "Requested actor to become invincible.");
+		}
+		f_Discrep$ = 0.0;
+		curOpp$ = NULL;
+		bMakeNewOppt$ = true;
+
+		setstate WaitForSkill_Mana$;
+	}
+	else
+	{
+		debug.AssertF(false, "add_spellToGo$ %s line %d", __NAME__, __LINE__);
+	}
+}
+
+state LookForSkill_Mana$
+{
+	event OnEnterState$
+	{
+		float f_TmpVal$;
+		
+		fActMana$ = m_Aspect$.CurrentMana;      // vs fR_Mana$
+//		logState$("LookForSkill_Mana$");
+		bAskedForSpell$ = false;
+					
+		if (fActMana$ < fR_Mana$)  //  expect drop after cast due to mana cost associated with the spell!
+		{
+			if (m_Aspect$.MaxMana < fR_Mana$)
+			{
+				StringTool.AssignF(m_statement$, "Raising MAX mana level from %f to %f so that spell may be used", fActMana$, fR_Mana$ * 2.0 + 1.0);
+				logout$(nINFO$, "ATTRIBUTES", m_statement$);
+				m_Aspect$.RCSetMaxMana(fR_Mana$ * 2.0 + 1.0 );
+//							StringTool.AssignF(m_statement$, "max Mana is now %f", m_Aspect$.MaxMana);  // commented out to keep output terse
+//							logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			}
+			m_Aspect$.RCSetCurrentMana(fR_Mana$ * 2.0);  
+			fActMana$ = m_Aspect$.CurrentMana;
+			StringTool.AssignF(m_statement$, "after GoAspect.RCSetCurrentMana() : Mana is now %f",  fActMana$);  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+			logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			// ensure actor has sufficient  mana level to use the spell!
+			if (fActMana$ < fR_Mana$)
+			{
+				rules.ChangeMana(m_Go$.goid, fR_Mana$);		// rules.ChangeMana				
+				StringTool.AssignF(m_statement$, "after rules.ChangeMana() : Mana is now %f",  m_Aspect$.CurrentMana );  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+				logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			}
+		}
+		fActLife$ = m_Aspect$.CurrentLife;  
+		if (fActLife$ < fR_Life$) 
+		{
+			if (m_Aspect$.MaxLife <  fR_Life$) 
+			{	
+				m_Aspect$.SSetMaxLife(fR_Life$);
+				StringTool.AssignF(m_statement$, "Raising MAX life level from %f to %f so that spell may be used", fActLife$, fR_Life$ * 2.0 + 1.0);
+				logout$(nINFO$, "ATTRIBUTES", m_statement$);				
+			}
+			m_Aspect$.SSetCurrentLife(fR_Life$);
+			fActLife$ = m_Aspect$.CurrentLife;  
+			StringTool.AssignF(m_statement$, "after GoAspect.SSetCurrentLife() : Life is now %f",  fActLife$);  // m_Aspect$.ManaRatio  * m_Aspect$.MaxMana);
+			logout$(nINFO$, "ATTRIBUTES", m_statement$);			
+		}
+		fActSkill$ = m_Actor$.GetSkillLevel(sMagicInst$);
+		if (fActSkill$ < fR_Skill$)  // get required skill & mana PRIOR to getting the spell...
+		{
+//			report.genericF("Nature Magic skill starts at %f\n", fM_Skill$);
+//						StringTool.AssignF(m_statement$, "Raising %s skill level from %f to %f so that spell may be used", sMagicInst$, fM_Skill$, fR_Skill$);
+//						logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			// ensure actor has sufficient <type> magic level to use the spell!
+			f_TmpVal$ = m_Actor$.GetSkillLevel(sMagicInst$);
+// 			f_Discrep$ = math.abs(fR_Skill$  - fActSkill$);  // not necessary...
+			if (f_Discrep$ < 0.01)
+			{
+				f_Discrep$ = fR_Skill$;   //  - f_TmpVal$;   NO GO!
+			}
+			else
+			{
+				f_Discrep$ /= 3.0;  // approaches req skill asymptotically
+			}
+			rules.AwardExperience(m_Go$.goid, m_SpellGoID$, myParamSkill$(f_Discrep$) );  
+//			StringTool.AssignF(m_statement$, "Raising %s skill level from %f to %f  with param %f ", sMagicInst$, f_TmpVal$, m_Actor$.GetSkillLevel(sMagicInst$), 1.0e13);
+			if (math.abs(f_TmpVal$ - m_Actor$.GetSkillLevel(sMagicInst$) ) > 0.50) 
+			{
+			    StringTool.AssignF(m_statement$, "Raising %s skill level from %f to %f", sMagicInst$, f_TmpVal$, m_Actor$.GetSkillLevel(sMagicInst$));
+			    logout$(nINFO$, "ATTRIBUTES", m_statement$);
+			}
+		}
+		if ((fActMana$ >= fR_Mana$) && (m_Actor$.GetSkillLevel(sMagicInst$) >= fR_Skill$))
+		{
+			setstate WaitForSpell$;
+		}
+		else
+		{
+			setstate WaitForSkill_Mana$;
+		}
+	}
+}
+
+state MakeSpellWeapon$
+{
+	event OnEnterState$
+	{
+		if (m_Spell$ != NULL)
+		{
+			if (! bSelectSpell$)
+			{
+				bSelectSpell$ = true;
+				m_GO_Inv$.RSTransfer(m_Spell$, m_GO_Inv$.GetEquipped( ES_SPELLBOOK ), il_spell_1, AO_HUMAN, false );  // il_active_primary_spell   il_spell_1
+				m_Mind$.SetActorWeaponPreference(WP_MAGIC);
+
+	//			report.generic("Job created: Select Spell as default weapon.\n");
+				logout$(nINFO$, "AUTOMATION", "Job created: Select Spell as default weapon");		
+			}
+			else
+			{
+				weapon$ = m_GO_Inv$.GetItem(il_active_primary_spell);  // il_active_primary_spell );  //    = m_Go$.Inventory.GetEquipped( ES_WEAPON_HAND );
+				m_Mind$.SetActorWeaponPreference(WP_MAGIC);
+				if (weapon$  != NULL)
+				{		
+					cur_Go$ += 1;  // set up for next go...
+					m_Mind$.SetActorWeaponPreference(WP_MAGIC);
+					m_GO_Inv$.RSSelect(il_active_primary_spell, AO_PARTY);
+
+					setstate Wait$;
+					return;
+				}
+			}
+		}
+		else
+		{
+			logout$(nINFO$, "AUTOMATION", "Spell not found! m_Spell$ is NULL");
+		}
+		setstate Wait2$;	  // re-evaluate in period$ secs.
+	}
+}
+
+state LookForSpell$
+{
+	event OnEnterState$
+	{
+		Go			temp$;
+		string      sTemp$;
+		
+//		logState$("LookForSpell$");
+	 	//I want to make this look at all nearby items, and choose the most powerful one.
+	 	//After picking it up, it's time to run away.  Get the spell
+	 		
+	 	m_Mind$.TempGopColl1.Clear;
+		bResponse$ = AIQuery.GetOccupantsInSphere(m_Go$.Placement.Position, 100.0, m_Mind$.TempGopColl1);
+		debug.AssertF(bResponse$, "state SInGame2 %s line %d", __NAME__, __LINE__);
+	 		
+	 	i$ = 0;
+		
+	 	//I need to get a list of all visible, and locate the Oppt - attack it if found.
+//			Report.genericF("Looking for %i objects in the vicinity... ", m_Mind$.TempGopColl1.Size() );
+		
+	 	while (! bAskedForSpell$ )  
+	 	{
+	 		temp$ = m_Mind$.TempGopColl1.Get( i$ );
+			debug.AssertF(temp$  != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+//				Report.genericF("%i: on temp go %i\n", i$, MakeInt(temp$.GoID) );
+
+			sTemp$ = temp$.TemplateName;
+//				Report.genericF("%i: found item %s\n", i$, sTemp$);
+		
+	 		if (( sTemp$ == sSpellTmpl$ ) && (Temp$.goid == m_SpellGoID$))  // scid == 0x0010000? => AV using getVisible() )  // Spell
+	 		{
+				if (! bAskedForSpell$)
+				{
+//						report.generic("Spell was found ");
+					m_Spell$ = temp$;
+					// Go run and get it
+					bAskedForSpell$ = true;  // ask only once 
+				}
+			}
+
+			if (i$ == (m_Mind$.TempGopColl1.Size() - 1) ) 
+			{
+				break;
+			}
+			else 
+			{
+				i$ += 1;   // continue in loop
+			}
+	 	}
+ 		if (bAskedForSpell$)
+ 		{
+/* 		
+	 		m_Jobtmp$ = m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, AO_HUMAN, m_Spell$.Placement.Position ) );
+	 		debug.AssertF(m_Jobtmp$ != NULL, "state LookForSpell$ %s line %d", __NAME__, __LINE__);
+//			StringTool.AssignF(m_statement$, "go to spell job status is %d", i$, m_Jobtmp$.JobResult); 
+//			logout$(nINFO$, "ATTRIBUTES", m_statement$);	
+*/	 		
+//			report.error("Picking up spell now");
+	 		m_Jobtmp$ = m_Mind$.SDoJob( MakeJobReq( JAT_GET,  JQ_ACTION, QP_FRONT, AO_HUMAN, m_SpellGoID$, es_any ) );
+	 		debug.AssertF(m_Jobtmp$ != NULL, "state LookForSpell$ %s line %d", __NAME__, __LINE__);
+	 		if (m_Jobtmp$ != NULL)
+	 		{
+//				StringTool.AssignF(m_statement$, "pick up spell job status is %d", i$, m_Jobtmp$.JobResult); 
+//				logout$(nINFO$, "ATTRIBUTES", m_statement$);	
+			}
+//		m_Mind$.SDoJob( MakeJobReq( JAT_EQUIP, JQ_ACTION, QP_FRONT, AO_HUMAN, m_SpellGoID$, es_spellbook,  ) );  // AVs !
+//		report.generic("- Job created: pick up this Spell.\n");
+
+			StringTool.AssignF(m_statement$, "%d Job created: pick up the spell", cur_Go$);		
+			logout$(nINFO$, "AUTOMATION", m_statement$);
+			i$ = 0;           // prepare to count firings of TakeSample$
+		}
+		else
+		{
+			if (BExiting$)
+			{
+				setstate Ext$;
+			}
+			else
+			{
+				setstate WaitForSpell$;		// re-evaluate in period$ secs.			
+			}
+			return;
+		}
+		setstate MakeSpellWeapon$;
+	}
+}
+
+
+////////////////////////////////////////
+//	WaitForSpell$
+state WaitForSpell$
+{
+	transition -> LookForSpell$ :  OnTimer( 1 );
+
+	event OnEnterState$
+	{
+		if ( (WorldState.CurrentState == WS_SP_OUTRO ) || (WorldState.CurrentState == WS_MP_SESSION_LOST ) )
+		{	
+			BExiting$ = true;
+		}
+		else
+		{
+			this.CreateTimer( 1, period$ );
+			i$ += 1;
+		}
+	}
+}
+
+state WaitForSkill_Mana$
+{
+	transition -> LookForSkill_Mana$ :  OnTimer( 1 );
+
+	event OnEnterState$
+	{
+		if ( (WorldState.CurrentState == WS_SP_OUTRO ) || (WorldState.CurrentState == WS_MP_SESSION_LOST ) )
+		{	
+			BExiting$ = true;
+		}
+		else
+		{
+			this.CreateTimer( 1, period$ );
+			i$ += 1;
+		}
+	}
+}
+
+state SInGame2$
+{
+ 	FInGame$ at ( 5 frames )
+	{
+		party$ = Server.GetScreenParty();
+			
+//		logState$("SInGame2$");
+		debug.AssertF(party$ != NULL, "state SInGame2 %s line %d", __NAME__, __LINE__);
+		
+		f_MAXTime$ = config.GetFloat("MAXTime", 0.00);
+		if (f_MAXTime$ < 0.2) // ensure reasonable values
+		{
+			f_MAXTime$ = 1700.0;  // = 1700.0;
+		}  
+		m_Go$ = party$.Children.Get( 0 );
+		if ( m_Go$ == NULL  )
+		{
+//			report.generic("HERO returned NULL\n");
+			logout$(nFAIL$, "SETUP", "Could not find Screen Party [essential]");
+			setstate Ext$;
+		}
+		else
+		{				
+			// in this config ref, looking for arg passed by vb app; default is killing fist, if no arg is found
+			sCloneName$ = config.GetString("clones", "gyorn");
+			sSpellTmpl$ = config.GetString("spell", "spell_spark");
+			sOpponent$ = config.GetString("Opponent", "gom");
+			bRepeatedly$ = config.GetBool("repeat", false);
+
+			m_1$ = m_Go$;
+			m_HeroMind$ = m_Go$.Mind;
+			fR_Skill$ = config.GetFloat("required_level", 0.00);
+			Stringtool.AssignF(m_statement$, "required_level is %f", fR_Skill$ );
+			logout$(nINFO$, "AUTOMATION", m_statement$);	
+					
+			heroPos$ = m_Go$.placement.position;
+			
+			setstate create_party$;
+		}
+	}
+}
+
+
+////////////////////////////////////////
+//	Wait$
+state Wait$
+{
+	transition -> TakeSample$ :  OnTimer( 1 );
+
+	event OnEnterState$
+	{
+		if ( (WorldState.CurrentState == WS_SP_OUTRO ) || (WorldState.CurrentState == WS_MP_SESSION_LOST ) )
+		{	
+			BExiting$ = true;
+		}
+		else
+		{
+			this.CreateTimer( 1, period$ );
+			i$ += 1;
+		}
+	}
+}
+
+////////////////////////////////////////
+//	Wait2$
+state Wait2$
+{
+	transition -> MakeSpellWeapon$ :  OnTimer( 2 );
+
+	event OnEnterState$
+	{
+		if ( (WorldState.CurrentState == WS_SP_OUTRO ) || (WorldState.CurrentState == WS_MP_SESSION_LOST ) )
+		{	
+			BExiting$ = true;
+		}
+		else
+		{
+			this.CreateTimer( 2, period$ );
+			i$ += 1;
+		}
+	}
+}
+
+
+////////////////////////////////////////
+//	TakeSample$
+state TakeSample$	
+{
+	event OnEnterState$
+	{
+		if (cur_Go$ < 9)
+		{
+			iterGO$(cur_Go$);
+			add_spellToGo$();	// sets state to equipping next go with spell		\
+			return;
+		}
+		else
+		{
+	// last chance to guarantee completion, ready or not, within f_MAXTime$ seconds
+			
+/*			Stringtool.AssignF(m_statement$, "comparing WorldTime %f to TIME limit of %f seconds", WorldTime.Time, f_MAXTime$ );
+			logout$(nINFO$, "AUTOMATION", m_statement$);   */
+			
+			if (WorldTime.Time > f_MAXTime$ )  //    
+			{
+				Stringtool.AssignF(m_statement$, "exiting because TIME exceeds %f seconds", f_MAXTime$ );
+				logout$(nINFO$, "AUTOMATION", m_statement$);
+				BExiting$ = true;
+			}
+			if (BExiting$)
+			{
+				setstate Ext$;
+			}
+			else
+			{
+				check_add_oppt$();
+
+				setstate Wait$;		// re-evaluate in period$ secs.			
+			}
+		}
+	}
+}
+
+state Ext$
+{
+	event OnEnterState$
+	{
+		logout$(nPass$, "CRITERIA", "Exited normally");
+		mydeinit$(__NAME__);
+		bResponse$ = GpConsole.Execute( "exit\n");          // out of here
+		debug.AssertF(bResponse$, "state TakeSample$ %s line %d", __NAME__, __LINE__);		
+	}
+}
+
+state create_party$
+{
+	SiegePos SpawnPos$;
+
+	event OnEnterState$
+	{
+		StringTool.AssignF(m_statement$, "asking to create 7 of %s...", sCloneName$);
+		logout$(nINFO$, "AUTOMATION", m_statement$);	
+
+		i$		= 1;
+		while (i$ < 8)
+		{
+			if( AIQuery.FindSpotRelativeToSource( m_Go$, 0.66, 1.33, 2.0, m_HeroMind$.TempPos1 ) )
+			{
+				SpawnPos$ = m_HeroMind$.TempPos1;
+			} else {
+				SpawnPos$ = heroPos$;
+			}
+
+			GoCloneReq cloneReq$ = MakeGoCloneReq( party$.Goid, sCloneName$ );
+			debug.AssertF(cloneReq$ != NULL, "create_party$ %s line %d", __NAME__, __LINE__);		
+			cloneReq$.StartingPos = SpawnPos$;
+			cloneReq$.SnapToTerrain = true;
+
+			// get the opponent directed by vb app:
+			m_CloneGoId$ = GoDb.SCloneGo( cloneReq$ );
+			debug.AssertF(m_CloneGoId$ != NULL, "create_party$ %s line %d", __NAME__, __LINE__);		
+			m_CloneGo$ = m_CloneGoId$.go;
+			debug.AssertF(m_CloneGo$ != NULL, "create_party$ %s line %d", __NAME__, __LINE__);		
+			
+			if (i$ == 1)  // simulated switch () stmt:
+			{
+				m_2$ = m_CloneGo$;
+			}
+			else if   (i$ == 2)
+			{
+				m_3$ = m_CloneGo$;
+			}
+			else if   (i$ == 3)
+			{
+				m_4$ = m_CloneGo$;
+			}
+			else if   (i$ == 4)
+			{
+				m_5$ = m_CloneGo$;
+			}
+			else if   (i$ == 5)
+			{
+				m_6$ = m_CloneGo$;
+			}
+			else if   (i$ == 6)
+			{
+				m_7$ = m_CloneGo$; 
+			}
+			else
+			{
+				m_8$ = m_CloneGo$;
+			}
+			
+			i$ += 1;
+		}
+		cur_Go$ = 1;
+		setstate 		wait$;
+	}
+}

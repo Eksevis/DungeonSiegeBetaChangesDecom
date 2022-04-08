@@ -1,0 +1,1719 @@
+/*
+  ============================================================================
+  ----------------------------------------------------------------------------
+
+	File		: 	brain_hero.skrit
+
+	Author(s)	: 	Bartosz Kijanka, Eric Tams
+
+	Purpose		:	Generic brain.
+
+	(C)opyright 2001 Gas Powered Games, Inc.
+
+	Exptected Behavior:
+	-------------------
+
+		This brain will react to a number of world events.  The reaction is based
+		on what world events are processed and which permission were set in
+		the Mind.  Below, for each permission, the action(s) the brain will
+		take are listed.
+
+	Convention Note:
+	----------------
+
+		Any time we speak of the brain taking any action, the brain
+		actually only calls for action to take place by pushing
+		job(s) onto the action quque (JQ_ACTION).  The brain
+		never actually performs the action(s) itself.  Is should
+		never call for animations or MCP plans to take place.  It
+		should only call for jobs to be executed on the job queue.
+
+	------------------------------------------------------------------------
+
+	Terms:
+	------
+		Actor 	= owner of the brain.
+		Target 	= the actor that the owner is attacking or interacting with.
+
+
+	Mind.ActorAlertsFriends
+
+		On WE_ENEMY_SPOTTED, the brain will send WE_ALERT_ENEMY spotted to visible
+		friends who share the same com channel.
+
+
+	Mind.OnEnemySpottedAttack
+
+		On WE_ENEMY_SPOTTED, the brain will attack the enemy, permitting standing orders
+		allow it.
+
+
+	Mind.OnEngagedFleedAbortAttack
+
+		On WE_ENGAGED_FLED the brain will terminate any current attack action.  While
+		fleeing, the fleeing actor will also no longer be seen as an enemy, so the
+		fleeing actor will not be auto-attacked.
+
+
+	Mind.ActorAttacksOthersInICZ
+
+		If -anyone- is found in the "inner comfort zone", the brain will attack them.
+
+	
+	Mind.OnEngagedLostConsciousnessAbortAttack 
+
+		The actor still consider unconsicous actors a threat, and auto-attack them
+		when possible, given the current standing-orders.
+
+
+	Mind.ActorAutoHealsSelfLife
+
+		On WE_LIFE_RATIO_REACHED_LOW actor will drink a health potion if he has one.
+
+
+	Mind.ActorAutoHealsSelfMana                       
+
+		On WE_MANA_RATIO_REACHED_LOW actor will drink a health potion if he has one.
+
+
+	Mind.ActorAutoPicksUpItems
+
+		If the actor is not busy, he will periodically auto-pick up nearby items.
+
+	Mind.ActorAutoUsesActiveSpells                    
+	
+		Any time the actor takes an autonomous action which require using an active
+		item, he will consider using any of the active spells.
+
+
+	Mind.ActorAutoUsesActiveWeapons                   
+
+		Any time the actor takes an autonomous action which require using an active
+		item, he will consider using any of the active weapons.
+
+
+	Mind.OnEnemyEnteredICZFlee                     
+
+		Actor will flee from any enemy in his "inner comfort zone."
+
+
+	Mind.OnEnemyEnteredOCZFlee                     
+
+		Actor will flee from any enemy in his "outer comfort zone."
+
+
+	Mind.OnFriendEnteredICZFlee                     
+
+		Actor will flee from any friend in his "inner comfort zone."
+
+
+	Mind.OnFriendEnteredOCZFlee                     
+
+		Actor will flee from any friend in his "outer comfort zone."
+
+
+	Mind.OnLifeRatioLowFlee
+
+		On WE_LIFE_RATIO_REACHED_LOW the actor will run away from the nearest enemy.
+
+
+	Mind.OnManaRatioLowFlee                     
+
+		On WE_MANA_RATIO_REACHED_LOW the actor will run away from the nearest enemy.
+
+
+	Mind.OnJobReachedTravelDistanceAbortAttack
+
+		On WE_JOB_REACHED_TRAVEL_DISTANCE, the actor will terminate any attacking
+		action.
+
+
+	Mind.OnEngagedLostLoiter                    
+
+		On WE_ENGAGED_LOST, the actor will terminate any current attacking
+		behavior.
+
+
+	Mind.OnEngagedLostReturnToJobOrigin         
+
+		On WE_ENGAGED_LOST, the actor will terminate any current attacking
+		action and walk back to where the attacking action begun.
+
+
+	Mind.ActorAutoDefendsOthers
+	Mind.ActorAutoHealsOthersLife                     
+	Mind.ActorAutoHealsOthersMana                     
+	Mind.ActorAutoXfersMana                           
+
+		Used only by party ai, if the actor happens to be in a party.
+
+
+	------------------------------------------------------------------------------------------------------------------
+	NOTES  NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES 
+	------------------------------------------------------------------------------------------------------------------
+
+	rules:
+	------
+
+	+	weapon preference
+		+	some actors prefer melee
+		+	some actors prefer ranged
+		+	some actors prefer magic - like, let's say... magicians!
+
+	+	weapon permissions
+		+	can autoswitch to karate
+		+	can autoswitch to melee
+		+	can autoswitch to ranged
+		+	can autoswitch to magic
+
+	+	weapon retrieval
+		+	can autouse stored inventory
+
+	+	all actors will switch away from their ranged weapon if someone gets in too close ( OCZ )
+	+	some ranged actors will choose to retreat if enemy gets too close, without switching weapons
+	+	some magic users will retreat if they don't have enough mana
+	+	some magic users will switch to melee if they don't have enough mana, then switch back
+	+	some ranged users will try to maintain a distance from target
+
+	old:
+	----
+	+	some actors may autoswitch from weapons to magic
+	+	some actors may autoswitch from magic to weapons ( melee/ranged )
+	+	can autoswitch from melee
+	+	can autoswitch from ranged
+	+	can autoswitch from spell
+
+	computer actors:
+	----------------
+	+	can be limited to selected, active or all inventory for weapons
+	+	if actors can't user thei prefered weapon, they will find an alternate...
+		when their prefered weapon is available, they will switch to it.  This is most
+		common with magic users.
+
+	+	computer actors have hard-coded weapon preference
+	+	some actors will randomly choose among spells, independent of any other settings.
+
+	human actors:
+	-------------
+	+	when told to attack with a melee weapon, they continue to use that weapon, when told to attack with ranged
+		they are subject to weapon down-switching if needed, same goes for spells and running out of mana
+
+	+	ranged and magic users may need to remember the last user-assigned weapon selection so that after weapon-switching they
+		switch back as soon as possible.
+
+	+	human actors remember user preference
+
+
+	ToDo:
+	-----
+		
+	+	setup a monster party test in bart_test map
+	+	count magic users with short-range spells as melee attackers... perhaps count any attacker within close range
+		as a melee attacker... yea, that's better...
+	+	picksafespotaway from change - do better search... try to deviate from straight line, but default to it if nothing else is found
+
+
+	regression test cases:
+	----------------------
+
+	+	archer that keeps shooting even if you get close
+	+	archer that switches to melee when you approach him
+	+	archer that retreats when you get close, but tries to maintain distance when you flee
+
+	+	magician that switches to melee when approached
+	+	magician that retreats when you get close, but tries to maintain distance when you flee
+
+	+	actor that simply retreats
+
+	+	human controlled actor set to cast magic, switches to melee when out of mana, then back to spell when mana is available
+
+
+  ----------------------------------------------------------------------------
+  ============================================================================
+*/
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+
+
+////////////////////////////////////////
+//	party params
+
+property	bool	form_party_on_damaged$				= true	  	doc = "When damaged (only when not attacking) try to find or form a party?";
+property	bool	form_party_on_projectile_alert$		= false	  	doc = "When shot by a ranged attack try to find or form a party?";
+property	bool	form_party_on_enemy_spotted$		= true	  	doc = "When spotting an enemy try to find or form a party?";
+property	bool	form_party_on_alert_enemy_spotted$	= true	  	doc = "When spotting an enemy run to friends and try to find or form a party?";
+property	bool	form_party_on_friend_entered_ICZ$	= false	  	doc = "Form or find a party when a friend enters ICZ?";
+property	bool	form_party_on_friend_entered_OCZ$	= false	  	doc = "Form or find a party when a friend enters OCZ?";
+property	bool	form_party_on_getting_friends$		= true	  	doc = "Form or find a party after running to get friends";
+
+property	float	party_creation_distance$			= 10.0	  	doc = "How far an actor will look to for a party";
+property	bool	actor_creates_own_party$			= false	  	doc = "Does this Actor create his own party?";
+property	bool	actor_joins_existing_party$			= false	  	doc = "Will this Actor auto join another party?";
+property	string	party_template$						= ""	  	doc = "template name of the party to create.";
+
+property	int		stop_flee_party_size$				= -1	  	doc = "If the party size is larger then this the stop fleeing, usefull for pack style attacks. (-1 to disable check).";										
+property	int		stop_flee_alive_party_size$			= -1	  	doc = "If the alive party size is larger then this the stop fleeing, usefull for pack style attacks. (-1 to disable check).";										
+
+////////////////////////////////////////
+//	friends
+
+property	bool	get_friends$						= false	  	doc = "get friends to help.";
+property	bool	run_to_friends$						= false	  	doc = "Run instead of walk to get friends.";
+property	float	find_friend_range$					= -1.0	  	doc = "How far an actor will for a friend, -1 to use sight range.";
+
+property	string	friends$									  	doc = "membership of friends to look for If blank will just look for same alignment.";
+
+property	bool	guard$								= false	  	doc = "try to guard instead of creating a party on the form party conditions.";
+
+////////////////////////////////////////
+// flee/heal
+
+property	bool	heal_life_after_flee$				= false	  	doc = "Try to heal life after fleeing from an enemy.";
+property	bool	heal_mana_after_flee$				= false	  	doc = "Try to heal mana after fleeing from an enemy.";
+property	bool	heal_when_idle$						= false	  	doc = "Try to heal life when idle.";
+property	float	heal_chance$						= 1.0		doc = "Chance to try to heal when Idle";
+
+Go			m_Go$;
+GoMind		m_Mind$;
+Job			m_Job$;
+float		m_OrigSpeed$ = 0.0;
+bool		m_HealPending$;
+Goid		m_Guardee$;
+
+#include "k_job_c_attack_utils"
+
+////////////////////////////////////////////////////////////////////////////////
+//	
+
+void TimeStamp$()
+{
+	report.reportf( "aiskrit", "[%2.4f, 0x%08x] brain skrit : ", WorldTime.GetTime, WorldTime.GetSimCount );
+}
+
+void RunSpeed$()
+{	
+	m_Go$.Body.SetAvgMoveVelocity( m_Go$.Body.MaxMoveVelocity );
+}
+
+void ResetSpeed$()
+{
+	if( m_OrigSpeed$ > 0.0 )
+	{
+		m_Go$.Body.SetAvgMoveVelocity( m_OrigSpeed$ );
+	}
+}
+
+
+bool TryGuardFriends$()
+{
+	if( !StringTool.IsEmpty( friends$ ) )
+	{
+		Go friend$;
+		m_Mind$.TempGopColl1.Clear;
+		
+		// look for nearby friends
+		m_Mind$.TempQtColl1.Clear;
+		m_Mind$.TempQtColl1.Add( QT_FRIEND );
+		m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+		m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.TempGopColl1 );
+		
+		// see if any of them match our membership.
+		m_Mind$.TempGopColl2.Clear;
+		int i$ = 0,iend$ =  m_Mind$.TempGopColl1.Size();
+		while( i$ < iend$ )
+		{
+			Go temp$ = m_Mind$.TempGopColl1.Get( i$ );
+			if( temp$ != NULL )
+			{
+				if( temp$.HasCommon )
+				{
+					if( m_Mind$.TempGopColl1.Get( i$ ).common.Membership.Contains( friends$ ) )
+					{
+						m_Mind$.TempGopColl2.add( temp$ );
+						
+						// $$$ should I worry about testing this in retail? -ET
+						
+						#only ( dev )
+						[[
+						if( !temp$.HasAspect )
+						{
+							Report.Errorf( "Invalid Target for Guarding!!\nPlease check membership on\n%s\n" ,temp$.TemplateName );
+							return false;
+						}
+						]]
+					}
+				}
+			}
+			i$ += 1;
+		}
+		
+		// get thew wimpiest guy and guard him.
+		friend$ = AIQuery.GetMin( m_Go$, QT_SURVIVAL_FACTOR, m_Mind$.TempGopColl1 ); 
+	
+		if( friend$ != NULL )
+		{
+			m_Guardee$ = friend$.Goid;
+			m_Mind$.RSGuard( friend$, QP_CLEAR, AO_REFLEX );
+			return true;
+		}
+	}
+	// if I made it here I don't have any friends. -ET
+	return false;
+}
+
+
+bool CreateOrJoinParty$()
+{
+	///////////
+	//
+	// The Actor who wants to join a party will first look to see if there is a party
+	// near that it can join. then it will see if there are enough guys nearby to join 
+	// it's own party.
+	//
+	// This function will return true if the character is now in a party.
+	//
+	// $$$ Note: need to check controling characters so monsters won't join the human party
+	// if it is confused or charmed.
+	
+	if( m_Go$.OwningParty != NULL )
+	{
+		return true;
+	}
+	
+	if( m_Mind$.AliveFriendsVisible() )
+	{
+		report.reportf( "aiskrit", "%s: I have friends nearby!! Continuing with party creation.\n",m_Go$.templatename);
+	}
+	else
+	{
+		report.reportf( "aiskrit", "%s: I don't have any friends nearby!! Aborting Party creation.\n",m_Go$.templatename);
+		return false;
+	}
+
+	m_Mind$.TempGopColl1.Clear;
+	m_Mind$.TempQtColl1.Clear;
+	m_Mind$.TempQtColl1.Add( QT_FRIEND  );
+	m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+	
+	m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.TempGopColl1, party_creation_distance$ );
+	
+	int i$ = 0;
+	int free_friends$ = 0;
+	
+	
+	// $ We are looking for a party to join, and counting free friends at the same time.
+	
+	/// try to join an existing party.
+	if( actor_joins_existing_party$ )
+	{
+		report.reportf( "aiskrit", "%s: Trying to find existing party\n",m_Go$.templatename);
+	
+		while ( m_Mind$.TempGopColl1.size > i$ )
+		{
+			Go temp_friend$ = m_Mind$.TempGopColl1.get( i$ );
+			Go temp_party$ = temp_friend$.OwningParty;
+			if( temp_party$ != NULL )
+			{
+				
+				// $$$ need to have a property for max and min party size $$$
+				if( temp_party$.common.Membership.ContainsAny( m_Go$.common.Membership ) && ( temp_party$.Children.Size < 8 ) )
+				{
+					temp_party$.Party.RSAddMemberNow( m_Go$ );
+					report.reportf( "aiskrit", "%s: I Joined an existing party!!\n",m_Go$.templatename);
+					return true;
+				}
+			}
+			i$ += 1;
+		}
+	}
+	
+	/// If we didn't find a party we need to see if there are enough people we want to invite into a party
+	
+	// need to have a valid party template defined, and at least have enough friends around to create a party.
+	if( StringTool.IsEmpty( party_template$ ) || !actor_creates_own_party$ )
+	{
+		report.reportf( "aiskrit", "%s: I don't have the right permisions to create a party! Aborting Party creation.\n",m_Go$.templatename);
+		return false;
+	}
+	
+	/// try to create own party. will only contine if there are enough free friends around.
+	
+	// $ do I need to create the party with the PlayerID?
+	// $ does a monster have a player id?
+	
+	// $$$ need a GetTemplateMembership so I don't need to create the party every freakin time I want to see if I have people I want to put in it.
+	// it doesn't seem like I destroy a party I don't need very often, maybe I don't need this.
+
+	// Note, get erronius behavior, since everything creats a krug party. a phrak may create a krug party, and find enough friendly krugs
+	// around to fill it. This should get fixed once I'm able to specialize AI skrits.
+
+	// creating the party
+	GoCloneReq cloneReq$ = MakeGoCloneReq( party_template$, m_Go$.PlayerId );		
+	cloneReq$.StartingPos = m_Go$.Placement.Position; 
+	cloneReq$.SnapToTerrain = true;
+	goid party$ = GoDb.SCloneGo( cloneReq$ );
+	
+	report.reportf( "aiskrit", "%s: I Created a party!!\n",m_Go$.templatename);
+	
+	party$.Go.Party.RSAddMemberNow( m_Go$ );
+	
+	i$ = 0;
+	// $$$ need to have a property for max and min party size $$$
+	int party_size$ = 1;
+	int max_party_size$ = 8;
+	
+	// add people to my party that don't have a party yet, and match the partys membership.
+	
+	while ( ( m_Mind$.TempGopColl1.size > i$ ) && ( party_size$ < max_party_size$ ) )
+	{
+		Go temp_friend$ = m_Mind$.TempGopColl1.get( i$ );
+		Go temp_party$ = temp_friend$.OwningParty;
+		Job action$ = temp_friend$.Mind.GetFrontJob( JQ_ACTION );
+		
+		bool join_ok$ = true;
+		
+		// might want to extend this check to include any action that shouldn't be interupted...
+		if( action$ != NULL )
+		{
+			if( action$.JobAbstractType == JAT_STARTUP )
+			{
+				join_ok$ = false;
+			}
+		}
+		if( temp_party$ != NULL )
+		{
+			join_ok$ = false;
+		}
+		if( !party$.Go.common.Membership.ContainsAny( temp_friend$.common.Membership ) )
+		{
+			join_ok$ = false;
+		}
+		
+		if( join_ok$ )
+		{
+			report.reportf( "aiskrit", "%s: I added a friend to my party!!\n",m_Go$.templatename);
+			party$.Go.Party.RSAddMemberNow( temp_friend$ );
+			party_size$ += 1;
+		}
+		i$ += 1;
+	}
+	
+	if( party_size$ >= 2 )
+	{
+		return true;
+	} else {
+		report.reportf( "aiskrit", "%s: I didn't find enough friends so I had to delete my party!!\n",m_Go$.templatename);
+		GoDb.SMarkForDeletion( party$ );
+	}
+	return false;
+}
+
+bool TryFormPartyOrGuard$()
+{
+	// we don't want to do anything if we are in the startup job
+	Job action$ = m_Mind$.GetFrontJob( JQ_ACTION );
+	if( action$ != NULL )
+	{
+		if( action$.JobAbstractType == JAT_STARTUP )
+		{
+			return false;
+		}
+	}
+	
+	if( CreateOrJoinParty$() )
+	{
+		return true;
+	}
+
+	// we only want to try to continue to guard someone if they are alive.
+	if( m_Guardee$.Go != NULL )
+	{
+		if( m_Guardee$.Go.Aspect.LifeState == LS_ALIVE_CONSCIOUS )
+		{
+		    return true;
+		}
+	}
+	
+	if( guard$ )
+	{
+		return TryGuardFriends$();
+	} 
+	
+	// if I made it here, I'm a failure. I'm not guarding anyone, or in any party.
+	return false;
+}
+
+startup state STARTUP$
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	init
+
+event OnJobInitPointers$( Job job$ )
+{
+	m_Job$		= job$;
+	m_Go$		= job$.Go;
+	m_Mind$		= job$.Go.Mind;
+}   
+    
+    
+event OnJobInit$( Job job$ )
+{   
+	if( job$.Go.IsHuded )
+	{
+		TimeStamp$();
+		report.report( "aiskrit", "OnJobInit$\n" );
+	}
+
+	OnJobInitPointers$( job$ );
+	m_OrigSpeed$ = m_Go$.Body.AvgMoveVelocity;
+	
+	SetState Thinking$;
+	return;
+}
+
+
+////////////////////////////////////////
+//	TryFlee
+
+void TryFlee$( Go From$ )
+{
+//	report.generic("I want to flee...\n");
+	////////////////////////////////////////
+	//	param valide 
+
+	if( From$ == NULL )
+	{
+		return;
+	}
+	
+	if( m_Mind$.MovementOrders != MO_FREE ) 
+	{
+		return;
+	}
+	
+	Job action$ = m_Mind$.GetFrontJob( JQ_ACTION );	
+	if( action$ != NULL )
+	{
+		if( action$.JobAbstractType == JAT_STARTUP )
+		{
+			return;
+		}
+	}
+
+	////////////////////////////////////////
+	//	check to see if we have enough friends in our party that we don't need to flee anymore.
+	
+	// we only perform the check if the size is positive.
+	if( stop_flee_party_size$ > 0 )
+	{
+		// we need to have a party to be able to abort.
+		if( m_Go$.OwningParty != NULL )
+		{
+			// do we have enough party members to abort?
+			if( m_Go$.OwningParty.Children.Size >= stop_flee_party_size$)
+			{
+				// abort.
+//				report.generic("aborting flee, I have enough friends that I want to attack...\n");
+				return;
+			}
+		}
+	}
+	
+	// we only perform the check if the size is positive.
+	if( stop_flee_alive_party_size$ > 0 )
+	{
+		// we need to have a party to be able to abort.
+		if( m_Go$.OwningParty != NULL )
+		{
+			m_Mind$.TempGopColl1.Clear;
+			
+			////////////////////////////////////////
+			//	check for living party members
+			if( AIQuery.Get( m_Go$, QT_ALIVE_CONSCIOUS, m_Go$.OwningParty.Children, m_Mind$.TempGopColl1 ) )
+			{
+				// do we have enough alive party members to abort?
+				if( m_Mind$.TempGopColl1.Size >= stop_flee_alive_party_size$)
+				{
+					// abort.
+//					report.generic("aborting flee, I have enough living friends that I want to attack...\n");
+					return;
+				}
+			}
+		}
+	}
+	
+	
+
+	////////////////////////////////////////////////////////////////////////////////
+	//	human player's actors can flee indefinitely, others are limited
+
+	if( m_Go$.Player.IsScreenPlayer || ( !m_Go$.Player.IsScreenPlayer && m_Mind$.FleeCount > 0 ) )
+	{
+		// $ These checks were placed to avoid neutral creatures fleeing from each other.
+		// maybe we should solve this with Memberships? -ET
+	
+		if( From$.HasActor() )
+		{
+			if( From$.actor.getalignment == AA_NEUTRAL )
+			{
+				return;
+			}
+		}
+		report.reportf( "aiskrit", "%s fleeing from %s\n", m_Go$.TemplateName, From$.TemplateName );
+		m_Mind$.SDoJob( MakeJobReq( JAT_FLEE_FROM_OBJECT, JQ_ACTION, m_Mind$.AmPatrolling ? QP_FRONT : QP_CLEAR, AO_REFLEX, From$.Goid ) );
+		
+		// do we want to heal ourselves after we flee?
+		if( heal_life_after_flee$ || heal_mana_after_flee$ )
+		{
+		    m_HealPending$ = true; 
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	PickState$
+state PickState$
+{
+	event OnEnterState$
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "PickState$ - entered state\n" );
+		}
+
+		// $ failsafe to get us out of this state if we're no longer attacking
+		Job newAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		if( newAction$ == NULL )
+		{
+			SetState Thinking$;
+		}
+		else if ( newAction$.IsOffensive )
+		{
+			SetState Attacking$;
+		}
+		else
+		{
+			SetState Thinking$;
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	state Thinking$
+
+state Thinking$
+{
+	transition
+	{
+		-> Thinking$:		OnWorldMessage( WE_JOB_TIMER_DONE );
+		-> Unconscious$:	OnWorldMessage( WE_LOST_CONSCIOUSNESS );
+	}
+
+	trigger OnWorldMessage$( WE_MIND_PROCESSING_NEW_JOB )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_MIND_PROCESSING_NEW_JOB\n" );
+		}
+
+		Job newAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		if( newAction$ != NULL )
+		{
+			if( newAction$.IsOffensive )
+			{
+				SetState Attacking$;
+			}
+			else if ( m_Mind$.AmBusy )
+			{
+				return;
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ENEMY_SPOTTED )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ENEMY_SPOTTED\n" );
+		}
+		
+		if( get_friends$ && ( m_Go$.OwningParty == NULL ) )
+		{
+			SetState GetHelp$;
+			return;
+		} 
+		else if( form_party_on_enemy_spotted$ )
+		{
+			TryFormPartyOrGuard$();	
+		}	
+		
+		if( m_Mind$.OnEnemySpottedAttack() && !m_Mind$.AmBusy() )
+		{
+			if( TryAutoAttackFocus$( m_Go$ ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ALERT_PROJECTILE_NEAR_MISSED )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ALERT_PROJECTILE_NEAR_MISSED\n" );
+		}
+		
+		if( form_party_on_projectile_alert$ )
+		{
+			TryFormPartyOrGuard$();
+		}
+
+		if( m_Mind$.OnAlertProjectileNearMissedFlee )
+		{
+			TryFlee$( MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go );
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ALERT_PROJECTILE_NEAR_MISSED )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ALERT_PROJECTILE_NEAR_MISSED\n" );
+		}
+
+		if( m_Mind$.OnAlertProjectileNearMissedAttack && !m_Mind$.AmBusy() )
+		{
+			if( TryAutoAttackFocus$( m_Go$ ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ENEMY_ENTERED_OUTER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ENEMY_ENTERED_OUTER_COMFORT_ZONE\n" );
+		}
+
+		if( m_Mind$.OnEnemyEnteredOCZFlee )
+		{
+			TryFlee$( MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go );
+		}
+	}
+
+	trigger OnWorldMessage$( WE_FRIEND_ENTERED_OUTER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_FRIEND_ENTERED_OUTER_COMFORT_ZONE\n" );
+		}
+
+		if( form_party_on_friend_entered_OCZ$ )
+		{
+			TryFormPartyOrGuard$();
+		}
+		
+		if( m_Mind$.OnFriendEnteredOCZFlee )
+		{
+			TryFlee$( MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go );
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ENEMY_ENTERED_INNER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ENEMY_ENTERED_INNER_COMFORT_ZONE\n" );
+		}
+
+		if( m_Mind$.OnEnemyEnteredICZFlee )
+		{
+			TryFlee$( MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go );
+		}
+	}
+
+	trigger OnWorldMessage$( WE_FRIEND_ENTERED_INNER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_FRIEND_ENTERED_INNER_COMFORT_ZONE\n" );
+		}
+		
+		if( form_party_on_friend_entered_ICZ$ )
+		{
+			TryFormPartyOrGuard$();
+		}
+
+		if( m_Mind$.OnFriendEnteredICZFlee )
+		{
+			TryFlee$( MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go );
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ENEMY_ENTERED_INNER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ENEMY_ENTERED_INNER_COMFORT_ZONE\n" );
+		}
+
+		if( m_Mind$.OnEnemyEnteredICZAttack && !m_Mind$.AmBusy() )
+		{
+			if( TryAutoAttackFocus$( m_Go$ ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_FRIEND_ENTERED_INNER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_FRIEND_ENTERED_INNER_COMFORT_ZONE\n" );
+		}
+
+		if( m_Mind$.OnFriendEnteredICZAttack && !m_Mind$.AmBusy() )
+		{
+			Go enemy$ = MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go;
+			if( TryAutoAttack$( m_Go$, enemy$ ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_DAMAGED )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_DAMAGED\n" );
+		}
+		
+		if( form_party_on_damaged$ )
+		{
+			TryFormPartyOrGuard$();
+		}
+
+		if( !m_Mind$.AmBusy() )
+		{
+			Go alternateTarget$ = MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go;
+			if( TryAutoRespondAttackFocus$( m_Go$, alternateTarget$ ) )
+			{
+				SetState( Attacking$ );
+				return;
+			}
+			else
+			{
+				// currently only non-human controlled actors have the option of fleeing
+				if( (m_Go$.Player.Controller != PC_HUMAN) && (alternateTarget$ != NULL) )
+				{
+					TryFlee$( alternateTarget$ );
+				}
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ATTACKED_MELEE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ATTACKED_MELEE\n" );
+		}
+
+		if( !m_Mind$.AmBusy() )
+		{
+			if( TryAutoAttackFocus$( m_Go$ ) )
+			{
+				SetState( Attacking$ );
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ALERT_ENEMY_SPOTTED )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_ALERT_ENEMY_SPOTTED\n" );
+		}
+		
+		if( form_party_on_alert_enemy_spotted$ )
+		{
+			TryFormPartyOrGuard$();
+		}
+
+		if( !m_Mind$.AmBusy() && ( m_Go$.OwningParty == NULL ) )
+		{
+			m_Mind$.RSGuard( m_Mind$.HandlingMessage.SendFrom.Go, QP_CLEAR, AO_REFLEX );
+		}
+	}
+
+	trigger OnWorldMessage$( WE_REQ_TALK_BEGIN )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - WE_REQ_TALK_BEGIN\n" );
+		}
+
+//		if( !m_Mind$.AmBusy() )
+		{
+			m_Mind$.SDoJob( MakeJobReq( JAT_TALK, JQ_ACTION, QP_FRONT, AO_REFLEX, MakeGoid( m_Mind$.HandlingMessage.Data1 ) ) );
+		}
+	}
+
+	event OnEnterState$
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Thinking$ - OnEnterState$\n" );
+		}
+//		this.TraceOpCodes 	   = m_Go$.IsHuded;
+//		this.TraceSkritCalls   = m_Go$.IsHuded;
+//		this.TraceStateChanges = m_Go$.IsHuded;
+
+		m_Job$.SetTimer( m_Mind$.SensorScanPeriod );
+
+		if( !m_Mind$.BrainActive )
+		{
+			return;
+		}
+		
+		// We just re-entered the thinking state, must evaluate any actions that should take place. -ET
+		
+		Job currentAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		if( currentAction$ != NULL )
+		{
+			// if we have a heal pending, then the first thing that we want to do once we
+			// have stoped fleeing is try to heal. -ET
+		
+			if( m_HealPending$ && ( currentAction$.JobAbstractType != JAT_FLEE_FROM_OBJECT ) )
+			{
+				m_HealPending$ = false;
+				
+				if( heal_life_after_flee$ )
+				{
+					m_Mind$.RSDrinkLifeHealingPotion( AO_REFLEX );
+			
+					if( m_Mind$.IsLifeLow() )
+					{
+						m_Mind$.RSCastLifeHealingSpell( AO_REFLEX );
+					}	
+				}
+				
+				if( heal_mana_after_flee$ )
+				{
+					m_Mind$.RSDrinkManaHealingPotion( AO_REFLEX );
+				}
+			}
+	
+			////////////////////////////////////////
+			//	set state based on what action we're running
+	
+			if( currentAction$.IsOffensive )
+			{
+				SetState Attacking$;
+				return;
+			}
+			else if ( m_Mind$.AmBusy )
+			{
+				return;
+			}
+		}
+
+		if( m_Mind$.OnEnemySpottedAttack() && m_Mind$.AliveEnemiesVisible() && !m_Mind$.AmBusy()  )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.OnEnemySpottedAttack() && m_Mind$.AliveEnemiesVisible() && !m_Mind$.AmBusy()\n" );
+			}
+
+			if( TryAutoAttackFocus$( m_Go$ ) )
+			{
+				SetState( Attacking$ );		
+				return;
+			}
+			else
+			{
+				if( m_Mind$.GetFrontActionJat == JAT_PATROL )
+				{
+					return;
+				}
+
+				m_Mind$.TempQtColl1.Clear;
+				m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+				m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+
+				Go temp_enemy$ = m_Mind$.GetClosestVisible( m_Mind$.TempQtColl1 );
+
+				if (temp_enemy$ != NULL)
+				{
+					if( !m_Mind$.AmFacing( temp_enemy$ ) )
+					{
+						if( m_Mind$.UnderstandsJob( JAT_FACE ) )
+						{
+							m_Mind$.SDoJob( MakeJobReq( JAT_FACE, JQ_ACTION, QP_CLEAR, AO_REFLEX, temp_enemy$.Goid ) );
+							return;
+						}
+					}
+				}
+			}
+		}
+
+		if( m_Mind$.AliveEnemiesVisible() && m_Mind$.OnEnemyEnteredICZAttack && !m_Mind$.AmBusy() )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.AliveEnemiesVisible() && m_Mind$.OnEnemyEnteredICZAttack && !m_Mind$.AmBusy()\n" );
+			}
+
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+			m_Mind$.TempQtColl1.Add( QT_ATTACKABLE );
+
+			Go enemy$ = m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.InnerComfortZoneRange );
+
+			if( TryAutoAttack$( m_Go$, enemy$ ) )
+			{												 
+				SetState( Attacking$ );
+				return;
+			}
+		}
+
+		if ( m_Mind$.AliveFriendsVisible() && m_Mind$.OnFriendEnteredICZAttack && !m_Mind$.AmBusy() )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.AliveFriendsVisible() && m_Mind$.OnFriendEnteredICZAttack && !m_Mind$.AmBusy()\n" );
+			}
+
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_FRIEND );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+			Go friend$ = m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.InnerComfortZoneRange );
+
+			if( TryAutoAttack$( m_Go$, friend$ ) )
+			{												 
+				SetState( Attacking$ );
+				return;
+			}
+		}
+
+		if( m_Mind$.AliveEnemiesVisible() && m_Mind$.OnEnemyEnteredICZFlee )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.AliveEnemiesVisible() && m_Mind$.OnEnemyEnteredICZFlee\n" );
+			}
+
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+
+			Go enemy$ = m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.InnerComfortZoneRange );
+
+			TryFlee$( enemy$ );
+			return;
+		}
+
+		if ( m_Mind$.AliveFriendsVisible() && m_Mind$.OnFriendEnteredICZFlee )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.AliveFriendsVisible() && m_Mind$.OnFriendEnteredICZFlee\n" );
+			}
+
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_FRIEND );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+			Go friend$ = m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.InnerComfortZoneRange );
+
+			TryFlee$( friend$ );
+			return;
+		}
+
+		if( m_Mind$.AliveEnemiesVisible() && m_Mind$.OnEnemyEnteredOCZFlee )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.AliveEnemiesVisible() && m_Mind$.OnEnemyEnteredOCZFlee\n" );
+			}
+
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+
+			Go enemy$ = m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.OuterComfortZoneRange );
+
+			TryFlee$( enemy$ );
+			return;
+		}
+
+		if ( m_Mind$.AliveFriendsVisible() && m_Mind$.OnFriendEnteredOCZFlee )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.AliveFriendsVisible() && m_Mind$.OnFriendEnteredOCZFlee\n" );
+			}
+
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_FRIEND );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+			Go friend$ = m_Mind$.GetVisible( m_Mind$.TempQtColl1, m_Mind$.OuterComfortZoneRange );
+
+			TryFlee$( friend$ );
+			return;
+		}
+
+		if( m_Mind$.ActorAutoPicksUpItems() && m_Mind$.ItemsVisible() )
+		{
+			if( m_Go$.IsHuded )
+			{
+				TimeStamp$();
+				report.report( "aiskrit", "Thinking$ - m_Mind$.ActorAutoPicksUpItems() && m_Mind$.ItemsVisible()\n" );
+			}
+
+			Go item$ = m_Mind$.GetClosestVisible( QT_ITEM );
+			m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, AO_REFLEX, m_Go$.Placement.Position ) );
+			m_Mind$.SDoJob( MakeJobReq( JAT_GET, JQ_ACTION, QP_FRONT, AO_REFLEX, item$.Goid ) );
+			return;
+		}
+
+		////////////////////////////////////////
+		//	try to honor standing orders - human players only $$
+
+		bool followMode$ = false;
+		#only( game )
+		[[
+			followMode$ = UIPartyManager.FollowMode;
+		]]
+
+		if( ( m_Go$.Player.Controller == PC_HUMAN ) && ( m_Go$.Mind.MovementOrders == MO_LIMITED ) && !m_Mind$.AmBusy && !followMode$ )
+		{
+			// don't walk back if you're patrolling ( since patrol is interruptable it won't register in the AmBusy check )
+			if( (m_Mind$.GetFrontActionJat == JAT_PATROL) || (m_Mind$.GetFrontActionJat == JAT_FOLLOW) )
+			{
+				return;
+			}
+
+			if( m_Go$.IsAnyHumanPartyMember() )
+			{
+				if( m_Go$.Parent.GetChildren.Size() == 1 )
+				{
+					return;
+				}
+			}
+
+			if( !m_Mind$.AliveEnemiesVisible )
+			{
+				if( AIQuery.GetDistance( m_Go$.Mind.LastExecutedUserAssignedActionPosition, m_Go$.Placement.Position ) > 0.1 )
+				{
+					m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, AO_REFLEX, m_Go$.Mind.LastExecutedUserAssignedActionPosition ) );
+				}
+			}
+		}
+		
+		if( heal_when_idle$	)
+		{
+			if( !m_Mind$.IsLifeHigh )
+			{
+				Job action$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		
+				if( action$ != NULL )
+				{
+					if( action$.JobAbstractType == JAT_CAST )
+					{
+						return;
+					}
+				}
+				
+				if ( heal_chance$ > Math.RandomFloat( 1 ) )
+				{
+					m_Mind$.TempQtColl1.Clear;
+					m_Mind$.TempQtColl1.Add( QT_SPELL );
+					m_Mind$.TempQtColl1.Add( QT_LIFE_HEALING );
+					
+					m_Mind$.TempGopColl1.Clear;
+				
+					Go m_SpellBook$ = m_Go$.Inventory.GetEquipped( ES_SPELLBOOK );
+					if ( m_SpellBook$ != NULL )
+					{	
+						m_SpellBook$.Inventory.ListItems( m_Mind$.TempQtColl1, IL_ALL_SPELLS, m_Mind$.TempGopColl1 );
+					}
+	
+					Go spell$ = AIQuery.GetMax( m_Go$, QT_LIFE_HEALING, m_Mind$.TempGopColl1 );
+					
+					if( spell$ != NULL )
+					{
+						m_Mind$.SDoJob( MakeJobReq( JAT_CAST, JQ_ACTION, QP_FRONT, AO_REFLEX, m_Go$.goid, spell$.Goid ) );
+					}
+				}
+			}
+		}
+		return;
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//	state Attacking$
+
+state Attacking$
+{
+	transition
+	{
+		-> Thinking$:	OnWorldMessage( WE_ENGAGED_INVALID );
+		-> Thinking$:	OnWorldMessage( WE_ENGAGED_HIT_KILLED );
+		-> Thinking$:	OnWorldMessage( WE_ENGAGED_KILLED );
+		-> Thinking$:	OnWorldMessage( WE_JOB_CURRENT_ACTION_BASE_JAT_CHANGED );
+	}
+
+	trigger OnTimer$( 1 )
+	{
+		SetState PickState$;
+	}
+
+	trigger OnWorldMessage$( WE_LIFE_RATIO_REACHED_LOW )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_LIFE_RATIO_REACHED_LOW\n" );
+		}
+
+		if( m_Mind$.ActorAutoHealsSelfLife() )
+		{
+			m_Mind$.RSDrinkLifeHealingPotion( AO_REFLEX );
+		}
+
+		if( m_Mind$.IsLifeLow() )
+		{
+			if( m_Mind$.ActorAutoHealsSelfLife() )
+			{
+				m_Mind$.RSCastLifeHealingSpell( AO_REFLEX );
+			}
+		}
+
+		if( m_Mind$.IsLifeLow() )
+		{
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+
+			Go enemy$ = m_Mind$.GetClosestVisible( m_Mind$.TempQtColl1 );
+
+			if( m_Mind$.OnLifeRatioLowFlee()  && ( enemy$ != NULL ) )
+			{
+				TryFlee$( enemy$ );
+			}
+		}
+	}
+
+	trigger OnWorldMessage$( WE_MANA_RATIO_REACHED_LOW )
+	{
+		// $$$ a character wielding a minigun class weapon will recieve a WE_MANA_RATIO_REACHED_LOW
+		// message when his weapon runs out of ammo. Might want to make seperate message for this. -ET
+		
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_MANA_RATIO_REACHED_LOW\n" );
+		}
+
+		if( m_Mind$.ActorAutoHealsSelfMana() )
+		{
+			m_Mind$.RSDrinkManaHealingPotion( AO_REFLEX );
+		}
+
+		if( m_Mind$.IsManaLow() || !m_Mind$.ActorAutoHealsSelfMana() )
+		{
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+
+			Go enemy$ = m_Mind$.GetClosestVisible( m_Mind$.TempQtColl1 );
+
+			if( m_Mind$.OnManaRatioLowFlee()  && ( enemy$ != NULL ) )
+			{
+				TryFlee$( enemy$ );
+			}
+		}
+		return;
+	}
+
+	trigger OnWorldMessage$( WE_ENGAGED_LOST )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_ENGAGED_LOST\n" );
+		}
+
+		Job currentAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		if( currentAction$ == NULL )
+		{
+			return;
+		}
+
+		if( m_Mind$.OnEngagedLostReturnToJobOrigin )
+		{
+			// $$ the original job creation position may have been unloaded... what to do then?
+			m_Mind$.SDoJob( MakeJobReq( JAT_MOVE, JQ_ACTION, QP_FRONT, AO_REFLEX, currentAction$.InitPosition ) );
+		}
+		else if ( m_Mind$.OnEngagedLostLoiter )
+		{
+			// $$$ do something to loiter
+			currentAction$.RequestEnd();
+		}
+	}
+
+	trigger OnWorldMessage$( WE_JOB_REACHED_TRAVEL_DISTANCE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_JOB_REACHED_TRAVEL_DISTANCE\n" );
+		}
+
+		Job currentAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+		if( currentAction$ == NULL )
+		{
+			return;
+		}
+
+		if( m_Mind$.OnJobReachedTravelDistanceAbortAttack )
+		{
+			TryFlee$( m_Mind$.EngagedObject.Go );
+			//currentAction$.RequestEnd();
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ENEMY_ENTERED_OUTER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_ENEMY_ENTERED_OUTER_COMFORT_ZONE\n" );
+		}
+
+		if( m_Mind$.OnEnemyEnteredOCZFlee )
+		{
+			TryFlee$( MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go );
+		}
+	}
+
+	trigger OnWorldMessage$( WE_FRIEND_ENTERED_OUTER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_FRIEND_ENTERED_OUTER_COMFORT_ZONE\n" );
+		}
+
+		if( form_party_on_friend_entered_OCZ$ )
+		{
+			TryFormPartyOrGuard$();	
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ENGAGED_FLED )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_ENGAGED_FLED\n" );
+		}
+
+		if( m_Mind$.OnEngagedFleedAbortAttack )
+		{
+			Job currentAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+			if( currentAction$ == NULL )
+			{
+				return;
+			}
+			currentAction$.RequestEnd();
+		}
+	}
+
+	trigger OnWorldMessage$( WE_ENGAGED_LOST_CONSCIOUSNESS )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_ENGAGED_LOST_CONSCIOUSNESS\n" );
+		}
+
+		if( m_Mind$.OnEngagedLostConsciousnessAbortAttack )
+		{
+			////////////////////////////////////////
+			//	if we're not supposed to beat up on unconscious targets, abort
+
+			Job currentAction$ = m_Mind$.GetFrontJob( JQ_ACTION );
+			if( currentAction$ == NULL )
+			{
+				return;
+			}
+			report.generic( "requesting job finish\n" );
+			currentAction$.RequestEnd();
+		}
+		else
+		{
+			////////////////////////////////////////
+			//	else, we're supposed to beat up on them, but try to find a nice juicy conscious alternative
+
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+			m_Mind$.TempQtColl1.Add( QT_ATTACKABLE );
+			
+			Go enemy$ = m_Mind$.GetClosestVisible( m_Mind$.TempQtColl1 );
+
+			if( enemy$ != NULL )
+			{
+				Go weapon$ = GetBestAutoAttackWeaponSpellOrKarate$( m_Go$, enemy$ );
+				if( weapon$ != NULL )
+				{
+					if( MayAutoAttack$( m_Go$, enemy$ ) )
+					{
+						TryAutoAttack$( m_Go$, enemy$ );
+					}
+				}
+			}
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	//	switch down to a melee weapon if allowed, when enemy gets in real close
+
+	trigger OnWorldMessage$( WE_ENEMY_ENTERED_INNER_COMFORT_ZONE )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_ENEMY_ENTERED_INNER_COMFORT_ZONE\n" );
+		}
+
+		if( ( m_Go$.Inventory.IsRangedWeaponEquipped || m_Go$.Inventory.IsSpellSelected ) && m_Mind$.OnEnemyEnteredICZSwitchToMelee )
+		{
+			m_Mind$.TempQtColl1.Clear;
+			m_Mind$.TempQtColl1.Add( QT_ENEMY  );
+			m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+			m_Mind$.TempQtColl1.Add( QT_ATTACKABLE );
+			
+			Go enemy$ = m_Mind$.GetClosestVisible( m_Mind$.TempQtColl1 );
+
+			if( enemy$ != NULL )
+			{
+				Go weapon$ = GetBestAutoAttackWeaponSpellOrKarate$( m_Go$, enemy$ );
+				if( weapon$ != NULL )
+				{
+					if( weapon$.IsMeleeWeapon || (weapon$ == m_Go$) )
+					{
+						if( MayAutoAttack$( m_Go$, enemy$ ) )
+						{
+							TryAutoAttack$( m_Go$, enemy$ );
+						}
+					}
+				}
+			}
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	//	respond to an attacker, even if we're busy, only if the actor we're attacking isn't attacking us back
+
+	trigger OnWorldMessage$( WE_DAMAGED )
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - WE_DAMAGED\n" );
+		}
+
+		////////////////////////////////////////
+		//	if I was attacked, but whom I'm attacking isn't attacking back, attack back
+
+		Go victim$ = m_Mind$.EngagedObject.Go;
+		Go newAttacker$ = MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go;
+
+		if( ( victim$ != NULL ) && ( newAttacker$ != NULL ) )
+		{
+			if( victim$.HasActor && newAttacker$.HasActor )
+			{
+				////////////////////////////////////////
+				//	respond if the if we're being damaged by a melee attacker
+				if( ( victim$.Mind.EngagedObject != m_Go$.Goid ) && ( newAttacker$.Mind.GetFrontActionJat == JAT_ATTACK_OBJECT_MELEE ) )
+				{
+					TryRespondToAttack$( m_Go$, MakeGoid( m_Mind$.HandlingMessage.Data1 ).Go );
+				}
+			}
+		}
+	}
+
+	event OnEnterState$
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Attacking$ - entered state\n" );
+		}
+
+		this.CreateTimer( 1, m_Mind$.SensorScanPeriod );
+	}
+}
+
+state Unconscious$
+{
+	transition
+	{
+		-> Thinking$:	OnWorldMessage( WE_GAINED_CONSCIOUSNESS );
+	}
+
+	event OnEnterState$
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "Unconscious$ - entered state\n" );
+		}
+	}
+}
+
+state GetHelp$
+{
+	transition
+	{
+		-> PickState$:		OnWorldMessage( WE_MCP_SECTION_COMPLETED );
+	}
+	
+	event OnEnterState$
+	{
+		if( m_Go$.IsHuded )
+		{
+			TimeStamp$();
+			report.report( "aiskrit", "GetHelp$ - entered state\n" );
+		}
+		
+		Go friend$;
+			
+		m_Mind$.TempGopColl1.Clear;
+		m_Mind$.TempGopColl2.Clear;
+		
+		// $$ get everything. This is scary. hopefully I'm not doing this too much. -ET
+		AIQuery.GetOccupantsInSphere( m_Go$.placement.position, ( find_friend_range$ > 0 ) ? find_friend_range$ : m_Mind$.sightrange , m_Mind$.TempGopColl1 );
+		
+		m_Mind$.TempQtColl1.Clear;
+		m_Mind$.TempQtColl1.Add( QT_FRIEND );
+		m_Mind$.TempQtColl1.Add( QT_ALIVE_CONSCIOUS );
+		
+		// we are only interested in our friends.
+		AIQuery.Get( m_Go$, m_Mind$.TempQtColl1, m_Mind$.TempGopColl1, m_Mind$.TempGopColl2 );
+		
+		// do we only like certain types of friends?
+		if( !StringTool.IsEmpty( friends$ ) )
+		{
+			m_Mind$.TempGopColl1.Clear;
+			int i$ = 0,iend$ =  m_Mind$.TempGopColl2.Size();
+			while( i$ < iend$ )
+			{
+				Go temp$ = m_Mind$.TempGopColl2.Get( i$ );
+				if( temp$ != NULL )
+				{
+					if( temp$.HasCommon )
+					{
+						if( m_Mind$.TempGopColl2.Get( i$ ).common.Membership.Contains( friends$ ) )
+						{
+							m_Mind$.TempGopColl1.add( temp$ );
+						}
+					}
+				}
+				i$ += 1;
+			}
+			friend$ = AIQuery.GetMax( m_Go$, QT_SURVIVAL_FACTOR, m_Mind$.TempGopColl1 ); 
+		}
+		// else just find the buffest friend around
+		else
+		{
+			// $$$ verify this is performing correctly, looked suspicious. -ET
+			friend$ = AIQuery.GetMax( m_Go$, QT_SURVIVAL_FACTOR, m_Mind$.TempGopColl2 ); 
+		}
+		
+		// still didn't find anything lets just give up.
+		if( friend$ == NULL )
+		{
+			report.report( "aiskrit", "GetHelp$ - couldn't find help... bailing.\n" );
+			SetState Thinking$;
+			return;
+		}
+		
+		// do we want to be all speedy like when we run to our friends?
+		if( run_to_friends$ )
+		{
+			RunSpeed$();
+		}
+		JobReq req$ = MakeJobReq( JAT_MOVE, JQ_ACTION, QP_CLEAR, AO_REFLEX, friend$.placement.position );
+		
+		// we only want to approach our friend. lets say about 2 meters away.
+		// might want to parameratize this. -ET
+		req$.Float1 = 2.0;
+		
+		Job newJob$ = m_Mind$.SDoJob( req$ );
+		
+		// we don't want this job interupted.
+		if( newJob$ != NULL )
+		{
+			newJob$.SetTraitInterruptable( false );
+		}
+		else
+		{
+			report.report( "aiskrit", "GetHelp$ - job creation failed.\n" );
+			SetState Thinking$;
+			return;
+		}
+	}
+	
+	event OnExitState$
+	{
+		// done looking for friends resume normal speed and try to get in a group.		
+		if( run_to_friends$ )
+		{
+			ResetSpeed$();
+		}
+		if( form_party_on_getting_friends$ )
+		{
+			TryFormPartyOrGuard$();
+		}
+	}
+}
